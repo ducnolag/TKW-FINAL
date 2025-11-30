@@ -8,7 +8,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="css/style.css" />
+
   </head>
 
   <body>
@@ -52,7 +52,7 @@
         <!-- Logo -->
         <div class="header-logo">
           <a href="/">
-            <img src="img/logo.svg" alt="Logo" />
+            <img src="/assets/logo.svg" alt="Logo" />
           </a>
         </div>
 
@@ -174,89 +174,6 @@
     </div>
 
     <div class="mobile-overlay" id="mobileOverlay"></div>
-
-    <script>
-      // Scroll effect
-      window.addEventListener("scroll", function () {
-        const header = document.querySelector(".header-main");
-        if (window.scrollY > 50) {
-          header.classList.add("scrolled");
-        } else {
-          header.classList.remove("scrolled");
-        }
-      });
-
-      // Auth state management
-      const accountBtn = document.getElementById("accountBtn");
-      const logoutBtn = document.getElementById("logoutBtn");
-      const authDropdown = document.getElementById("authDropdown");
-
-      // Simulate user logged in state (change this based on your actual auth state)
-      let isLoggedIn = true; // Set to true to show logged in state initially
-
-      function updateAuthUI() {
-        if (isLoggedIn) {
-          // User is logged in - show "Tài khoản" and "Thoát"
-          accountBtn.style.display = "flex";
-          logoutBtn.style.display = "flex";
-          authDropdown.style.display = "none";
-        } else {
-          // User is logged out - show "Đăng nhập" and "Đăng ký"
-          accountBtn.style.display = "none";
-          logoutBtn.style.display = "none";
-          authDropdown.style.display = "flex";
-        }
-      }
-
-      // Initial UI state
-      updateAuthUI();
-
-      // Logout button click handler
-      if (logoutBtn) {
-        logoutBtn.addEventListener("click", function (e) {
-          e.preventDefault();
-          isLoggedIn = false;
-          updateAuthUI();
-          // Here you can add actual logout logic (clear session, redirect, etc.)
-        });
-      }
-
-      // Mobile Menu Toggle
-      const mobileToggle = document.getElementById("mobileToggle");
-      const mobileMenu = document.getElementById("mobileMenu");
-      const mobileClose = document.getElementById("mobileClose");
-      const mobileOverlay = document.getElementById("mobileOverlay");
-
-      function openMobileMenu() {
-        mobileMenu.classList.add("active");
-        mobileOverlay.classList.add("active");
-        document.body.style.overflow = "hidden";
-      }
-
-      function closeMobileMenu() {
-        mobileMenu.classList.remove("active");
-        mobileOverlay.classList.remove("active");
-        document.body.style.overflow = "";
-      }
-
-      if (mobileToggle) {
-        mobileToggle.addEventListener("click", openMobileMenu);
-      }
-
-      if (mobileClose) {
-        mobileClose.addEventListener("click", closeMobileMenu);
-      }
-
-      if (mobileOverlay) {
-        mobileOverlay.addEventListener("click", closeMobileMenu);
-      }
-
-      // Close menu on escape key
-      document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape") {
-          closeMobileMenu();
-        }
-      });
-    </script>
+    <script src="../js/page/home/header.js"></script>
   </body>
 </html>
