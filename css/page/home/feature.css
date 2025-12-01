@@ -1,0 +1,251 @@
+/* 
+Home Featured Menu Styles
+*/
+.section-featured-menu {
+  width: 100%;
+  background: linear-gradient(90deg, #fff9f3 0%, #fff5eb 100%);
+  padding: 60px 0;
+}
+
+.featured-container {
+  display: grid;
+  grid-template-columns: 1.2fr 3fr;
+  align-items: stretch;
+  gap: 30px;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* --- Bên trái --- */
+.featured-left {
+  background: #dfc6a7;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 50px 20px;
+  color: #222;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+}
+
+.featured-logo {
+  width: 150px;
+  margin-bottom: 15px;
+}
+
+.featured-left h2 {
+  font-size: 40px;
+  font-weight: 800;
+  color: #e21b1b;
+  margin-bottom: 10px;
+}
+
+.featured-left p {
+  font-size: 17px;
+  line-height: 1.6;
+  max-width: 300px;
+  margin: 15px auto 25px;
+}
+
+.btn-main {
+  background: #e21b1b;
+  color: white;
+  padding: 10px 28px;
+  font-weight: 600;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn-main:hover {
+  background: #ad1816;
+}
+
+/* --- Bên phải (món ăn) --- */
+.featured-right {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+}
+
+.menu-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  height: 100%;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.menu-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.menu-img-wrap {
+  height: 250px;
+  overflow: hidden;
+}
+
+.menu-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.menu-item:hover img {
+  transform: scale(1.08);
+}
+
+.menu-info {
+  text-align: center;
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+.menu-info h3 {
+  font-size: 18px;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.btn-order {
+  background: #e21b1b;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 25px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s;
+  display: inline-block;
+}
+
+.btn-order:hover {
+  background: #ad1816;
+}
+
+/* --- Responsive --- */
+@media (max-width: 1200px) {
+  .featured-container {
+    grid-template-columns: 1fr;
+  }
+  .featured-right {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .featured-right {
+    grid-template-columns: 1fr;
+  }
+  .featured-left h2 {
+    font-size: 32px;
+  }
+}
+
+
+/* =======================
+   FEATURE BANNER SECTION
+   ======================= */
+.featured-banner {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  background: url('/assets/feature/feature1.png') center/cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Lớp phủ làm chữ nổi rõ */
+.banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5); 
+
+}
+
+/* Nội dung ở giữa banner */
+.banner-content {
+  position: relative;
+  max-width: 780px;
+  text-align: center;
+  color: white;
+  padding: 0 20px;
+  animation: fadeIn 1s ease forwards;
+}
+
+.banner-content h2 {
+  font-size: 50px;
+  font-weight: 900;
+  margin-bottom: 20px;
+  text-shadow: 0 3px 20px rgba(0, 0, 0, 0.45);
+}
+
+.banner-content p {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 30px;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Nút đặt hàng */
+.banner-btn {
+  background: #e21b1b;
+  color: white;
+  padding: 14px 40px;
+  border-radius: 40px;
+  font-size: 20px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 10px 30px rgba(226, 27, 27, 0.4);
+  transition: 0.3s;
+}
+
+.banner-btn:hover {
+  background: #c41616;
+  transform: translateY(-3px);
+}
+
+/* Hiệu ứng fade in */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* =======================
+   RESPONSIVE
+   ======================= */
+@media (max-width: 900px) {
+  .featured-banner {
+    height: 500px;
+  }
+  .banner-content h2 {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 600px) {
+  .featured-banner {
+    height: 430px;
+    padding: 0 10px;
+  }
+  .banner-content h2 {
+    font-size: 28px;
+  }
+  .banner-content p {
+    font-size: 15px;
+  }
+  .banner-btn {
+    font-size: 16px;
+    padding: 10px 28px;
+  }
+}

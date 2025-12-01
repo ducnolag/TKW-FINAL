@@ -3,3 +3,7 @@
 @import url('./base/typography.css');
 
 @import url('layouts/header.css');
+@import url('page/home/slide.css');
+@import url('page/home/feature.css');
+@import url('page/home/bestseller.css');
+@import url('page/home/co-folder.css');
