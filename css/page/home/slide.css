@@ -73,14 +73,38 @@ Home Slider Styles
   backdrop-filter: blur(6px);
 }
 
+/* === MOBILE FIX: FULL SLIDE, KHÔNG THẤY 2 SLIDE BÊN === */
 @media (max-width: 768px) {
   .section_slider .swiper-slide {
-    height: 320px;
+    transform: none !important;
+    opacity: 1 !important;
+    height: 200px !important; /* tuỳ chỉnh */
   }
-  .slide-text {
-    bottom: 10%;
-    left: 5%;
+
+  .section_slider .swiper-slide-active {
+    transform: none !important;
+  }
+
+  .slide-bg {
+    background-size: cover !important;   /* đảm bảo đầy màn hình */
+    background-position: center !important;
   }
 }
 
 
+
+gory {
+      animation: slideUp 0.6s ease 0.2s both;
+    }
+
+    .swiper-slide-active .slide-title {
+      animation: slideUp 0.6s ease 0.4s both;
+    }
+
+    .swiper-slide-active .slide-description {
+      animation: slideUp 0.6s ease 0.6s both;
+    }
+
+    .swiper-slide-active .slide-cta {
+      animation: slideUp 0.6s ease 0.8s both;
+    }

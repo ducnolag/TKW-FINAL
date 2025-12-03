@@ -46,14 +46,27 @@ document.addEventListener('htmlIncluded', function () {
       }
     },
     breakpoints: {
-      768: {
-        slidesPerView: 1.6,
-        spaceBetween: 40
+      // Mobile
+      0: {
+        slidesPerView: 1,
+        centeredSlides: false,
+        spaceBetween: 0
       },
+
+      // Tablet
+      768: {
+        slidesPerView: 1.4,
+        centeredSlides: true,
+        spaceBetween: 30
+      },
+
+      // Desktop
       1024: {
         slidesPerView: 1.8,
+        centeredSlides: true,
         spaceBetween: 50
       }
     }
+
   });
 });

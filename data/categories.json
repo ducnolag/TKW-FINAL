@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "name": "Men",
+    "slug": "men"
+  },
+  {
+    "id": 2,
+    "name": "Women",
+    "slug": "women"
+  },
+  {
+    "id": 3,
+    "name": "Kids",
+    "slug": "kids"
+  },
+  {
+    "id": 4,
+    "name": "Accessories",
+    "slug": "accessories"
+  }
+]

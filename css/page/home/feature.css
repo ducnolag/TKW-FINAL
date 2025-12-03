@@ -20,7 +20,7 @@ Home Featured Menu Styles
 /* --- Bên trái --- */
 .featured-left {
   background: #dfc6a7;
-  border-radius: 25px;
+  border-radius: var(--border-radius-large);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -28,7 +28,7 @@ Home Featured Menu Styles
   text-align: center;
   padding: 50px 20px;
   color: #222;
-  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-large);
 }
 
 .featured-logo {
@@ -39,7 +39,7 @@ Home Featured Menu Styles
 .featured-left h2 {
   font-size: 40px;
   font-weight: 800;
-  color: #e21b1b;
+  color: var(--accent-color);
   margin-bottom: 10px;
 }
 
@@ -51,13 +51,13 @@ Home Featured Menu Styles
 }
 
 .btn-main {
-  background: #e21b1b;
-  color: white;
+  background: var(--accent-color);
+  color: var(--white-color);
   padding: 10px 28px;
-  font-weight: 600;
-  border-radius: 30px;
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--border-radius-large);
   text-decoration: none;
-  transition: 0.3s;
+  transition: var(--transition-normal);
 }
 
 .btn-main:hover {
@@ -75,17 +75,17 @@ Home Featured Menu Styles
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: white;
-  border-radius: 20px;
+  background: var(--white-color);
+  border-radius: var(--border-radius-medium);
   overflow: hidden;
   height: 100%;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: var(--shadow-medium);
+  transition: transform var(--transition-normal) ease, box-shadow var(--transition-normal) ease;
 }
 
 .menu-item:hover {
   transform: translateY(-6px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  box-shadow: var(--shadow-large);
 }
 
 .menu-img-wrap {
@@ -112,19 +112,19 @@ Home Featured Menu Styles
 
 .menu-info h3 {
   font-size: 18px;
-  color: #333;
-  font-weight: 600;
+  color: var(--text-color-dark);
+  font-weight: var(--font-weight-semibold);
   margin-bottom: 15px;
 }
 
 .btn-order {
-  background: #e21b1b;
-  color: white;
+  background: var(--accent-color);
+  color: var(--white-color);
   padding: 8px 20px;
-  border-radius: 25px;
-  font-weight: 600;
+  border-radius: var(--border-radius-large);
+  font-weight: var(--font-weight-semibold);
   text-decoration: none;
-  transition: 0.3s;
+  transition: var(--transition-normal);
   display: inline-block;
 }
 
@@ -151,7 +151,6 @@ Home Featured Menu Styles
   }
 }
 
-
 /* =======================
    FEATURE BANNER SECTION
    ======================= */
@@ -169,8 +168,7 @@ Home Featured Menu Styles
 .banner-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5); 
-
+  background: rgba(0, 0, 0, 0.5);
 }
 
 /* Nội dung ở giữa banner */
@@ -178,7 +176,7 @@ Home Featured Menu Styles
   position: relative;
   max-width: 780px;
   text-align: center;
-  color: white;
+  color: var(--white-color);
   padding: 0 20px;
   animation: fadeIn 1s ease forwards;
 }
@@ -199,15 +197,15 @@ Home Featured Menu Styles
 
 /* Nút đặt hàng */
 .banner-btn {
-  background: #e21b1b;
-  color: white;
+  background: var(--accent-color);
+  color: var(--white-color);
   padding: 14px 40px;
-  border-radius: 40px;
+  border-radius: var(--border-radius-large);
   font-size: 20px;
   font-weight: 700;
   text-decoration: none;
   box-shadow: 0 10px 30px rgba(226, 27, 27, 0.4);
-  transition: 0.3s;
+  transition: var(--transition-normal);
 }
 
 .banner-btn:hover {

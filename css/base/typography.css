@@ -1,0 +1,50 @@
+body {
+  font-family: var(--font-family-sans-serif);
+  line-height: 1.6;
+  background: var(--background-color);
+  color: var(--text-color-light);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-sans-serif);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-color-dark);
+  /* margin-bottom: 0.5em; */
+}
+
+/* h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.75rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+h5 {
+  font-size: 1.25rem;
+}
+
+h6 {
+  font-size: 1rem;
+}
+
+p {
+  margin-bottom: 1em;
+} */
+
+a {
+  color: var(--primary-color);
+  transition: color var(--transition-normal);
+}
+
+a:hover {
+  color: var(--primary-color-dark);
+}
