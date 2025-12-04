@@ -1,66 +1,42 @@
 [
   {
     "id": 1,
-    "name": "Men's T-Shirt",
-    "slug": "men-t-shirt",
-    "price": 25.99,
-    "image": "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
-    "category": "men"
+    "title": "Chân Gà Rút Xương Sốt Thái",
+    "price_current": 74250,
+    "price_old": 82500,
+    "image": "",
+    "status": "soldout"
   },
   {
     "id": 2,
-    "name": "Men's Casual Slim Fit",
-    "slug": "men-s-casual-slim-fit",
-    "price": 15.99,
-    "image": "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg",
-    "category": "men"
+    "title": "Gà Popcorn Chiên Lắc Phô Mai",
+    "price_current": 46800,
+    "price_old": 52000,
+    "image": "",
+    "status": "soldout"
   },
   {
     "id": 3,
-    "name": "Women's T-Shirt",
-    "slug": "women-t-shirt",
-    "price": 29.99,
-    "image": "https://fakestoreapi.com/img/71z3kpMAYsL._AC_UY879_.jpg",
-    "category": "women"
+    "title": "Mì Trộn Indomie Ngon Nhất Thế Giới",
+    "price_current": 37350,
+    "price_old": 41500,
+    "image": "",
+    "status": "soldout"
   },
   {
     "id": 4,
-    "name": "Women's Windbreaker",
-    "slug": "women-s-windbreaker",
-    "price": 115,
-    "image": "https://fakestoreapi.com/img/51Y5NI-I5jL._AC_UX679_.jpg",
-    "category": "women"
+    "title": "Combo Bánh Gà Phô Mai",
+    "price_current": 23400,
+    "price_old": 26000,
+    "image": "",
+    "status": "soldout"
   },
   {
     "id": 5,
-    "name": "Kid's T-Shirt",
-    "slug": "kid-t-shirt",
-    "price": 15.99,
-    "image": "https://fakestoreapi.com/img/81XH0e8fefL._AC_UY879_.jpg",
-    "category": "kids"
-  },
-  {
-    "id": 6,
-    "name": "Kid's Jacket",
-    "slug": "kid-s-jacket",
-    "price": 25.99,
-    "image": "https://fakestoreapi.com/img/61-7EDL-+sL._AC_SY879._SX._UX._SY._UY_.jpg",
-    "category": "kids"
-  },
-  {
-    "id": 7,
-    "name": "Bracelet",
-    "slug": "bracelet",
-    "price": 10.99,
-    "image": "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg",
-    "category": "accessories"
-  },
-  {
-    "id": 8,
-    "name": "Ring",
-    "slug": "ring",
-    "price": 12.99,
-    "image": "https://fakestoreapi.com/img/61sbMiUnoGL._AC_UL640_QL65_ML3_.jpg",
-    "category": "accessories"
+    "title": "Bánh Tráng Trộn Đặc Biệt",
+    "price_current": 32400,
+    "price_old": 36000,
+    "image": "",
+    "status": "soldout"
   }
 ]

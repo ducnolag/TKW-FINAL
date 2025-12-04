@@ -1,110 +1,137 @@
-/*
-Home Slider Styles
-*/
 .section_slider {
   margin-top: 20px;
   border-radius: 20px;
   overflow: hidden;
   position: relative;
 }
+
 .section_slider .swiper-container {
   width: 100%;
   padding-bottom: 40px;
 }
+
 .section_slider .swiper-slide {
-  height: 460px;
+  aspect-ratio: 16/7; /* chống crop */
   transform: scale(0.75);
-  transition: transform 0.6s ease, opacity 0.6s ease;
-  opacity: 0.5;
+  transition: transform var(--transition-slow) ease, opacity var(--transition-slow) ease;
+  opacity: 0.4;
   border-radius: 20px;
   overflow: hidden;
   position: relative;
+  background: #000;
 }
+
 .section_slider .swiper-slide-active {
-  transform: scale(1);
+  transform: scale(1.1);
   opacity: 1;
   z-index: 10;
 }
+
+/* Background images */
 .slide-bg {
   position: absolute;
   inset: 0;
-  background-size: contain !important;
-  background-repeat: no-repeat;
+  background-size: cover; /* Không bị crop nhiều */
   background-position: center;
   transition: transform 1s ease;
   will-change: transform;
 }
 
-.slide-text {
-  transition: all 0.6s ease;
-}
-.fade-in {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-  animation: fadeLines 1s ease forwards;
-}
-.fade-in .line-1 {
-  animation: fadeUp 0.8s ease forwards 0.2s;
-}
-.fade-in .line-2 {
-  animation: fadeUp 0.8s ease forwards 0.5s;
-}
-.fade-in .line-3 {
-  animation: fadeUp 0.8s ease forwards 0.8s;
-}
-@keyframes fadeUp {
-  0% { opacity: 0; transform: translateY(15px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
+
+/* Bullet pagination */
 .section_slider .swiper-pagination-bullet {
   background: #b37c3daa;
   opacity: 0.8;
-  transition: all 0.3s ease;
-}
-.section_slider .swiper-pagination-bullet-active {
-  width: 24px;
-  border-radius: 8px;
-  background: #f97316;
-}
-.slide-counter {
-  font-family: 'Inter', sans-serif;
-  display: none;
-  letter-spacing: 1px;
-  backdrop-filter: blur(6px);
+  transition: all var(--transition-normal) ease;
 }
 
-/* === MOBILE FIX: FULL SLIDE, KHÔNG THẤY 2 SLIDE BÊN === */
+.section_slider .swiper-pagination-bullet-active {
+  width: 24px;
+  border-radius: var(--border-radius-small);
+  background: var(--primary-color);
+}
+
+/* Navigation buttons */
+/* Nút Prev / Next auto theo slide chính giữa */
+.section_slider .swiper-button-prev,
+.section_slider .swiper-button-next {
+  width: 40px !important;
+  height: 40px !important;
+  background: 
+  var(--primary-color)!important;
+  border-radius: 50% !important;
+  color: #000 !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  z-index: 20 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25) !important;
+}
+
+/* vị trí nút: dựa theo khoảng scale 0.8 của slide bên cạnh */
+.section_slider .swiper-button-prev {
+  left: calc(22vw) !important;   /* đẩy ra theo tỉ lệ màn hình */
+}
+
+.section_slider .swiper-button-next {
+  right: calc(22vw) !important;
+}
+
+/* Icon */
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  display: none !important;
+}
+.swiper-button-prev svg,
+.swiper-button-next svg {
+  width: 20px !important;
+  height: 20px !important;
+  stroke: #000 !important;
+  stroke-width: 2 !important;
+}
+
+/* Hover */
+.section_slider .swiper-button-prev:hover,
+.section_slider .swiper-button-next:hover {
+  transform: translateY(-50%) scale(1.12) !important;
+}
+@media (max-width: 1000px) {
+.section_slider .swiper-button-prev {
+  left: calc(10vw) !important;   /* đẩy ra theo tỉ lệ màn hình */
+}
+
+.section_slider .swiper-button-next {
+  right: calc(10vw) !important;
+}
+
+}
+
+
+/* MOBILE RESPONSIVE */
 @media (max-width: 768px) {
+
+  /* bỏ scale để slider toàn màn hình → nút trở về cạnh trái/phải */
   .section_slider .swiper-slide {
     transform: none !important;
     opacity: 1 !important;
-    height: 200px !important; /* tuỳ chỉnh */
+    border-radius: 0 !important;
+  }
+  .section_slider {
+    border-radius: 0 !important;
   }
 
-  .section_slider .swiper-slide-active {
-    transform: none !important;
+  .section_slider .swiper-button-prev {
+    left: 8px !important;
+  }
+  .section_slider .swiper-button-next {
+    right: 8px !important;
   }
 
-  .slide-bg {
-    background-size: cover !important;   /* đảm bảo đầy màn hình */
-    background-position: center !important;
+  .section_slider .swiper-button-prev,
+  .section_slider .swiper-button-next {
+    width: 38px !important;
+    height: 38px !important;
   }
 }
-
-
-
-gory {
-      animation: slideUp 0.6s ease 0.2s both;
-    }
-
-    .swiper-slide-active .slide-title {
-      animation: slideUp 0.6s ease 0.4s both;
-    }
-
-    .swiper-slide-active .slide-description {
-      animation: slideUp 0.6s ease 0.6s both;
-    }
-
-    .swiper-slide-active .slide-cta {
-      animation: slideUp 0.6s ease 0.8s both;
-    }
