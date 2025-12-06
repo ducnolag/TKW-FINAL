@@ -74,6 +74,17 @@
   font-size: 13px;
 }
 
+/* Logged In State */
+.logged-in-section {
+  display: none;
+  gap: 20px;
+}
+
+.logged-in-section.show {
+  display: flex;
+}
+
+/* Logged Out State */
 .auth-dropdown {
   display: none;
   gap: 20px;
@@ -81,6 +92,18 @@
 
 .auth-dropdown.show {
   display: flex;
+}
+
+.user-greeting {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--white-color);
+  font-weight: 500;
+}
+
+.user-greeting strong {
+  color: var(--warning-color);
 }
 
 /* ===== MAIN HEADER ===== */

@@ -40,6 +40,9 @@
         .header h1 {
             color: #ff6b35;
             font-size: 28px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
         .header .user-info {
@@ -51,6 +54,29 @@
         .header .user-info span {
             color: #666;
             font-size: 14px;
+        }
+
+        .home-btn {
+            background: white;
+            color: #ff6b35;
+            border: 2px solid #ff6b35;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .home-btn:hover {
+            background: #ff6b35;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.3);
         }
 
         .logout-btn {
@@ -297,6 +323,13 @@
             .header .user-info {
                 flex-direction: column;
                 gap: 10px;
+                width: 100%;
+            }
+
+            .home-btn,
+            .logout-btn {
+                width: 100%;
+                justify-content: center;
             }
 
             .profile-header {
@@ -579,8 +612,15 @@
             
             const html = `
                 <div class="header">
-                    <h1><i class="fas fa-user-circle"></i> Trang cá nhân</h1>
+                    <h1>
+                        <i class="fas fa-user-circle"></i> 
+                        Trang cá nhân
+                    </h1>
                     <div class="user-info">
+                        <a href="/index.htm" class="home-btn">
+                            <i class="fas fa-home"></i>
+                            Trang chủ
+                        </a>
                         <span>Xin chào, <strong>${user.username}</strong></span>
                         <button class="logout-btn" onclick="logout()">
                             <i class="fas fa-sign-out-alt"></i>

@@ -1,414 +1,1046 @@
-<!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiệm Ăn Vặt Ngon Nhất Thế Giới</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <title>Document</title>
+</head>>
 
-    <style>
-        /* --- 1. CÀI ĐẶT CHUNG --- */
-        :root { --primary-orange: #ff6b35; --primary-red: #d82b2b; --arrow-red: #ea4b25; --text-dark: #333; --promo-bg: #e6dccf; --star-yellow: #ffc107; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
-        body { background-color: #ffffff; overflow-x: hidden; } 
-        a { text-decoration: none; color: inherit; }
-        ul { list-style: none; }
-        .container { width: 1200px; max-width: 100%; margin: 0 auto; padding: 0 15px; }
+<style>
+    /* ===== TOPBAR ===== */
+.header-topbar {
+  background: var(--primary-color);
+  color: var(--white-color);
+  padding: 0;
+  font-size: 14px;
+  position: relative;
+}
 
-        /* --- 3. SLIDER STYLES (BANNER) --- */
-        .TAVNHTG-slider-section { padding: 40px 0; overflow: hidden; position: relative; }
-        .swiper { width: 100%; padding-bottom: 50px !important; overflow: visible !important; }
-        .mySwiper .swiper-slide { width: 65%; height: auto; border-radius: 15px; overflow: hidden; transition: all 0.4s ease; opacity: 0.6; transform: scale(0.9); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .mySwiper .swiper-slide-active { opacity: 1; transform: scale(1); box-shadow: 0 15px 30px rgba(0,0,0,0.2); z-index: 10; }
-        .mySwiper .swiper-slide img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 15px; }
-        
-        /* --- SỬA LỖI NÚT BẤM BANNER --- */
-        .swiper-button-next, .swiper-button-prev { width: 60px !important; height: 60px !important; min-width: 60px !important; background-color: var(--arrow-red); border: 3px solid #fff; border-radius: 50% !important; display: flex !important; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.2); opacity: 1 !important; z-index: 20; top: 50%; transform: translateY(-50%); --swiper-navigation-color: transparent; color: #fff !important; outline: none; }
-        .swiper-button-next::after, .swiper-button-prev::after { font-family: "Font Awesome 6 Free" !important; font-weight: 900 !important; font-size: 24px !important; border: none; color: #fff; display: block; line-height: 1; }
-        .swiper-button-next::after { content: "\f054" !important; }
-        .swiper-button-prev::after { content: "\f053" !important; }
-        .swiper-button-next:hover, .swiper-button-prev:hover { background-color: #d33815; transform: translateY(-50%) scale(1.1) !important; box-shadow: 0 6px 15px rgba(0,0,0,0.25); }
-        .swiper-button-next { right: 15% !important; }
-        .swiper-button-prev { left: 15% !important; }
-        @media (max-width: 768px) { .swiper-button-next, .swiper-button-prev { width: 45px !important; height: 45px !important; min-width: 45px !important; } .swiper-button-next::after, .swiper-button-prev::after { font-size: 18px !important; } .swiper-button-next { right: 10px !important; } .swiper-button-prev { left: 10px !important; } }
+.header-topbar .container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+  position: relative;
+}
 
-        /* --- 5. TODAY'S MENU (GRID RESPONSIVE & WAVES) --- */
-        .today-menu-section { margin-top: 0; padding-top: 40px; padding-bottom: 50px; background-color: #fffaf0; border-top: 3px solid #b1b1b1; position: relative; overflow: visible; }
-        .today-menu-section::before { content: ""; position: absolute; top: -40px; left: 0; width: 100%; height: 50px; background: radial-gradient(ellipse 25% 100% at 50% 100%, rgba(220, 65, 50, 0.7) 0%, rgba(210, 58, 48, 0.5) 30%, rgba(200, 50, 42, 0.3) 60%, transparent 100%), radial-gradient(ellipse 20% 90% at 15% 100%, rgba(215, 60, 50, 0.65) 0%, rgba(205, 52, 45, 0.45) 35%, rgba(195, 45, 40, 0.25) 65%, transparent 100%), radial-gradient(ellipse 20% 90% at 85% 100%, rgba(215, 60, 50, 0.65) 0%, rgba(205, 52, 45, 0.45) 35%, rgba(195, 45, 40, 0.25) 65%, transparent 100%), radial-gradient(ellipse 100% 100% at 50% 100%, rgba(200, 50, 40, 0.35) 0%, rgba(210, 55, 45, 0.25) 40%, transparent 80%); clip-path: ellipse(50% 100% at 50% 100%); filter: blur(10px); pointer-events: none; z-index: -1; animation: waveRoll1 6s ease-in-out infinite; }
-        .today-menu-section::after { content: ""; position: absolute; top: -30px; left: 0; width: 100%; height: 40px; background: radial-gradient(ellipse 22% 100% at 50% 100%, rgba(230, 75, 60, 0.6) 0%, rgba(220, 68, 58, 0.4) 30%, rgba(210, 60, 50, 0.2) 65%, transparent 100%), radial-gradient(ellipse 18% 85% at 18% 100%, rgba(225, 70, 58, 0.55) 0%, rgba(215, 62, 52, 0.38) 35%, rgba(205, 55, 48, 0.2) 68%, transparent 100%), radial-gradient(ellipse 18% 85% at 82% 100%, rgba(225, 70, 58, 0.55) 0%, rgba(215, 62, 52, 0.38) 35%, rgba(205, 55, 48, 0.2) 68%, transparent 100%), radial-gradient(ellipse 100% 100% at 50% 100%, rgba(210, 60, 50, 0.3) 0%, rgba(220, 65, 55, 0.2) 40%, transparent 75%); clip-path: ellipse(50% 100% at 50% 100%); filter: blur(8px); pointer-events: none; z-index: -1; animation: waveRoll2 7s ease-in-out infinite; animation-delay: 0.8s; }
-        @keyframes waveRoll1 { 0% { transform: translateX(-30px) scaleX(1) scaleY(1); opacity: 0.85; } 25% { transform: translateX(0px) scaleX(1.05) scaleY(1.15); opacity: 0.9; } 50% { transform: translateX(30px) scaleX(0.95) scaleY(0.9); opacity: 0.88; } 75% { transform: translateX(0px) scaleX(1.03) scaleY(1.1); opacity: 0.92; } 100% { transform: translateX(-30px) scaleX(1) scaleY(1); opacity: 0.85; } }
-        @keyframes waveRoll2 { 0% { transform: translateX(25px) scaleX(1) scaleY(1); opacity: 0.8; } 25% { transform: translateX(0px) scaleX(0.96) scaleY(0.92); opacity: 0.75; } 50% { transform: translateX(-25px) scaleX(1.06) scaleY(1.18); opacity: 0.88; } 75% { transform: translateX(0px) scaleX(1.04) scaleY(1.12); opacity: 0.85; } 100% { transform: translateX(25px) scaleX(1) scaleY(1); opacity: 0.8; } }
-        
-        .menu-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 20px; align-items: stretch; }
-        .menu-item { background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.3s; display: flex; flex-direction: column; align-items: center; text-align: center; height: 100%; min-width: 0; }
-        .menu-item:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
-        .promo-card { background-color: var(--promo-bg); padding: 50px 25px; justify-content: center; }
-        .promo-logo { width: 80px; margin-bottom: 20px; opacity: 0.8; mix-blend-mode: multiply; }
-        .promo-card h2 { color: #d82b2b; font-size: 24px; margin-bottom: 10px; font-weight: 900; text-transform: uppercase; }
-        .promo-card p { font-size: 14px; color: #555; margin-bottom: 25px; line-height: 1.5; }
-        .shop-name { font-weight: bold; color: #d82b2b; }
-        .btn-view-menu { background-color: #d82b2b; color: #fff; padding: 10px 25px; border-radius: 30px; font-size: 13px; font-weight: bold; text-transform: uppercase; box-shadow: 0 4px 10px rgba(216, 43, 43, 0.3); transition: 0.3s; }
-        .btn-view-menu:hover { background-color: #b71c1c; transform: scale(1.05); }
-        .product-card { padding-bottom: 30px; }
-        .p-img { width: 100%; aspect-ratio: 4/5; overflow: hidden; margin-bottom: 20px; }
-        .p-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-        .product-card:hover .p-img img { transform: scale(1.1); }
-        .product-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 15px; color: #333; }
-        .btn-order { background-color: #d82b2b; color: #fff; padding: 6px 20px; border-radius: 20px; font-size: 12px; font-weight: bold; transition: 0.3s; }
-        .btn-order:hover { background-color: #ff6b35; }
-        @media (max-width: 1200px) { .menu-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; } .promo-card { grid-column: 1 / -1; padding: 40px 100px; } }
-        @media (max-width: 768px) { .menu-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; } .promo-card { grid-column: 1 / -1; padding: 40px 20px; } .promo-card h2 { font-size: 20px; } .product-card h3 { font-size: 14px; } .btn-order { padding: 5px 15px; font-size: 11px; } }
+.topbar-contact {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
 
-        /* --- 6. ABOUT US --- */
-        .about-us-section { width: 100%; background: url('https://placehold.co/1920x600/333/999?text=Background') no-repeat center center; background-size: cover; position: relative; padding: 80px 0; color: #fff; text-align: center; }
-        .about-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 1; }
-        .about-content { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; padding: 0 20px; }
-        .about-title { font-size: 36px; font-weight: 700; margin-bottom: 25px; text-transform: capitalize; line-height: 1.3; }
-        .about-desc { font-size: 15px; line-height: 1.8; margin-bottom: 35px; color: #f0f0f0; word-wrap: break-word; }
-        .btn-see-more { display: inline-block; background-color: #ea4b25; color: #fff; padding: 12px 40px; border-radius: 30px; font-weight: bold; font-size: 16px; text-transform: capitalize; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(234, 75, 37, 0.4); }
-        .btn-see-more:hover { background-color: #c0392b; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(234, 75, 37, 0.6); }
-        @media (max-width: 768px) { .about-us-section { padding: 50px 0; height: auto; } .about-title { font-size: 24px; margin-bottom: 15px; } .about-desc { font-size: 14px; line-height: 1.6; padding: 0; } .btn-see-more { padding: 10px 30px; font-size: 14px; } }
+.topbar-contact a {
+  color: var(--white-color);
+  text-decoration: none;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 400;
+  font-size: 14px;
+}
 
-        /* --- 7. BEST SELLER SECTION --- */
-        .best-seller-section { padding: 60px 0; background-color: #fff; overflow: hidden; }
-        .bs-header-container { text-align: center; margin-bottom: 40px; }
-        .bs-subtitle { font-size: 20px; color: #333; margin-bottom: 5px; font-family: 'Times New Roman', serif; font-style: italic; }
-        .bs-main-title { font-size: 28px; font-weight: 700; color: #c0392b; margin: 0; }
-        .bs-divider { margin-top: 10px; color: #e0e0e0; font-size: 10px; letter-spacing: 5px; }
-        .bs-wrapper-container { max-width: 1200px; margin: 0 auto; position: relative; padding: 0 10px; }
-        .swiper-best-seller { padding: 20px 10px !important; margin: -20px -10px !important; overflow: hidden !important; }
-        .bs-card { background: #fff; border: 1px solid #f2f2f2; border-radius: 8px; display: flex; flex-direction: column; overflow: hidden; transition: all 0.3s ease; box-shadow: none; transform: none; height: 100%; }
-        .bs-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-color: transparent; z-index: 2; }
-        .bs-img-wrapper { background-color: #fff5e1; padding: 15px; position: relative; aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; }
-        .bs-img-wrapper img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.5s; mix-blend-mode: multiply; }
-        .bs-card:hover .bs-img-wrapper img { transform: scale(1.05); }
-        .bs-content { padding: 15px 10px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; flex-grow: 1; }
-        .bs-name { font-size: 14px; font-weight: 700; color: #333; margin: 0; line-height: 1.4; height: 40px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
-        .bs-price-row { display: flex; align-items: center; gap: 8px; font-size: 14px; }
-        .price-current { color: #d82b2b; font-weight: 700; font-size: 15px; }
-        .price-old { color: #999; text-decoration: line-through; font-size: 12px; }
-        .btn-pill-outline { display: inline-block; padding: 6px 20px; border: 1px solid #d82b2b; border-radius: 50px; color: #d82b2b; font-size: 11px; font-weight: 700; text-transform: uppercase; background: #fff; transition: all 0.3s ease; margin-top: auto; }
-        .btn-pill-outline:hover { background-color: #d82b2b; color: #fff; }
-        .bs-button-next, .bs-button-prev { width: 40px; height: 40px; border-radius: 50%; background-color: #fff; border: 1px solid #eee; color: #555; display: flex; align-items: center; justify-content: center; position: absolute; top: 35%; z-index: 20; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: 0.3s; }
-        .bs-button-next:hover, .bs-button-prev:hover { background-color: #d82b2b; color: #fff; border-color: #d82b2b; }
-        .bs-button-prev { left: -20px; } 
-        .bs-button-next { right: -20px; }
-        @media (max-width: 1250px) { .bs-button-prev { left: 10px; } .bs-button-next { right: 10px; } }
-        @media (max-width: 768px) { .bs-button-next, .bs-button-prev { display: none; } }
+.topbar-contact a:hover {
+  opacity: 0.85;
+}
 
-        /* --- 8. TEAM SECTION --- */
-        .team-section { background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://placehold.co/1920x800/333/666?text=Background+Quan'); background-size: cover; background-position: center; background-attachment: fixed; padding: 80px 0 100px 0; position: relative; }
-        .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; margin-bottom: 60px; justify-items: center; }
-        .team-member { text-align: center; width: 100%; }
-        .member-avatar { width: 160px; height: 160px; margin: 0 auto 15px auto; border-radius: 50%; border: 4px solid rgba(255, 255, 255, 0.2); padding: 5px; transition: all 0.4s ease; position: relative; overflow: hidden; }
-        .member-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
-        .team-member:hover .member-avatar { border-color: var(--primary-orange); transform: scale(1.1); box-shadow: 0 0 20px rgba(255, 107, 53, 0.5); }
-        .member-name { color: #fff; font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-top: 10px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
-        .team-quote-box { background-color: #fff; max-width: 900px; margin: 0 auto; padding: 40px 50px; border-radius: 30px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative; }
-        .team-quote-box::before { content: "\201C"; font-family: serif; font-size: 60px; color: #d82b2b; position: absolute; top: 10px; left: 20px; opacity: 0.2; }
-        .team-quote-text { font-size: 15px; line-height: 1.8; color: #555; font-style: italic; font-weight: 500; }
-        @media (max-width: 1024px) { .team-grid { grid-template-columns: repeat(2, 1fr); gap: 50px 30px; } }
-        @media (max-width: 768px) { .team-grid { grid-template-columns: repeat(2, 1fr); gap: 30px 15px; } .member-avatar { width: 110px; height: 110px; } .member-name { font-size: 13px; } .team-quote-box { padding: 30px 20px; } .team-quote-text { font-size: 13px; } }
+.topbar-contact i {
+  font-size: 13px;
+}
 
-        /* --- 9. NEWS SECTION --- */
-        .news-section { padding: 60px 0 80px 0; background-color: #fff; }
-        .news-title { text-align: center; font-size: 32px; font-weight: 900; color: #d82b2b; text-transform: uppercase; margin-bottom: 40px; letter-spacing: 1px; }
-        .news-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-bottom: 40px; }
-        .news-card { background: #fff; cursor: pointer; border-radius: 10px; overflow: hidden; transition: all 0.4s ease; }
-        .news-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
-        .news-card:hover .news-thumb img { transform: scale(1.1); }
-        .news-card:hover .news-heading { color: #ff6b35; }
-        .news-thumb { width: 100%; aspect-ratio: 3/2; overflow: hidden; margin-bottom: 15px; }
-        .news-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
-        .news-content { padding: 0 10px 15px 10px; }
-        .news-heading { font-size: 15px; font-weight: 800; color: #333; text-transform: uppercase; line-height: 1.4; margin-bottom: 10px; transition: 0.3s; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .news-excerpt { font-size: 13px; color: #666; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-        .news-footer { text-align: center; margin-top: 20px; }
-        .btn-news-view-more { display: inline-block; background-color: #d82b2b; color: #fff; padding: 12px 50px; font-weight: 700; text-transform: uppercase; border-radius: 5px; font-size: 14px; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(216, 43, 43, 0.3); }
-        .btn-news-view-more:hover { background-color: #b71c1c; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(216, 43, 43, 0.5); }
-        @media (max-width: 1024px) { .news-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; } }
-        @media (max-width: 576px) { .news-grid { grid-template-columns: 1fr; } .news-title { font-size: 24px; margin-bottom: 25px; } }
-    </style>
-</head>
-<body>
+.topbar-account {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
 
-<header>
-    <div id="header-placeholder"></div>
-</header>
+.topbar-account a,
+.topbar-account button {
+  color: var(--white-color);
+  text-decoration: none;
+  transition: all 0.3s;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
 
-<section class="TAVNHTG-slider-section">
-    <div class="swiper mySwiper">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide"><a href="#"><img src="https://placehold.co/1200x500/ff6b35/ffffff?text=Gà+Rán+Giòn" alt="Banner 1"></a></div>
-            <div class="swiper-slide"><a href="#"><img src="https://placehold.co/1200x500/d82b2b/ffffff?text=Mì+Ý+Bò+Bằm" alt="Banner 2"></a></div>
-            <div class="swiper-slide"><a href="#"><img src="https://placehold.co/1200x500/ffc107/333333?text=Combo+Siêu+Hời" alt="Banner 3"></a></div>
-            <div class="swiper-slide"><a href="#"><img src="https://placehold.co/1200x500/4caf50/ffffff?text=Trà+Sữa+Thái" alt="Banner 4"></a></div>
-        </div>
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-pagination"></div>
-    </div>
-</section>
+.topbar-account a:hover,
+.topbar-account button:hover {
+  opacity: 0.85;
+}
 
-<section class="today-menu-section">
-    <div class="container">
-        <div class="menu-grid">
-            <div class="menu-item promo-card">
-                <img src="https://via.placeholder.com/100x100/e6dccf/d82b2b?text=LOGO" alt="Logo" class="promo-logo">
-                <h2>HÔM NAY ĂN GÌ?</h2>
-                <p>Chào mừng bạn đến với <span class="shop-name">Tiệm Ăn Vặt Ngon Nhất Thế Giới</span>. Khám phá thực đơn phong phú và hấp dẫn ngay!</p>
-                <a href="#" class="btn-view-menu">Xem Thực Đơn</a>
-            </div>
-            
-            <div class="menu-item product-card">
-                <div class="p-img"><img src="https://placehold.co/400x500/fff/d82b2b?text=Mỳ+Cay" alt="Mỳ Cay"></div>
-                <h3>Mỳ Cay</h3>
-                <a href="#" class="btn-order">Đặt Hàng</a>
-            </div>
-            <div class="menu-item product-card">
-                <div class="p-img"><img src="https://placehold.co/400x500/fff/d82b2b?text=Mỳ+Trộn" alt="Mỳ Trộn"></div>
-                <h3>Mỳ Trộn</h3>
-                <a href="#" class="btn-order">Đặt Hàng</a>
-            </div>
-            <div class="menu-item product-card">
-                <div class="p-img"><img src="https://placehold.co/400x500/fff/d82b2b?text=Ăn+Vặt" alt="Ăn Vặt"></div>
-                <h3>Ăn Vặt</h3>
-                <a href="#" class="btn-order">Đặt Hàng</a>
-            </div>
-            <div class="menu-item product-card">
-                <div class="p-img"><img src="https://placehold.co/400x500/fff/d82b2b?text=Đồ+Uống" alt="Đồ Uống"></div>
-                <h3>Đồ Uống</h3>
-                <a href="#" class="btn-order">Đặt Hàng</a>
-            </div>
-        </div>
-    </div>
-</section>
+.topbar-account i {
+  font-size: 13px;
+}
 
-<section class="about-us-section">
-    <div class="about-overlay"></div>
-    <div class="container about-content">
-        <h2 class="about-title">Tiệm Ăn Vặt Ngon Nhất Thế Giới</h2>
-        <p class="about-desc">
-            Tiệm hiện giao nhanh trong 30-45 phút, chỉ nhận đơn trong bán kính dưới 5km gồm các quận Đống Đa, Hoàn Kiếm và Hai Bà Trưng để đảm bảo món ăn luôn nóng hổi khi đến tay khách. Tất cả đơn hàng đều được đóng gói chuẩn chất lượng với độ nóng giữ nhiệt và đồ uống tách đá riêng, cùng mức phí ship minh bạch theo từng khu vực để khách yên tâm khi đặt món.
-        </p>
-        <a href="#" class="btn-see-more">Xem Thêm</a>
-    </div>
-</section>
+/* Logged In State */
+.logged-in-section {
+  display: none;
+  gap: 20px;
+}
 
-<section class="best-seller-section">
-        <div class="bs-header-container">
-            <div class="bs-subtitle">Best Seller</div>
-            <h2 class="bs-main-title">Món Ngon Nhất Định Phải Thử</h2>
-            <div class="bs-divider">
-                <i class="fa-solid fa-heart" style="font-size: 8px; color: #ddd;"></i> 
-                <i class="fa-solid fa-heart" style="font-size: 8px; color: #ddd;"></i> 
-                <i class="fa-solid fa-heart" style="font-size: 8px; color: #ddd;"></i>
-            </div>
-        </div>
+.logged-in-section.show {
+  display: flex;
+}
 
-        <div class="bs-wrapper-container">
-            <div class="bs-button-prev"><i class="fa-solid fa-chevron-left"></i></div>
-            <div class="bs-button-next"><i class="fa-solid fa-chevron-right"></i></div>
+/* Logged Out State */
+.auth-dropdown {
+  display: none;
+  gap: 20px;
+}
 
-            <div class="swiper swiper-best-seller">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide bs-card">
-                        <div class="bs-img-wrapper"><img src="https://placehold.co/300x300/fff5e1/ff6b35?text=Top+Mo" alt="Tóp Mỡ"></div>
-                        <div class="bs-content">
-                            <h3 class="bs-name">Tóp Mỡ Rim Mắm Tỏi Ớt</h3>
-                            <div class="bs-price-row"><span class="price-current">79.088đ</span><span class="price-old">83.250đ</span></div>
-                            <a href="#" class="btn-pill-outline">MUA HÀNG</a>
-                        </div>
-                    </div>
-                    <div class="swiper-slide bs-card">
-                        <div class="bs-img-wrapper"><img src="https://placehold.co/300x300/fff5e1/d82b2b?text=Combo" alt="Combo"></div>
-                        <div class="bs-content">
-                            <h3 class="bs-name">Combo Ăn Vặt Thập Cẩm</h3>
-                            <div class="bs-price-row"><span class="price-current">76.950đ</span><span class="price-old">81.000đ</span></div>
-                            <a href="#" class="btn-pill-outline">TÙY CHỌN</a>
-                        </div>
-                    </div>
-                    <div class="swiper-slide bs-card">
-                        <div class="bs-img-wrapper"><img src="https://placehold.co/300x300/fff5e1/4caf50?text=Chan+Ga" alt="Chân Gà"></div>
-                        <div class="bs-content">
-                            <h3 class="bs-name">Chân Gà Rút Xương Sốt Thái</h3>
-                            <div class="bs-price-row"><span class="price-current">70.538đ</span><span class="price-old">74.250đ</span></div>
-                            <a href="#" class="btn-pill-outline">MUA HÀNG</a>
-                        </div>
-                    </div>
-                    <div class="swiper-slide bs-card">
-                        <div class="bs-img-wrapper"><img src="https://placehold.co/300x300/fff5e1/ffc107?text=Ga+Popcorn" alt="Gà Popcorn"></div>
-                        <div class="bs-content">
-                            <h3 class="bs-name">Gà Popcorn Chiên Lắc Phô Mai</h3>
-                            <div class="bs-price-row"><span class="price-current">44.460đ</span><span class="price-old">46.800đ</span></div>
-                            <a href="#" class="btn-pill-outline">MUA HÀNG</a>
-                        </div>
-                    </div>
-                    <div class="swiper-slide bs-card">
-                        <div class="bs-img-wrapper"><img src="https://placehold.co/300x300/fff5e1/9c27b0?text=Mi+Tron" alt="Mì Trộn"></div>
-                        <div class="bs-content">
-                            <h3 class="bs-name">Mì Trộn Indomie Đặc Biệt</h3>
-                            <div class="bs-price-row"><span class="price-current">37.350đ</span><span class="price-old">41.500đ</span></div>
-                            <a href="#" class="btn-pill-outline">TÙY CHỌN</a>
-                        </div>
-                    </div>
-                    <div class="swiper-slide bs-card">
-                        <div class="bs-img-wrapper"><img src="https://placehold.co/300x300/fff5e1/2196f3?text=Tra+Sua" alt="Trà Sữa"></div>
-                        <div class="bs-content">
-                            <h3 class="bs-name">Trà Sữa Trân Châu Đường Đen</h3>
-                            <div class="bs-price-row"><span class="price-current">30.000đ</span><span class="price-old">40.000đ</span></div>
-                            <a href="#" class="btn-pill-outline">MUA HÀNG</a>
-                        </div>
-                    </div>
-                    <div class="swiper-slide bs-card">
-                        <div class="bs-img-wrapper"><img src="https://placehold.co/300x300/fff5e1/2196f3?text=Tra+Sua" alt="Trà Sữa"></div>
-                        <div class="bs-content">
-                            <h3 class="bs-name">Trà Sữa Trân Châu Đường Đen</h3>
-                            <div class="bs-price-row"><span class="price-current">30.000đ</span><span class="price-old">40.000đ</span></div>
-                            <a href="#" class="btn-pill-outline">MUA HÀNG</a>
-                        </div>
-                    </div>
-                    <div class="swiper-slide bs-card">
-                        <div class="bs-img-wrapper"><img src="https://placehold.co/300x300/fff5e1/2196f3?text=Tra+Sua" alt="Trà Sữa"></div>
-                        <div class="bs-content">
-                            <h3 class="bs-name">Trà Sữa Trân Châu Đường Đen</h3>
-                            <div class="bs-price-row"><span class="price-current">30.000đ</span><span class="price-old">40.000đ</span></div>
-                            <a href="#" class="btn-pill-outline">MUA HÀNG</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+.auth-dropdown.show {
+  display: flex;
+}
 
-<section class="team-section">
-    <div class="container">
-        <div class="team-grid">
-            <div class="team-member">
-                <div class="member-avatar"><img src="https://placehold.co/200x200/333/fff?text=Dat" alt="Trần Tất Đạt"></div>
-                <h4 class="member-name">Trần Tất Đạt</h4>
-            </div>
-            <div class="team-member">
-                <div class="member-avatar"><img src="https://placehold.co/200x200/333/fff?text=Chien" alt="Vũ Trọng Chiến"></div>
-                <h4 class="member-name">Vũ Trọng Chiến</h4>
-            </div>
-            <div class="team-member">
-                <div class="member-avatar"><img src="https://placehold.co/200x200/333/fff?text=Duc" alt="Nguyễn Mạnh Đức"></div>
-                <h4 class="member-name">Nguyễn Mạnh Đức</h4>
-            </div>
-            <div class="team-member">
-                <div class="member-avatar"><img src="https://placehold.co/200x200/333/fff?text=Phong" alt="Ngô Quang Phong"></div>
-                <h4 class="member-name">Ngô Quang Phong</h4>
-            </div>
-        </div>
-        <div class="team-quote-box">
-            <p class="team-quote-text">
-                "Chúng tôi là bốn con người xuất phát từ niềm đam mê chung với ẩm thực đường phố và mong muốn mang lại những trải nghiệm tốt hơn cho mọi khách hàng. Mỗi người một thế mạnh, một câu chuyện riêng, nhưng cùng chia sẻ khát vọng xây dựng một thương hiệu đồ ăn vặt tử tế, chất lượng và đáng tin cậy. Hành trình này bắt đầu từ sự giản dị, được nuôi dưỡng bằng nỗ lực mỗi ngày, và chúng tôi tự hào khi được đồng hành cùng nhau, mang đến những món ngon nhất thế giới khiến bạn cảm thấy vui hơn – dù chỉ một chút."
-            </p>
-        </div>
-    </div>
-</section>
+.user-greeting {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--white-color);
+  font-weight: 500;
+}
 
-<section class="news-section">
-    <div class="container">
-        <h2 class="news-title">TIN TỨC</h2>
-        <div class="news-grid">
-            <div class="news-card">
-                <div class="news-thumb"><img src="https://placehold.co/600x400/d82b2b/fff?text=Cua+Hang+Moi" alt="Khai trương"></div>
-                <div class="news-content">
-                    <h3 class="news-heading">Tiệm Ăn Vặt đạt mốc 50 cửa hàng tại Hà Nội</h3>
-                    <p class="news-excerpt">Sự kiện khai trương cửa hàng thứ 50 là cột mốc quan trọng trong kế hoạch mở rộng kinh doanh, khẳng định vị thế thương hiệu đồ ăn vặt hàng đầu.</p>
-                </div>
-            </div>
-            <div class="news-card">
-                <div class="news-thumb"><img src="https://placehold.co/600x400/ff6b35/fff?text=Hop+Tac" alt="Hợp tác"></div>
-                <div class="news-content">
-                    <h3 class="news-heading">Hợp tác bền vững với các nông trại sạch Đà Lạt</h3>
-                    <p class="news-excerpt">Việc ký kết hợp tác chiến lược với các nông trại giúp chúng tôi đảm bảo nguồn nguyên liệu tươi ngon nhất mỗi ngày cho khách hàng.</p>
-                </div>
-            </div>
-            <div class="news-card">
-                <div class="news-thumb"><img src="https://placehold.co/600x400/4caf50/fff?text=Khai+Truong" alt="Sự kiện"></div>
-                <div class="news-content">
-                    <h3 class="news-heading">Tưng bừng khai trương cơ sở mới tại Quận Cầu Giấy</h3>
-                    <p class="news-excerpt">Vào ngày 15/06/2024, tại tuyến phố sầm uất Xuân Thủy, Tiệm Ăn Vặt chính thức ra mắt không gian mới siêu đẹp check-in.</p>
-                </div>
-            </div>
-            <div class="news-card">
-                <div class="news-thumb"><img src="https://placehold.co/600x400/ffc107/333?text=Chung+Nhan" alt="Chứng nhận"></div>
-                <div class="news-content">
-                    <h3 class="news-heading">Tiệm Ăn Vặt nhận chứng nhận Vệ Sinh An Toàn Thực Phẩm ISO</h3>
-                    <p class="news-excerpt">Chúng tôi đã đưa vào vận hành quy trình kiểm soát chất lượng mới với chứng nhận tiêu chuẩn quốc tế về an toàn vệ sinh.</p>
-                </div>
-            </div>
-        </div>
-        <div class="news-footer">
-            <a href="#" class="btn-news-view-more">XEM THÊM</a>
-        </div>
-    </div>
-</section>
+.user-greeting strong {
+  color: var(--warning-color);
+}
 
-<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-<script>
-// Load header từ file header.html    
-fetch('header.html')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Không thể load header.html');
-        }
-        return response.text();
-    })
-    .then(data => {
-        document.getElementById('header-placeholder').innerHTML = data;
-    })
-    .catch(error => {
-        console.error('Lỗi khi load header:', error);
-    });
-/* 2. Khởi tạo Swiper:
-   Nên bọc trong 'DOMContentLoaded' để đảm bảo HTML đã tải xong
-   trước khi JS chạy tìm phần tử.
-*/
-document.addEventListener("DOMContentLoaded", function() {
+/* ===== MAIN HEADER ===== */
+.header-main {
+  background: var(--white-color);
+  box-shadow: var(--shadow-small);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  transition: all 0.3s;
+}
 
-    // Banner Slider
-    var swiperBanner = new Swiper(".mySwiper", {
-        slidesPerView: "auto", centeredSlides: true, spaceBetween: 100,
-        loop: true, autoplay: { delay: 3500, disableOnInteraction: false },
-        pagination: { el: ".swiper-pagination", clickable: true },
-        navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-        effect: "coverflow", coverflowEffect: { rotate: 0, stretch: 0, depth: 100, modifier: 1, slideShadows: false },
-    });
+.header-main.scrolled {
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.12);
+}
 
-    // --- Best Seller Slider (Đã chọn phiên bản đầy đủ nhất) ---
-    var swiperBestSeller = new Swiper(".swiper-best-seller", {
-        slidesPerView: 4, // Mặc định cho màn hình lớn
-        spaceBetween: 20,
-        loop: true,
-        navigation: {
-            nextEl: ".bs-button-next",
-            prevEl: ".bs-button-prev",
-        },
-        // Responsive breakpoints
-        breakpoints: {
-            320: { // Mobile nhỏ
-                slidesPerView: 2,
-                spaceBetween: 10
-            },
-            768: { // Tablet
-                slidesPerView: 3,
-                spaceBetween: 15
-            },
-            1024: { // Desktop
-                slidesPerView: 4,
-                spaceBetween: 20
-            },
-        },
-    });
+.header-main .container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 220px 1fr auto;
+  align-items: center;
+  gap: 0;
+  min-height: 85px;
+}
 
-});
-</script>
+/* Logo */
+.header-logo {
+  display: flex;
+  align-items: center;
+}
+
+.header-logo a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  gap: 12px;
+  transition: transform 0.3s;
+}
+
+.header-logo a:hover {
+  transform: scale(1.05);
+}
+
+.header-logo img {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Desktop Navigation */
+.header-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 10px;
+  color: var(--text-color-dark);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+  border-radius: 10px;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.nav-link::before {
+  content: "";
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 30px;
+  height: 3px;
+  background: var(--primary-color);
+  border-radius: 2px;
+  transition: transform 0.3s;
+}
+
+.nav-link:hover,
+.nav-item.active .nav-link {
+  background: rgba(var(--primary-rgb), 0.1);
+  color: var(--primary-color);
+}
+
+.nav-link:hover::before,
+.nav-item.active .nav-link::before {
+  transform: translateX(-50%) scaleX(1);
+}
+
+.nav-link i {
+  font-size: 10px;
+  transition: transform 0.3s;
+}
+
+.nav-item:hover .nav-link i {
+  transform: rotate(180deg);
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  background: var(--white-color);
+  min-width: 240px;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  padding: 12px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(15px);
+  transition: all 0.3s;
+  z-index: 1000;
+  list-style: none;
+  border: 1px solid rgba(var(--primary-rgb), 0.1);
+}
+
+.nav-item:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-menu li a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  color: var(--text-color-light);
+  text-decoration: none;
+  transition: all 0.3s;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.dropdown-menu li a:hover {
+  background: rgba(var(--primary-rgb), 0.1);
+  color: var(--primary-color);
+  transform: translateX(5px);
+}
+
+/* Mega Menu */
+.mega-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(15px);
+  background: var(--white-color);
+  border-radius: 16px;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+  padding: 35px;
+  width: 750px;
+  max-width: 90vw;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+  z-index: 1000;
+  border: 1px solid rgba(var(--primary-rgb), 0.1);
+}
+
+.nav-item.has-mega:hover .mega-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.mega-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.mega-column h4 {
+  color: var(--primary-color);
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mega-column h4::before {
+  content: "";
+  width: 4px;
+  height: 16px;
+  background: var(--primary-color);
+  border-radius: 2px;
+}
+
+.mega-column a {
+  display: block;
+  padding: 8px 12px;
+  color: var(--text-color-light);
+  text-decoration: none;
+  transition: all 0.3s;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.mega-column a:hover {
+  background: rgba(var(--primary-rgb), 0.1);
+  color: var(--primary-color);
+  transform: translateX(5px);
+}
+
+/* Header Actions */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  justify-self: end;
+}
+
+.search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  width: 210px;
+  height: 48px;
+  padding: 0 55px 0 20px;
+  border: 2px solid var(--light-gray-color);
+  border-radius: 24px;
+  font-size: 14px;
+  transition: all 0.3s;
+  background: var(--light-background-color);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.1);
+  background: var(--white-color);
+}
+
+.search-btn {
+  position: absolute;
+  right: 5px;
+  background: var(--primary-color);
+  color: var(--white-color);
+  border: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.3);
+}
+
+.search-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px rgba(var(--primary-rgb), 0.4);
+}
+
+.cart-btn {
+  position: relative;
+  background: var(--primary-color);
+  border: none;
+  color: var(--white-color);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.3);
+}
+
+.cart-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(var(--primary-rgb), 0.4);
+}
+
+.cart-btn i {
+  font-size: 20px;
+}
+
+.cart-count {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: var(--warning-color);
+  color: var(--text-color-dark);
+  min-width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 0 6px;
+  border: 3px solid var(--white-color);
+  box-shadow: 0 2px 10px rgba(var(--warning-rgb), 0.4);
+}
+
+.mobile-toggle {
+  display: none;
+  background: var(--primary-color);
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  cursor: pointer;
+  color: var(--white-color);
+  font-size: 20px;
+  transition: all 0.3s;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.3);
+}
+
+.mobile-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(var(--primary-rgb), 0.4);
+}
+
+/* ===== MOBILE SEARCH BAR ===== */
+.mobile-search-bar {
+  display: none;
+  background: var(--white-color);
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--light-gray-color);
+}
+
+.mobile-search-bar form {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.mobile-search-bar input {
+  width: 100%;
+  padding: 14px 50px 14px 18px;
+  border: 2px solid var(--light-gray-color);
+  border-radius: 25px;
+  font-size: 14px;
+  background: var(--light-background-color);
+}
+
+.mobile-search-bar input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  background: var(--white-color);
+}
+
+.mobile-search-bar button {
+  position: absolute;
+  right: 5px;
+  background: var(--primary-color);
+  color: var(--white-color);
+  border: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.3);
+}
+
+/* ===== MOBILE MENU ===== */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 320px;
+  height: 100vh;
+  background: var(--white-color);
+  box-shadow: 5px 0 30px rgba(0, 0, 0, 0.2);
+  transition: left 0.3s;
+  z-index: 9999;
+  overflow-y: auto;
+}
+
+.mobile-menu.active {
+  left: 0;
+}
+
+.mobile-menu-header {
+  padding: 25px 20px;
+  background: var(--primary-color);
+  color: var(--white-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mobile-menu-header h3 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.mobile-close {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: var(--white-color);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(90deg);
+}
+
+.mobile-nav-list {
+  list-style: none;
+  padding: 15px 0;
+}
+
+.mobile-nav-item {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.mobile-nav-item > a {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  color: var(--text-color-dark);
+  text-decoration: none;
+  transition: all 0.3s;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.mobile-nav-item > a:hover {
+  background: rgba(var(--primary-rgb), 0.1);
+  color: var(--primary-color);
+  padding-left: 30px;
+}
+
+.mobile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+  z-index: 9998;
+  backdrop-filter: blur(2px);
+}
+
+.mobile-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1330px) {
+  .header-main .container {
+    grid-template-columns: 1fr auto auto;
+    min-height: 75px;
+  }
+
+  .header-nav {
+    display: none;
+  }
+
+  .mobile-toggle {
+    display: flex;
+  }
+
+  .search-box {
+    display: none;
+  }
+
+  .mobile-search-bar {
+    display: block;
+  }
+}
+
+@media (max-width: 650px) {
+  .header-topbar .container {
+    height: 36px;
+    font-size: 12px;
+    padding: 0 15px;
+  }
+
+  .topbar-contact {
+    display: none;
+  }
+
+  .topbar-account {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .header-main .container {
+    gap: 12px;
+    min-height: 70px;
+    padding: 0 15px;
+    grid-template-columns: auto 1fr auto auto;
+  }
+
+  .header-logo {
+    order: 2;
+  }
+
+  .mobile-toggle {
+    order: 1;
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  .header-actions {
+    order: 3;
+    gap: 10px;
+  }
+
+  .cart-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .cart-btn i {
+    font-size: 18px;
+  }
+
+  .header-logo img {
+    height: 45px;
+  }
+
+  .mobile-search-bar {
+    padding: 12px 15px;
+  }
+
+  .mobile-search-bar input {
+    padding: 12px 45px 12px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-topbar .container {
+    height: 36px;
+    padding: 0 12px;
+  }
+
+  .topbar-account {
+    gap: 15px;
+  }
+
+  .topbar-account a,
+  .topbar-account button {
+    font-size: 13px;
+  }
+
+  .mobile-menu {
+    width: 280px;
+  }
+
+  .header-main .container {
+    gap: 8px;
+    padding: 0 12px;
+    min-height: 65px;
+  }
+
+  .mobile-toggle {
+    width: 38px;
+    height: 38px;
+    font-size: 16px;
+  }
+
+  .cart-btn {
+    width: 38px;
+    height: 38px;
+  }
+
+  .cart-btn i {
+    font-size: 16px;
+  }
+
+  .header-logo img {
+    height: 40px;
+  }
+
+  .mobile-search-bar {
+    padding: 10px 12px;
+  }
+
+  .mobile-search-bar input {
+    padding: 10px 40px 10px 14px;
+    font-size: 13px;
+  }
+
+  .mobile-search-bar button {
+    width: 34px;
+    height: 34px;
+  }
+}
+</style>
 
 </body>
+
+
+<!-- TOPBAR -->
+<div class="header-topbar">
+  <div class="container">
+    <div class="topbar-contact">
+      <a href="tel:0343130254">
+        <i class="fas fa-phone-alt"></i>
+        0343130254
+      </a>
+      <a href="mailto:tavntg@gmail.com">
+        <i class="far fa-envelope"></i>
+        tavntg@gmail.com
+      </a>
+    </div>
+
+    <div class="topbar-account">
+      <!-- Phần hiển thị KHI ĐÃ ĐĂNG NHẬP -->
+      <div class="logged-in-section" id="loggedInSection">
+
+        <a href="/account/profile.html">
+          <i class="fas fa-user"></i> Tài khoản
+        </a>
+        <button id="logoutBtn">
+          <i class="fas fa-sign-out-alt"></i> Đăng xuất
+        </button>
+      </div>
+
+      <!-- Phần hiển thị KHI CHƯA ĐĂNG NHẬP -->
+      <div class="auth-dropdown" id="authDropdown">
+        <a href="/account/login.html#login">
+          <i class="fas fa-sign-in-alt"></i> Đăng nhập
+        </a>
+        <a href="/account/login.html#signup">
+          <i class="fas fa-user-plus"></i> Đăng ký
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- MAIN HEADER -->
+    <header class="header-main">
+      <div class="container">
+        <!-- Logo -->
+        <div class="header-logo">
+          <a href="/">
+            <img src="/assets/logo.svg" alt="Logo" />
+          </a>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <nav class="header-nav">
+          <ul class="nav-menu">
+            <li class="nav-item active">
+              <a href="/" class="nav-link">Trang chủ</a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">Giới thiêu</a>
+            </li>
+            <li class="nav-item has-mega">
+              <a href="#" class="nav-link">
+                Sản phẩm
+                <i class="fas fa-chevron-down"></i>
+              </a>
+              <div class="mega-menu">
+                <div class="mega-grid" id="megaCategory">
+                  <div class="mega-column">
+                    <h4>Danh mục 1</h4>
+                    <a href="#">Sản phẩm A</a>
+                    <a href="#">Sản phẩm B</a>
+                    <a href="#">Sản phẩm C</a>
+                  </div>
+                  <div class="mega-column">
+                    <h4>Danh mục 2</h4>
+                    <a href="#">Sản phẩm D</a>
+                    <a href="#">Sản phẩm E</a>
+                    <a href="#">Sản phẩm F</a>
+                  </div>
+                  <div class="mega-column">
+                    <h4>Danh mục 3</h4>
+                    <a href="#">Sản phẩm G</a>
+                    <a href="#">Sản phẩm H</a>
+                    <a href="#">Sản phẩm I</a>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">Khuyến mãi</a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">Tin tức</a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">Phương thức mua hàng</a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">Liên hệ</a>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- Header Actions -->
+        <div class="header-actions">
+          <!-- Search -->
+          <form action="/search" method="get" class="search-box">
+            <input
+              type="text"
+              name="query"
+              class="search-input"
+              placeholder="Tìm kiếm sản phẩm..."
+            />
+            <button type="submit" class="search-btn">
+              <i class="fas fa-search"></i>
+            </button>
+          </form>
+
+          <!-- Cart -->
+          <a href="/cart" class="cart-btn">
+            <p class="cart-count">0</p>
+            <i class="fas fa-shopping-cart"></i>
+          </a>
+
+          <!-- Mobile Menu Toggle -->
+          <button class="mobile-toggle" id="mobileToggle">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MOBILE SEARCH -->
+    <div class="mobile-search-bar">
+      <form action="/search" method="get">
+        <input type="text" name="query" placeholder="Tìm kiếm sản phẩm..." />
+        <button type="submit"><i class="fas fa-search"></i></button>
+      </form>
+    </div>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu-header">
+        <h3>Menu</h3>
+        <button class="mobile-close" id="mobileClose">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <ul class="mobile-nav-list">
+        <li class="mobile-nav-item">
+          <a href="/">Trang chủ</a>
+        </li>
+        <li class="mobile-nav-item">
+          <a href="#">Sản phẩm</a>
+        </li>
+        <li class="mobile-nav-item">
+          <a href="#">Khuyến mãi</a>
+        </li>
+        <li class="mobile-nav-item">
+          <a href="#">Tin tức</a>
+        </li>
+        <li class="mobile-nav-item">
+          <a href="#">Liên hệ</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+
+
+<script>
+    document.addEventListener("htmlIncluded", function () {
+      // Scroll effect
+      window.addEventListener("scroll", function () {
+        const header = document.querySelector(".header-main");
+        if (header && window.scrollY > 50) {
+          header.classList.add("scrolled");
+        } else if (header) {
+          header.classList.remove("scrolled");
+        }
+      });
+
+// ===== AUTH STATE MANAGEMENT =====
+function checkAuthState() {
+  const currentUser = sessionStorage.getItem("currentUser");
+  const loggedInSection = document.getElementById("loggedInSection");
+  const authDropdown = document.getElementById("authDropdown");
+  const usernameDisplay = document.getElementById("usernameDisplay");
+
+  console.log("Checking auth state:", currentUser ? "Logged in" : "Logged out"); // Debug
+
+  if (currentUser) {
+    // User đã đăng nhập
+    const user = JSON.parse(currentUser);
+    
+    // HIỆN: Section đã đăng nhập
+    if (loggedInSection) {
+      loggedInSection.classList.add("show");
+    }
+    
+    // ẨN: Section đăng nhập/đăng ký
+    if (authDropdown) {
+      authDropdown.classList.remove("show");
+    }
+    
+    // Hiển thị tên user
+    if (usernameDisplay) {
+      usernameDisplay.textContent = user.username;
+    }
+    
+    console.log("Showing logged-in section"); // Debug
+  } else {
+    // User chưa đăng nhập
+    
+    // ẨN: Section đã đăng nhập
+    if (loggedInSection) {
+      loggedInSection.classList.remove("show");
+    }
+    
+    // HIỆN: Section đăng nhập/đăng ký
+    if (authDropdown) {
+      authDropdown.classList.add("show");
+    }
+    
+    console.log("Showing auth dropdown"); // Debug
+  }
+}
+
+// Hàm đăng xuất
+function logout() {
+  if (confirm("Bạn có chắc muốn đăng xuất?")) {
+    sessionStorage.removeItem("currentUser");
+    checkAuthState(); // Cập nhật UI ngay
+  }
+}
+
+// CHẠY NGAY - không cần đợi DOMContentLoaded
+checkAuthState();
+
+// Event listener cho nút đăng xuất
+document.addEventListener("DOMContentLoaded", function() {
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", logout);
+  }
+});
+
+// Lắng nghe sự thay đổi từ tab khác
+window.addEventListener("storage", function(e) {
+  if (e.key === "currentUser") {
+    checkAuthState();
+  }
+});
+
+      // Mobile Menu Toggle
+      const mobileToggle = document.getElementById("mobileToggle");
+      const mobileMenu = document.getElementById("mobileMenu");
+      const mobileClose = document.getElementById("mobileClose");
+      const mobileOverlay = document.getElementById("mobileOverlay");
+
+      function openMobileMenu() {
+        if (mobileMenu) mobileMenu.classList.add("active");
+        if (mobileOverlay) mobileOverlay.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeMobileMenu() {
+        if (mobileMenu) mobileMenu.classList.remove("active");
+        if (mobileOverlay) mobileOverlay.classList.remove("active");
+        document.body.style.overflow = "";
+      }
+
+      if (mobileToggle) {
+        mobileToggle.addEventListener("click", openMobileMenu);
+      }
+
+      if (mobileClose) {
+        mobileClose.addEventListener("click", closeMobileMenu);
+      }
+
+      if (mobileOverlay) {
+        mobileOverlay.addEventListener("click", closeMobileMenu);
+      }
+
+      // Close menu on escape key
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          closeMobileMenu();
+        }
+      });
+});
+</script>
 </html>
