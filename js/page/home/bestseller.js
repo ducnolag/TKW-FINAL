@@ -6,8 +6,10 @@ document.addEventListener('htmlIncluded', function () {
   // 1. Load sản phẩm từ file product.json
   fetch('/data/product.json')
     .then(res => res.json())
-    .then(products => {
+    .then(data => {
+      const products = data.sale;
 
+      // Chọn wrapper của slider
       const wrapper = document.querySelector('.swiper_product_sale .swiper-wrapper');
       if (!wrapper) return;
 

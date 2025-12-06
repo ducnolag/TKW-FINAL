@@ -10,10 +10,16 @@
 </head>
 <body>
     <div class="container">
+        <!-- Back to Home Icon -->
+        <a href="../index.htm" class="back-home" title="Về trang chủ">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+
         <div class="mobile-toggle">
             <button class="btn active" onclick="showLogin()">Đăng nhập</button>
             <button class="btn" onclick="showSignup()">Đăng ký</button>
         </div>
+        
         <div class="container-forms">
             <div class="container-info">
                 <div class="info-item">
@@ -25,6 +31,7 @@
                     <button class="btn" onclick="toggleForms()">Đăng ký</button>
                 </div>
             </div>
+            
             <div class="container-form">
                 <form class="form-item log-in" onsubmit="login(event)">
                     <h1>Đăng nhập</h1>
@@ -55,6 +62,7 @@
                         </button>
                     </div>
                 </form>
+                
                 <form class="form-item sign-up" onsubmit="register(event)">
                     <h1>Đăng ký</h1>
                     <div class="input-container">
@@ -97,13 +105,11 @@
     </div>
 
     <script>
-        // Toggle giữa form đăng nhập và đăng ký (Desktop)
         function toggleForms() {
             document.querySelector('.container').classList.toggle('log-in');
             clearMessages();
         }
 
-        // Show login form (Mobile)
         function showLogin() {
             document.querySelector('.container').classList.remove('log-in');
             document.querySelectorAll('.mobile-toggle .btn').forEach(btn => btn.classList.remove('active'));
@@ -111,7 +117,6 @@
             clearMessages();
         }
 
-        // Show signup form (Mobile)
         function showSignup() {
             document.querySelector('.container').classList.add('log-in');
             document.querySelectorAll('.mobile-toggle .btn').forEach(btn => btn.classList.remove('active'));
@@ -119,7 +124,6 @@
             clearMessages();
         }
 
-        // Xóa thông báo lỗi/thành công
         function clearMessages() {
             document.getElementById('loginMessage').textContent = '';
             document.getElementById('reMessage').textContent = '';
@@ -127,7 +131,6 @@
             document.getElementById('reMessage').className = 'message';
         }
 
-        // Toggle hiển thị mật khẩu
         function togglePasswordVisibility(inputId, icon) {
             const input = document.getElementById(inputId);
             if (input.type === 'password') {
@@ -141,7 +144,6 @@
             }
         }
 
-        // Hàm đăng ký
         function register(event) {
             event.preventDefault();
             
@@ -151,20 +153,17 @@
             const password = document.getElementById("rePassword").value.trim();
             const messageEl = document.getElementById("reMessage");
 
-            // Regex patterns
             const lowercaseLetter = /[a-z]/g;
             const uppercaseLetter = /[A-Z]/g;
             const number = /[0-9]/g;
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             const phonePattern = /^[0-9]{10,11}$/;
 
-            // Validate các trường
             if (!username || !email || !phone || !password) {
                 showMessage(messageEl, "Vui lòng điền đầy đủ thông tin.", "error");
                 return;
             }
 
-            // Validate username (3-20 ký tự, chỉ chữ cái, số và gạch dưới)
             if (username.length < 3 || username.length > 20) {
                 showMessage(messageEl, "Tên đăng nhập phải có từ 3-20 ký tự.", "error");
                 return;
@@ -175,19 +174,16 @@
                 return;
             }
 
-            // Validate email
             if (!emailPattern.test(email)) {
                 showMessage(messageEl, "Email không hợp lệ.", "error");
                 return;
             }
 
-            // Validate phone
             if (!phonePattern.test(phone)) {
                 showMessage(messageEl, "Số điện thoại phải có 10-11 chữ số.", "error");
                 return;
             }
 
-            // Validate password
             if (password.length < 8) {
                 showMessage(messageEl, "Mật khẩu phải có ít nhất 8 ký tự.", "error");
                 return;
@@ -208,7 +204,6 @@
                 return;
             }
 
-            // Tạo object user
             const user = {
                 username: username,
                 email: email,
@@ -217,33 +212,28 @@
                 createdAt: new Date().toISOString()
             };
 
-            // Lấy danh sách users từ memory
             let users = {};
             const usersData = sessionStorage.getItem("users");
             if (usersData) {
                 users = JSON.parse(usersData);
             }
 
-            // Kiểm tra username đã tồn tại
             if (users[username]) {
                 showMessage(messageEl, "Tên đăng nhập đã tồn tại.", "error");
                 return;
             }
 
-            // Kiểm tra email đã được sử dụng
             const emailExists = Object.values(users).some(u => u.email === email);
             if (emailExists) {
                 showMessage(messageEl, "Email đã được sử dụng.", "error");
                 return;
             }
 
-            // Lưu user mới
             users[username] = user;
             sessionStorage.setItem("users", JSON.stringify(users));
             
             showMessage(messageEl, "Đăng ký thành công! Bạn có thể đăng nhập ngay bây giờ.", "success");
             
-            // Reset form và chuyển sang login sau 1.5s
             setTimeout(() => {
                 document.querySelector('.form-item.sign-up').reset();
                 if (window.innerWidth <= 768) {
@@ -254,7 +244,6 @@
             }, 1500);
         }
 
-        // Hàm đăng nhập
         function login(event) {
             event.preventDefault();
             
@@ -262,13 +251,11 @@
             const password = document.getElementById("loginPassword").value.trim();
             const messageEl = document.getElementById("loginMessage");
 
-            // Validate
             if (!username || !password) {
                 showMessage(messageEl, "Vui lòng nhập tên đăng nhập và mật khẩu.", "error");
                 return;
             }
 
-            // Lấy danh sách users
             const usersData = sessionStorage.getItem("users");
             if (!usersData) {
                 showMessage(messageEl, "Tên đăng nhập hoặc mật khẩu không đúng.", "error");
@@ -278,7 +265,6 @@
             const users = JSON.parse(usersData);
             const user = users[username];
 
-            // Kiểm tra user tồn tại và mật khẩu đúng
             if (!user) {
                 showMessage(messageEl, "Tên đăng nhập hoặc mật khẩu không đúng.", "error");
                 return;
@@ -289,10 +275,8 @@
                 return;
             }
 
-            // Đăng nhập thành công
             showMessage(messageEl, "Đăng nhập thành công! Đang chuyển hướng...", "success");
             
-            // Lưu session
             sessionStorage.setItem("currentUser", JSON.stringify({
                 username: user.username,
                 email: user.email,
@@ -301,21 +285,17 @@
                 loginTime: new Date().toISOString()
             }));
 
-            // Chuyển hướng đến trang profile sau 1s
             setTimeout(() => {
                 window.location.href = "profile.html";
             }, 1000);
         }
 
-        // Hàm hiển thị thông báo
         function showMessage(element, message, type) {
             element.textContent = message;
             element.className = 'message ' + type;
         }
 
-        // Đăng nhập với Google
         function loginWithGoogle() {
-            // Demo: Giả lập đăng nhập với Google
             const mockGoogleUser = {
                 username: "google_user_" + Math.floor(Math.random() * 1000),
                 email: "user@gmail.com",
@@ -328,9 +308,7 @@
             window.location.href = "profile.html";
         }
 
-        // Đăng nhập với Facebook
         function loginWithFacebook() {
-            // Demo: Giả lập đăng nhập với Facebook
             const mockFacebookUser = {
                 username: "fb_user_" + Math.floor(Math.random() * 1000),
                 email: "user@facebook.com",
@@ -343,22 +321,18 @@
             window.location.href = "profile.html";
         }
 
-        // Đăng ký với Google
         function signupWithGoogle() {
             loginWithGoogle();
         }
 
-        // Đăng ký với Facebook
         function signupWithFacebook() {
             loginWithFacebook();
         }
 
-        // Kiểm tra hash URL để hiển thị đúng form
         function checkURLHash() {
             const hash = window.location.hash;
             
             if (hash === '#signup' || hash === '#register') {
-                // Hiển thị form đăng ký
                 if (window.innerWidth <= 768) {
                     document.querySelector('.container').classList.add('log-in');
                     document.querySelectorAll('.mobile-toggle .btn').forEach(btn => btn.classList.remove('active'));
@@ -367,7 +341,6 @@
                     document.querySelector('.container').classList.add('log-in');
                 }
             } else if (hash === '#login') {
-                // Hiển thị form đăng nhập
                 if (window.innerWidth <= 768) {
                     document.querySelector('.container').classList.remove('log-in');
                     document.querySelectorAll('.mobile-toggle .btn').forEach(btn => btn.classList.remove('active'));
@@ -378,19 +351,15 @@
             }
         }
 
-        // Kiểm tra nếu đã đăng nhập
         window.onload = function() {
-            // Kiểm tra URL hash trước
             checkURLHash();
             
             const currentUser = sessionStorage.getItem("currentUser");
             if (currentUser) {
-                // Đã đăng nhập, chuyển hướng đến profile
                 window.location.href = "profile.html";
             }
         };
 
-        // Lắng nghe sự thay đổi hash
         window.addEventListener('hashchange', checkURLHash);
     </script>
 </body>

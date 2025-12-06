@@ -1,1046 +1,661 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>>
-
-<style>
-    /* ===== TOPBAR ===== */
-.header-topbar {
-  background: var(--primary-color);
-  color: var(--white-color);
-  padding: 0;
-  font-size: 14px;
-  position: relative;
-}
-
-.header-topbar .container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 40px;
-  position: relative;
-}
-
-.topbar-contact {
-  display: flex;
-  align-items: center;
-  gap: 30px;
-}
-
-.topbar-contact a {
-  color: var(--white-color);
-  text-decoration: none;
-  transition: all 0.3s;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 400;
-  font-size: 14px;
-}
-
-.topbar-contact a:hover {
-  opacity: 0.85;
-}
-
-.topbar-contact i {
-  font-size: 13px;
-}
-
-.topbar-account {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.topbar-account a,
-.topbar-account button {
-  color: var(--white-color);
-  text-decoration: none;
-  transition: all 0.3s;
-  font-weight: 400;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 14px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-}
-
-.topbar-account a:hover,
-.topbar-account button:hover {
-  opacity: 0.85;
-}
-
-.topbar-account i {
-  font-size: 13px;
-}
-
-/* Logged In State */
-.logged-in-section {
-  display: none;
-  gap: 20px;
-}
-
-.logged-in-section.show {
-  display: flex;
-}
-
-/* Logged Out State */
-.auth-dropdown {
-  display: none;
-  gap: 20px;
-}
-
-.auth-dropdown.show {
-  display: flex;
-}
-
-.user-greeting {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--white-color);
-  font-weight: 500;
-}
-
-.user-greeting strong {
-  color: var(--warning-color);
-}
-
-/* ===== MAIN HEADER ===== */
-.header-main {
-  background: var(--white-color);
-  box-shadow: var(--shadow-small);
-  position: sticky;
-  top: 0;
-  z-index: 999;
-  transition: all 0.3s;
-}
-
-.header-main.scrolled {
-  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.12);
-}
-
-.header-main .container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 20px;
-  display: grid;
-  grid-template-columns: 220px 1fr auto;
-  align-items: center;
-  gap: 0;
-  min-height: 85px;
-}
-
-/* Logo */
-.header-logo {
-  display: flex;
-  align-items: center;
-}
-
-.header-logo a {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  gap: 12px;
-  transition: transform 0.3s;
-}
-
-.header-logo a:hover {
-  transform: scale(1.05);
-}
-
-.header-logo img {
-  height: 60px;
-  width: auto;
-  object-fit: contain;
-}
-
-/* Desktop Navigation */
-.header-nav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.nav-menu {
-  display: flex;
-  list-style: none;
-  gap: 16px;
-  margin: 0;
-  padding: 0;
-  align-items: center;
-}
-
-.nav-item {
-  position: relative;
-}
-
-.nav-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 12px 10px;
-  color: var(--text-color-dark);
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 15px;
-  border-radius: 10px;
-  transition: all 0.3s;
-  position: relative;
-}
-
-.nav-link::before {
-  content: "";
-  position: absolute;
-  bottom: 8px;
-  left: 50%;
-  transform: translateX(-50%) scaleX(0);
-  width: 30px;
-  height: 3px;
-  background: var(--primary-color);
-  border-radius: 2px;
-  transition: transform 0.3s;
-}
-
-.nav-link:hover,
-.nav-item.active .nav-link {
-  background: rgba(var(--primary-rgb), 0.1);
-  color: var(--primary-color);
-}
-
-.nav-link:hover::before,
-.nav-item.active .nav-link::before {
-  transform: translateX(-50%) scaleX(1);
-}
-
-.nav-link i {
-  font-size: 10px;
-  transition: transform 0.3s;
-}
-
-.nav-item:hover .nav-link i {
-  transform: rotate(180deg);
-}
-
-/* Dropdown Menu */
-.dropdown-menu {
-  position: absolute;
-  top: calc(100% + 10px);
-  left: 0;
-  background: var(--white-color);
-  min-width: 240px;
-  border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-  padding: 12px;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(15px);
-  transition: all 0.3s;
-  z-index: 1000;
-  list-style: none;
-  border: 1px solid rgba(var(--primary-rgb), 0.1);
-}
-
-.nav-item:hover .dropdown-menu {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.dropdown-menu li a {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 16px;
-  color: var(--text-color-light);
-  text-decoration: none;
-  transition: all 0.3s;
-  border-radius: 8px;
-  font-size: 14px;
-}
-
-.dropdown-menu li a:hover {
-  background: rgba(var(--primary-rgb), 0.1);
-  color: var(--primary-color);
-  transform: translateX(5px);
-}
-
-/* Mega Menu */
-.mega-menu {
-  position: absolute;
-  top: calc(100% + 10px);
-  left: 50%;
-  transform: translateX(-50%) translateY(15px);
-  background: var(--white-color);
-  border-radius: 16px;
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
-  padding: 35px;
-  width: 750px;
-  max-width: 90vw;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s;
-  z-index: 1000;
-  border: 1px solid rgba(var(--primary-rgb), 0.1);
-}
-
-.nav-item.has-mega:hover .mega-menu {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(-50%) translateY(0);
-}
-
-.mega-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-}
-
-.mega-column h4 {
-  color: var(--primary-color);
-  font-size: 13px;
-  font-weight: 700;
-  margin-bottom: 15px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.mega-column h4::before {
-  content: "";
-  width: 4px;
-  height: 16px;
-  background: var(--primary-color);
-  border-radius: 2px;
-}
-
-.mega-column a {
-  display: block;
-  padding: 8px 12px;
-  color: var(--text-color-light);
-  text-decoration: none;
-  transition: all 0.3s;
-  border-radius: 6px;
-  font-size: 14px;
-}
-
-.mega-column a:hover {
-  background: rgba(var(--primary-rgb), 0.1);
-  color: var(--primary-color);
-  transform: translateX(5px);
-}
-
-/* Header Actions */
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  justify-self: end;
-}
-
-.search-box {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.search-input {
-  width: 210px;
-  height: 48px;
-  padding: 0 55px 0 20px;
-  border: 2px solid var(--light-gray-color);
-  border-radius: 24px;
-  font-size: 14px;
-  transition: all 0.3s;
-  background: var(--light-background-color);
-}
-
-.search-input:focus {
-  outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.1);
-  background: var(--white-color);
-}
-
-.search-btn {
-  position: absolute;
-  right: 5px;
-  background: var(--primary-color);
-  color: var(--white-color);
-  border: none;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: all 0.3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.3);
-}
-
-.search-btn:hover {
-  transform: scale(1.08);
-  box-shadow: 0 6px 20px rgba(var(--primary-rgb), 0.4);
-}
-
-.cart-btn {
-  position: relative;
-  background: var(--primary-color);
-  border: none;
-  color: var(--white-color);
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s;
-  text-decoration: none;
-  box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.3);
-}
-
-.cart-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(var(--primary-rgb), 0.4);
-}
-
-.cart-btn i {
-  font-size: 20px;
-}
-
-.cart-count {
-  position: absolute;
-  top: -4px;
-  right: -4px;
-  background: var(--warning-color);
-  color: var(--text-color-dark);
-  min-width: 24px;
-  height: 24px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 0 6px;
-  border: 3px solid var(--white-color);
-  box-shadow: 0 2px 10px rgba(var(--warning-rgb), 0.4);
-}
-
-.mobile-toggle {
-  display: none;
-  background: var(--primary-color);
-  border: none;
-  width: 50px;
-  height: 50px;
-  border-radius: 12px;
-  cursor: pointer;
-  color: var(--white-color);
-  font-size: 20px;
-  transition: all 0.3s;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.3);
-}
-
-.mobile-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(var(--primary-rgb), 0.4);
-}
-
-/* ===== MOBILE SEARCH BAR ===== */
-.mobile-search-bar {
-  display: none;
-  background: var(--white-color);
-  padding: 15px 20px;
-  border-bottom: 1px solid var(--light-gray-color);
-}
-
-.mobile-search-bar form {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.mobile-search-bar input {
-  width: 100%;
-  padding: 14px 50px 14px 18px;
-  border: 2px solid var(--light-gray-color);
-  border-radius: 25px;
-  font-size: 14px;
-  background: var(--light-background-color);
-}
-
-.mobile-search-bar input:focus {
-  outline: none;
-  border-color: var(--primary-color);
-  background: var(--white-color);
-}
-
-.mobile-search-bar button {
-  position: absolute;
-  right: 5px;
-  background: var(--primary-color);
-  color: var(--white-color);
-  border: none;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.3);
-}
-
-/* ===== MOBILE MENU ===== */
-.mobile-menu {
-  position: fixed;
-  top: 0;
-  left: -100%;
-  width: 320px;
-  height: 100vh;
-  background: var(--white-color);
-  box-shadow: 5px 0 30px rgba(0, 0, 0, 0.2);
-  transition: left 0.3s;
-  z-index: 9999;
-  overflow-y: auto;
-}
-
-.mobile-menu.active {
-  left: 0;
-}
-
-.mobile-menu-header {
-  padding: 25px 20px;
-  background: var(--primary-color);
-  color: var(--white-color);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.mobile-menu-header h3 {
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.mobile-close {
-  background: rgba(255, 255, 255, 0.2);
-  border: none;
-  color: var(--white-color);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 20px;
-  transition: all 0.3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.mobile-close:hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: rotate(90deg);
-}
-
-.mobile-nav-list {
-  list-style: none;
-  padding: 15px 0;
-}
-
-.mobile-nav-item {
-  border-bottom: 1px solid #f0f0f0;
-}
-
-.mobile-nav-item > a {
-  display: flex;
-  align-items: center;
-  padding: 16px 20px;
-  color: var(--text-color-dark);
-  text-decoration: none;
-  transition: all 0.3s;
-  font-weight: 600;
-  font-size: 15px;
-}
-
-.mobile-nav-item > a:hover {
-  background: rgba(var(--primary-rgb), 0.1);
-  color: var(--primary-color);
-  padding-left: 30px;
-}
-
-.mobile-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.6);
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s;
-  z-index: 9998;
-  backdrop-filter: blur(2px);
-}
-
-.mobile-overlay.active {
-  opacity: 1;
-  visibility: visible;
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 1330px) {
-  .header-main .container {
-    grid-template-columns: 1fr auto auto;
-    min-height: 75px;
-  }
-
-  .header-nav {
-    display: none;
-  }
-
-  .mobile-toggle {
-    display: flex;
-  }
-
-  .search-box {
-    display: none;
-  }
-
-  .mobile-search-bar {
-    display: block;
-  }
-}
-
-@media (max-width: 650px) {
-  .header-topbar .container {
-    height: 36px;
-    font-size: 12px;
-    padding: 0 15px;
-  }
-
-  .topbar-contact {
-    display: none;
-  }
-
-  .topbar-account {
-    width: 100%;
-    justify-content: flex-start;
-  }
-
-  .header-main .container {
-    gap: 12px;
-    min-height: 70px;
-    padding: 0 15px;
-    grid-template-columns: auto 1fr auto auto;
-  }
-
-  .header-logo {
-    order: 2;
-  }
-
-  .mobile-toggle {
-    order: 1;
-    width: 40px;
-    height: 40px;
-    font-size: 18px;
-  }
-
-  .header-actions {
-    order: 3;
-    gap: 10px;
-  }
-
-  .cart-btn {
-    width: 40px;
-    height: 40px;
-  }
-
-  .cart-btn i {
-    font-size: 18px;
-  }
-
-  .header-logo img {
-    height: 45px;
-  }
-
-  .mobile-search-bar {
-    padding: 12px 15px;
-  }
-
-  .mobile-search-bar input {
-    padding: 12px 45px 12px 16px;
-  }
-}
-
-@media (max-width: 480px) {
-  .header-topbar .container {
-    height: 36px;
-    padding: 0 12px;
-  }
-
-  .topbar-account {
-    gap: 15px;
-  }
-
-  .topbar-account a,
-  .topbar-account button {
-    font-size: 13px;
-  }
-
-  .mobile-menu {
-    width: 280px;
-  }
-
-  .header-main .container {
-    gap: 8px;
-    padding: 0 12px;
-    min-height: 65px;
-  }
-
-  .mobile-toggle {
-    width: 38px;
-    height: 38px;
-    font-size: 16px;
-  }
-
-  .cart-btn {
-    width: 38px;
-    height: 38px;
-  }
-
-  .cart-btn i {
-    font-size: 16px;
-  }
-
-  .header-logo img {
-    height: 40px;
-  }
-
-  .mobile-search-bar {
-    padding: 10px 12px;
-  }
-
-  .mobile-search-bar input {
-    padding: 10px 40px 10px 14px;
-    font-size: 13px;
-  }
-
-  .mobile-search-bar button {
-    width: 34px;
-    height: 34px;
-  }
-}
-</style>
-
-</body>
-
-
-<!-- TOPBAR -->
-<div class="header-topbar">
-  <div class="container">
-    <div class="topbar-contact">
-      <a href="tel:0343130254">
-        <i class="fas fa-phone-alt"></i>
-        0343130254
-      </a>
-      <a href="mailto:tavntg@gmail.com">
-        <i class="far fa-envelope"></i>
-        tavntg@gmail.com
-      </a>
-    </div>
-
-    <div class="topbar-account">
-      <!-- Phần hiển thị KHI ĐÃ ĐĂNG NHẬP -->
-      <div class="logged-in-section" id="loggedInSection">
-
-        <a href="/account/profile.html">
-          <i class="fas fa-user"></i> Tài khoản
-        </a>
-        <button id="logoutBtn">
-          <i class="fas fa-sign-out-alt"></i> Đăng xuất
-        </button>
-      </div>
-
-      <!-- Phần hiển thị KHI CHƯA ĐĂNG NHẬP -->
-      <div class="auth-dropdown" id="authDropdown">
-        <a href="/account/login.html#login">
-          <i class="fas fa-sign-in-alt"></i> Đăng nhập
-        </a>
-        <a href="/account/login.html#signup">
-          <i class="fas fa-user-plus"></i> Đăng ký
-        </a>
-      </div>
-    </div>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tất cả sản phẩm</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
+    }
+
+    .breadcrumb {
+      background: white;
+      padding: 15px 20px;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+    }
+
+    .breadcrumb a {
+      color: #666;
+      text-decoration: none;
+      margin: 0 5px;
+    }
+
+    .breadcrumb span {
+      color: #e74c3c;
+      margin: 0 5px;
+    }
+
+    .page-title {
+      text-align: center;
+      padding: 30px 20px;
+      background: white;
+      font-size: 32px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .container {
+      display: flex;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+      gap: 30px;
+    }
+
+    .sidebar {
+      width: 280px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      height: fit-content;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .sidebar h3 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .sidebar ul {
+      list-style: none;
+    }
+
+    .sidebar li {
+      padding: 12px 0;
+      border-bottom: 1px solid #eee;
+      color: #333;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .sidebar li:hover {
+      color: #e74c3c;
+    }
+
+    .sidebar li.active {
+      color: #e74c3c;
+      font-weight: bold;
+    }
+
+    .main-content {
+      flex: 1;
+    }
+
+    .products-header {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .products-header h2 {
+      font-size: 20px;
+      color: #333;
+    }
+
+    .view-options {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .view-btn {
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      background: white;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+
+    .view-btn:hover {
+      background: #f5f5f5;
+    }
+
+    .view-btn.active {
+      background: #333;
+      color: white;
+    }
+
+    .sort-select {
+      padding: 8px 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background: white;
+      cursor: pointer;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      transition: all 0.3s;
+    }
+
+    .products.list-view {
+      grid-template-columns: 1fr;
+    }
+
+    .product-item {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+
+    .products.list-view .product-item {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .products.list-view .product-image {
+      width: 300px;
+      height: 250px;
+      flex-shrink: 0;
+    }
+
+    .products.list-view .product-info {
+      flex: 1;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 20px 30px;
+    }
+
+    .product-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 250px;
+      background: #f5f5f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .product-info {
+      padding: 15px;
+      text-align: center;
+    }
+
+    .product-title {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 10px;
+      min-height: 40px;
+      font-weight: 500;
+    }
+
+    .price-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .products.list-view .price-section {
+      justify-content: flex-start;
+    }
+
+    .price-current {
+      font-size: 20px;
+      font-weight: bold;
+      color: #e74c3c;
+    }
+
+    .price-old {
+      font-size: 14px;
+      color: #999;
+      text-decoration: line-through;
+    }
+
+    .product-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .products.list-view .product-actions {
+      justify-content: flex-start;
+    }
+
+    .btn {
+      padding: 10px 25px;
+      border: 2px solid #e74c3c;
+      background: white;
+      color: #e74c3c;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s;
+      font-size: 14px;
+    }
+
+    .btn:hover {
+      background: #e74c3c;
+      color: white;
+    }
+
+    .btn-primary {
+      background: #e74c3c;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #c0392b;
+      border-color: #c0392b;
+    }
+
+    .mobile-menu-toggle {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      z-index: 1000;
+      transition: transform 0.3s;
+    }
+
+    .mobile-menu-toggle:active {
+      transform: scale(0.95);
+    }
+
+    .sidebar-overlay {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        padding: 10px;
+      }
+
+      .sidebar {
+        position: fixed;
+        left: -100%;
+        top: 0;
+        width: 80%;
+        max-width: 300px;
+        height: 100vh;
+        background: white;
+        z-index: 999;
+        transition: left 0.3s ease;
+        overflow-y: auto;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+      }
+
+      .sidebar.active {
+        left: 0;
+      }
+
+      .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(0,0,0,0.5);
+        z-index: 998;
+      }
+
+      .sidebar-overlay.active {
+        display: block;
+      }
+
+      .sidebar-header {
+        display: none;
+      }
+
+      .mobile-menu-toggle {
+        display: block;
+      }
+
+      .products {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 15px;
+      }
+
+      .products.list-view {
+        grid-template-columns: 1fr;
+      }
+
+      .products.list-view .product-item {
+        flex-direction: column;
+      }
+
+      .products.list-view .product-image {
+        width: 100%;
+        height: 200px;
+      }
+
+      .products.list-view .product-info {
+        text-align: center;
+        padding: 15px;
+      }
+
+      .products.list-view .price-section {
+        justify-content: center;
+      }
+
+      .products.list-view .product-actions {
+        justify-content: center;
+      }
+
+      .product-image {
+        height: 180px;
+      }
+
+      .product-title {
+        font-size: 14px;
+        min-height: 35px;
+      }
+
+      .price-current {
+        font-size: 16px;
+      }
+
+      .price-old {
+        font-size: 12px;
+      }
+
+      .btn {
+        padding: 8px 20px;
+        font-size: 12px;
+      }
+
+      .products-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+      }
+
+      .view-options {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .sort-select {
+        flex: 1;
+      }
+
+      .page-title {
+        font-size: 24px;
+        padding: 20px 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .products:not(.list-view) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="breadcrumb">
+    <a href="index.html">Trang chủ</a>
+    <span>></span>
+    <span id="breadcrumbCategory">Tất cả sản phẩm</span>
   </div>
-</div>
 
-    <!-- MAIN HEADER -->
-    <header class="header-main">
-      <div class="container">
-        <!-- Logo -->
-        <div class="header-logo">
-          <a href="/">
-            <img src="/assets/logo.svg" alt="Logo" />
-          </a>
-        </div>
+  <div class="page-title" id="pageTitle">Tất cả sản phẩm</div>
 
-        <!-- Desktop Navigation -->
-        <nav class="header-nav">
-          <ul class="nav-menu">
-            <li class="nav-item active">
-              <a href="/" class="nav-link">Trang chủ</a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">Giới thiêu</a>
-            </li>
-            <li class="nav-item has-mega">
-              <a href="#" class="nav-link">
-                Sản phẩm
-                <i class="fas fa-chevron-down"></i>
-              </a>
-              <div class="mega-menu">
-                <div class="mega-grid" id="megaCategory">
-                  <div class="mega-column">
-                    <h4>Danh mục 1</h4>
-                    <a href="#">Sản phẩm A</a>
-                    <a href="#">Sản phẩm B</a>
-                    <a href="#">Sản phẩm C</a>
-                  </div>
-                  <div class="mega-column">
-                    <h4>Danh mục 2</h4>
-                    <a href="#">Sản phẩm D</a>
-                    <a href="#">Sản phẩm E</a>
-                    <a href="#">Sản phẩm F</a>
-                  </div>
-                  <div class="mega-column">
-                    <h4>Danh mục 3</h4>
-                    <a href="#">Sản phẩm G</a>
-                    <a href="#">Sản phẩm H</a>
-                    <a href="#">Sản phẩm I</a>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">Khuyến mãi</a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">Tin tức</a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">Phương thức mua hàng</a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">Liên hệ</a>
-            </li>
-          </ul>
-        </nav>
+  <button class="mobile-menu-toggle" id="menuToggle">☰</button>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-        <!-- Header Actions -->
-        <div class="header-actions">
-          <!-- Search -->
-          <form action="/search" method="get" class="search-box">
-            <input
-              type="text"
-              name="query"
-              class="search-input"
-              placeholder="Tìm kiếm sản phẩm..."
-            />
-            <button type="submit" class="search-btn">
-              <i class="fas fa-search"></i>
-            </button>
-          </form>
-
-          <!-- Cart -->
-          <a href="/cart" class="cart-btn">
-            <p class="cart-count">0</p>
-            <i class="fas fa-shopping-cart"></i>
-          </a>
-
-          <!-- Mobile Menu Toggle -->
-          <button class="mobile-toggle" id="mobileToggle">
-            <i class="fas fa-bars"></i>
-          </button>
-        </div>
-      </div>
-    </header>
-
-    <!-- MOBILE SEARCH -->
-    <div class="mobile-search-bar">
-      <form action="/search" method="get">
-        <input type="text" name="query" placeholder="Tìm kiếm sản phẩm..." />
-        <button type="submit"><i class="fas fa-search"></i></button>
-      </form>
-    </div>
-
-    <!-- MOBILE MENU -->
-    <div class="mobile-menu" id="mobileMenu">
-      <div class="mobile-menu-header">
-        <h3>Menu</h3>
-        <button class="mobile-close" id="mobileClose">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-
-      <ul class="mobile-nav-list">
-        <li class="mobile-nav-item">
-          <a href="/">Trang chủ</a>
-        </li>
-        <li class="mobile-nav-item">
-          <a href="#">Sản phẩm</a>
-        </li>
-        <li class="mobile-nav-item">
-          <a href="#">Khuyến mãi</a>
-        </li>
-        <li class="mobile-nav-item">
-          <a href="#">Tin tức</a>
-        </li>
-        <li class="mobile-nav-item">
-          <a href="#">Liên hệ</a>
-        </li>
+  <div class="container">
+    <aside class="sidebar" id="sidebar">
+      <h3>Menu</h3>
+      <ul id="menu">
+        <li data-category="all" class="active">Tất Cả</li>
+        <li data-category="sale">Sản Phẩm Khuyến Mãi</li>
+        <li data-category="newsale">Sản Phẩm Mới</li>
+        <li data-category="snacks">Ăn Vặt</li>
+        <li data-category="mixedNoodles">Mì trộn</li>
+        <li data-category="spicyNoodles">Mì Cay</li>
+        <li data-category="sides">Đồ Ăn Kèm</li>
+        <li data-category="drinks">Đồ Uống</li>
+        <li data-category="combo">Combo Theo Người</li>
+        <li data-category="special">Món Ngon Phải Thử</li>
       </ul>
-    </div>
 
-    <div class="mobile-overlay" id="mobileOverlay"></div>
+      <h3 style="margin-top: 30px;">Hướng dẫn</h3>
+      <ul>
+        <li>Hướng dẫn mua hàng</li>
+        <li>Hướng dẫn hủy đơn</li>
+        <li>Hướng dẫn tra cứu đơn hàng</li>
+      </ul>
+    </aside>
 
+    <main class="main-content">
+      <div class="products-header">
+        <h2 id="categoryTitle">Tất cả sản phẩm</h2>
+        <div class="view-options">
+          <button class="view-btn active" id="gridView">☷</button>
+          <button class="view-btn" id="listView">☰</button>
+          <span style="margin-left: 20px; color: #666;">Sắp xếp:</span>
+          <select class="sort-select" id="sortSelect">
+            <option value="default">Mặc định</option>
+            <option value="priceAsc">Giá tăng dần</option>
+            <option value="priceDesc">Giá giảm dần</option>
+            <option value="nameAsc">Tên A-Z</option>
+            <option value="nameDesc">Tên Z-A</option>
+          </select>
+        </div>
+      </div>
 
+      <section class="products" id="productsContainer"></section>
+    </main>
+  </div>
 
-<script>
-    document.addEventListener("htmlIncluded", function () {
-      // Scroll effect
-      window.addEventListener("scroll", function () {
-        const header = document.querySelector(".header-main");
-        if (header && window.scrollY > 50) {
-          header.classList.add("scrolled");
-        } else if (header) {
-          header.classList.remove("scrolled");
+  <script>
+    let allData = null;
+    let currentCategory = 'all';
+    let currentView = 'grid';
+    let currentSort = 'default';
+
+    const productsContainer = document.getElementById('productsContainer');
+    const pageTitle = document.getElementById('pageTitle');
+    const breadcrumbCategory = document.getElementById('breadcrumbCategory');
+    const categoryTitle = document.getElementById('categoryTitle');
+    const gridView = document.getElementById('gridView');
+    const listView = document.getElementById('listView');
+    const sortSelect = document.getElementById('sortSelect');
+
+    function formatPrice(price) {
+      return price.toLocaleString('vi-VN') + 'đ';
+    }
+
+    function createProductHTML(item) {
+      const statusButton = item.status === 'soldout' 
+        ? '<button class="btn">TÙY CHỌN</button>'
+        : '<button class="btn btn-primary">MUA HÀNG</button>';
+      
+      return `
+        <div class="product-item">
+          <div class="product-image">
+            ${item.image ? `<img src="${item.image}" alt="${item.title}">` : `<img src="https://via.placeholder.com/280x250/f5f5f5/999?text=${encodeURIComponent(item.title)}" alt="${item.title}">`}
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">${item.title}</h3>
+            <div class="price-section">
+              <span class="price-current">${formatPrice(item.price_current)}</span>
+              <span class="price-old">${formatPrice(item.price_old)}</span>
+            </div>
+            <div class="product-actions">
+              ${statusButton}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function sortProducts(products) {
+      const sorted = [...products];
+      
+      switch(currentSort) {
+        case 'priceAsc':
+          return sorted.sort((a, b) => a.price_current - b.price_current);
+        case 'priceDesc':
+          return sorted.sort((a, b) => b.price_current - a.price_current);
+        case 'nameAsc':
+          return sorted.sort((a, b) => a.title.localeCompare(b.title));
+        case 'nameDesc':
+          return sorted.sort((a, b) => b.title.localeCompare(a.title));
+        default:
+          return sorted;
+      }
+    }
+
+    function displayProducts(category) {
+      if (!allData) return;
+
+      let products = [];
+      let titleText = '';
+
+      if (category === 'all') {
+        products = [...allData.sale, ...allData.newsale];
+        titleText = 'Tất cả sản phẩm';
+      } else if (category === 'sale') {
+        products = allData.sale;
+        titleText = 'Sản phẩm khuyến mãi';
+      } else if (category === 'newsale') {
+        products = allData.newsale;
+        titleText = 'Sản phẩm mới';
+      }
+
+      // Sắp xếp sản phẩm
+      products = sortProducts(products);
+
+      // Cập nhật tiêu đề
+      pageTitle.textContent = titleText;
+      breadcrumbCategory.textContent = titleText;
+      categoryTitle.textContent = titleText;
+
+      // Hiển thị sản phẩm
+      if (products.length > 0) {
+        productsContainer.innerHTML = products.map(createProductHTML).join('');
+      } else {
+        productsContainer.innerHTML = '<div style="padding: 40px; text-align: center; color: #999;">Không có sản phẩm trong danh mục này</div>';
+      }
+    }
+
+    // Chuyển đổi view
+    gridView.addEventListener('click', () => {
+      currentView = 'grid';
+      productsContainer.classList.remove('list-view');
+      gridView.classList.add('active');
+      listView.classList.remove('active');
+    });
+
+    listView.addEventListener('click', () => {
+      currentView = 'list';
+      productsContainer.classList.add('list-view');
+      listView.classList.add('active');
+      gridView.classList.remove('active');
+    });
+
+    // Sắp xếp
+    sortSelect.addEventListener('change', (e) => {
+      currentSort = e.target.value;
+      displayProducts(currentCategory);
+    });
+
+    // Menu categories
+    document.querySelectorAll('#menu li[data-category]').forEach(item => {
+      item.addEventListener('click', () => {
+        const category = item.getAttribute('data-category');
+        currentCategory = category;
+        
+        // Update active state
+        document.querySelectorAll('#menu li').forEach(li => li.classList.remove('active'));
+        item.classList.add('active');
+        
+        displayProducts(category);
+        
+        // Close sidebar on mobile
+        if (window.innerWidth <= 768) {
+          closeSidebarMenu();
         }
       });
+    });
 
-// ===== AUTH STATE MANAGEMENT =====
-function checkAuthState() {
-  const currentUser = sessionStorage.getItem("currentUser");
-  const loggedInSection = document.getElementById("loggedInSection");
-  const authDropdown = document.getElementById("authDropdown");
-  const usernameDisplay = document.getElementById("usernameDisplay");
-
-  console.log("Checking auth state:", currentUser ? "Logged in" : "Logged out"); // Debug
-
-  if (currentUser) {
-    // User đã đăng nhập
-    const user = JSON.parse(currentUser);
-    
-    // HIỆN: Section đã đăng nhập
-    if (loggedInSection) {
-      loggedInSection.classList.add("show");
-    }
-    
-    // ẨN: Section đăng nhập/đăng ký
-    if (authDropdown) {
-      authDropdown.classList.remove("show");
-    }
-    
-    // Hiển thị tên user
-    if (usernameDisplay) {
-      usernameDisplay.textContent = user.username;
-    }
-    
-    console.log("Showing logged-in section"); // Debug
-  } else {
-    // User chưa đăng nhập
-    
-    // ẨN: Section đã đăng nhập
-    if (loggedInSection) {
-      loggedInSection.classList.remove("show");
-    }
-    
-    // HIỆN: Section đăng nhập/đăng ký
-    if (authDropdown) {
-      authDropdown.classList.add("show");
-    }
-    
-    console.log("Showing auth dropdown"); // Debug
-  }
-}
-
-// Hàm đăng xuất
-function logout() {
-  if (confirm("Bạn có chắc muốn đăng xuất?")) {
-    sessionStorage.removeItem("currentUser");
-    checkAuthState(); // Cập nhật UI ngay
-  }
-}
-
-// CHẠY NGAY - không cần đợi DOMContentLoaded
-checkAuthState();
-
-// Event listener cho nút đăng xuất
-document.addEventListener("DOMContentLoaded", function() {
-  const logoutBtn = document.getElementById("logoutBtn");
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", logout);
-  }
-});
-
-// Lắng nghe sự thay đổi từ tab khác
-window.addEventListener("storage", function(e) {
-  if (e.key === "currentUser") {
-    checkAuthState();
-  }
-});
-
-      // Mobile Menu Toggle
-      const mobileToggle = document.getElementById("mobileToggle");
-      const mobileMenu = document.getElementById("mobileMenu");
-      const mobileClose = document.getElementById("mobileClose");
-      const mobileOverlay = document.getElementById("mobileOverlay");
-
-      function openMobileMenu() {
-        if (mobileMenu) mobileMenu.classList.add("active");
-        if (mobileOverlay) mobileOverlay.classList.add("active");
-        document.body.style.overflow = "hidden";
-      }
-
-      function closeMobileMenu() {
-        if (mobileMenu) mobileMenu.classList.remove("active");
-        if (mobileOverlay) mobileOverlay.classList.remove("active");
-        document.body.style.overflow = "";
-      }
-
-      if (mobileToggle) {
-        mobileToggle.addEventListener("click", openMobileMenu);
-      }
-
-      if (mobileClose) {
-        mobileClose.addEventListener("click", closeMobileMenu);
-      }
-
-      if (mobileOverlay) {
-        mobileOverlay.addEventListener("click", closeMobileMenu);
-      }
-
-      // Close menu on escape key
-      document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape") {
-          closeMobileMenu();
+    const getData = async () => {
+      try {
+        const response = await fetch('data/product.json');
+        
+        if (!response.ok) {
+          throw new Error('Không thể tải file product.json');
         }
-      });
-});
-</script>
+        
+        allData = await response.json();
+        displayProducts(currentCategory);
+      } catch (error) {
+        console.error('Lỗi khi tải file:', error.message);
+        productsContainer.innerHTML = `<div style="padding: 40px; text-align: center; color: #e74c3c;">Lỗi: ${error.message}</div>`;
+      }
+    }
+
+    // Mobile menu
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+    function openSidebar() {
+      sidebar.classList.add('active');
+      sidebarOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSidebarMenu() {
+      sidebar.classList.remove('active');
+      sidebarOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    menuToggle.addEventListener('click', openSidebar);
+    sidebarOverlay.addEventListener('click', closeSidebarMenu);
+
+    getData();
+  </script>
+</body>
 </html>

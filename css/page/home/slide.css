@@ -72,11 +72,11 @@
 
 /* vị trí nút: dựa theo khoảng scale 0.8 của slide bên cạnh */
 .section_slider .swiper-button-prev {
-  left: calc(22vw) !important;   /* đẩy ra theo tỉ lệ màn hình */
+  left: calc(20vw) !important;   /* đẩy ra theo tỉ lệ màn hình */
 }
 
 .section_slider .swiper-button-next {
-  right: calc(22vw) !important;
+  right: calc(20vw) !important;
 }
 
 /* Icon */
