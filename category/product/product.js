@@ -271,6 +271,9 @@ let allData = null;
       // Lưu giỏ hàng
       localStorage.setItem('cart', JSON.stringify(cart));
       
+      // ✅ Cập nhật số lượng giỏ hàng trên header
+      window.updateCartCount();
+      
       alert(`✅ Đã thêm ${quantity} sản phẩm vào giỏ hàng!`);
       closeModal();
     }
@@ -295,6 +298,9 @@ let allData = null;
       
       // Lưu giỏ hàng
       localStorage.setItem('cart', JSON.stringify(cart));
+      
+      // ✅ Cập nhật số lượng giỏ hàng trên header
+      window.updateCartCount();
       
       // Chuyển đến trang thanh toán
       window.location.href = '/checkout/checkout.htm';

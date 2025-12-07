@@ -145,6 +145,26 @@ document.addEventListener("htmlIncluded", function () {
   
   // Gọi hàm khi DOM sẵn sàng - phải chạy TRONG htmlIncluded event
   loadMegaMenu();
+
+  // ✅ Hàm cập nhật số lượng giỏ hàng
+  window.updateCartCount = function() {
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const cartCountElement = document.querySelector('.cart-count');
+    if (cartCountElement) {
+      cartCountElement.textContent = totalItems;
+    }
+  };
+
+  // Cập nhật số lượng khi trang load
+  window.updateCartCount();
+
+  // Lắng nghe sự thay đổi localStorage từ các tab khác
+  window.addEventListener('storage', function(e) {
+    if (e.key === 'cart') {
+      window.updateCartCount();
+    }
+  });
 });
 
 // Hàm xử lý tìm kiếm - chạy NGOÀI htmlIncluded event
