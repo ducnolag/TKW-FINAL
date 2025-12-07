@@ -1,4 +1,4 @@
-   let allData = null;
+let allData = null;
     let currentCategory = 'all';
     let currentView = 'grid';
     let currentSort = 'default';
@@ -150,6 +150,7 @@
       item.addEventListener('click', () => {
         const category = item.getAttribute('data-category');
         currentCategory = category;
+        searchQuery = ''; // ✅ THÊM DÒNG NÀY - Reset tìm kiếm
         
         // Update active state
         document.querySelectorAll('#menu li').forEach(li => li.classList.remove('active'));
