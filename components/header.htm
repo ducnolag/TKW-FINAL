@@ -86,7 +86,7 @@
         <!-- Header Actions -->
         <div class="header-actions">
           <!-- Search -->
-          <form action="/search" method="get" class="search-box">
+          <form action="../product.htm" method="get" class="search-box" onsubmit="return handleSearch(event)">
             <input
               type="text"
               name="query"
@@ -114,7 +114,7 @@
 
     <!-- MOBILE SEARCH -->
     <div class="mobile-search-bar">
-      <form action="/search" method="get">
+      <form action="../product.htm" method="get" onsubmit="return handleSearch(event)">
         <input type="text" name="query" placeholder="Tìm kiếm sản phẩm..." />
         <button type="submit"><i class="fas fa-search"></i></button>
       </form>

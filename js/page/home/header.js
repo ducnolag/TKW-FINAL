@@ -146,3 +146,12 @@ document.addEventListener("htmlIncluded", function () {
   // Gọi hàm khi DOM sẵn sàng - phải chạy TRONG htmlIncluded event
   loadMegaMenu();
 });
+
+// Hàm xử lý tìm kiếm - chạy NGOÀI htmlIncluded event
+function handleSearch(event) {
+  const query = event.target.querySelector('input[name="query"]').value.trim();
+  if (query) {
+    window.location.href = '../product.htm?query=' + encodeURIComponent(query);
+  }
+  return false;
+}
