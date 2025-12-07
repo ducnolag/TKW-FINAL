@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giỏ Hàng</title>
+  <link rel="stylesheet" href="cart.css">
+</head>
+<body>
+  <div class="breadcrumb">
+    <a href="/index.htm">Trang chủ</a>
+    <span>></span>
+    <span>Giỏ hàng</span>
+  </div>
+
+
+
+  <div class="container">
+    <div class="cart-section">
+      <a href="/category/product/product.htm" class="continue-shopping">
+        ← Tiếp tục mua sắm
+      </a>
+      
+      <h2 class="section-title">Sản phẩm trong giỏ (<span id="itemCount">0</span>)</h2>
+      
+      <div id="cartItems"></div>
+    </div>
+
+    <div class="summary-section">
+      <h2 class="section-title">Tóm tắt đơn hàng</h2>
+      
+      <div class="summary-row">
+        <span>Tạm tính:</span>
+        <span id="subtotal">0đ</span>
+      </div>
+      
+      <div class="summary-row">
+        <span>Phí vận chuyển:</span>
+        <span id="shipping">0đ</span>
+      </div>
+      
+      <div class="promo-code">
+        <div class="promo-input-group">
+          <input type="text" class="promo-input" placeholder="Nhập mã giảm giá" id="promoInput">
+          <button class="apply-btn" onclick="applyPromo()">Áp dụng</button>
+        </div>
+      </div>
+      
+      <div class="summary-row">
+        <span>Giảm giá:</span>
+        <span id="discount" style="color: #27ae60;">-0đ</span>
+      </div>
+      
+      <div class="summary-row total">
+        <span>Tổng cộng:</span>
+        <span class="amount" id="total">0đ</span>
+      </div>
+      
+      <button class="checkout-btn" id="checkoutBtn" onclick="checkout()">
+        Thanh Toán Ngay
+      </button>
+      
+      <div class="secure-badge">
+        <span>🔒</span>
+        <span>Thanh toán an toàn & bảo mật</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="cart.js">
+
+  </script>
+</body>
+</html>

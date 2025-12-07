@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tất cả sản phẩm</title>
+  <link rel="stylesheet" href="product.css">
+</head>
+<body>
+  <div class="breadcrumb">
+    <a href="/index.htm">Trang chủ</a>
+    <span>></span>
+    <span id="breadcrumbCategory">Tất cả sản phẩm</span>
+  </div>
+
+  <div class="page-title" id="pageTitle">Tất cả sản phẩm</div>
+
+  <button class="mobile-menu-toggle" id="menuToggle">☰</button>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <div class="container">
+    <aside class="sidebar" id="sidebar">
+      <h3>Menu</h3>
+      <ul id="menu">
+        <li data-category="all" class="active">Tất Cả</li>
+        <li data-category="sale">Sản Phẩm Khuyến Mãi</li>
+        <li data-category="newsale">Sản Phẩm Mới</li>
+        <li data-category="snacks">Ăn Vặt</li>
+        <li data-category="mixedNoodles">Mì trộn</li>
+        <li data-category="spicyNoodles">Mì Cay</li>
+        <li data-category="sides">Đồ Ăn Kèm</li>
+        <li data-category="drinks">Đồ Uống</li>
+        <li data-category="combo">Combo Theo Người</li>
+        <li data-category="special">Món Ngon Phải Thử</li>
+      </ul>
+
+      <h3 style="margin-top: 30px;">Hướng dẫn</h3>
+      <ul>
+        <li>Hướng dẫn mua hàng</li>
+        <li>Hướng dẫn hủy đơn</li>
+        <li>Hướng dẫn tra cứu đơn hàng</li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <div class="products-header">
+        <h2 id="categoryTitle">Tất cả sản phẩm</h2>
+        <div class="view-options">
+          <button class="view-btn active" id="gridView">☷</button>
+          <button class="view-btn" id="listView">☰</button>
+          <span style="margin-left: 20px; color: #666;">Sắp xếp:</span>
+          <select class="sort-select" id="sortSelect">
+            <option value="default">Mặc định</option>
+            <option value="priceAsc">Giá tăng dần</option>
+            <option value="priceDesc">Giá giảm dần</option>
+            <option value="nameAsc">Tên A-Z</option>
+            <option value="nameDesc">Tên Z-A</option>
+          </select>
+        </div>
+      </div>
+
+      <section class="products" id="productsContainer"></section>
+    </main>
+  </div>
+
+  <!-- Modal for Quick Action -->
+  <div class="modal" id="quickActionModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Tùy chọn sản phẩm</h2>
+        <button class="close-btn" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="product-info-modal">
+          <div class="product-name-modal" id="modalProductName"></div>
+          <div class="product-price-modal" id="modalProductPrice"></div>
+        </div>
+        <div class="quantity-section-modal">
+          <span class="quantity-label-modal">Số lượng:</span>
+          <div class="quantity-controls-modal">
+            <button class="quantity-btn-modal" onclick="decreaseQuantityModal()">−</button>
+            <input type="number" class="quantity-input-modal" id="modalQuantity" value="1" min="1" max="99">
+            <button class="quantity-btn-modal" onclick="increaseQuantityModal()">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-btn" onclick="addToCartFromModal()">
+          🛒 Thêm vào giỏ
+        </button>
+        <button class="modal-btn modal-btn-primary" onclick="buyNowFromModal()">
+          ⚡ Mua ngay
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="product.js">
+ 
+  </script>
+</body>
+</html>

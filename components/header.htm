@@ -17,7 +17,7 @@
       <!-- Phần hiển thị KHI ĐÃ ĐĂNG NHẬP -->
       <div class="logged-in-section" id="loggedInSection">
 
-        <a href="/account/profile.html">
+        <a href="/account/profile/profile.html">
           <i class="fas fa-user"></i> Tài khoản
         </a>
         <button id="logoutBtn">
@@ -27,10 +27,10 @@
 
       <!-- Phần hiển thị KHI CHƯA ĐĂNG NHẬP -->
       <div class="auth-dropdown" id="authDropdown">
-        <a href="/account/login.html#login">
+        <a href="/account/login/login.html#login">
           <i class="fas fa-sign-in-alt"></i> Đăng nhập
         </a>
-        <a href="/account/login.html#signup">
+        <a href="/account/login/login.html#signup">
           <i class="fas fa-user-plus"></i> Đăng ký
         </a>
       </div>
@@ -43,7 +43,7 @@
       <div class="container">
         <!-- Logo -->
         <div class="header-logo">
-          <a href="/">
+          <a href="/index.htm">
             <img src="/assets/logo.svg" alt="Logo" />
           </a>
         </div>
@@ -52,13 +52,13 @@
         <nav class="header-nav">
           <ul class="nav-menu">
             <li class="nav-item active">
-              <a href="/" class="nav-link">Trang chủ</a>
+              <a href="#" class="nav-link">Trang chủ</a>
             </li>
             <li class="nav-item">
-              <a href="../checkout.htm" class="nav-link">Test Thanh Toán</a>
+              <a href="/checkout/checkout.htm" class="nav-link">Test Thanh Toán</a>
             </li>
             <li class="nav-item has-mega">
-              <a href="/product.htm" class="nav-link">
+              <a href="/category/product/product.htm" class="nav-link">
                 Sản phẩm
                 <i class="fas fa-chevron-down"></i>
               </a>
@@ -86,7 +86,7 @@
         <!-- Header Actions -->
         <div class="header-actions">
           <!-- Search -->
-          <form action="../product.htm" method="get" class="search-box" onsubmit="return handleSearch(event)">
+          <form action="/category/product/product.htm" method="get" class="search-box" onsubmit="return handleSearch(event)">
             <input
               type="text"
               name="query"
@@ -99,7 +99,7 @@
           </form>
 
           <!-- Cart -->
-          <a href="/cart" class="cart-btn">
+          <a href="/cart/cart.htm" class="cart-btn">
             <p class="cart-count">0</p>
             <i class="fas fa-shopping-cart"></i>
           </a>
@@ -114,7 +114,7 @@
 
     <!-- MOBILE SEARCH -->
     <div class="mobile-search-bar">
-      <form action="../product.htm" method="get" onsubmit="return handleSearch(event)">
+      <form action="/category/product/product.htm" method="get" onsubmit="return handleSearch(event)">
         <input type="text" name="query" placeholder="Tìm kiếm sản phẩm..." />
         <button type="submit"><i class="fas fa-search"></i></button>
       </form>
@@ -131,10 +131,10 @@
 
       <ul class="mobile-nav-list">
         <li class="mobile-nav-item">
-          <a href="/">Trang chủ</a>
+          <a href="/index.htm">Trang chủ</a>
         </li>
         <li class="mobile-nav-item">
-          <a href="/product.htm">Sản phẩm</a>
+          <a href="/category/product/product.htm">Sản phẩm</a>
         </li>
         <li class="mobile-nav-item">
           <a href="#">Khuyến mãi</a>

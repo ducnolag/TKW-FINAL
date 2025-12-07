@@ -37,7 +37,7 @@ document.addEventListener("htmlIncluded", function () {
       sessionStorage.removeItem("currentUser");
       checkAuthState();
       // Redirect to home page
-      window.location.href = "../index.htm";
+      window.location.href = "/index.htm";
     }
   }
 
@@ -107,7 +107,7 @@ document.addEventListener("htmlIncluded", function () {
   // Tải megamenu từ product.json
   async function loadMegaMenu() {
     try {
-      const response = await fetch('./data/product.json');
+      const response = await fetch('/data/product.json');
       const data = await response.json();
       const megaCategory = document.getElementById('megaCategory');
       
@@ -127,12 +127,12 @@ document.addEventListener("htmlIncluded", function () {
           column.className = 'mega-column';
           
           // Thêm heading là link đến danh mục
-          let columnHTML = `<h4><a href="../product.htm?category=${key}" style="color: inherit; text-decoration: none; display: block;">${label}</a></h4>`;
+          let columnHTML = `<h4><a href="/category/product/product.htm?category=${key}" style="color: inherit; text-decoration: none; display: block;">${label}</a></h4>`;
           
           // Lấy tối đa 5 sản phẩm từng danh mục
-          data[key].slice(0, 5).forEach(product => {
-            columnHTML += `<a href="../product.htm?category=${key}">${product.title}</a>`;
-          });
+          // data[key].slice(0, 5).forEach(product => {
+          //   columnHTML += `<a href="/category/product/product.htm?category=${key}">${product.title}</a>`;
+          // });
           
           column.innerHTML = columnHTML;
           megaCategory.appendChild(column);
@@ -151,7 +151,8 @@ document.addEventListener("htmlIncluded", function () {
 function handleSearch(event) {
   const query = event.target.querySelector('input[name="query"]').value.trim();
   if (query) {
-    window.location.href = '../product.htm?query=' + encodeURIComponent(query);
+    window.location.href = '/category/product/product.htm?query=' + encodeURIComponent(query);
   }
   return false;
 }
+
