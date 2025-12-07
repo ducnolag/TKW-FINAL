@@ -428,11 +428,204 @@
         grid-template-columns: repeat(2, 1fr);
       }
     }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background-color: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      max-width: 500px;
+      width: 90%;
+      animation: slideUp 0.3s ease;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-header h2 {
+      font-size: 22px;
+      color: #333;
+      margin: 0;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 28px;
+      color: #999;
+      cursor: pointer;
+      padding: 0;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.3s;
+    }
+
+    .close-btn:hover {
+      color: #e74c3c;
+    }
+
+    .modal-body {
+      margin-bottom: 25px;
+    }
+
+    .product-info-modal {
+      margin-bottom: 20px;
+    }
+
+    .product-name-modal {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .product-price-modal {
+      font-size: 20px;
+      font-weight: bold;
+      color: #e74c3c;
+      margin-bottom: 15px;
+    }
+
+    .quantity-section-modal {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .quantity-label-modal {
+      font-size: 16px;
+      color: #333;
+      font-weight: 500;
+    }
+
+    .quantity-controls-modal {
+      display: flex;
+      align-items: center;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .quantity-btn-modal {
+      width: 40px;
+      height: 40px;
+      border: none;
+      background: white;
+      cursor: pointer;
+      font-size: 20px;
+      transition: background 0.3s;
+    }
+
+    .quantity-btn-modal:hover {
+      background: #f5f5f5;
+    }
+
+    .quantity-input-modal {
+      width: 60px;
+      height: 40px;
+      border: none;
+      border-left: 1px solid #ddd;
+      border-right: 1px solid #ddd;
+      text-align: center;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 15px;
+    }
+
+    .modal-btn {
+      flex: 1;
+      padding: 15px;
+      border: 2px solid #e74c3c;
+      background: white;
+      color: #e74c3c;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+
+    .modal-btn:hover {
+      background: #e74c3c;
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .modal-btn-primary {
+      background: #e74c3c;
+      color: white;
+    }
+
+    .modal-btn-primary:hover {
+      background: #c0392b;
+      border-color: #c0392b;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .modal-content {
+        padding: 30px 20px;
+      }
+
+      .modal-actions {
+        flex-direction: column;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="breadcrumb">
-    <a href="index.html">Trang chủ</a>
+    <a href="index.htm">Trang chủ</a>
     <span>></span>
     <span id="breadcrumbCategory">Tất cả sản phẩm</span>
   </div>
@@ -487,11 +680,50 @@
     </main>
   </div>
 
+  <!-- Modal for Quick Action -->
+  <div class="modal" id="quickActionModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Tùy chọn sản phẩm</h2>
+        <button class="close-btn" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="product-info-modal">
+          <div class="product-name-modal" id="modalProductName"></div>
+          <div class="product-price-modal" id="modalProductPrice"></div>
+        </div>
+        <div class="quantity-section-modal">
+          <span class="quantity-label-modal">Số lượng:</span>
+          <div class="quantity-controls-modal">
+            <button class="quantity-btn-modal" onclick="decreaseQuantityModal()">−</button>
+            <input type="number" class="quantity-input-modal" id="modalQuantity" value="1" min="1" max="99">
+            <button class="quantity-btn-modal" onclick="increaseQuantityModal()">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-btn" onclick="addToCartFromModal()">
+          🛒 Thêm vào giỏ
+        </button>
+        <button class="modal-btn modal-btn-primary" onclick="buyNowFromModal()">
+          ⚡ Mua ngay
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
     let allData = null;
     let currentCategory = 'all';
     let currentView = 'grid';
     let currentSort = 'default';
+
+    // Lấy category từ URL query parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryFromURL = urlParams.get('category');
+    if (categoryFromURL) {
+      currentCategory = categoryFromURL;
+    }
 
     const productsContainer = document.getElementById('productsContainer');
     const pageTitle = document.getElementById('pageTitle');
@@ -507,11 +739,11 @@
 
     function createProductHTML(item) {
       const statusButton = item.status === 'soldout' 
-        ? '<button class="btn">TÙY CHỌN</button>'
-        : '<button class="btn btn-primary">MUA HÀNG</button>';
+        ? `<button class="btn" onclick="event.stopPropagation(); openModal(${item.id}, '${item.title}', ${item.price_current});">TÙY CHỌN</button>`
+        : `<button class="btn btn-primary" onclick="event.stopPropagation(); openModal(${item.id}, '${item.title}', ${item.price_current});">MUA HÀNG</button>`;
       
       return `
-        <div class="product-item">
+        <div class="product-item" onclick="window.location.href='detail.htm?id=${item.id}'" style="cursor: pointer;">
           <div class="product-image">
             ${item.image ? `<img src="${item.image}" alt="${item.title}">` : `<img src="https://via.placeholder.com/280x250/f5f5f5/999?text=${encodeURIComponent(item.title)}" alt="${item.title}">`}
           </div>
@@ -571,6 +803,16 @@
       breadcrumbCategory.textContent = titleText;
       categoryTitle.textContent = titleText;
 
+      // Cập nhật sidebar - đánh dấu danh mục hiện tại
+      const menuItems = document.querySelectorAll('#menu li[data-category]');
+      menuItems.forEach(item => {
+        if (item.getAttribute('data-category') === category) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+
       // Hiển thị sản phẩm
       if (products.length > 0) {
         productsContainer.innerHTML = products.map(createProductHTML).join('');
@@ -621,17 +863,21 @@
 
     const getData = async () => {
       try {
-        const response = await fetch('data/product.json');
+        console.log('Đang tải dữ liệu sản phẩm...');
+        const response = await fetch('./data/product.json');
+        
+        console.log('Response status:', response.status);
         
         if (!response.ok) {
-          throw new Error('Không thể tải file product.json');
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
         
         allData = await response.json();
+        console.log('Dữ liệu đã tải:', allData);
         displayProducts(currentCategory);
       } catch (error) {
-        console.error('Lỗi khi tải file:', error.message);
-        productsContainer.innerHTML = `<div style="padding: 40px; text-align: center; color: #e74c3c;">Lỗi: ${error.message}</div>`;
+        console.error('Lỗi khi tải file:', error);
+        productsContainer.innerHTML = `<div style="padding: 40px; text-align: center; color: #e74c3c;">❌ Lỗi: ${error.message}<br/>Kiểm tra console để xem chi tiết</div>`;
       }
     }
 
@@ -654,6 +900,108 @@
 
     menuToggle.addEventListener('click', openSidebar);
     sidebarOverlay.addEventListener('click', closeSidebarMenu);
+
+    // Modal Functions
+    let currentModalProduct = {
+      id: null,
+      title: null,
+      price: null,
+      image: null
+    };
+
+    function openModal(productId, productTitle, productPrice) {
+      currentModalProduct = {
+        id: productId,
+        title: productTitle,
+        price: productPrice
+      };
+
+      document.getElementById('modalProductName').textContent = productTitle;
+      document.getElementById('modalProductPrice').textContent = formatPrice(productPrice);
+      document.getElementById('modalQuantity').value = 1;
+      document.getElementById('quickActionModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('quickActionModal').classList.remove('active');
+      currentModalProduct = { id: null, title: null, price: null, image: null };
+    }
+
+    function increaseQuantityModal() {
+      const input = document.getElementById('modalQuantity');
+      const current = parseInt(input.value);
+      if (current < 99) {
+        input.value = current + 1;
+      }
+    }
+
+    function decreaseQuantityModal() {
+      const input = document.getElementById('modalQuantity');
+      const current = parseInt(input.value);
+      if (current > 1) {
+        input.value = current - 1;
+      }
+    }
+
+    function addToCartFromModal() {
+      const quantity = parseInt(document.getElementById('modalQuantity').value);
+      
+      // Lấy giỏ hàng từ localStorage
+      let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      
+      // Kiểm tra sản phẩm đã tồn tại trong giỏ chưa
+      const existingItem = cart.find(item => item.id === currentModalProduct.id);
+      
+      if (existingItem) {
+        existingItem.quantity += quantity;
+      } else {
+        cart.push({
+          id: currentModalProduct.id,
+          title: currentModalProduct.title,
+          price: currentModalProduct.price,
+          quantity: quantity,
+          image: ''
+        });
+      }
+      
+      // Lưu giỏ hàng
+      localStorage.setItem('cart', JSON.stringify(cart));
+      
+      alert(`✅ Đã thêm ${quantity} sản phẩm vào giỏ hàng!`);
+      closeModal();
+    }
+
+    function buyNowFromModal() {
+      const quantity = parseInt(document.getElementById('modalQuantity').value);
+      
+      // Lấy giỏ hàng từ localStorage
+      let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      
+      // Xóa giỏ hàng cũ
+      cart = [];
+      
+      // Thêm sản phẩm hiện tại
+      cart.push({
+        id: currentModalProduct.id,
+        title: currentModalProduct.title,
+        price: currentModalProduct.price,
+        quantity: quantity,
+        image: ''
+      });
+      
+      // Lưu giỏ hàng
+      localStorage.setItem('cart', JSON.stringify(cart));
+      
+      // Chuyển đến trang thanh toán
+      window.location.href = 'checkout.htm';
+    }
+
+    // Đóng modal khi bấm ra ngoài
+    document.getElementById('quickActionModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeModal();
+      }
+    });
 
     getData();
   </script>

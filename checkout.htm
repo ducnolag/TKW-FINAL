@@ -370,27 +370,32 @@
             return JSON.parse(currentUser);
         }
 
-        // Lấy giỏ hàng (demo)
+        // Lấy giỏ hàng từ localStorage
         function getCartItems() {
-            // Demo data - trong thực tế lấy từ sessionStorage hoặc API
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            return cart.length > 0 ? cart : getDemoCart();
+        }
+        
+        // Demo data nếu giỏ hàng trống
+        function getDemoCart() {
             return [
                 {
                     id: 1,
-                    name: "Bánh mì thịt nướng",
+                    title: "Bánh mì thịt nướng",
                     price: 25000,
                     quantity: 2,
                     image: "🥖"
                 },
                 {
                     id: 2,
-                    name: "Phở bò",
+                    title: "Phở bò",
                     price: 45000,
                     quantity: 1,
                     image: "🍜"
                 },
                 {
                     id: 3,
-                    name: "Cà phê sữa",
+                    title: "Cà phê sữa",
                     price: 20000,
                     quantity: 2,
                     image: "☕"
@@ -458,9 +463,10 @@
             // Giả lập đặt hàng
             alert(`✅ Đặt hàng thành công!\n\nTổng tiền: ${formatMoney(orderData.total)}\nPhương thức: ${paymentMethod.textContent.trim()}\n\nCảm ơn bạn đã đặt hàng!`);
             
-            // Chuyển về trang chủ hoặc trang cảm ơn
+            // Xóa giỏ hàng và chuyển về trang chủ
+            localStorage.removeItem('cart');
             setTimeout(() => {
-                window.location.href = "../index.htm";
+                window.location.href = "index.htm";
             }, 2000);
         }
 
@@ -478,11 +484,11 @@
                         Thanh toán
                     </h1>
                     <div class="header-actions">
-                        <a href="../index.htm" class="btn btn-secondary">
+                        <a href="product.htm" class="btn btn-secondary">
                             <i class="fas fa-arrow-left"></i>
                             Tiếp tục mua
                         </a>
-                        <a href="../account/profile.html" class="btn btn-secondary">
+                        <a href="account/profile.html" class="btn btn-secondary">
                             <i class="fas fa-user"></i>
                             ${user.username}
                         </a>

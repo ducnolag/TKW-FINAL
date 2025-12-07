@@ -103,4 +103,46 @@ document.addEventListener("htmlIncluded", function () {
       closeMobileMenu();
     }
   });
+
+  // Tải megamenu từ product.json
+  async function loadMegaMenu() {
+    try {
+      const response = await fetch('./data/product.json');
+      const data = await response.json();
+      const megaCategory = document.getElementById('megaCategory');
+      
+      if (!megaCategory) return;
+      
+      megaCategory.innerHTML = '';
+      
+      // Tạo column cho từng danh mục (sale, newsale)
+      const categories = {
+        'sale': 'Sản Phẩm Khuyến Mãi',
+        'newsale': 'Sản Phẩm Mới'
+      };
+      
+      for (const [key, label] of Object.entries(categories)) {
+        if (data[key]) {
+          const column = document.createElement('div');
+          column.className = 'mega-column';
+          
+          // Thêm heading là link đến danh mục
+          let columnHTML = `<h4><a href="../product.htm?category=${key}" style="color: inherit; text-decoration: none; display: block;">${label}</a></h4>`;
+          
+          // Lấy tối đa 5 sản phẩm từng danh mục
+          data[key].slice(0, 5).forEach(product => {
+            columnHTML += `<a href="../product.htm?category=${key}">${product.title}</a>`;
+          });
+          
+          column.innerHTML = columnHTML;
+          megaCategory.appendChild(column);
+        }
+      }
+    } catch (error) {
+      console.error('Lỗi khi tải megamenu:', error);
+    }
+  }
+  
+  // Gọi hàm khi DOM sẵn sàng - phải chạy TRONG htmlIncluded event
+  loadMegaMenu();
 });
