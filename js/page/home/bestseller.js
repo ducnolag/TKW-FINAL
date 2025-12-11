@@ -17,51 +17,57 @@ document.addEventListener('htmlIncluded', function () {
       wrapper.innerHTML = products.map(item => `
         <div class="swiper-slide">
           <div class="item_product_main">
-            <img src="${item.image}" alt="${item.title}" class="product-image">
+            <a href="/category/detail/detail.htm?id=${item.id}" style="text-decoration: none; color: inherit;">
+              <img src="${item.image}" alt="${item.title}" class="product-image">
 
-            <div class="product-info">
-              <h3 class="product-title">${item.title}</h3>
+              <div class="product-info">
+                <h3 class="product-title">${item.title}</h3>
 
-              <div class="product-price">
-                <span class="price-current">${item.price_current.toLocaleString()}₫</span>
-                <span class="price-old">${item.price_old.toLocaleString()}₫</span>
+                <div class="product-price">
+                  <span class="price-current">${item.price_current.toLocaleString()}₫</span>
+                  <span class="price-old">${item.price_old.toLocaleString()}₫</span>
+                </div>
               </div>
-
-              <button class="product-button ${item.status === 'soldout' ? 'sold-out' : ''}">
+            </a>
+            
+            <div class="product-button-wrapper">
+              <a href="/category/detail/detail.htm?id=${item.id}" 
+                 class="product-button ${item.status === 'soldout' ? 'sold-out' : ''}" 
+                 style="text-decoration: none;">
                 Tùy Chọn
-              </button>
+              </a>
             </div>
           </div>
         </div>
       `).join('');
-    })
 
-    // 3. Sau khi render xong thì khởi tạo Swiper
-    .then(() => {
-      new Swiper('.swiper_product_sale', {
-        slidesPerView: 4,
-        spaceBetween: 24,
-        speed: 600,
-        loop: true,
+      // 3. Sau khi render xong thì khởi tạo Swiper
+      setTimeout(() => {
+        new Swiper('.swiper_product_sale', {
+          slidesPerView: 4,
+          spaceBetween: 24,
+          speed: 600,
+          loop: true,
 
-        autoplay: {
-          delay: 2500,
-          disableOnInteraction: false,
-        },
+          autoplay: {
+            delay: 2500,
+            disableOnInteraction: false,
+          },
 
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
 
-        grabCursor: true,
+          grabCursor: true,
 
-        breakpoints: {
-          320:  { slidesPerView: 1, spaceBetween: 16 },
-          640:  { slidesPerView: 2, spaceBetween: 16 },
-          992:  { slidesPerView: 3, spaceBetween: 20 },
-          1200: { slidesPerView: 4, spaceBetween: 24 }
-        }
-      });
+          breakpoints: {
+            320:  { slidesPerView: 1, spaceBetween: 16 },
+            640:  { slidesPerView: 2, spaceBetween: 16 },
+            992:  { slidesPerView: 3, spaceBetween: 20 },
+            1200: { slidesPerView: 4, spaceBetween: 24 }
+          }
+        });
+      }, 100);
     });
 });
