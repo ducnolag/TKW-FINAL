@@ -1,4 +1,4 @@
-        const productDetail = document.getElementById('productDetail');
+const productDetail = document.getElementById('productDetail');
         const breadcrumbProduct = document.getElementById('breadcrumbProduct');
 
         function formatPrice(price) {
@@ -172,6 +172,12 @@
                     productDetail.innerHTML = createDetailHTML(product);
                     breadcrumbProduct.textContent = product.title;
                     document.title = product.title + ' - Chi tiết sản phẩm';
+                    
+                    // Cập nhật page-title với tên sản phẩm
+                    const pageTitleElement = document.getElementById('pageTitle');
+                    if (pageTitleElement && product.title) {
+                      pageTitleElement.textContent = product.title;
+                    }
                 } else {
                     productDetail.innerHTML = '<div class="error">Không tìm thấy sản phẩm này!</div>';
                 }

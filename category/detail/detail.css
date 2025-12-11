@@ -1,34 +1,7 @@
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f8f8;
-        }
-
-        .breadcrumb {
-            background: white;
-            padding: 15px 20px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .breadcrumb a {
-            color: #666;
-            text-decoration: none;
-            margin: 0 5px;
-        }
-
-        .breadcrumb span {
-            color: #e74c3c;
-            margin: 0 5px;
-        }
 
         .detail-container {
             max-width: 1200px;
-            margin: 40px auto;
+            margin: 20px auto;
             padding: 20px;
         }
 
@@ -212,18 +185,6 @@
             border-color: #c0392b;
         }
 
-        .back-link {
-            display: inline-block;
-            margin-bottom: 20px;
-            color: #e74c3c;
-            text-decoration: none;
-            font-size: 16px;
-            transition: color 0.3s;
-        }
-
-        .back-link:hover {
-            color: #c0392b;
-        }
 
         .loading {
             text-align: center;

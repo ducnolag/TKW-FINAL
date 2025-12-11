@@ -165,6 +165,26 @@ document.addEventListener("htmlIncluded", function () {
       window.updateCartCount();
     }
   });
+
+  // ✅ Highlight menu item dựa trên URL hiện tại
+  const currentPath = window.location.pathname;
+  const navItems = document.querySelectorAll('.nav-item');
+  
+  navItems.forEach(item => {
+    const link = item.querySelector('.nav-link');
+    if (link) {
+      const href = link.getAttribute('href');
+      if (href && href !== '#' && currentPath.includes(href.replace('/index.htm', ''))) {
+        navItems.forEach(el => el.classList.remove('active'));
+        item.classList.add('active');
+      }
+    }
+  });
+  
+  if (currentPath === '/' || currentPath === '/index.htm') {
+    navItems.forEach(el => el.classList.remove('active'));
+    navItems[0]?.classList.add('active');
+  }
 });
 
 // Hàm xử lý tìm kiếm - chạy NGOÀI htmlIncluded event
