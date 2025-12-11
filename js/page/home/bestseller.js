@@ -34,7 +34,7 @@ document.addEventListener('htmlIncluded', function () {
               <a href="/category/detail/detail.htm?id=${item.id}" 
                  class="product-button ${item.status === 'soldout' ? 'sold-out' : ''}" 
                  style="text-decoration: none;">
-                Tùy Chọn
+                Xem chi tiết
               </a>
             </div>
           </div>

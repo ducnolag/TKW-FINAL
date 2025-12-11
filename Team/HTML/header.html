@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiệm Ăn Vặt Ngon Nhất Thế Giới</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+
+    <style>
+        /* --- 1. CÀI ĐẶT CHUNG --- */
+        :root { --primary-orange: #ff6b35; --primary-red: #d82b2b; --arrow-red: #ea4b25; --text-dark: #333; --promo-bg: #e6dccf; --star-yellow: #ffc107; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+        body { background-color: #ffffff; overflow-x: hidden; } 
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        .container { width: 1200px; max-width: 100%; margin: 0 auto; padding: 0 15px; }
+
+        /* --- 2. HEADER STYLES --- */
+        header { width: 100%; background-color: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.05); position: relative; z-index: 100;}
+        .top-bar { background: linear-gradient(90deg, var(--primary-orange) 0%, var(--primary-red) 100%); color: #fff; padding: 8px 0; font-size: 14px; }
+        .top-bar .container { display: flex; justify-content: space-between; align-items: center; }
+        .top-left, .top-right { display: flex; align-items: center; gap: 20px; }
+        .contact-item { display: flex; align-items: center; gap: 8px; }
+        .separator { opacity: 0.5; }
+
+        .main-header { padding: 15px 0; background-color: #fff; position: relative; }
+        .main-header .container { display: flex; align-items: center; justify-content: space-between; }
+        .logo img { height: 50px; object-fit: contain; }
+        .main-menu { display: flex; gap: 20px; font-weight: 500; color: var(--text-dark); font-size: 15px; }
+        .main-menu li { position: relative; cursor: pointer; transition: color 0.3s; white-space: nowrap; }
+        .main-menu li:hover { color: var(--primary-orange); }
+        .right-actions { display: flex; align-items: center; gap: 15px; }
+        .search-box { position: relative; width: 250px; }
+        .search-box input { width: 100%; padding: 10px 40px 10px 15px; border-radius: 25px; border: 1px solid #ddd; outline: none; font-size: 14px; }
+        .search-box button { position: absolute; right: 5px; top: 50%; transform: translateY(-50%); background-color: #ff5722; border: none; color: white; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .cart-icon { position: relative; font-size: 18px; color: #666; width: 38px; height: 38px; border: 1px solid #ddd; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .cart-badge { position: absolute; top: -5px; right: -5px; background-color: #ff5722; color: white; font-size: 10px; font-weight: bold; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .menu-toggle { display: none; font-size: 24px; color: var(--text-dark); cursor: pointer; margin-left: 15px; }
+
+        @media (max-width: 1024px) {
+            .main-menu { display: none; position: absolute; top: 100%; left: 0; width: 100%; background-color: white; flex-direction: column; padding: 10px 0; box-shadow: 0 5px 10px rgba(0,0,0,0.1); border-top: 1px solid #eee; z-index: 1000; gap: 0; }
+            .main-menu.active { display: flex; }
+            .main-menu li { width: 100%; padding: 15px 20px; border-bottom: 1px solid #f5f5f5; }
+            .menu-toggle { display: block; }
+            .top-bar .container { flex-direction: row; justify-content: space-between; gap: 0; }
+            .top-left .separator, .top-left .contact-item:nth-child(3) { display: none; }
+            .top-right .contact-item:last-child { display: none; }
+            .main-header .container { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; }
+            .logo { order: 1; flex: 1; }
+            .right-actions { display: contents; }
+            .cart-icon { order: 2; margin-left: 10px; }
+            .menu-toggle { order: 3; margin-left: 15px; }
+            .search-box { order: 4; width: 100%; margin-top: 15px; margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-left">
+                <div class="contact-item"><i class="fa-solid fa-phone"></i> <span>0843373274</span></div>
+                <span class="separator">|</span>
+                <div class="contact-item"><i class="fa-regular fa-envelope"></i> <span>tavnntg@gmail.com</span></div>
+            </div>
+            <div class="top-right">
+                <div class="contact-item"><i class="fa-solid fa-user"></i> <a href="#">Tài khoản</a></div>
+                <div class="contact-item"><i class="fa-solid fa-right-from-bracket"></i> <a href="#">Thoát</a></div>
+            </div>
+        </div>
+    </div>
+    <div class="main-header">
+        <div class="container">
+            <a href="#" class="logo"><img src="https://via.placeholder.com/150x60/ffffff/ff6b35?text=LOGO" alt="Logo"></a>
+            <ul class="main-menu" id="navMenu">
+                <li><a href="#">Trang chủ</a></li>
+                <li><a href="#">Giới thiệu</a></li>
+                <li><a href="products.html">Sản phẩm <i class="fa-solid fa-caret-down"></i></a></li>
+                <li><a href="promotion.html">Khuyến mãi <i class="fa-solid fa-caret-down"></i></a></li>
+                <li><a href="#">Tin tức</a></li>
+                <li><a href="#">Liên hệ</a></li>
+            </ul>
+            <div class="right-actions">
+                <div class="search-box">
+                    <input type="text" placeholder="Tìm kiếm...">
+                    <button><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
+                <div class="cart-icon"><i class="fa-solid fa-clipboard-list"></i><span class="cart-badge">0</span></div>
+                <div class="menu-toggle" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></div>
+            </div>
+        </div>
+    </div>
+</header>
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<script>
+    /* 1. Hàm Toggle Menu:
+   Nên để function này độc lập để HTML (nút bấm) có thể gọi được.
+*/
+function toggleMenu() {
+    var nav = document.getElementById("navMenu");
+    if (nav) {
+        nav.classList.toggle("active");
+    }
+}
+</script>
+</body>
+</html>

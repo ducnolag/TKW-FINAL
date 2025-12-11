@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiệm Ăn Vặt Ngon Nhất Thế Giới</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+
+    <style>
+        /* --- 1. CÀI ĐẶT CHUNG --- */
+        :root { --primary-orange: #ff6b35; --primary-red: #d82b2b; --arrow-red: #ea4b25; --text-dark: #333; --promo-bg: #e6dccf; --star-yellow: #ffc107; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+        body { background-color: #ffffff; overflow-x: hidden; } 
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        .container { width: 1200px; max-width: 100%; margin: 0 auto; padding: 0 15px; }
+
+        /* --- 3. SLIDER STYLES (BANNER) --- */
+        .TAVNHTG-slider-section { padding: 40px 0; overflow: hidden; position: relative; }
+        .swiper { width: 100%; padding-bottom: 50px !important; overflow: visible !important; }
+        .mySwiper .swiper-slide { width: 65%; height: auto; border-radius: 15px; overflow: hidden; transition: all 0.4s ease; opacity: 0.6; transform: scale(0.9); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .mySwiper .swiper-slide-active { opacity: 1; transform: scale(1); box-shadow: 0 15px 30px rgba(0,0,0,0.2); z-index: 10; }
+        .mySwiper .swiper-slide img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 15px; }
+        
+        /* --- SỬA LỖI NÚT BẤM BANNER --- */
+        .swiper-button-next, .swiper-button-prev { width: 60px !important; height: 60px !important; min-width: 60px !important; background-color: var(--arrow-red); border: 3px solid #fff; border-radius: 50% !important; display: flex !important; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.2); opacity: 1 !important; z-index: 20; top: 50%; transform: translateY(-50%); --swiper-navigation-color: transparent; color: #fff !important; outline: none; }
+        .swiper-button-next::after, .swiper-button-prev::after { font-family: "Font Awesome 6 Free" !important; font-weight: 900 !important; font-size: 24px !important; border: none; color: #fff; display: block; line-height: 1; }
+        .swiper-button-next::after { content: "\f054" !important; }
+        .swiper-button-prev::after { content: "\f053" !important; }
+        .swiper-button-next:hover, .swiper-button-prev:hover { background-color: #d33815; transform: translateY(-50%) scale(1.1) !important; box-shadow: 0 6px 15px rgba(0,0,0,0.25); }
+        .swiper-button-next { right: 15% !important; }
+        .swiper-button-prev { left: 15% !important; }
+        @media (max-width: 768px) { .swiper-button-next, .swiper-button-prev { width: 45px !important; height: 45px !important; min-width: 45px !important; } .swiper-button-next::after, .swiper-button-prev::after { font-size: 18px !important; } .swiper-button-next { right: 10px !important; } .swiper-button-prev { left: 10px !important; } }
+
+        /* --- 5. TODAY'S MENU (GRID RESPONSIVE & WAVES) --- */
+        .today-menu-section { margin-top: 0; padding-top: 40px; padding-bottom: 50px; background-color: #fffaf0; border-top: 3px solid #b1b1b1; position: relative; overflow: visible; }
+        .today-menu-section::before { content: ""; position: absolute; top: -40px; left: 0; width: 100%; height: 50px; background: radial-gradient(ellipse 25% 100% at 50% 100%, rgba(220, 65, 50, 0.7) 0%, rgba(210, 58, 48, 0.5) 30%, rgba(200, 50, 42, 0.3) 60%, transparent 100%), radial-gradient(ellipse 20% 90% at 15% 100%, rgba(215, 60, 50, 0.65) 0%, rgba(205, 52, 45, 0.45) 35%, rgba(195, 45, 40, 0.25) 65%, transparent 100%), radial-gradient(ellipse 20% 90% at 85% 100%, rgba(215, 60, 50, 0.65) 0%, rgba(205, 52, 45, 0.45) 35%, rgba(195, 45, 40, 0.25) 65%, transparent 100%), radial-gradient(ellipse 100% 100% at 50% 100%, rgba(200, 50, 40, 0.35) 0%, rgba(210, 55, 45, 0.25) 40%, transparent 80%); clip-path: ellipse(50% 100% at 50% 100%); filter: blur(10px); pointer-events: none; z-index: -1; animation: waveRoll1 6s ease-in-out infinite; }
+        .today-menu-section::after { content: ""; position: absolute; top: -30px; left: 0; width: 100%; height: 40px; background: radial-gradient(ellipse 22% 100% at 50% 100%, rgba(230, 75, 60, 0.6) 0%, rgba(220, 68, 58, 0.4) 30%, rgba(210, 60, 50, 0.2) 65%, transparent 100%), radial-gradient(ellipse 18% 85% at 18% 100%, rgba(225, 70, 58, 0.55) 0%, rgba(215, 62, 52, 0.38) 35%, rgba(205, 55, 48, 0.2) 68%, transparent 100%), radial-gradient(ellipse 18% 85% at 82% 100%, rgba(225, 70, 58, 0.55) 0%, rgba(215, 62, 52, 0.38) 35%, rgba(205, 55, 48, 0.2) 68%, transparent 100%), radial-gradient(ellipse 100% 100% at 50% 100%, rgba(210, 60, 50, 0.3) 0%, rgba(220, 65, 55, 0.2) 40%, transparent 75%); clip-path: ellipse(50% 100% at 50% 100%); filter: blur(8px); pointer-events: none; z-index: -1; animation: waveRoll2 7s ease-in-out infinite; animation-delay: 0.8s; }
+        @keyframes waveRoll1 { 0% { transform: translateX(-30px) scaleX(1) scaleY(1); opacity: 0.85; } 25% { transform: translateX(0px) scaleX(1.05) scaleY(1.15); opacity: 0.9; } 50% { transform: translateX(30px) scaleX(0.95) scaleY(0.9); opacity: 0.88; } 75% { transform: translateX(0px) scaleX(1.03) scaleY(1.1); opacity: 0.92; } 100% { transform: translateX(-30px) scaleX(1) scaleY(1); opacity: 0.85; } }
+        @keyframes waveRoll2 { 0% { transform: translateX(25px) scaleX(1) scaleY(1); opacity: 0.8; } 25% { transform: translateX(0px) scaleX(0.96) scaleY(0.92); opacity: 0.75; } 50% { transform: translateX(-25px) scaleX(1.06) scaleY(1.18); opacity: 0.88; } 75% { transform: translateX(0px) scaleX(1.04) scaleY(1.12); opacity: 0.85; } 100% { transform: translateX(25px) scaleX(1) scaleY(1); opacity: 0.8; } }
+        
+        .menu-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 20px; align-items: stretch; }
+        .menu-item { background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.3s; display: flex; flex-direction: column; align-items: center; text-align: center; height: 100%; min-width: 0; }
+        .menu-item:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .promo-card { background-color: var(--promo-bg); padding: 50px 25px; justify-content: center; }
+        .promo-logo { width: 80px; margin-bottom: 20px; opacity: 0.8; mix-blend-mode: multiply; }
+        .promo-card h2 { color: #d82b2b; font-size: 24px; margin-bottom: 10px; font-weight: 900; text-transform: uppercase; }
+        .promo-card p { font-size: 14px; color: #555; margin-bottom: 25px; line-height: 1.5; }
+        .shop-name { font-weight: bold; color: #d82b2b; }
+        .btn-view-menu { background-color: #d82b2b; color: #fff; padding: 10px 25px; border-radius: 30px; font-size: 13px; font-weight: bold; text-transform: uppercase; box-shadow: 0 4px 10px rgba(216, 43, 43, 0.3); transition: 0.3s; }
+        .btn-view-menu:hover { background-color: #b71c1c; transform: scale(1.05); }
+        .product-card { padding-bottom: 30px; }
+        .p-img { width: 100%; aspect-ratio: 4/5; overflow: hidden; margin-bottom: 20px; }
+        .p-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .product-card:hover .p-img img { transform: scale(1.1); }
+        .product-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 15px; color: #333; }
+        .btn-order { background-color: #d82b2b; color: #fff; padding: 6px 20px; border-radius: 20px; font-size: 12px; font-weight: bold; transition: 0.3s; }
+        .btn-order:hover { background-color: #ff6b35; }
+        @media (max-width: 1200px) { .menu-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; } .promo-card { grid-column: 1 / -1; padding: 40px 100px; } }
+        @media (max-width: 768px) { .menu-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; } .promo-card { grid-column: 1 / -1; padding: 40px 20px; } .promo-card h2 { font-size: 20px; } .product-card h3 { font-size: 14px; } .btn-order { padding: 5px 15px; font-size: 11px; } }
+
+        /* --- 6. ABOUT US --- */
+        .about-us-section { width: 100%; background: url('https://placehold.co/1920x600/333/999?text=Background') no-repeat center center; background-size: cover; position: relative; padding: 80px 0; color: #fff; text-align: center; }
+        .about-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 1; }
+        .about-content { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; padding: 0 20px; }
+        .about-title { font-size: 36px; font-weight: 700; margin-bottom: 25px; text-transform: capitalize; line-height: 1.3; }
+        .about-desc { font-size: 15px; line-height: 1.8; margin-bottom: 35px; color: #f0f0f0; word-wrap: break-word; }
+        .btn-see-more { display: inline-block; background-color: #ea4b25; color: #fff; padding: 12px 40px; border-radius: 30px; font-weight: bold; font-size: 16px; text-transform: capitalize; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(234, 75, 37, 0.4); }
+        .btn-see-more:hover { background-color: #c0392b; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(234, 75, 37, 0.6); }
+        @media (max-width: 768px) { .about-us-section { padding: 50px 0; height: auto; } .about-title { font-size: 24px; margin-bottom: 15px; } .about-desc { font-size: 14px; line-height: 1.6; padding: 0; } .btn-see-more { padding: 10px 30px; font-size: 14px; } }
+
+        /* --- 7. BEST SELLER SECTION --- */
+        .best-seller-section { padding: 60px 0; background-color: #fff; overflow: hidden; }
+        .bs-header-container { text-align: center; margin-bottom: 40px; }
+        .bs-subtitle { font-size: 20px; color: #333; margin-bottom: 5px; font-family: 'Times New Roman', serif; font-style: italic; }
+        .bs-main-title { font-size: 28px; font-weight: 700; color: #c0392b; margin: 0; }
+        .bs-divider { margin-top: 10px; color: #e0e0e0; font-size: 10px; letter-spacing: 5px; }
+        .bs-wrapper-container { max-width: 1200px; margin: 0 auto; position: relative; padding: 0 10px; }
+        .swiper-best-seller { padding: 20px 10px !important; margin: -20px -10px !important; overflow: hidden !important; }
+        .bs-card { background: #fff; border: 1px solid #f2f2f2; border-radius: 8px; display: flex; flex-direction: column; overflow: hidden; transition: all 0.3s ease; box-shadow: none; transform: none; height: 100%; }
+        .bs-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-color: transparent; z-index: 2; }
+        .bs-img-wrapper { background-color: #fff5e1; padding: 15px; position: relative; aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; }
+        .bs-img-wrapper img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.5s; mix-blend-mode: multiply; }
+        .bs-card:hover .bs-img-wrapper img { transform: scale(1.05); }
+        .bs-content { padding: 15px 10px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; flex-grow: 1; }
+        .bs-name { font-size: 14px; font-weight: 700; color: #333; margin: 0; line-height: 1.4; height: 40px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+        .bs-price-row { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+        .price-current { color: #d82b2b; font-weight: 700; font-size: 15px; }
+        .price-old { color: #999; text-decoration: line-through; font-size: 12px; }
+        .btn-pill-outline { display: inline-block; padding: 6px 20px; border: 1px solid #d82b2b; border-radius: 50px; color: #d82b2b; font-size: 11px; font-weight: 700; text-transform: uppercase; background: #fff; transition: all 0.3s ease; margin-top: auto; }
+        .btn-pill-outline:hover { background-color: #d82b2b; color: #fff; }
+        .bs-button-next, .bs-button-prev { width: 40px; height: 40px; border-radius: 50%; background-color: #fff; border: 1px solid #eee; color: #555; display: flex; align-items: center; justify-content: center; position: absolute; top: 35%; z-index: 20; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: 0.3s; }
+        .bs-button-next:hover, .bs-button-prev:hover { background-color: #d82b2b; color: #fff; border-color: #d82b2b; }
+        .bs-button-prev { left: -20px; } 
+        .bs-button-next { right: -20px; }
+        @media (max-width: 1250px) { .bs-button-prev { left: 10px; } .bs-button-next { right: 10px; } }
+        @media (max-width: 768px) { .bs-button-next, .bs-button-prev { display: none; } }
+
+        /* --- 8. TEAM SECTION --- */
+        .team-section { background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://placehold.co/1920x800/333/666?text=Background+Quan'); background-size: cover; background-position: center; background-attachment: fixed; padding: 80px 0 100px 0; position: relative; }
+        .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; margin-bottom: 60px; justify-items: center; }
+        .team-member { text-align: center; width: 100%; }
+        .member-avatar { width: 160px; height: 160px; margin: 0 auto 15px auto; border-radius: 50%; border: 4px solid rgba(255, 255, 255, 0.2); padding: 5px; transition: all 0.4s ease; position: relative; overflow: hidden; }
+        .member-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+        .team-member:hover .member-avatar { border-color: var(--primary-orange); transform: scale(1.1); box-shadow: 0 0 20px rgba(255, 107, 53, 0.5); }
+        .member-name { color: #fff; font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-top: 10px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .team-quote-box { background-color: #fff; max-width: 900px; margin: 0 auto; padding: 40px 50px; border-radius: 30px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative; }
+        .team-quote-box::before { content: "\201C"; font-family: serif; font-size: 60px; color: #d82b2b; position: absolute; top: 10px; left: 20px; opacity: 0.2; }
+        .team-quote-text { font-size: 15px; line-height: 1.8; color: #555; font-style: italic; font-weight: 500; }
+        @media (max-width: 1024px) { .team-grid { grid-template-columns: repeat(2, 1fr); gap: 50px 30px; } }
+        @media (max-width: 768px) { .team-grid { grid-template-columns: repeat(2, 1fr); gap: 30px 15px; } .member-avatar { width: 110px; height: 110px; } .member-name { font-size: 13px; } .team-quote-box { padding: 30px 20px; } .team-quote-text { font-size: 13px; } }
+
+        /* --- 9. NEWS SECTION --- */
+        .news-section { padding: 60px 0 80px 0; background-color: #fff; }
+        .news-title { text-align: center; font-size: 32px; font-weight: 900; color: #d82b2b; text-transform: uppercase; margin-bottom: 40px; letter-spacing: 1px; }
+        .news-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-bottom: 40px; }
+        .news-card { background: #fff; cursor: pointer; border-radius: 10px; overflow: hidden; transition: all 0.4s ease; }
+        .news-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
+        .news-card:hover .news-thumb img { transform: scale(1.1); }
+        .news-card:hover .news-heading { color: #ff6b35; }
+        .news-thumb { width: 100%; aspect-ratio: 3/2; overflow: hidden; margin-bottom: 15px; }
+        .news-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .news-content { padding: 0 10px 15px 10px; }
+        .news-heading { font-size: 15px; font-weight: 800; color: #333; text-transform: uppercase; line-height: 1.4; margin-bottom: 10px; transition: 0.3s; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .news-excerpt { font-size: 13px; color: #666; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .news-footer { text-align: center; margin-top: 20px; }
+        .btn-news-view-more { display: inline-block; background-color: #d82b2b; color: #fff; padding: 12px 50px; font-weight: 700; text-transform: uppercase; border-radius: 5px; font-size: 14px; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(216, 43, 43, 0.3); }
+        .btn-news-view-more:hover { background-color: #b71c1c; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(216, 43, 43, 0.5); }
+        @media (max-width: 1024px) { .news-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; } }
+        @media (max-width: 576px) { .news-grid { grid-template-columns: 1fr; } .news-title { font-size: 24px; margin-bottom: 25px; } }
+    </style>
+</head>
+<body>
+
+<header>
+    <div id="header-placeholder"></div>
+</header>
+
+<section class="TAVNHTG-slider-section">
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><a href="#"><img src="https://placehold.co/1200x500/ff6b35/ffffff?text=Gà+Rán+Giòn" alt="Banner 1"></a></div>
+            <div class="swiper-slide"><a href="#"><img src="https://placehold.co/1200x500/d82b2b/ffffff?text=Mì+Ý+Bò+Bằm" alt="Banner 2"></a></div>
+            <div class="swiper-slide"><a href="#"><img src="https://placehold.co/1200x500/ffc107/333333?text=Combo+Siêu+Hời" alt="Banner 3"></a></div>
+            <div class="swiper-slide"><a href="#"><img src="https://placehold.co/1200x500/4caf50/ffffff?text=Trà+Sữa+Thái" alt="Banner 4"></a></div>
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
+    </div>
+</section>
+
+<section class="today-menu-section">
+    <div class="container">
+        <div class="menu-grid">
+            <div class="menu-item promo-card">
+                <img src="https://via.placeholder.com/100x100/e6dccf/d82b2b?text=LOGO" alt="Logo" class="promo-logo">
+                <h2>HÔM NAY ĂN GÌ?</h2>
+                <p>Chào mừng bạn đến với <span class="shop-name">Tiệm Ăn Vặt Ngon Nhất Thế Giới</span>. Khám phá thực đơn phong phú và hấp dẫn ngay!</p>
+                <a href="#" class="btn-view-menu">Xem Thực Đơn</a>
+            </div>
+            
+            <div class="menu-item product-card">
+                <div class="p-img"><img src="https://placehold.co/400x500/fff/d82b2b?text=Mỳ+Cay" alt="Mỳ Cay"></div>
+                <h3>Mỳ Cay</h3>
+                <a href="#" class="btn-order">Đặt Hàng</a>
+            </div>
+            <div class="menu-item product-card">
+                <div class="p-img"><img src="https://placehold.co/400x500/fff/d82b2b?text=Mỳ+Trộn" alt="Mỳ Trộn"></div>
+                <h3>Mỳ Trộn</h3>
+                <a href="#" class="btn-order">Đặt Hàng</a>
+            </div>
+            <div class="menu-item product-card">
+                <div class="p-img"><img src="https://placehold.co/400x500/fff/d82b2b?text=Ăn+Vặt" alt="Ăn Vặt"></div>
+                <h3>Ăn Vặt</h3>
+                <a href="#" class="btn-order">Đặt Hàng</a>
+            </div>
+            <div class="menu-item product-card">
+                <div class="p-img"><img src="https://placehold.co/400x500/fff/d82b2b?text=Đồ+Uống" alt="Đồ Uống"></div>
+                <h3>Đồ Uống</h3>
+                <a href="#" class="btn-order">Đặt Hàng</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="about-us-section">
+    <div class="about-overlay"></div>
+    <div class="container about-content">
+        <h2 class="about-title">Tiệm Ăn Vặt Ngon Nhất Thế Giới</h2>
+        <p class="about-desc">
+            Tiệm hiện giao nhanh trong 30-45 phút, chỉ nhận đơn trong bán kính dưới 5km gồm các quận Đống Đa, Hoàn Kiếm và Hai Bà Trưng để đảm bảo món ăn luôn nóng hổi khi đến tay khách. Tất cả đơn hàng đều được đóng gói chuẩn chất lượng với độ nóng giữ nhiệt và đồ uống tách đá riêng, cùng mức phí ship minh bạch theo từng khu vực để khách yên tâm khi đặt món.
+        </p>
+        <a href="#" class="btn-see-more">Xem Thêm</a>
+    </div>
+</section>
+
+<section class="best-seller-section">
+        <div class="bs-header-container">
+            <div class="bs-subtitle">Best Seller</div>
+            <h2 class="bs-main-title">Món Ngon Nhất Định Phải Thử</h2>
+            <div class="bs-divider">
+                <i class="fa-solid fa-heart" style="font-size: 8px; color: #ddd;"></i> 
+                <i class="fa-solid fa-heart" style="font-size: 8px; color: #ddd;"></i> 
+                <i class="fa-solid fa-heart" style="font-size: 8px; color: #ddd;"></i>
+            </div>
+        </div>
+
+        <div class="bs-wrapper-container">
+            <div class="bs-button-prev"><i class="fa-solid fa-chevron-left"></i></div>
+            <div class="bs-button-next"><i class="fa-solid fa-chevron-right"></i></div>
+
+            <div class="swiper swiper-best-seller">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide bs-card">
+                        <div class="bs-img-wrapper"><img src="https://placehold.co/300x300/fff5e1/ff6b35?text=Top+Mo" alt="Tóp Mỡ"></div>
+                        <div class="bs-content">
+                            <h3 class="bs-name">Tóp Mỡ Rim Mắm Tỏi Ớt</h3>
+                            <div class="bs-price-row"><span class="price-current">79.088đ</span><span class="price-old">83.250đ</span></div>
+                            <a href="#" class="btn-pill-outline">MUA HÀNG</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide bs-card">
+                        <div class="bs-img-wrapper"><img src="https://placehold.co/300x300/fff5e1/d82b2b?text=Combo" alt="Combo"></div>
+                        <div class="bs-content">
+                            <h3 class="bs-name">Combo Ăn Vặt Thập Cẩm</h3>
+                            <div class="bs-price-row"><span class="price-current">76.950đ</span><span class="price-old">81.000đ</span></div>
+                            <a href="#" class="btn-pill-outline">TÙY CHỌN</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide bs-card">
+                        <div class="bs-img-wrapper"><img src="https://placehold.co/300x300/fff5e1/4caf50?text=Chan+Ga" alt="Chân Gà"></div>
+                        <div class="bs-content">
+                            <h3 class="bs-name">Chân Gà Rút Xương Sốt Thái</h3>
+                            <div class="bs-price-row"><span class="price-current">70.538đ</span><span class="price-old">74.250đ</span></div>
+                            <a href="#" class="btn-pill-outline">MUA HÀNG</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide bs-card">
+                        <div class="bs-img-wrapper"><img src="https://placehold.co/300x300/fff5e1/ffc107?text=Ga+Popcorn" alt="Gà Popcorn"></div>
+                        <div class="bs-content">
+                            <h3 class="bs-name">Gà Popcorn Chiên Lắc Phô Mai</h3>
+                            <div class="bs-price-row"><span class="price-current">44.460đ</span><span class="price-old">46.800đ</span></div>
+                            <a href="#" class="btn-pill-outline">MUA HÀNG</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide bs-card">
+                        <div class="bs-img-wrapper"><img src="https://placehold.co/300x300/fff5e1/9c27b0?text=Mi+Tron" alt="Mì Trộn"></div>
+                        <div class="bs-content">
+                            <h3 class="bs-name">Mì Trộn Indomie Đặc Biệt</h3>
+                            <div class="bs-price-row"><span class="price-current">37.350đ</span><span class="price-old">41.500đ</span></div>
+                            <a href="#" class="btn-pill-outline">TÙY CHỌN</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide bs-card">
+                        <div class="bs-img-wrapper"><img src="https://placehold.co/300x300/fff5e1/2196f3?text=Tra+Sua" alt="Trà Sữa"></div>
+                        <div class="bs-content">
+                            <h3 class="bs-name">Trà Sữa Trân Châu Đường Đen</h3>
+                            <div class="bs-price-row"><span class="price-current">30.000đ</span><span class="price-old">40.000đ</span></div>
+                            <a href="#" class="btn-pill-outline">MUA HÀNG</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide bs-card">
+                        <div class="bs-img-wrapper"><img src="https://placehold.co/300x300/fff5e1/2196f3?text=Tra+Sua" alt="Trà Sữa"></div>
+                        <div class="bs-content">
+                            <h3 class="bs-name">Trà Sữa Trân Châu Đường Đen</h3>
+                            <div class="bs-price-row"><span class="price-current">30.000đ</span><span class="price-old">40.000đ</span></div>
+                            <a href="#" class="btn-pill-outline">MUA HÀNG</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide bs-card">
+                        <div class="bs-img-wrapper"><img src="https://placehold.co/300x300/fff5e1/2196f3?text=Tra+Sua" alt="Trà Sữa"></div>
+                        <div class="bs-content">
+                            <h3 class="bs-name">Trà Sữa Trân Châu Đường Đen</h3>
+                            <div class="bs-price-row"><span class="price-current">30.000đ</span><span class="price-old">40.000đ</span></div>
+                            <a href="#" class="btn-pill-outline">MUA HÀNG</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<section class="team-section">
+    <div class="container">
+        <div class="team-grid">
+            <div class="team-member">
+                <div class="member-avatar"><img src="https://placehold.co/200x200/333/fff?text=Dat" alt="Trần Tất Đạt"></div>
+                <h4 class="member-name">Trần Tất Đạt</h4>
+            </div>
+            <div class="team-member">
+                <div class="member-avatar"><img src="https://placehold.co/200x200/333/fff?text=Chien" alt="Vũ Trọng Chiến"></div>
+                <h4 class="member-name">Vũ Trọng Chiến</h4>
+            </div>
+            <div class="team-member">
+                <div class="member-avatar"><img src="https://placehold.co/200x200/333/fff?text=Duc" alt="Nguyễn Mạnh Đức"></div>
+                <h4 class="member-name">Nguyễn Mạnh Đức</h4>
+            </div>
+            <div class="team-member">
+                <div class="member-avatar"><img src="https://placehold.co/200x200/333/fff?text=Phong" alt="Ngô Quang Phong"></div>
+                <h4 class="member-name">Ngô Quang Phong</h4>
+            </div>
+        </div>
+        <div class="team-quote-box">
+            <p class="team-quote-text">
+                "Chúng tôi là bốn con người xuất phát từ niềm đam mê chung với ẩm thực đường phố và mong muốn mang lại những trải nghiệm tốt hơn cho mọi khách hàng. Mỗi người một thế mạnh, một câu chuyện riêng, nhưng cùng chia sẻ khát vọng xây dựng một thương hiệu đồ ăn vặt tử tế, chất lượng và đáng tin cậy. Hành trình này bắt đầu từ sự giản dị, được nuôi dưỡng bằng nỗ lực mỗi ngày, và chúng tôi tự hào khi được đồng hành cùng nhau, mang đến những món ngon nhất thế giới khiến bạn cảm thấy vui hơn – dù chỉ một chút."
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="news-section">
+    <div class="container">
+        <h2 class="news-title">TIN TỨC</h2>
+        <div class="news-grid">
+            <div class="news-card">
+                <div class="news-thumb"><img src="https://placehold.co/600x400/d82b2b/fff?text=Cua+Hang+Moi" alt="Khai trương"></div>
+                <div class="news-content">
+                    <h3 class="news-heading">Tiệm Ăn Vặt đạt mốc 50 cửa hàng tại Hà Nội</h3>
+                    <p class="news-excerpt">Sự kiện khai trương cửa hàng thứ 50 là cột mốc quan trọng trong kế hoạch mở rộng kinh doanh, khẳng định vị thế thương hiệu đồ ăn vặt hàng đầu.</p>
+                </div>
+            </div>
+            <div class="news-card">
+                <div class="news-thumb"><img src="https://placehold.co/600x400/ff6b35/fff?text=Hop+Tac" alt="Hợp tác"></div>
+                <div class="news-content">
+                    <h3 class="news-heading">Hợp tác bền vững với các nông trại sạch Đà Lạt</h3>
+                    <p class="news-excerpt">Việc ký kết hợp tác chiến lược với các nông trại giúp chúng tôi đảm bảo nguồn nguyên liệu tươi ngon nhất mỗi ngày cho khách hàng.</p>
+                </div>
+            </div>
+            <div class="news-card">
+                <div class="news-thumb"><img src="https://placehold.co/600x400/4caf50/fff?text=Khai+Truong" alt="Sự kiện"></div>
+                <div class="news-content">
+                    <h3 class="news-heading">Tưng bừng khai trương cơ sở mới tại Quận Cầu Giấy</h3>
+                    <p class="news-excerpt">Vào ngày 15/06/2024, tại tuyến phố sầm uất Xuân Thủy, Tiệm Ăn Vặt chính thức ra mắt không gian mới siêu đẹp check-in.</p>
+                </div>
+            </div>
+            <div class="news-card">
+                <div class="news-thumb"><img src="https://placehold.co/600x400/ffc107/333?text=Chung+Nhan" alt="Chứng nhận"></div>
+                <div class="news-content">
+                    <h3 class="news-heading">Tiệm Ăn Vặt nhận chứng nhận Vệ Sinh An Toàn Thực Phẩm ISO</h3>
+                    <p class="news-excerpt">Chúng tôi đã đưa vào vận hành quy trình kiểm soát chất lượng mới với chứng nhận tiêu chuẩn quốc tế về an toàn vệ sinh.</p>
+                </div>
+            </div>
+        </div>
+        <div class="news-footer">
+            <a href="#" class="btn-news-view-more">XEM THÊM</a>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<script>
+// Load header từ file header.html    
+fetch('header.html')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Không thể load header.html');
+        }
+        return response.text();
+    })
+    .then(data => {
+        document.getElementById('header-placeholder').innerHTML = data;
+    })
+    .catch(error => {
+        console.error('Lỗi khi load header:', error);
+    });
+/* 2. Khởi tạo Swiper:
+   Nên bọc trong 'DOMContentLoaded' để đảm bảo HTML đã tải xong
+   trước khi JS chạy tìm phần tử.
+*/
+document.addEventListener("DOMContentLoaded", function() {
+
+    // Banner Slider
+    var swiperBanner = new Swiper(".mySwiper", {
+        slidesPerView: "auto", centeredSlides: true, spaceBetween: 100,
+        loop: true, autoplay: { delay: 3500, disableOnInteraction: false },
+        pagination: { el: ".swiper-pagination", clickable: true },
+        navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+        effect: "coverflow", coverflowEffect: { rotate: 0, stretch: 0, depth: 100, modifier: 1, slideShadows: false },
+    });
+
+    // --- Best Seller Slider (Đã chọn phiên bản đầy đủ nhất) ---
+    var swiperBestSeller = new Swiper(".swiper-best-seller", {
+        slidesPerView: 4, // Mặc định cho màn hình lớn
+        spaceBetween: 20,
+        loop: true,
+        navigation: {
+            nextEl: ".bs-button-next",
+            prevEl: ".bs-button-prev",
+        },
+        // Responsive breakpoints
+        breakpoints: {
+            320: { // Mobile nhỏ
+                slidesPerView: 2,
+                spaceBetween: 10
+            },
+            768: { // Tablet
+                slidesPerView: 3,
+                spaceBetween: 15
+            },
+            1024: { // Desktop
+                slidesPerView: 4,
+                spaceBetween: 20
+            },
+        },
+    });
+
+});
+</script>
+
+</body>
+</html>

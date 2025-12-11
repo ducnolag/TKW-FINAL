@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tất Cả Sản Phẩm - Tiệm Ăn Vặt</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- 1. IMPORT & GLOBAL STYLES (Đồng bộ với Index) --- */
+        :root { --primary-orange: #ff6b35; --primary-red: #d82b2b; --text-dark: #333; --bg-color: #fffaf0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+        body { background-color: #fff; color: var(--text-dark); }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+        .container { width: 1200px; max-width: 100%; margin: 0 auto; padding: 0 15px; }
+        /* --- 2. CSS RIÊNG CHO TRANG SẢN PHẨM --- */
+        
+        /* Breadcrumb */
+        .page-header { text-align: center; padding: 30px 0; margin-bottom: 30px; }
+        .breadcrumb { font-size: 13px; color: #888; margin-bottom: 15px; }
+        .breadcrumb span { margin: 0 5px; }
+        .breadcrumb .current { color: var(--primary-red); }
+        .page-title { font-size: 36px; font-weight: 400; color: #333; margin: 0; }
+
+        /* Layout */
+        .shop-layout { display: flex; gap: 40px; margin-bottom: 80px; align-items: flex-start; }
+        .sidebar { width: 260px; flex-shrink: 0; }
+        .shop-content { flex: 1; }
+
+        /* Sidebar Styling (Menu trái) */
+        .sidebar-block { margin-bottom: 40px; }
+        .sidebar-title { font-size: 24px; font-weight: 500; margin-bottom: 20px; color: #333; }
+        
+        .category-menu { padding: 0; }
+        .category-menu li { margin-bottom: 5px; }
+        .category-menu li a { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 10px 15px; color: #333; font-size: 15px; font-weight: 400; 
+            border-radius: 5px; transition: 0.2s;
+        }
+        
+        /* Style cho mục đang Active (Mì trộn) giống ảnh mẫu */
+        .category-menu li.cat-active a {
+            background-color: #fff5f5; /* Nền hồng nhạt */
+            color: var(--primary-red);
+            font-weight: 700;
+        }
+        .category-menu li a:hover { color: var(--primary-red); }
+        .category-menu i { font-size: 12px; color: #999; }
+        .category-menu li.cat-active i { color: var(--primary-red); }
+
+        /* Toolbar (Thanh công cụ trên lưới sản phẩm) */
+        .shop-toolbar { 
+            display: flex; justify-content: space-between; align-items: center; 
+            margin-bottom: 30px; border: 1px solid #eee; padding: 12px 20px; border-radius: 4px; 
+            background-color: #fff;
+        }
+        .toolbar-left h3 { font-size: 18px; margin: 0; font-weight: 700; } /* Text "Tất cả sản phẩm" */
+        .view-modes i { font-size: 18px; color: #ccc; cursor: pointer; margin-right: 10px; }
+        .view-modes i.active { color: #333; }
+        
+        .toolbar-right { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #555; }
+        .sort-select { border: none; font-weight: 500; color: #333; outline: none; background: transparent; cursor: pointer; }
+
+        /* Product Grid */
+        .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        
+        /* Product Card (Giống mẫu ảnh mới) */
+        .prod-item { text-align: center; background: #fff; transition: 0.3s; display: flex; flex-direction: column; }
+        .prod-img { 
+            width: 100%; aspect-ratio: 1/1; 
+            background-color: #fff5e1; /* Màu nền beige nhẹ giống ảnh */
+            margin-bottom: 20px; position: relative; overflow: hidden; 
+        }
+        .prod-img img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; mix-blend-mode: multiply; }
+        .prod-item:hover .prod-img img { transform: scale(1.05); }
+        
+        .prod-info { display: flex; flex-direction: column; align-items: center; gap: 10px; flex: 1; }
+        .prod-name { 
+            font-size: 14px; font-weight: 700; color: #333; 
+            text-transform: uppercase; line-height: 1.4; 
+            margin: 0; min-height: 40px; /* Giữ chiều cao đều */
+        }
+        
+        .prod-price-box { margin-bottom: 5px; }
+        .price-new { color: var(--primary-red); font-weight: 700; font-size: 16px; margin-right: 10px; }
+        .price-old { color: #999; text-decoration: line-through; font-size: 14px; font-weight: 400; }
+
+        /* Nút bấm (Tùy chọn / Mua hàng) */
+        .btn-prod-action {
+            display: inline-block;
+            padding: 8px 30px;
+            border: 1px solid #d82b2b;
+            color: #d82b2b;
+            background: #fff;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-top: auto;
+            transition: 0.3s;
+        }
+        .btn-prod-action:hover {
+            background: #d82b2b;
+            color: #fff;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .shop-layout { flex-direction: column; }
+            .sidebar { width: 100%; margin-bottom: 30px; }
+            .product-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .product-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+            .main-menu { display: none; } 
+            .page-title { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+<header>
+        <!-- Placeholder cho header - sẽ được load từ header.html -->
+        <div id="header-placeholder"></div>
+</header>
+
+<div class="container">
+    
+    <div class="page-header">
+        <div class="breadcrumb">
+            <a href="index.html">Trang chủ</a> <span>/</span> <span class="current">Tất cả sản phẩm</span>
+        </div>
+        <h1 class="page-title">Tất cả sản phẩm</h1>
+    </div>
+
+    <div class="shop-layout">
+        
+        <aside class="sidebar">
+            <div class="sidebar-block">
+                <h3 class="sidebar-title">Menu</h3>
+                <ul class="category-menu">
+                    <li><a href="product-detail.html">Tất Cả</a></li>
+                    <li><a href="product-detail.html">Ăn Vặt <i class="fa-solid fa-angle-down"></i></a></li>
+                    
+                    <li class="cat-active"><a href="product-detail.html">Mì trộn <i class="fa-solid fa-angle-down"></i></a></li>
+                    
+                    <li><a href="product-detail.html">Mì Cay <i class="fa-solid fa-angle-down"></i></a></li>
+                    <li><a href="product-detail.html">Đồ Ăn Kèm <i class="fa-solid fa-angle-down"></i></a></li>
+                    <li><a href="product-detail.html">Đồ Uống <i class="fa-solid fa-angle-down"></i></a></li>
+                    <li><a href="product-detail.html">Combo Theo Người <i class="fa-solid fa-angle-down"></i></a></li>
+                    <li><a href="product-detail.html">Món Ngon Phải Thử</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-block">
+                <h3 class="sidebar-title">Hướng dẫn</h3>
+                <ul class="category-menu">
+                    <li><a href="product-detail.html">Hướng dẫn mua hàng</a></li>
+                    <li><a href="product-detail.html">Hướng dẫn hủy đơn</a></li>
+                    <li><a href="product-detail.html">Hướng dẫn tra cứu đơn hàng</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="shop-content">
+            
+            <div class="shop-toolbar">
+                <div class="toolbar-left">
+                    <div class="view-modes">
+                        <i class="fa-solid fa-table-cells active"></i> <i class="fa-solid fa-list"></i> </div>
+                </div>
+                <div class="toolbar-right">
+                    <span>Sắp xếp: </span>
+                    <select class="sort-select">
+                        <option value="default">Mặc định</option>
+                        <option value="price-asc">Giá tăng dần</option>
+                        <option value="price-desc">Giá giảm dần</option>
+                    </select>
+                    <i class="fa-solid fa-angle-down" style="font-size: 12px; margin-left: 5px;"></i>
+                </div>
+            </div>
+
+            <div class="product-grid">
+                
+                <div class="prod-item">
+                    <div class="prod-img">
+                        <a href="#"><img src="https://placehold.co/400x400/fff5e1/ff6b35?text=Combo+Mi+Tron" alt="Combo Mì Trộn"></a>
+                    </div>
+                    <div class="prod-info">
+                        <h3 class="prod-name"><a href="product-detail.html">COMBO MÌ TRỘN INDOMIE (NHÓM 4 NGƯỜI)</a></h3>
+                        <div class="prod-price-box">
+                            <span class="price-new">133.000₫</span>
+                            <span class="price-old">152.550₫</span>
+                        </div>
+                        <a href="product-detail.html" class="btn-prod-action">TÙY CHỌN</a>
+                    </div>
+                </div>
+
+                <div class="prod-item">
+                    <div class="prod-img">
+                        <a href="#"><img src="https://placehold.co/400x400/fff5e1/d82b2b?text=Combo+An+Vat" alt="Combo Ăn Vặt"></a>
+                    </div>
+                    <div class="prod-info">
+                        <h3 class="prod-name"><a href="product-detail.html">COMBO ĂN VẶT THẬP CẨM (2 NGƯỜI)</a></h3>
+                        <div class="prod-price-box">
+                            <span class="price-new">105.000₫</span>
+                            <span class="price-old">117.000₫</span>
+                        </div>
+                        <a href="product-detail.html" class="btn-prod-action">MUA HÀNG</a>
+                    </div>
+                </div>
+
+                <div class="prod-item">
+                    <div class="prod-img">
+                        <a href="#"><img src="https://placehold.co/400x400/fff5e1/4caf50?text=Combo+Mi+Ga" alt="Combo Mì Gà"></a>
+                    </div>
+                    <div class="prod-info">
+                        <h3 class="prod-name"><a href="#">Combo Mì Gà (2 người)</a></h3>
+                        <div class="prod-price-box">
+                            <span class="price-new">158.000₫</span>
+                            <span class="price-old">175.500₫</span>
+                        </div>
+                        <a href="product-detail.html" class="btn-prod-action">TÙY CHỌN</a>
+                    </div>
+                </div>
+
+                <div class="prod-item">
+                    <div class="prod-img">
+                        <a href="#"><img src="https://placehold.co/400x400/fff5e1/ffc107?text=Chan+Ga" alt="Chân Gà"></a>
+                    </div>
+                    <div class="prod-info">
+                        <h3 class="prod-name"><a href="product-detail.html">Chân Gà Rút Xương Sốt Thái</a></h3>
+                        <div class="prod-price-box">
+                            <span class="price-new">70.538₫</span>
+                            <span class="price-old">74.250₫</span>
+                        </div>
+                        <a href="product-detail.html" class="btn-prod-action">MUA HÀNG</a>
+                    </div>
+                </div>
+
+                <div class="prod-item">
+                    <div class="prod-img">
+                        <a href="#"><img src="https://placehold.co/400x400/fff5e1/9c27b0?text=Top+Mo" alt="Tóp Mỡ"></a>
+                    </div>
+                    <div class="prod-info">
+                        <h3 class="prod-name"><a href="product-detail.html">Tóp Mỡ Rim Mắm Tỏi Ớt</a></h3>
+                        <div class="prod-price-box">
+                            <span class="price-new">79.088₫</span>
+                            <span class="price-old">83.250₫</span>
+                        </div>
+                        <a href="product-detail.html" class="btn-prod-action">MUA HÀNG</a>
+                    </div>
+                </div>
+
+                <div class="prod-item">
+                    <div class="prod-img">
+                        <a href="#"><img src="https://placehold.co/400x400/fff5e1/2196f3?text=Tra+Sua" alt="Trà Sữa"></a>
+                    </div>
+                    <div class="prod-info">
+                        <h3 class="prod-name"><a href="product-detail.html">Trà Sữa Trân Châu Đường Đen</a></h3>
+                        <div class="prod-price-box">
+                            <span class="price-new">30.000₫</span>
+                            <span class="price-old">40.000₫</span>
+                        </div>
+                        <a href="product-detail.html" class="btn-prod-action">TÙY CHỌN</a>
+                    </div>
+                </div>
+
+            </div>
+            </main>
+    </div>
+</div>
+<script>
+// Load header từ file header.html
+fetch('header.html')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Không thể load header.html');
+        }
+        return response.text();
+    })
+    .then(data => {
+        document.getElementById('header-placeholder').innerHTML = data;
+    })
+    .catch(error => {
+        console.error('Lỗi khi load header:', error);
+    });
+</script>
+</body>
+</html>

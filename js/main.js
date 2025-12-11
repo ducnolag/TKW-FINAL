@@ -1,6 +1,6 @@
 import '../utils/include.js';
 
-
-import './page/home/header.js';
+import './layouts/floating-navigation.js'
+import './layouts/header.js';
 import './page/home/slide.js';
 import './page/home/bestseller.js';

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Săn Deal - Tiệm Ăn Vặt</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- 1. CẤU HÌNH MÀU SẮC (THEME CAM) --- */
+        :root { 
+            --primary: #ff6b35; /* CAM CHỦ ĐẠO */
+            --primary-dark: #e85d2a; /* Cam đậm hơn chút cho hover */
+            --green: #4caf50;   
+            --blue: #2196f3;
+            --text: #333; 
+            --bg-light: #f4f6f8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+        body { background-color: var(--bg-light); color: var(--text); padding-bottom: 60px; }
+        body.modal-open { overflow: hidden; }
+        .container { width: 1100px; max-width: 100%; margin: 0 auto; padding: 0 15px; }
+        
+        /* Banner & Header */
+        .promo-banner-area {
+            margin-top: 5px; margin-bottom: 30px; 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            
+        }
+        .promo-banner-img { width: 100%; display: block; max-height: 68vh; object-fit: cover; }
+        .page-header { text-align: center; margin-bottom: 40px; }
+        .page-title { font-size: 32px; font-weight: 900; color: var(--primary); text-transform: uppercase; margin-bottom: 8px; }
+        .page-desc { font-size: 15px; color: #666; max-width: 600px; margin: 0 auto; }
+        
+        .section-title {
+            font-size: 22px; font-weight: 800; color: #222; margin-bottom: 25px; margin-top: 50px;
+            border-left: 5px solid var(--primary); padding-left: 15px; display: flex; align-items: center; gap: 10px;
+        }
+
+        /* --- 2. LAYOUT CARD CHUNG --- */
+        .promo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+
+        .common-card {
+            background: #fff; border-radius: 16px; overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: 0.3s;
+            border: 2px solid transparent; display: flex; flex-direction: column; height: 100%;
+            cursor: pointer; position: relative;
+        }
+        .common-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.12); }
+
+        .cc-thumb { height: 180px; width: 100%; position: relative; overflow: hidden; }
+        .cc-thumb img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .common-card:hover .cc-thumb img { transform: scale(1.1); }
+        
+        /* Badge mặc định */
+        .cc-badge {
+            position: absolute; top: 12px; right: 12px; z-index: 2;
+            font-size: 11px; font-weight: 800; padding: 5px 12px; border-radius: 20px;
+            text-transform: uppercase; box-shadow: 0 2px 5px rgba(0,0,0,0.2); color: #fff;
+            transition: 0.3s;
+        }
+        
+        .cc-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+        .cc-title { font-size: 17px; font-weight: 800; margin-bottom: 8px; color: #333; line-height: 1.35; }
+        .cc-desc { font-size: 13px; color: #555; line-height: 1.5; margin-bottom: 15px; flex: 1; }
+        
+        /* Time mặc định (Màu xám) */
+        .cc-time { 
+            font-size: 12px; font-weight: 600; color: #666; 
+            background: #f0f0f0; padding: 8px 12px; border-radius: 8px;
+            display: flex; align-items: center; gap: 8px; transition: 0.3s;
+        }
+
+        /* Footer chứa nút */
+        .card-footer {
+            margin-top: auto; padding-top: 15px; border-top: 1px dashed #eee;
+            display: flex; gap: 10px; flex-wrap: wrap;
+        }
+
+        /* --- HIỆU ỨNG ACTIVE MÀU CAM (MỚI) --- */
+        @keyframes pulse-orange {
+            0% { box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 107, 53, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 107, 53, 0); }
+        }
+
+        /* Khi Card Active */
+        .type-program.active { 
+            border: 2px solid var(--primary); /* Viền CAM */
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.15); /* Bóng CAM */
+        }
+        
+        /* Badge Active (Nháy nháy CAM) */
+        .type-program.active .cc-badge { 
+            background: var(--primary); 
+            animation: pulse-orange 2s infinite; 
+        }
+
+        /* Time Active (Chữ trắng nền CAM -> NỔI BẬT KHUNG GIỜ) */
+        .type-program.active .cc-time {
+            background: var(--primary);
+            color: #fff;
+            font-weight: 900;
+            box-shadow: 0 4px 10px rgba(255, 107, 53, 0.3);
+        }
+        .type-program.active .cc-time i { color: #fff; }
+
+        /* Nút Bấm Active (CAM) */
+        .type-program.active .btn-action {
+            background: var(--primary) !important;
+            box-shadow: 0 4px 10px rgba(255, 107, 53, 0.4);
+            animation: pulse-orange 2s infinite; 
+        }
+
+        /* Trạng thái Wait (Chưa đến giờ) */
+        .type-program.wait .cc-thumb img { filter: grayscale(100%); opacity: 0.8; }
+        .type-program.wait .cc-badge { background: #999; }
+        .type-program.wait .btn-action { background: #999 !important; pointer-events: none; opacity: 0.7; }
+
+        /* --- BUTTON STYLES --- */
+        .btn-action {
+            flex: 1; text-align: center; padding: 10px; border-radius: 6px;
+            font-size: 12px; font-weight: 800; text-decoration: none; color: #fff;
+            transition: 0.2s; white-space: nowrap; display: inline-block;
+            background: var(--primary); /* Nền CAM */
+        }
+        .btn-action:hover { background: var(--primary-dark); transform: translateY(-2px); }
+
+        /* Voucher Styles */
+        /* Giữ nguyên bố cục Voucher nhưng đổi màu hover sang CAM */
+        .type-voucher:hover { border-color: var(--primary); }
+        .type-voucher .cc-badge { background: var(--primary); }
+        
+        .code-row { display: flex; justify-content: space-between; align-items: center; width: 100%; background: #fff5f0; padding: 8px 12px; border-radius: 8px; border: 1px dashed var(--primary); }
+        .code-val { font-weight: 900; color: var(--text); font-size: 15px; letter-spacing: 1px; }
+        .btn-copy { border: none; background: #fff; color: var(--primary); font-size: 11px; font-weight: bold; cursor: pointer; padding: 6px 12px; border-radius: 6px; transition: 0.2s; text-transform: uppercase; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .btn-copy:hover { background: var(--primary); color: #fff; }
+        
+        .tier-group { display: flex; gap: 8px; width: 100%; }
+        .tier-btn { flex: 1; padding: 8px 0; border: 1px solid var(--primary); background: #fff; color: var(--primary); border-radius: 6px; font-weight: bold; font-size: 11px; cursor: pointer; transition: 0.2s; text-align: center; }
+        .tier-btn span { display: block; font-size: 9px; font-weight: normal; margin-top: 2px; color: #555; }
+        .tier-btn:hover { background: var(--primary); color: #fff; }
+        .tier-btn:hover span { color: #fff; }
+
+        /* Toast & Modal */
+        #toast-box { position: fixed; top: 30px; right: 30px; z-index: 999999; display: flex; flex-direction: column; gap: 10px; }
+        .toast { width: 340px; background: #fff; font-weight: 500; box-shadow: 0 5px 20px rgba(0,0,0,0.15); display: flex; align-items: center; border-radius: 6px; border-left: 5px solid var(--green); transform: translateX(120%); transition: transform 0.4s; padding: 16px 0; }
+        .toast.show { transform: translateX(0); }
+        .toast i.icon { margin: 0 15px; font-size: 22px; color: var(--green); }
+        .toast-msg { flex: 1; font-size: 13px; color: #333; }
+        .toast-close { padding: 0 15px; cursor: pointer; color: #ccc; }
+
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.3s; padding: 15px; }
+        .modal-overlay.show { opacity: 1; visibility: visible; }
+        .modal-box { background: #fff; width: 600px; max-width: 100%; border-radius: 12px; overflow: hidden; transform: translateY(30px); transition: 0.4s ease; }
+        .modal-overlay.show .modal-box { transform: translateY(0); }
+        .modal-header { padding: 15px 25px; background: var(--primary); color: #fff; display: flex; justify-content: space-between; align-items: center; }
+        .modal-title { font-weight: 800; font-size: 18px; }
+        
+        /* --- SỬA CSS NÚT ĐÓNG (MODAL CLOSE) --- */
+        .modal-close { cursor: pointer; font-size: 22px; /* Thiết lập kích thước vuông để khi xoay tâm nằm chính giữa */ width: 36px; height: 36px; /* Căn icon ra giữa khung */ display: flex; align-items: center; justify-content: center; border-radius: 50%; /* Bo tròn vùng hover */ /* Quan trọng: Tạo độ mượt khi thay đổi trạng thái */ transition: all 0.4s ease; }
+        /* Hiệu ứng khi di chuột vào */
+        .modal-close:hover { /* Xoay 90 độ (1/4 vòng) hoặc 180 độ (nửa vòng) tùy bạn thích */ /* Đổi màu nền nhẹ để người dùng dễ nhận biết */ background-color: rgba(255, 255, 255, 0.2); /* Phóng to nhẹ icon một chút */ transform: rotate(90deg) scale(1.1); }
+
+        .modal-body { padding: 25px; max-height: 70vh; overflow-y: auto; }
+        .modal-desc-block { margin-bottom: 20px; }
+        .modal-desc-block h4 { font-size: 14px; font-weight: 700; border-bottom: 2px solid #eee; padding-bottom: 5px; margin-bottom: 8px; color: #555; text-transform: uppercase; }
+        .modal-desc-block p { font-size: 14px; line-height: 1.6; color: #555; }
+
+        @media (max-width: 900px) { .promo-grid { grid-template-columns: 1fr; } }
+
+        /* --- BỔ SUNG: ẢNH TRONG MODAL & LIGHTBOX --- */
+        /* 1. Ảnh nằm trong Modal */
+        .modal-banner { width: 100%; height: 200px; overflow: hidden; border-radius: 8px; margin-bottom: 20px; position: relative; cursor: zoom-in; /* Con trỏ hình kính lúp */ border: 1px solid #eee; }
+        .modal-banner img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+        .modal-banner:hover img { transform: scale(1.05); /* Hiệu ứng zoom nhẹ khi di chuột */ }
+
+        /* Icon kính lúp gợi ý bấm vào */
+        .modal-banner::after { content: '\f00e'; /* FontAwesome icon search-plus */ font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); color: #fff; padding: 5px 10px; border-radius: 4px; font-size: 12px; pointer-events: none; }
+
+        /* 2. Màn hình xem ảnh phóng to (Lightbox) */
+        .lightbox-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 9999999; /* Cao hơn cả modal */ display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.3s; cursor: zoom-out; }
+        .lightbox-overlay.show { opacity: 1; visibility: visible; }
+        .lightbox-img { max-width: 90%; max-height: 90%; border-radius: 4px; box-shadow: 0 0 20px rgba(255,255,255,0.2); transform: scale(0.8); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .lightbox-overlay.show .lightbox-img { transform: scale(1); }
+    </style>
+</head>
+<body>
+
+<header>
+    <div id="header-placeholder"></div>
+</header>
+<div class="promo-banner-area">
+        <img src="../img/Khuyenmai/ngoai/slider_3.webp" alt="Banner" class="promo-banner-img">
+</div>
+<div class="container">
+    
+    
+
+    <div class="page-header">
+        <h1 class="page-title">Săn Deal Hời - Ăn Thả Ga</h1>
+        <p class="page-desc">Tổng hợp tất cả chương trình khuyến mãi và mã giảm giá đang hoạt động.</p>
+    </div>
+
+    <h2 class="section-title"><i class="fas fa-bolt"></i> Chương Trình Tự Động</h2>
+    
+    <div class="promo-grid" id="program-container">
+        
+        <div class="common-card type-program active" 
+            data-title="Mỳ Không Cay - Trộn Không Khô"
+            data-detail="Combo hoàn hảo cho tín đồ mỳ trộn. Hệ thống tự động giảm giá nước."
+            data-terms="- Mua 1 Mỳ bất kỳ -> Giảm 50% cho 1 Đồ uống đi kèm.<br>- Áp dụng toàn thời gian.">
+            
+            <div class="cc-thumb">
+                <div class="cc-badge">Đang diễn ra</div>
+                <img src="../img/Khuyenmai/1080x/6.png" alt="Mỳ Trộn">
+            </div>
+            <div class="cc-body">
+                <div class="cc-title">Mỳ Trộn Không Khô - Mỳ Cay Không Cay</div>
+                <div class="cc-desc">Gọi món mỳ bất kỳ, giảm ngay nửa giá nước lọc khi mua kèm.</div>
+                
+                <div class="cc-time"><i class="fas fa-clock"></i> Luôn hoạt động</div>
+
+                <div class="card-footer">
+                    <a href="menu.html#mycay" class="btn-action no-modal">MUA MỲ CAY</a>
+                    <a href="menu.html#mytron" class="btn-action no-modal">MUA MỲ TRỘN</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="common-card type-program" id="card-afternoon"
+            data-title="Xế Chiều Nạp MOOD"
+            data-detail="Nạp năng lượng tỉnh táo cho buổi chiều."
+            data-terms="- Khung giờ: 13:30 - 17:30.<br>- Giảm 5% toàn bộ menu Đồ uống.">
+            
+            <div class="cc-thumb">
+                <div class="cc-badge" id="status-afternoon">Sắp diễn ra</div>
+                <img src="../img/Khuyenmai/1080x/3.png" alt="Xế Chiều">
+            </div>
+            <div class="cc-body">
+                <div class="cc-title">Xế Chiều Nạp MOOD</div>
+                <div class="cc-desc">Giảm 5% sản phẩm Đồ uống. Nạp năng lượng chiều.</div>
+                
+                <div class="cc-time"><i class="fas fa-clock"></i> 13:30 - 17:30</div>
+
+                <div class="card-footer">
+                    <a href="menu.html#douong" class="btn-action no-modal">XEM MENU ĐỒ UỐNG</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="common-card type-program" id="card-night"
+            data-title="Cú Đêm Diệt Mồi"
+            data-detail="Đói bụng đêm khuya đã có menu ăn vặt trợ giá."
+            data-terms="- Khung giờ: 22:30 - 02:30 sáng.<br>- Giảm 5% các món Ăn vặt.">
+            
+            <div class="cc-thumb">
+                <div class="cc-badge" id="status-night">Sắp diễn ra</div>
+                <img src="../img/Khuyenmai/1080x/2.png" alt="Cú Đêm">
+            </div>
+            <div class="cc-body">
+                <div class="cc-title">Cú Đêm Diệt Mồi</div>
+                <div class="cc-desc">Giảm 5% sản phẩm Ăn vặt. Cứu đói đêm khuya.</div>
+                
+                <div class="cc-time"><i class="fas fa-clock"></i> 22:30 - 02:30 Sáng</div>
+
+                <div class="card-footer">
+                    <a href="menu.html#anvat" class="btn-action no-modal">XEM MENU ĂN VẶT</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <h2 class="section-title"><i class="fas fa-ticket-alt"></i> Kho Mã Giảm Giá</h2>
+
+    <div class="promo-grid" id="voucher-container">
+        <div class="common-card type-voucher"
+            data-title="Voucher: Chào Bạn Mới"
+            data-detail="Món quà làm quen dành tặng cho các khách hàng mới."
+            data-terms="- Mã: <strong>CHAOBANMOI</strong><br>- Giảm 10% (max 30k) cho đơn đầu.">
+            
+            <div class="cc-thumb">
+                <div class="cc-badge">GIẢM 10%</div>
+                <img src="../img/Khuyenmai/1080x/1.png" alt="Bạn Mới">
+            </div>
+            <div class="cc-body">
+                <div class="cc-title">Chào Bạn Mới</div>
+                <div class="cc-desc">Giảm 10% tổng đơn hàng cho lần đăng nhập đầu tiên (tối đa 30k).</div>
+                <div class="card-footer">
+                    <div class="code-row">
+                        <span class="code-val">CHAOBANMOI</span>
+                        <button class="btn-copy no-modal" onclick="copyCode(event, 'CHAOBANMOI')">Lấy Mã</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="common-card type-voucher"
+            data-title="Voucher: Trợ Giá Ship"
+            data-detail="Đừng để phí ship ngăn cản cơn thèm ăn của bạn."
+            data-terms="- Mã: <strong>THITOTNHA</strong><br>- Freeship max 15k.<br>- Hạn dùng: Đến 31/12/2025.">
+            
+            <div class="cc-thumb">
+                <div class="cc-badge">FREESHIP 15K</div>
+                <img src="../img/Khuyenmai/1080x/4.png" alt="Free Ship">
+            </div>
+            <div class="cc-body">
+                <div class="cc-title">Tiếp Sức Mùa Thi</div>
+                <div class="cc-desc">Miễn phí vận chuyển tối đa 15k. </br> Hạn từ 21/11/2025 - 31/12/2025.</div>
+                <div class="card-footer">
+                    <div class="code-row">
+                        <span class="code-val">THITOTNHA</span>
+                        <button class="btn-copy no-modal" onclick="copyCode(event, 'THITOTNHA')">Lấy Mã</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="common-card type-voucher"
+            data-title="Combo Voucher: Mua Nhiều Giảm Sâu"
+            data-detail="Bộ mã giảm giá theo bậc thang giá trị đơn hàng."
+            data-terms="- Đơn >99k: Giảm 10k (MUC10)<br>- Đơn >169k: Giảm 20k (MUC20)<br>- Đơn >249k: Giảm 30k (MUC30)">
+            
+            <div class="cc-thumb">
+                <div class="cc-badge">COMBO 30K</div>
+                <img src="../img/Khuyenmai/1080x/5.png" alt="Combo">
+            </div>
+            <div class="cc-body">
+                <div class="cc-title">Mua Càng Nhiều - Ưu Đãi Càng Hời</div>
+                <div class="cc-desc">Mã tặng bạn hàng tuần.</div>
+                <div class="card-footer">
+                    <div class="tier-group">
+                        <button class="tier-btn no-modal" onclick="copyCode(event, 'MUC10')">MUC10<span>-10k</span></button>
+                        <button class="tier-btn no-modal" onclick="copyCode(event, 'MUC20')">MUC20<span>-20k</span></button>
+                        <button class="tier-btn no-modal" onclick="copyCode(event, 'MUC30')">MUC30<span>-30k</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="detailModal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3 class="modal-title" id="modalTitle">Chi Tiết Ưu Đãi</h3>
+            <div class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></div>
+        </div>
+        <div class="modal-body">
+            
+            <div class="modal-banner" onclick="openLightbox()">
+                <img id="modalImg" src="" alt="Promo Detail">
+            </div>
+
+            <div class="modal-desc-block">
+                <h4>Nội dung chương trình</h4>
+                <p id="modalDetailContent">...</p>
+            </div>
+            <div class="modal-desc-block">
+                <h4>Điều kiện áp dụng</h4>
+                <p id="modalTermsContent" style="white-space: pre-line;">...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+    <img src="" alt="Zoom Image" class="lightbox-img" id="lightboxImg">
+</div>
+
+<!-- --- Chèn JS --- -->
+<script src="../js/header.js"></script>
+
+
+<script src="../js/product-detail/fake-notification.js"></script>
+<script src="../js/promotion/checktime.js"></script>
+<script src="../js/promotion/modal-lightbox.js"></script>
+<script src="../js/promotion/toast.js"></script>
+<!-- Swiper JS (Best Seller) -->
+<script src="../JS/widget-loader/widget-loader.js"></script>
+<script>
+
+    
+</script>
+
+</body>
+</html>
