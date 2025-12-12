@@ -176,23 +176,58 @@ function updatePromoDisplay() {
     }
 }
 
+// 🎨 TOAST NOTIFICATION SYSTEM
+function showNotification(message, type = 'info', duration = 3000) {
+    let container = document.getElementById('toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        container.className = 'toast-container';
+        document.body.appendChild(container);
+    }
+
+    const icons = {
+        success: '✅',
+        error: '❌',
+        warning: '⚠️',
+        info: 'ℹ️'
+    };
+
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.innerHTML = `
+        <span class="toast-icon">${icons[type] || icons.info}</span>
+        <span class="toast-text">${message}</span>
+        <button class="toast-close" onclick="this.parentElement.remove()">✕</button>
+    `;
+
+    container.appendChild(toast);
+
+    setTimeout(() => {
+        if (toast.parentElement) {
+            toast.classList.add('remove');
+            setTimeout(() => toast.remove(), 300);
+        }
+    }, duration);
+}
+
 function applyPromo() {
     const promoInput = document.getElementById('promoInput');
     const code = promoInput.value.trim().toUpperCase();
 
     if (!code) {
-        alert('Vui lòng nhập mã giảm giá!');
+        showNotification('Vui lòng nhập mã giảm giá!', 'warning');
         return;
     }
 
     if (validPromoCodes[code]) {
         appliedPromoCode = code;
         localStorage.setItem('appliedPromoCode', code);
-        alert(`✅ Áp dụng mã thành công! ${validPromoCodes[code].desc}`);
+        showNotification(`Áp dụng mã thành công! ${validPromoCodes[code].desc}`, 'success');
         promoInput.value = '';
         updateSummary();
     } else {
-        alert('❌ Mã giảm giá không hợp lệ');
+        showNotification('Mã giảm giá không hợp lệ', 'error');
         promoInput.value = '';
     }
 }
@@ -206,8 +241,8 @@ function applyStoredPromo() {
 function removePromoCode() {
     appliedPromoCode = '';
     localStorage.removeItem('appliedPromoCode');
+    showNotification('Đã xóa mã giảm giá', 'info');
     updateSummary();
-    alert('❌ Đã xóa mã giảm giá');
 }
 
 function checkout() {

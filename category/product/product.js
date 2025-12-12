@@ -54,7 +54,7 @@ let allData = null;
       `;
     }
 
-    // ⭐ THÊM HÀM TẠO HTML PHÂN TRANG
+    // ⭐ CẬP NHẬT HÀM TẠO HTML PHÂN TRANG
     function createPaginationHTML(totalPages) {
       if (totalPages <= 1) return '';
       
@@ -67,8 +67,38 @@ let allData = null;
         html += `<button class="pagination-btn" disabled>← Trang trước</button>`;
       }
       
-      // Hiển thị số trang
-      html += `<span class="pagination-info">Trang <strong>${currentPage}</strong> / <strong>${totalPages}</strong></span>`;
+      // Hiển thị các số trang
+      html += '<div class="pagination-numbers">';
+      
+      let startPage = Math.max(1, currentPage - 2);
+      let endPage = Math.min(totalPages, currentPage + 2);
+      
+      // Nút trang đầu tiên
+      if (startPage > 1) {
+        html += `<button class="pagination-number" onclick="goToPage(1)">1</button>`;
+        if (startPage > 2) {
+          html += `<span class="pagination-ellipsis">...</span>`;
+        }
+      }
+      
+      // Các nút trang
+      for (let i = startPage; i <= endPage; i++) {
+        if (i === currentPage) {
+          html += `<button class="pagination-number active">${i}</button>`;
+        } else {
+          html += `<button class="pagination-number" onclick="goToPage(${i})">${i}</button>`;
+        }
+      }
+      
+      // Nút trang cuối cùng
+      if (endPage < totalPages) {
+        if (endPage < totalPages - 1) {
+          html += `<span class="pagination-ellipsis">...</span>`;
+        }
+        html += `<button class="pagination-number" onclick="goToPage(${totalPages})">${totalPages}</button>`;
+      }
+      
+      html += '</div>';
       
       // Nút Next
       if (currentPage < totalPages) {

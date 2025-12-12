@@ -471,7 +471,10 @@ function createReviewListHTML() {
                     <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
                         <div style="font-size: 32px;">${review.avatar}</div>
                         <div style="flex: 1;">
-                            <div style="font-weight: 600; color: #1f2937; font-size: 14px;">${review.name}</div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="font-weight: 600; color: #1f2937; font-size: 14px;">${review.name}</div>
+                                ${review.verified ? '<span style="background: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 600;">✅ Đã mua</span>' : ''}
+                            </div>
                             <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
                                 <div style="color: #fbbf24; font-size: 14px;">${'⭐'.repeat(review.rating)}</div>
                                 <span style="font-size: 12px; color: #9ca3af;">${review.date}</span>
@@ -792,3 +795,546 @@ const getDetailProduct = async () => {
 };
 
 getDetailProduct();
+
+// ========== HÀM BỔ SUNG - KIỂM TRA ĐĂNG NHẬP & MUA HÀNG ==========
+function checkUserAuth() {
+    const userSession = sessionStorage.getItem('currentUser');
+    const userLocal = localStorage.getItem('currentUser');
+    
+    if (!userSession && !userLocal) {
+        return { loggedIn: false, user: null };
+    }
+    
+    try {
+        const user = userSession ? JSON.parse(userSession) : JSON.parse(userLocal);
+        return { loggedIn: true, user };
+    } catch (e) {
+        return { loggedIn: false, user: null };
+    }
+}
+
+function checkUserPurchased(productId) {
+    const auth = checkUserAuth();
+    if (!auth.loggedIn) return false;
+
+    const username = auth.user.username;
+    
+    // Kiểm tra sessionStorage
+    const purchasesSession = JSON.parse(sessionStorage.getItem('userPurchases') || '{}');
+    const purchasesLocal = JSON.parse(localStorage.getItem('userPurchases') || '{}');
+    
+    // Kết hợp cả 2
+    const allPurchases = { ...purchasesLocal, ...purchasesSession };
+    const userPurchases = allPurchases[username] || [];
+    
+    // ✅ SỬA: Kiểm tra 'productId' thay vì 'id'
+    return userPurchases.some(p => p.productId == productId || p.id == productId);
+}
+
+// ========== HÀM REVIEW FORM - CÓ KIỂM TRA ==========
+function openReviewForm() {
+    const auth = checkUserAuth();
+    
+    // ⭐ KIỂM TRA ĐĂNG NHẬP
+    if (!auth.loggedIn) {
+        const modal = document.createElement('div');
+        modal.id = 'loginPromptModal';
+        modal.style.cssText = `
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10001;
+            animation: fadeIn 0.3s ease;
+            padding: 16px;
+        `;
+        
+        modal.innerHTML = `
+            <div style="background: white; border-radius: 16px; padding: 30px; max-width: 400px; width: 100%; text-align: center; animation: slideUp 0.3s ease; box-shadow: 0 10px 40px rgba(0,0,0,0.2);">
+                <div style="font-size: 60px; margin-bottom: 16px;">🔐</div>
+                <h2 style="margin: 0 0 12px 0; font-size: 20px; color: #1f2937; font-weight: 700;">Vui lòng đăng nhập</h2>
+                <p style="margin: 0 0 24px 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                    Bạn cần đăng nhập để viết đánh giá sản phẩm
+                </p>
+                
+                <div style="display: flex; gap: 10px; flex-direction: column;">
+                    <button onclick="window.location.href='/account/login/login.html'" style="padding: 12px 24px; background: linear-gradient(135deg, #f97316 0%, #dc2626 100%); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 14px; transition: all 0.3s; box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);">
+                        ✅ Đi tới Đăng nhập
+                    </button>
+                    <button onclick="document.getElementById('loginPromptModal').remove()" style="padding: 12px 24px; background: #e5e7eb; color: #1f2937; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 14px; transition: all 0.3s;">
+                        ✕ Hủy
+                    </button>
+                </div>
+            </div>
+            
+            <style>
+                @keyframes fadeIn {
+                    from {
+                        opacity: 0;
+                    }
+                    to {
+                        opacity: 1;
+                    }
+                }
+                
+                @keyframes slideUp {
+                    from {
+                        transform: translateY(20px);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateY(0);
+                        opacity: 1;
+                    }
+                }
+                
+                @media (max-width: 480px) {
+                    div[style*="max-width: 400px"] {
+                        padding: 24px 20px !important;
+                    }
+                }
+            </style>
+        `;
+        
+        document.body.appendChild(modal);
+        modal.onclick = (e) => {
+            if (e.target === modal) modal.remove();
+        };
+        return;
+    }
+    
+    // ⭐ KIỂM TRA ĐÃ MUA SẢN PHẨM
+    if (!checkUserPurchased(window.currentProduct.id)) {
+        showToast('❌ Bạn phải mua sản phẩm này trước khi có thể đánh giá!', 'error');
+        return;
+    }
+    
+    const modal = document.createElement('div');
+    modal.id = 'reviewFormModal';
+    modal.style.cssText = `
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.5);
+        display: flex;
+        align-items: flex-end;
+        z-index: 10001;
+        animation: fadeIn 0.3s ease;
+        padding: 0;
+    `;
+    
+    modal.innerHTML = `
+        <div style="background: white; width: 100%; max-height: 90vh; border-radius: 20px 20px 0 0; padding: 20px; overflow-y: auto; box-shadow: 0 -4px 32px rgba(0,0,0,0.15);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; position: sticky; top: 0; background: white; z-index: 1;">
+                <h3 style="margin: 0; font-size: 18px; font-weight: 700;">✏️ Viết đánh giá</h3>
+                <button onclick="document.getElementById('reviewFormModal').remove()" style="background: none; border: none; font-size: 24px; cursor: pointer; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; padding: 0;">×</button>
+            </div>
+            
+            <!-- Thông tin người dùng -->
+            <div style="background: #f3f4f6; padding: 12px; border-radius: 8px; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                <span style="font-size: 20px;">✅</span>
+                <div style="min-width: 0;">
+                    <div style="font-size: 12px; color: #6b7280;">Đăng nhập với tư cách:</div>
+                    <div style="font-weight: 600; color: #1f2937; word-break: break-all;">${auth.user.username}</div>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 8px; font-size: 14px;">Tên của bạn</label>
+                <input type="text" id="reviewName" placeholder="Nhập tên..." value="${auth.user.username}" style="width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 8px; box-sizing: border-box; font-size: 14px;">
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 8px; font-size: 14px;">Đánh giá</label>
+                <div id="ratingStars" style="display: flex; gap: 8px; font-size: 28px;">
+                    ${[1,2,3,4,5].map(star => `
+                        <span class="rating-star" data-rating="${star}" style="cursor: pointer; opacity: 0.4; transition: all 0.2s; user-select: none;" onclick="selectRating(${star})">⭐</span>
+                    `).join('')}
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 8px; font-size: 14px;">Bình luận</label>
+                <textarea id="reviewComment" placeholder="Chia sẻ trải nghiệm của bạn..." style="width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 8px; box-sizing: border-box; font-size: 14px; min-height: 100px; resize: vertical;"></textarea>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 8px; font-size: 14px;">📸 Tải ảnh lên (Tùy chọn)</label>
+                <div style="border: 2px dashed #e5e7eb; border-radius: 8px; padding: 20px; text-align: center; cursor: pointer; transition: all 0.3s; background: white;" id="uploadArea" onclick="document.getElementById('reviewImage').click();">
+                    <div style="font-size: 32px; margin-bottom: 8px;">📷</div>
+                    <p style="margin: 0; font-size: 14px; color: #6b7280;">Nhấn để chọn ảnh hoặc kéo thả</p>
+                    <p style="margin: 4px 0 0 0; font-size: 12px; color: #9ca3af;">PNG, JPG, GIF (Tối đa 2MB)</p>
+                </div>
+                <input type="file" id="reviewImage" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
+                <div id="imagePreview" style="margin-top: 12px; display: none;">
+                    <img id="previewImg" src="" style="max-width: 100%; max-height: 200px; border-radius: 8px; object-fit: cover;">
+                    <button type="button" onclick="removeImage()" style="display: block; width: 100%; margin-top: 8px; padding: 8px; background: #fee2e2; color: #dc2626; border: 1px solid #fecaca; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 12px;">Xóa ảnh</button>
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <button onclick="submitReviewForm()" style="flex: 1; padding: 12px; background: linear-gradient(135deg, #f97316 0%, #dc2626 100%); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 14px; transition: all 0.3s; box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);">Gửi đánh giá</button>
+                <button onclick="document.getElementById('reviewFormModal').remove()" style="flex: 1; padding: 12px; background: #e5e7eb; color: #1f2937; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 14px; transition: all 0.3s;">Hủy</button>
+            </div>
+        </div>
+        
+        <style>
+            @keyframes slideUp {
+                from {
+                    transform: translateY(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+            
+            @media (max-width: 480px) {
+                #reviewFormModal > div {
+                    border-radius: 16px 16px 0 0 !important;
+                    max-height: 95vh !important;
+                    padding: 16px !important;
+                }
+                
+                #reviewFormModal h3 {
+                    font-size: 16px !important;
+                }
+                
+                #reviewFormModal label {
+                    font-size: 13px !important;
+                }
+                
+                #reviewFormModal input,
+                #reviewFormModal textarea,
+                #reviewFormModal button {
+                    font-size: 13px !important;
+                }
+                
+                #ratingStars {
+                    font-size: 24px !important;
+                }
+            }
+            
+            @media (max-width: 768px) {
+                #reviewFormModal > div {
+                    max-width: 100% !important;
+                }
+            }
+        </style>
+    `;
+    
+    document.body.appendChild(modal);
+    modal.onclick = (e) => {
+        if (e.target === modal) modal.remove();
+    };
+
+    // Xử lý kéo thả ảnh
+    const uploadArea = document.getElementById('uploadArea');
+    uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.style.borderColor = '#f97316';
+        uploadArea.style.background = '#fef3c7';
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.style.borderColor = '#e5e7eb';
+        uploadArea.style.background = 'white';
+    });
+
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.style.borderColor = '#e5e7eb';
+        uploadArea.style.background = 'white';
+        
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            document.getElementById('reviewImage').files = files;
+            handleImageUpload({ target: { files: files } });
+        }
+    });
+}
+
+function handleImageUpload(event) {
+    const file = event.target.files[0];
+    
+    if (!file) return;
+
+    // Kiểm tra kích thước file (2MB)
+    if (file.size > 2 * 1024 * 1024) {
+        showToast('❌ Ảnh quá lớn! Tối đa 2MB', 'error');
+        document.getElementById('reviewImage').value = '';
+        return;
+    }
+
+    // Kiểm tra loại file
+    if (!file.type.startsWith('image/')) {
+        showToast('❌ Vui lòng chọn file ảnh!', 'error');
+        document.getElementById('reviewImage').value = '';
+        return;
+    }
+
+    // Đọc file thành Base64
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        currentImageBase64 = e.target.result;
+        
+        // Hiển thị preview
+        const preview = document.getElementById('imagePreview');
+        const img = document.getElementById('previewImg');
+        img.src = currentImageBase64;
+        preview.style.display = 'block';
+        
+        showToast('✅ Ảnh đã được chọn!', 'success');
+    };
+    
+    reader.onerror = () => {
+        showToast('❌ Lỗi khi đọc file!', 'error');
+    };
+
+    reader.readAsDataURL(file);
+}
+
+function removeImage() {
+    currentImageBase64 = null;
+    document.getElementById('reviewImage').value = '';
+    document.getElementById('imagePreview').style.display = 'none';
+    showToast('✅ Đã xóa ảnh!', 'success');
+}
+
+function submitReviewForm() {
+    const auth = checkUserAuth();
+    const name = document.getElementById('reviewName').value.trim();
+    const comment = document.getElementById('reviewComment').value.trim();
+    
+    if (!name) {
+        showToast('❌ Vui lòng nhập tên!', 'error');
+        return;
+    }
+    if (!comment) {
+        showToast('❌ Vui lòng viết bình luận!', 'error');
+        return;
+    }
+    if (selectedRating === 0) {
+        showToast('❌ Vui lòng chọn đánh giá!', 'error');
+        return;
+    }
+    
+    const newReview = {
+        id: Date.now(),
+        name,
+        rating: selectedRating,
+        date: new Date().toLocaleDateString('vi-VN'),
+        comment,
+        avatar: '👤',
+        image: currentImageBase64,
+        likes: 0,
+        replies: [],
+        // ⭐ THÊM THÔNG TIN NGƯỜI DÙNG
+        username: auth.user.username,
+        userId: auth.user.username,
+        verified: true // ✅ Đánh dấu là người đã mua
+    };
+    
+    allReviews.push(newReview);
+    saveReviews();
+    
+    document.getElementById('reviewFormModal').remove();
+    
+    const reviewsSection = document.querySelector('.reviews-section');
+    if (reviewsSection) {
+        reviewsSection.innerHTML = createReviewsHTML();
+    }
+    
+    selectedRating = 0;
+    currentImageBase64 = null;
+    showToast('✅ Cảm ơn bạn đã đánh giá!', 'success');
+}
+
+// ========== HÀM QUẢN LÝ SỐ LƯỢNG ==========
+function increaseQuantity() {
+    const input = document.getElementById('quantity');
+    if (input.value < 99) {
+        input.value = parseInt(input.value) + 1;
+    }
+}
+
+function decreaseQuantity() {
+    const input = document.getElementById('quantity');
+    if (input.value > 1) {
+        input.value = parseInt(input.value) - 1;
+    }
+}
+
+// ========== THÊM VÀO GIỎ HÀNG ==========
+function addToCart() {
+    const quantity = parseInt(document.getElementById('quantity').value);
+    const product = window.currentProduct;
+    
+    if (!product) {
+        showToast('❌ Không tìm thấy sản phẩm!', 'error');
+        return;
+    }
+    
+    // Lấy giỏ hàng hiện tại
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    
+    // Kiểm tra sản phẩm đã có trong giỏ chưa
+    const existingItem = cart.find(item => item.id === product.id);
+    
+    if (existingItem) {
+        // Nếu có rồi thì tăng số lượng
+        existingItem.quantity += quantity;
+    } else {
+        // Nếu chưa có thì thêm mới
+        cart.push({
+            id: product.id,
+            title: product.title,
+            price: product.price_current,
+            quantity: quantity,
+            image: product.image || ''
+        });
+    }
+    
+    // Lưu vào localStorage
+    localStorage.setItem('cart', JSON.stringify(cart));
+    
+    // ⭐ CẬP NHẬT ICON GIỎ HÀNG NGAY LẬP TỨC
+    window.updateCartCount();
+    window.dispatchEvent(new Event('cartUpdated'));
+    
+    showToast(`✅ Đã thêm ${quantity} ${product.title} vào giỏ!`, 'success');
+}
+
+// ========== MUA NGAY ==========
+function buyNow() {
+    const quantity = parseInt(document.getElementById('quantity').value);
+    const product = window.currentProduct;
+    
+    if (!product) {
+        showToast('❌ Không tìm thấy sản phẩm!', 'error');
+        return;
+    }
+    
+    // Thêm vào giỏ hàng trước
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const existingItem = cart.find(item => item.id === product.id);
+    
+    if (existingItem) {
+        existingItem.quantity += quantity;
+    } else {
+        cart.push({
+            id: product.id,
+            title: product.title,
+            price: product.price_current,
+            quantity: quantity,
+            image: product.image || ''
+        });
+    }
+    
+    localStorage.setItem('cart', JSON.stringify(cart));
+    
+    // Cập nhật giỏ hàng
+    window.updateCartCount();
+    
+    // Chuyển hướng đến trang thanh toán
+    setTimeout(() => {
+        window.location.href = '/checkout/checkout.htm';
+    }, 300);
+}
+
+// ========== TOAST NOTIFICATION ==========
+function showToast(message, type = 'info') {
+    // Kiểm tra xem có toast container chưa
+    let toastContainer = document.getElementById('toastContainer');
+    if (!toastContainer) {
+        toastContainer = document.createElement('div');
+        toastContainer.id = 'toastContainer';
+        toastContainer.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        `;
+        document.body.appendChild(toastContainer);
+    }
+    
+    const toast = document.createElement('div');
+    toast.style.cssText = `
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 14px;
+        animation: slideIn 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        max-width: 300px;
+        word-wrap: break-word;
+    `;
+    
+    // Thiết lập màu dựa vào type
+    if (type === 'success') {
+        toast.style.background = '#dcfce7';
+        toast.style.color = '#166534';
+        toast.style.borderLeft = '4px solid #10b981';
+    } else if (type === 'error') {
+        toast.style.background = '#fee2e2';
+        toast.style.color = '#991b1b';
+        toast.style.borderLeft = '4px solid #ef4444';
+    } else {
+        toast.style.background = '#dbeafe';
+        toast.style.color = '#0c4a6e';
+        toast.style.borderLeft = '4px solid #0ea5e9';
+    }
+    
+    toast.textContent = message;
+    toastContainer.appendChild(toast);
+    
+    // Tự động xóa sau 3 giây
+    setTimeout(() => {
+        toast.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+// Thêm CSS animation
+if (!document.getElementById('toastStyles')) {
+    const style = document.createElement('style');
+    style.id = 'toastStyles';
+    style.textContent = `
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+}

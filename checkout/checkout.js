@@ -17,7 +17,6 @@
             const currentUser = sessionStorage.getItem("currentUser");
             
             if (!currentUser) {
-                alert("Bạn cần đăng nhập để thanh toán!");
                 window.location.href = "/account/login/login.html#login";
                 return null;
             }
@@ -76,37 +75,77 @@
             event.currentTarget.classList.add('active');
         }
 
-        // ✅ Áp dụng mã giảm giá
-        function applyPromoCode() {
-            const promoInput = document.getElementById('checkoutPromoInput');
-            const code = promoInput.value.trim().toUpperCase();
+        // 🎨 TOAST NOTIFICATION SYSTEM
+function showNotification(message, type = 'info', duration = 3000) {
+    // Tạo container nếu chưa tồn tại
+    let container = document.getElementById('toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        container.className = 'toast-container';
+        document.body.appendChild(container);
+    }
 
-            if (!code) {
-                alert('Vui lòng nhập mã giảm giá!');
-                return;
-            }
+    // Map icon cho từng loại
+    const icons = {
+        success: '✅',
+        error: '❌',
+        warning: '⚠️',
+        info: 'ℹ️'
+    };
 
-            if (validPromoCodes[code]) {
-                appliedPromoCode = code;
-                localStorage.setItem('appliedPromoCode', code);
-                alert(`✅ Áp dụng mã thành công! ${validPromoCodes[code].desc}`);
-                promoInput.value = '';
-                // Reload trang để cập nhật giá
-                const user = checkAuth();
-                if (user) renderCheckout(user);
-            } else {
-                alert('❌ Mã giảm giá không hợp lệ');
-                promoInput.value = '';
-            }
+    // Tạo toast element
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.innerHTML = `
+        <span class="toast-icon">${icons[type] || icons.info}</span>
+        <span class="toast-text">${message}</span>
+        <button class="toast-close" onclick="this.parentElement.remove()">✕</button>
+    `;
+
+    container.appendChild(toast);
+
+    // Auto remove sau duration
+    setTimeout(() => {
+        if (toast.parentElement) {
+            toast.classList.add('remove');
+            setTimeout(() => toast.remove(), 300);
         }
+    }, duration);
+}
 
-        // ✅ Xóa mã giảm giá
-        function removePromoCode() {
-            appliedPromoCode = '';
-            localStorage.removeItem('appliedPromoCode');
-            const user = checkAuth();
-            if (user) renderCheckout(user);
-        }
+// ✅ Áp dụng mã giảm giá
+function applyPromoCode() {
+    const promoInput = document.getElementById('checkoutPromoInput');
+    const code = promoInput.value.trim().toUpperCase();
+
+    if (!code) {
+        showNotification('Vui lòng nhập mã giảm giá!', 'warning');
+        return;
+    }
+
+    if (validPromoCodes[code]) {
+        appliedPromoCode = code;
+        localStorage.setItem('appliedPromoCode', code);
+        showNotification(`Áp dụng mã thành công! ${validPromoCodes[code].desc}`, 'success');
+        promoInput.value = '';
+        // Reload trang để cập nhật giá
+        const user = checkAuth();
+        if (user) renderCheckout(user);
+    } else {
+        showNotification('Mã giảm giá không hợp lệ', 'error');
+        promoInput.value = '';
+    }
+}
+
+// ✅ Xóa mã giảm giá
+function removePromoCode() {
+    appliedPromoCode = '';
+    localStorage.removeItem('appliedPromoCode');
+    showNotification('Đã xóa mã giảm giá', 'info');
+    const user = checkAuth();
+    if (user) renderCheckout(user);
+}
 
         // Xử lý đặt hàng
         function placeOrder(event) {
