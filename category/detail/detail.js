@@ -626,6 +626,10 @@ function createDetailHTML(product) {
         ${createSuggestHTML()}
         ${createReviewsHTML()}
         
+        <div class="detail-section-separator"></div>
+        
+        ${createRelatedProductsHTML(window.allProductData, product)}
+        
         <div id="imageViewer" style="position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 10000;">
             <img id="viewerImage" src="" style="max-width: 90%; max-height: 90%; border-radius: 8px;">
             <button onclick="closeImageViewer()" style="position: absolute; top: 20px; right: 20px; background: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 20px;">×</button>
@@ -633,425 +637,125 @@ function createDetailHTML(product) {
     `;
 }
 
-// ========== HÀM XỬ LÝ ==========
-function setFilter(type) {
-    currentFilterType = type;
-    visibleReviewCount = 5;
-    renderReviews();
-}
-
-function setSort(type) {
-    currentSortType = type;
-    visibleReviewCount = 5;
-    renderReviews();
-}
-
-function loadMoreReviews() {
-    visibleReviewCount += LOAD_MORE_STEP;
-    renderReviews();
-}
-
-function toggleReplyInput(reviewId) {
-    const box = document.getElementById(`reply-box-${reviewId}`);
-    if (box) {
-        box.style.display = box.style.display === 'none' ? 'block' : 'none';
-    }
-}
-
-function submitReply(reviewId) {
-    const nameVal = document.getElementById(`reply-name-${reviewId}`).value.trim();
-    const contentVal = document.getElementById(`reply-content-${reviewId}`).value.trim();
+// ========== SẢN PHẨM LIÊN QUAN - TOP 5 LƯỢT XEM ==========
+function createRelatedProductsHTML(allData, currentProduct) {
+    // Tìm danh mục sản phẩm hiện tại
+    const isInSale = allData.sale.some(p => p.id === currentProduct.id);
+    const categoryProducts = isInSale ? allData.sale : allData.newsale;
     
-    if (!nameVal || !contentVal) {
-        alert('Vui lòng nhập đầy đủ thông tin!');
-        return;
-    }
-    
-    const review = allReviews.find(r => r.id === reviewId);
-    if (review) {
-        if (!review.replies) review.replies = [];
-        review.replies.push({
-            name: nameVal,
-            content: contentVal,
-            date: new Date().toLocaleDateString('vi-VN'),
-            isAdmin: false
-        });
-        saveReviews();
-        renderReviews();
-        showToast('✅ Đã gửi trả lời!', 'success');
-    }
+    // Lấy các sản phẩm khác từ cùng danh mục
+    const relatedProducts = categoryProducts
+        .filter(p => p.id !== currentProduct.id)
+        .map(product => {
+            const views = parseInt(localStorage.getItem(`product_views_${product.id}`) || '0');
+            return { ...product, views };
+        })
+        .sort((a, b) => b.views - a.views) // Sắp xếp theo lượt xem giảm dần
+        .slice(0, 5); // Lấy top 5
+
+    if (relatedProducts.length === 0) return '';
+
+    return `
+        <section class="section-related-products">
+            <div class="related-container">
+                <div class="related-header-block">
+                    <h2 class="related-title">
+                        <span class="related-icon">🔗</span>
+                        Sản Phẩm Liên Quan
+                    </h2>
+                    <p class="related-subtitle">Top 5 sản phẩm được xem nhiều nhất</p>
+                </div>
+
+                <div class="related-products-grid">
+                    ${relatedProducts.map((product, index) => {
+                        const discount = calculateDiscount(product.price_old, product.price_current);
+                        const avgRating = (3.8 + Math.random()).toFixed(1);
+                        const reviewCount = Math.floor(Math.random() * 80) + 5;
+                        const foodEmojis = ['🍗', '🍔', '🍕', '🌮', '🍜', '🥘', '🍱', '🍲'];
+                        const emoji = foodEmojis[product.id % foodEmojis.length];
+                        
+                        return `
+                            <a href="/category/detail/detail.htm?id=${product.id}" class="related-product-card" style="text-decoration: none; color: inherit;">
+                                <div class="related-card-badge">#${index + 1}</div>
+                                
+                                <div class="related-product-img-wrapper">
+                                    <div class="related-product-img">
+                                        ${product.image ? 
+                                            `<img src="${product.image}" alt="${product.title}" loading="lazy">` : 
+                                            `<div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 60px; background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);">${emoji}</div>`
+                                        }
+                                    </div>
+                                    
+                                    ${discount > 0 ? `
+                                        <div class="related-discount-tag">-${discount}%</div>
+                                    ` : ''}
+                                    
+                                    <div class="related-views-badge">
+                                        <span style="font-size: 12px;">👁️</span>
+                                        <span>${product.views.toLocaleString('vi-VN')}</span>
+                                    </div>
+                                </div>
+
+                                <div class="related-product-content">
+                                    <h3 class="related-product-name">${product.title}</h3>
+                                    
+                                    <div class="related-rating-block">
+                                        <div class="related-stars">
+                                            ${[...Array(5)].map((_, i) => `
+                                                <span class="star ${i < Math.floor(avgRating) ? 'filled' : 'empty'}">★</span>
+                                            `).join('')}
+                                        </div>
+                                        <span class="related-rating-value">${avgRating}</span>
+                                        <span class="related-review-text">(${reviewCount})</span>
+                                    </div>
+
+                                    <div class="related-price-group">
+                                        <span class="related-price-now">${formatPrice(product.price_current)}</span>
+                                        ${product.price_old !== product.price_current ? `
+                                            <span class="related-price-old">${formatPrice(product.price_old)}</span>
+                                        ` : ''}
+                                    </div>
+
+                                    <button class="related-add-btn" onclick="event.preventDefault(); event.stopPropagation(); addRelatedToCart(${product.id}, '${product.title}', ${product.price_current});">
+                                        🛒 Thêm giỏ
+                                    </button>
+                                </div>
+                            </a>
+                        `;
+                    }).join('')}
+                </div>
+            </div>
+        </section>
+    `;
 }
 
-function likeReview(reviewId) {
-    const review = allReviews.find(r => r.id === reviewId);
-    if (review) {
-        review.likes = (review.likes || 0) + 1;
-        saveReviews();
-        renderReviews();
-    }
-}
-
-function openImageViewer(src) {
-    const viewer = document.getElementById('imageViewer');
-    const img = document.getElementById('viewerImage');
-    if (viewer && img) {
-        img.src = src;
-        viewer.style.display = 'flex';
-    }
-}
-
-function closeImageViewer() {
-    const viewer = document.getElementById('imageViewer');
-    if (viewer) {
-        viewer.style.display = 'none';
-    }
-}
-
-function increaseQuantity() {
-    const input = document.getElementById('quantity');
-    if (input.value < 99) input.value = parseInt(input.value) + 1;
-}
-
-function decreaseQuantity() {
-    const input = document.getElementById('quantity');
-    if (input.value > 1) input.value = parseInt(input.value) - 1;
-}
-
-function addToCart() {
-    const quantity = parseInt(document.getElementById('quantity').value);
-    const product = window.currentProduct;
-    
-    if (!product) return;
-    
+// Hàm thêm sản phẩm liên quan vào giỏ
+function addRelatedToCart(productId, productTitle, productPrice) {
     let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    const existingItem = cart.find(item => item.id === product.id);
+    
+    const existingItem = cart.find(item => item.id === productId);
     
     if (existingItem) {
-        existingItem.quantity += quantity;
+        existingItem.quantity += 1;
     } else {
         cart.push({
-            id: product.id,
-            title: product.title,
-            price: product.price_current,
-            quantity: quantity,
-            image: product.image || ''
+            id: productId,
+            title: productTitle,
+            price: productPrice,
+            quantity: 1,
+            image: ''
         });
     }
     
     localStorage.setItem('cart', JSON.stringify(cart));
     
-    // ⭐ THÊM 2 DÒNG NÀY
     window.updateCartCount();
     window.dispatchEvent(new Event('cartUpdated'));
     
-    showToast(`✅ Đã thêm ${quantity} sản phẩm vào giỏ hàng!`, 'success');
+    showToast(`✅ Đã thêm ${productTitle} vào giỏ!`, 'success');
 }
 
-function buyNow() {
-    const quantity = parseInt(document.getElementById('quantity').value);
-    const product = window.currentProduct;
-    
-    if (!product) return;
-    
-    let cart = [{
-        id: product.id,
-        title: product.title,
-        price: product.price_current,
-        quantity: quantity,
-        image: product.image || ''
-    }];
-    
-    localStorage.setItem('cart', JSON.stringify(cart));
-    
-    // ⭐ THÊM 2 DÒNG NÀY
-    window.updateCartCount();
-    window.dispatchEvent(new Event('cartUpdated'));
-    
-    // Tăng lượt mua
-    let buys = parseInt(localStorage.getItem(`product_buys_${product.id}`) || '0');
-    buys++;
-    localStorage.setItem(`product_buys_${product.id}`, buys);
-    
-    // Ghi nhận mua hàng
-    recordPurchase(product.id, product.title);
-    
-    window.location.href = '/checkout/checkout.htm';
-}
-
-function recordPurchase(productId, productTitle) {
-    const user = localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser');
-    if (!user) return;
-    
-    try {
-        const userObj = JSON.parse(user);
-        const purchases = JSON.parse(localStorage.getItem('userPurchases') || '{}');
-        if (!purchases[userObj.username]) purchases[userObj.username] = [];
-        
-        if (!purchases[userObj.username].some(p => p.productId == productId)) {
-            purchases[userObj.username].push({
-                productId: productId,
-                productTitle: productTitle,
-                purchaseDate: new Date().toLocaleDateString('vi-VN'),
-                quantity: 1
-            });
-        }
-        localStorage.setItem('userPurchases', JSON.stringify(purchases));
-    } catch (e) {}
-}
-
-function openReviewForm() {
-    if (!isUserLoggedIn()) {
-        const currentUrl = window.location.href;
-        sessionStorage.setItem('redirectAfterLogin', currentUrl);
-        localStorage.setItem('redirectAfterLogin', currentUrl);
-        alert('❌ Vui lòng đăng nhập để viết đánh giá!');
-        window.location.href = '/account/login/login.html#login';
-        return;
-    }
-
-    if (!hasUserPurchasedProduct(window.currentProduct.id)) {
-        alert('❌ Chỉ những khách hàng đã mua sản phẩm này mới có thể đánh giá!');
-        return;
-    }
-
-    selectedRating = 0;
-    currentImageBase64 = null;
-    
-    const modal = document.createElement('div');
-    modal.id = 'reviewModal';
-    modal.style.cssText = 'position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 9999; padding: 16px; backdrop-filter: blur(4px);';
-    
-    modal.innerHTML = `
-        <div style="background: white; border-radius: 16px; width: 100%; max-width: 600px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); overflow: hidden; max-height: 90vh; overflow-y: auto;">
-            <div style="background: linear-gradient(135deg, #f97316 0%, #dc2626 100%); padding: 24px; color: white; position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between;">
-                <div style="display: flex; align-items: center; gap: 12px;">
-                    <span style="font-size: 28px;">⭐</span>
-                    <h2 style="font-size: 22px; font-weight: 700; margin: 0;">Viết Đánh Giá</h2>
-                </div>
-                <button onclick="closeReviewModal()" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 20px;">×</button>
-            </div>
-
-            <div style="padding: 24px;">
-                <form id="reviewForm" onsubmit="submitReview(event)">
-                    <div style="margin-bottom: 16px;">
-                        <label style="display: block; font-weight: 600; color: #1f2937; margin-bottom: 8px;">👤 Tên của bạn</label>
-                        <input type="text" id="reviewName" required placeholder="Nhập tên của bạn" style="width: 100%; padding: 10px 12px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 14px; box-sizing: border-box; cursor: text;" onfocus="this.style.borderColor='#f97316'" onblur="this.style.borderColor='#e5e7eb'">
-                    </div>
-
-                    <div style="margin-bottom: 16px;">
-                        <label style="display: block; font-weight: 600; color: #1f2937; margin-bottom: 8px;">⭐ Đánh giá <span id="ratingError" style="color: #dc2626; font-size: 12px; display: none;">(Vui lòng chọn sao)</span></label>
-                        <div style="display: flex; gap: 8px;" id="ratingStars">
-                            ${[1,2,3,4,5].map(star => `<span data-rating="${star}" style="font-size: 40px; cursor: pointer; color: #d1d5db; user-select: none;">☆</span>`).join('')}
-                        </div>
-                    </div>
-
-                    <div style="margin-bottom: 16px;">
-                        <label style="display: block; font-weight: 600; color: #1f2937; margin-bottom: 8px;">🖼️ Hình ảnh (tùy chọn)</label>
-                        <input type="file" id="reviewImage" accept="image/*" style="width: 100%; padding: 8px; border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer;">
-                        <div id="previewContainer" style="margin-top: 10px;"></div>
-                    </div>
-
-                    <div style="margin-bottom: 16px;">
-                        <label style="display: block; font-weight: 600; color: #1f2937; margin-bottom: 8px;">💬 Bình luận</label>
-                        <textarea id="reviewComment" required placeholder="Chia sẻ trải nghiệm của bạn..." style="width: 100%; padding: 10px 12px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 14px; box-sizing: border-box; min-height: 100px; font-family: inherit; cursor: text;" onfocus="this.style.borderColor='#f97316'" onblur="this.style.borderColor='#e5e7eb'"></textarea>
-                    </div>
-
-                    <div style="display: flex; gap: 12px; margin-top: 20px;">
-                        <button type="button" onclick="closeReviewModal()" style="flex: 1; padding: 10px; border: 2px solid #e5e7eb; background: white; color: #6b7280; border-radius: 8px; font-weight: 600; cursor: pointer;">✕ Hủy</button>
-                        <button type="submit" style="flex: 1; padding: 10px; background: linear-gradient(135deg, #f97316 0%, #dc2626 100%); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);">✓ Gửi</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    `;
-    
-    document.body.appendChild(modal);
-
-    // Xử lý ảnh
-    document.getElementById('reviewImage').addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(evt) {
-                currentImageBase64 = evt.target.result;
-                document.getElementById('previewContainer').innerHTML = `<img src="${evt.target.result}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;">`;
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-
-    // Xử lý rating
-    const stars = document.querySelectorAll('#ratingStars span');
-    stars.forEach((star) => {
-        star.addEventListener('click', function() {
-            selectedRating = parseInt(this.getAttribute('data-rating'));
-            document.getElementById('ratingError').style.display = 'none';
-            stars.forEach((s, i) => {
-                if (i < selectedRating) {
-                    s.textContent = '★';
-                    s.style.color = '#fbbf24';
-                } else {
-                    s.textContent = '☆';
-                    s.style.color = '#d1d5db';
-                }
-            });
-        });
-    });
-}
-
-function closeReviewModal() {
-    const modal = document.getElementById('reviewModal');
-    if (modal) modal.remove();
-    selectedRating = 0;
-    currentImageBase64 = null;
-}
-
-function submitReview(event) {
-    event.preventDefault();
-
-    if (selectedRating === 0) {
-        document.getElementById('ratingError').style.display = 'inline';
-        alert('⚠️ Vui lòng chọn số sao!');
-        return false;
-    }
-
-    const name = document.getElementById('reviewName').value;
-    const comment = document.getElementById('reviewComment').value;
-
-    const newReview = {
-        id: Date.now(),
-        name: name,
-        rating: selectedRating,
-        date: new Date().toLocaleDateString('vi-VN'),
-        comment: comment,
-        avatar: ['👨', '👩', '👨‍💼', '👩‍🔬'][Math.floor(Math.random() * 4)],
-        image: currentImageBase64,
-        likes: 0,
-        replies: []
-    };
-
-    allReviews.unshift(newReview);
-    saveReviews();
-
-    alert('✅ Cảm ơn bạn đã đánh giá!');
-    closeReviewModal();
-    renderReviews();
-    
-    return false;
-}
-
-function renderReviews() {
-    const reviewsContainer = productDetail.querySelector('.reviews-section');
-    if (reviewsContainer) {
-        reviewsContainer.innerHTML = createReviewsHTML();
-    }
-}
-
-function isUserLoggedIn() {
-    const userSession = sessionStorage.getItem('currentUser');
-    const userLocal = localStorage.getItem('currentUser');
-    return (userSession && userSession !== '') || (userLocal && userLocal !== '');
-}
-
-function hasUserPurchasedProduct(productId) {
-    const userSession = sessionStorage.getItem('currentUser');
-    const userLocal = localStorage.getItem('currentUser');
-    let user = userSession || userLocal;
-    
-    if (!user) return false;
-    
-    try {
-        user = JSON.parse(user);
-        const purchasesSession = JSON.parse(sessionStorage.getItem('userPurchases') || '{}');
-        const purchasesLocal = JSON.parse(localStorage.getItem('userPurchases') || '{}');
-        const allPurchases = { ...purchasesLocal, ...purchasesSession };
-        const userPurchases = allPurchases[user.username] || [];
-        
-        return userPurchases.some(p => p.productId == productId);
-    } catch (e) {
-        return false;
-    }
-}
-
-function openPromoPopup() {
-    const popup = document.createElement('div');
-    popup.id = 'promoPopup';
-    popup.style.cssText = 'position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 9999; padding: 16px;';
-    
-    popup.innerHTML = `
-        <div style="background: white; border-radius: 20px; width: 100%; max-width: 900px; max-height: 85vh; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);">
-            <div style="background: linear-gradient(135deg, #f97316 0%, #dc2626 100%); padding: 20px; color: white; position: relative;">
-                <button onclick="closePromoPopup()" style="position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.2); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 20px;">×</button>
-                <h2 style="font-size: 24px; font-weight: 700; margin: 0;">🎫 Kho Mã Giảm Giá</h2>
-            </div>
-
-            <div style="padding: 20px; overflow-y: auto; max-height: calc(85vh - 100px);">
-                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;">
-                    ${promoCodes.map(promo => `
-                        <div style="background: white; border-radius: 12px; border: 2px solid #fed7aa; overflow: hidden;">
-                            <div style="background: linear-gradient(135deg, #f97316, #dc2626); padding: 20px; color: white; text-align: center;">
-                                <span style="font-size: 48px;">${promo.image}</span>
-                                <h3 style="margin: 10px 0 0 0; font-weight: 700;">${promo.title}</h3>
-                                <p style="margin: 5px 0; font-size: 12px; opacity: 0.9;">${promo.description}</p>
-                            </div>
-                            <div style="padding: 15px;">
-                                ${promo.codes ? `
-                                    <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px;">
-                                        ${promo.codes.map(item => `
-                                            <div style="flex: 1; border: 1px solid #fed7aa; border-radius: 6px; padding: 6px; text-align: center;">
-                                                <div style="font-size: 10px; font-weight: 700; color: #f97316;">${item.code}</div>
-                                                <div style="font-size: 9px; color: #6b7280;">${item.discount}</div>
-                                            </div>
-                                        `).join('')}
-                                    </div>
-                                ` : `
-                                    <div style="border: 2px dashed #fed7aa; border-radius: 8px; padding: 10px; margin-bottom: 10px; background: #fffbeb; text-align: center;">
-                                        <div style="font-family: monospace; font-weight: 700; color: #1f2937;">${promo.code}</div>
-                                    </div>
-                                `}
-                                <button onclick="copyPromoCode('${promo.codes ? promo.codes[0].code : promo.code}')" style="width: 100%; background: #f97316; color: white; padding: 8px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 12px;">LẤY MÃ</button>
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-            </div>
-        </div>
-    `;
-    
-    document.body.appendChild(popup);
-}
-
-function closePromoPopup() {
-    const popup = document.getElementById('promoPopup');
-    if (popup) popup.remove();
-}
-
-function copyPromoCode(code) {
-    navigator.clipboard.writeText(code).then(() => {
-        localStorage.setItem(STORAGE_KEY_PROMO, code);
-        alert(`✅ Đã sao chép mã: ${code}\nMã này sẽ tự động áp dụng trong giỏ hàng!`);
-        closePromoPopup();
-    });
-}
-
-function showToast(message, type = 'success') {
-    let toastBox = document.getElementById('toast-box');
-    if (!toastBox) {
-        toastBox = document.createElement('div');
-        toastBox.id = 'toast-box';
-        toastBox.style.cssText = 'position: fixed; top: 20px; right: 20px; z-index: 10000;';
-        document.body.appendChild(toastBox);
-    }
-    
-    const toast = document.createElement('div');
-    toast.style.cssText = 'background: #10b981; color: white; padding: 16px 24px; border-radius: 8px; margin-bottom: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); animation: slideIn 0.3s ease;';
-    toast.textContent = message;
-    toastBox.appendChild(toast);
-    
-    setTimeout(() => toast.remove(), 3000);
-}
-
-// ========== KHỞI TẠO ==========
+// ========== LẤY DỮ LIỆU CHI TIẾT SẢN PHẨM ==========
 const getDetailProduct = async () => {
     try {
         const params = new URLSearchParams(window.location.search);
@@ -1063,6 +767,7 @@ const getDetailProduct = async () => {
         if (!response.ok) throw new Error('Không thể tải dữ liệu sản phẩm');
 
         const data = await response.json();
+        window.allProductData = data; // ⭐ THÊM DÒNG NÀY - LƯU DỮ LIỆU
         const allProducts = [...data.sale, ...data.newsale];
         const product = allProducts.find(p => p.id == productId);
 
@@ -1073,7 +778,6 @@ const getDetailProduct = async () => {
             breadcrumbProduct.textContent = product.title;
             document.title = product.title + ' - Chi tiết sản phẩm';
             
-            // ⭐ THÊM DÒNG NÀY - KHỞI TẠO SUGGEST BOX
             setTimeout(() => {
                 console.log('Khởi tạo suggest box...');
                 initSuggestBox();
