@@ -1,857 +1,264 @@
-/* === FLOATING NAVIGATION - RESPONSIVE === */
-/* Hiện khi scroll xuống 20% | Desktop: Hiện luôn | Mobile: Toggle */
+/* === FLOATING SIDEBAR - SAFE MODE (NO CONFLICT) === */
 
 window.addEventListener('load', () => {
-    createFloatingNavigation();
-    initNavigationLogic();
-    initScrollTrigger();
+    // Load FontAwesome
+    if (!document.querySelector('link[href*="fontawesome"]')) {
+        const fa = document.createElement('link');
+        fa.rel = 'stylesheet';
+        fa.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+        document.head.appendChild(fa);
+    }
+    
+    createSafeNav();
+    initSafeScroll();
 });
 
-function createFloatingNavigation() {
-    // Inject CSS
+function createSafeNav() {
     const style = document.createElement('style');
     style.innerHTML = `
-        /* === DESKTOP: Hiện luôn, không toggle === */
-        @media (min-width: 769px) {
-            .float-nav-container {
-                position: fixed;
-                top: 55%;
-                right: 6px;
-                z-index: 9990;
-                display: flex;
-                flex-direction: column;
-                gap: 12px;
-                transform: translateY(-50%);
-                opacity: 0;
-                visibility: hidden;
-                transition: opacity 0.4s ease, visibility 0.4s ease;
-            }
-            
-            .float-nav-container.show {
-                opacity: 1;
-                visibility: visible;
-            }
-            
-            .float-nav-toggle { display: none; }
-            
-            .float-nav-item {
-                width: 32px;
-                height: 32px;
-                border-radius: 50%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                color: #fff;
-                text-decoration: none;
-                position: relative;
-                transition: all 0.3s ease;
-                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
-                cursor: pointer;
-                border: none;
-                font-size: 13px;
-            }
-            
-            .float-nav-item:hover {
-                transform: scale(1.15);
-                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-            }
-            
-            .float-nav-item::before {
-                content: attr(data-tooltip);
-                position: absolute;
-                right: 45px;
-                background: rgba(0, 0, 0, 0.85);
-                color: #fff;
-                padding: 5px 9px;
-                border-radius: 4px;
-                font-size: 11px;
-                white-space: nowrap;
-                opacity: 0;
-                pointer-events: none;
-                transition: opacity 0.3s;
-            }
-            
-            .float-nav-item:hover::before { opacity: 1; }
-            
-            .float-badge {
-                position: absolute;
-                top: -2px;
-                right: -2px;
-                background: #ff0000;
-                color: #fff;
-                font-size: 8px;
-                font-weight: bold;
-                padding: 1px 3px;
-                border-radius: 6px;
-                border: 1.5px solid #fff;
-                min-width: 13px;
-                text-align: center;
-            }
-            
-            .fn-home { background: linear-gradient(135deg, #ff6b35, #d82b2b); }
-            .fn-cart { background: linear-gradient(135deg, #ff6b35, #ff8c42); }
-            .fn-facebook { background: linear-gradient(135deg, #0088ff, #00c6ff); }
-            .fn-location { background: linear-gradient(135deg, #ff6b35, #ffa500); }
-            .fn-top { background: linear-gradient(135deg, #ff6b35, #d82b2b); }
+        :root {
+            /* MÀU SẮC */
+            --fsb-home: #2980b9; --fsb-cart: #e67e22; --fsb-map: #c0392b; 
+            --fsb-mess: #0984e3; --fsb-top: #7f8c8d;
+            --fsb-toggle: linear-gradient(135deg, #ff6b35, #e03e28);
         }
 
-        /* === MOBILE: Có toggle button, vị trí giữa trang === */
-        @media (max-width: 768px) {
-            .float-nav-container {
-                position: fixed;
-                top: 55%;
-                right: -55px;
-                z-index: 9990;
-                transition: right 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.4s ease;
-                display: flex;
-                align-items: flex-start;
-                transform: translateY(-50%);
-                opacity: 0;
-                visibility: hidden;
-            }
-            
-            .float-nav-container.show {
-                opacity: 1;
-                visibility: visible;
-            }
-            
-            .float-nav-container.open { right: 0; }
-            
-            .float-nav-toggle {
-                width: 30px;
-                height: 30px;
-                background: linear-gradient(135deg, #ff6b35, #d82b2b);
-                color: white;
-                border-radius: 6px 0 0 6px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                cursor: pointer;
-                box-shadow: -2px 2px 8px rgba(0, 0, 0, 0.15);
-                font-size: 12px;
-                border: none;
-                flex-shrink: 0;
-            }
-            
-            .float-nav-content {
-                background: rgba(255, 255, 255, 0.98);
-                backdrop-filter: blur(10px);
-                width: 45px;
-                padding: 8px 0;
-                border-radius: 0 0 0 8px;
-                box-shadow: -3px 3px 10px rgba(0, 0, 0, 0.12);
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
-                align-items: center;
-            }
-            
-            .float-nav-item {
-                width: 30px;
-                height: 30px;
-                border-radius: 50%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                color: #fff;
-                text-decoration: none;
-                position: relative;
-                transition: all 0.2s;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                cursor: pointer;
-                border: none;
-                font-size: 12px;
-            }
-            
-            .float-nav-item:active { 
-                transform: scale(0.9); 
-                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
-            }
-            
-            .float-badge {
-                position: absolute;
-                top: -2px;
-                right: -2px;
-                background: #ff0000;
-                color: #fff;
-                font-size: 7px;
-                font-weight: bold;
-                padding: 1px 3px;
-                border-radius: 5px;
-                border: 1.5px solid #fff;
-                min-width: 12px;
-                text-align: center;
-            }
-            
-            .fn-home { background: linear-gradient(135deg, #ff6b35, #d82b2b); }
-            .fn-cart { background: linear-gradient(135deg, #ff6b35, #ff8c42); }
-            .fn-facebook { background: linear-gradient(135deg, #0088ff, #00c6ff); }
-            .fn-location { background: linear-gradient(135deg, #ff6b35, #ffa500); }
-            .fn-top { background: linear-gradient(135deg, #ff6b35, #d82b2b); }
-        }
-        
-        /* === MOBILE NHỎ (< 480px): Điều chỉnh thêm === */
-        @media (max-width: 480px) {
-            .float-nav-container {
-                top: 58%;
-            }
-            
-            .float-nav-toggle {
-                width: 28px;
-                height: 28px;
-                font-size: 11px;
-            }
-            
-            .float-nav-content {
-                width: 42px;
-                padding: 7px 0;
-                gap: 12px;
-            }
-            
-            .float-nav-item {
-                width: 28px;
-                height: 28px;
-                font-size: 11px;
-            }
-        }
-        
-        /* === MODAL POPUP LOCATION === */
-        .location-modal-overlay {
+        /* === 1. CONTAINER CHUNG (Mặc định ẩn để chờ scroll) === */
+        .fsb-widget {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(5px);
-            z-index: 99999;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        .location-modal-overlay.show {
+            z-index: 99999; /* Z-index cao nhất để đè lên mọi thứ */
+            top: 50%;
+            /* Ẩn sang phải và mờ đi */
+            transform: translateY(-50%) translateX(60px); 
+            opacity: 0;
+            visibility: hidden;
             display: flex;
+            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            pointer-events: none;
+            font-family: sans-serif; /* Reset font để không lỗi */
+            line-height: normal;
         }
-        
-        .location-modal {
-            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
-            border-radius: 20px;
-            padding: 30px;
-            max-width: 450px;
-            width: 90%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: slideUp 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            position: relative;
+
+        /* Class hiện widget khi cuộn 50% */
+        .fsb-widget.is-visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(-50%) translateX(0);
+            pointer-events: auto;
         }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        @keyframes slideUp {
-            from { 
-                transform: translateY(50px);
-                opacity: 0;
-            }
-            to { 
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-        
-        .location-modal-header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-        
-        .location-modal-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #ff6b35, #ffa500);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 auto 15px;
-            font-size: 28px;
-            color: white;
-            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.3);
-        }
-        
-        .location-modal-title {
-            font-size: 22px;
-            font-weight: 700;
-            color: #2c3e50;
-            margin: 0 0 8px 0;
-        }
-        
-        .location-modal-subtitle {
-            font-size: 14px;
-            color: #7f8c8d;
-            margin: 0;
-        }
-        
-        .location-modal-body {
-            margin-bottom: 25px;
-        }
-        
-        .location-input-group {
-            position: relative;
-            margin-bottom: 15px;
-        }
-        
-        .location-input-group label {
-            display: block;
-            font-size: 13px;
-            font-weight: 600;
-            color: #555;
-            margin-bottom: 8px;
-        }
-        
-        .location-input-group input {
-            width: 100%;
-            padding: 14px 18px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            font-size: 15px;
-            transition: all 0.3s ease;
+
+        /* === 2. ITEM STYLE (Tên class riêng biệt) === */
+        .fsb-item {
+            display: flex; justify-content: center; align-items: center;
+            text-decoration: none; cursor: pointer; border: none; background: transparent;
+            position: relative; transition: all 0.2s ease; 
+            color: var(--icon-c);
+            padding: 0; margin: 0; /* Reset margin/padding */
             box-sizing: border-box;
         }
         
-        .location-input-group input:focus {
-            outline: none;
-            border-color: #ff6b35;
-            box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.1);
+        .fsb-badge {
+            position: absolute; top: 4px; right: 4px; 
+            background: #ff0000; color: white;
+            font-size: 10px; font-weight: bold; width: 16px; height: 16px; 
+            border-radius: 50%; display: flex; justify-content: center; align-items: center; 
+            border: 2px solid white; line-height: 1; z-index: 2;
         }
-        
-        .location-info-box {
-            background: linear-gradient(135deg, #fff5f0 0%, #ffe8dc 100%);
-            border: 1px solid #ffd4b8;
-            border-radius: 12px;
-            padding: 15px;
-            margin-top: 15px;
-        }
-        
-        .location-info-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-            font-size: 13px;
-            color: #555;
-        }
-        
-        .location-info-item:last-child {
-            margin-bottom: 0;
-        }
-        
-        .location-info-item i {
-            color: #ff6b35;
-            width: 18px;
-            text-align: center;
-        }
-        
-        .location-modal-actions {
-            display: flex;
-            gap: 12px;
-        }
-        
-        .location-btn {
-            flex: 1;
-            padding: 14px 20px;
-            border: none;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .location-btn-primary {
-            background: linear-gradient(135deg, #ff6b35, #ffa500);
-            color: white;
-            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
-        }
-        
-        .location-btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
-        }
-        
-        .location-btn-primary:active {
-            transform: translateY(0);
-        }
-        
-        .location-btn-secondary {
-            background: #f1f3f5;
-            color: #555;
-        }
-        
-        .location-btn-secondary:hover {
-            background: #e9ecef;
-        }
-        
-        .location-modal-close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: #f1f3f5;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: all 0.3s ease;
-        }
-        
-        .location-modal-close:hover {
-            background: #e9ecef;
-            transform: rotate(90deg);
-        }
-        
-        .location-loading {
-            text-align: center;
-            padding: 20px;
-        }
-        
-        .location-spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #ff6b35;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .location-result {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 20px;
-            border: 2px solid #e0e0e0;
-        }
-        
-        .location-result-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        
-        .location-result-item:last-child {
-            border-bottom: none;
-        }
-        
-        .location-result-label {
-            font-size: 13px;
-            color: #7f8c8d;
-        }
-        
-        .location-result-value {
-            font-size: 15px;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-        
-        .location-result-value.highlight {
-            color: #ff6b35;
-            font-size: 18px;
-        }
-        
-        .location-error {
-            background: linear-gradient(135deg, #fff5f5 0%, #ffe5e5 100%);
-            border: 2px solid #ffcccc;
-            border-radius: 12px;
-            padding: 15px;
-            margin-top: 15px;
-            text-align: center;
-        }
-        
-        .location-error-icon {
-            font-size: 36px;
-            color: #e74c3c;
-            margin-bottom: 10px;
-        }
-        
-        .location-error-text {
-            font-size: 15px;
-            color: #c0392b;
-            font-weight: 600;
-            margin: 0 0 5px 0;
-        }
-        
-        .location-error-subtext {
-            font-size: 13px;
-            color: #7f8c8d;
-            margin: 0;
-        }
-        
-        @media (max-width: 480px) {
-            .location-modal {
-                padding: 25px 20px;
+
+        /* === 3. DESKTOP STYLE === */
+        @media (min-width: 769px) {
+            .fsb-widget {
+                right: 0; width: 46px;
+                background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px);
+                border: 1px solid #eee; border-right: none; border-radius: 12px 0 0 12px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1); flex-direction: column; padding: 8px 0;
+            }
+            .fsb-toggle-btn { display: none; }
+            .fsb-content { display: contents; } /* Container ảo */
+            
+            .fsb-item { width: 100%; height: 44px; font-size: 20px; margin-bottom: 2px; }
+            .fsb-item:hover { background: #f8f9fa; }
+            .fsb-item:hover::before {
+                content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+                background: var(--icon-c); border-radius: 0 4px 4px 0;
             }
             
-            .location-modal-title {
-                font-size: 20px;
+            .fsb-tooltip {
+                position: absolute; right: 55px; background: #2d3436; color: white;
+                padding: 5px 10px; border-radius: 6px; font-size: 12px; white-space: nowrap;
+                opacity: 0; visibility: hidden; transform: translateX(10px); transition: 0.2s; pointer-events: none;
+                line-height: 1.2;
+            }
+            .fsb-item:hover .fsb-tooltip { opacity: 1; visibility: visible; transform: translateX(0); }
+        }
+
+        /* === 4. MOBILE STYLE === */
+        @media (max-width: 768px) {
+            .fsb-widget {
+                right: -70px; flex-direction: row; align-items: flex-start;
+                filter: drop-shadow(-2px 5px 10px rgba(0,0,0,0.15));
             }
             
-            .location-btn {
-                padding: 12px 16px;
-                font-size: 14px;
+            .fsb-widget.is-open { right: 0; } 
+
+            .fsb-toggle-btn {
+                width: 45px; height: 45px; background: var(--fsb-toggle);
+                color: white; border: none; border-radius: 8px 0 0 8px;
+                cursor: pointer; display: flex; justify-content: center; align-items: center;
+                font-size: 18px; margin: 0; padding: 0;
             }
+            
+            .fsb-content {
+                background: white; width: 70px; padding: 15px 0;
+                display: flex; flex-direction: column; align-items: center;
+                border-radius: 0 0 0 16px; min-height: 250px;
+                box-sizing: border-box;
+            }
+            
+            .fsb-item {
+                width: 45px; height: 45px; background: #f1f2f6;
+                border-radius: 10px; margin-bottom: 12px; font-size: 22px;
+            }
+            .fsb-item:active { transform: scale(0.95); }
+            .fsb-tooltip { display: none; }
+            .fsb-badge { top: -4px; right: -4px; width: 18px; height: 18px; }
         }
+
+        /* === MODAL STYLE === */
+        .fsb-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100000;
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden; transition: 0.3s; backdrop-filter: blur(3px);
+        }
+        .fsb-overlay.show { opacity: 1; visibility: visible; }
+        .fsb-box {
+            background: white; width: 90%; max-width: 340px; padding: 25px;
+            border-radius: 20px; text-align: center; transform: scale(0.9); transition: 0.3s;
+            font-family: sans-serif;
+        }
+        .fsb-overlay.show .fsb-box { transform: scale(1); }
+        .fsb-inp { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; margin: 15px 0; outline: none; box-sizing: border-box; }
+        .fsb-btn { width: 100%; padding: 12px; background: #e67e22; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
     `;
     document.head.appendChild(style);
 
-    // Inject HTML
     const html = `
-        <div id="float-nav-widget" class="float-nav-container">
-            <button class="float-nav-toggle" onclick="toggleFloatNav()">
+        <div id="fsb-widget" class="fsb-widget">
+            <button class="fsb-toggle-btn" onclick="toggleFSB()">
                 <i class="fa-solid fa-angles-left"></i>
             </button>
-            
-            <div class="float-nav-content">
-                <button class="float-nav-item fn-home" data-tooltip="Trang chủ" onclick="floatNavGoHome()">
+            <div class="fsb-content">
+                <button class="fsb-item" style="--icon-c: var(--fsb-home)" onclick="fsbGoHome()">
                     <i class="fa-solid fa-house"></i>
+                    <span class="fsb-tooltip">Trang chủ</span>
                 </button>
-                
-                <button class="float-nav-item fn-cart" data-tooltip="Giỏ hàng" onclick="floatNavShowCart()">
+                <button class="fsb-item" style="--icon-c: var(--fsb-cart)" onclick="fsbShowCart()">
                     <i class="fa-solid fa-cart-shopping"></i>
-                    <span id="float-cart-badge" class="float-badge">0</span>
+                    <span id="fsb-badge" class="fsb-badge" style="display:none">0</span>
+                    <span class="fsb-tooltip">Giỏ hàng</span>
                 </button>
-                
-                <a href="https://m.me/shopanvat" target="_blank" class="float-nav-item fn-facebook" data-tooltip="Facebook Messenger">
-                    <i class="fa-brands fa-facebook-messenger"></i>
-                </a>
-                
-                <button class="float-nav-item fn-location" data-tooltip="Vị trí của tôi" onclick="floatNavGetLocation()">
+                <button class="fsb-item" style="--icon-c: var(--fsb-map)" onclick="fsbGetLoc()">
                     <i class="fa-solid fa-map-location-dot"></i>
+                    <span class="fsb-tooltip">Tính phí Ship</span>
                 </button>
-                
-                <button class="float-nav-item fn-top" data-tooltip="Lên đầu trang" onclick="floatNavScrollTop()">
+                <a href="https://m.me/shopanvat" target="_blank" class="fsb-item" style="--icon-c: var(--fsb-mess)">
+                    <i class="fa-brands fa-facebook-messenger"></i>
+                    <span class="fsb-tooltip">Chat Messenger</span>
+                </a>
+                <button class="fsb-item" style="--icon-c: var(--fsb-top); margin-top: auto" onclick="fsbScrollTop()">
                     <i class="fa-solid fa-arrow-up"></i>
+                    <span class="fsb-tooltip">Lên đầu trang</span>
                 </button>
             </div>
         </div>
-        
-        <!-- Location Modal -->
-        <div id="location-modal-overlay" class="location-modal-overlay" onclick="closeLocationModal(event)">
-            <div class="location-modal" onclick="event.stopPropagation()">
-                <button class="location-modal-close" onclick="closeLocationModal()">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-                
-                <div class="location-modal-header">
-                    <div class="location-modal-icon">
-                        <i class="fa-solid fa-location-dot"></i>
-                    </div>
-                    <h3 class="location-modal-title">Tính phí vận chuyển</h3>
-                    <p class="location-modal-subtitle">Nhập địa chỉ của bạn để kiểm tra</p>
-                </div>
-                
-                <div id="location-modal-content" class="location-modal-body">
-                    <div class="location-input-group">
-                        <label for="user-address-input">Địa chỉ giao hàng</label>
-                        <input 
-                            type="text" 
-                            id="user-address-input" 
-                            placeholder="Ví dụ: 123 Đường ABC, Quận XYZ, Hà Nội"
-                            autocomplete="off"
-                        >
-                    </div>
-                    
-                    <div class="location-info-box">
-                        <div class="location-info-item">
-                            <i class="fa-solid fa-store"></i>
-                            <span><strong>Địa chỉ shop:</strong> 68 Trung Tiến, Khâm Thiên, Hà Nội</span>
-                        </div>
-                        <div class="location-info-item">
-                            <i class="fa-solid fa-circle-info"></i>
-                            <span>Chỉ giao hàng trong bán kính <strong>5km</strong></span>
-                        </div>
-                    </div>
-                    
-                    <div id="location-result-container"></div>
-                </div>
-                
-                <div class="location-modal-actions">
-                    <button class="location-btn location-btn-secondary" onclick="closeLocationModal()">
-                        Đóng
-                    </button>
-                    <button class="location-btn location-btn-primary" onclick="calculateShipping()">
-                        <i class="fa-solid fa-calculator"></i> Tính phí ship
-                    </button>
-                </div>
+
+        <div id="fsb-overlay" class="fsb-overlay" onclick="closeFSBLoc(event)">
+            <div class="fsb-box" onclick="event.stopPropagation()">
+                <i class="fa-solid fa-truck-fast" style="font-size:40px; color:#e67e22; margin-bottom:10px"></i>
+                <h3 style="margin:5px 0; color:#333">Phí vận chuyển</h3>
+                <input type="text" id="fsb-inp" class="fsb-inp" placeholder="Nhập địa chỉ..." autocomplete="off">
+                <button class="fsb-btn" onclick="fsbCalc()">Kiểm tra</button>
+                <div id="fsb-res" style="margin-top:15px; font-size:14px"></div>
+                <button onclick="closeFSBLoc()" style="background:none; border:none; color:#999; margin-top:10px; cursor:pointer">Đóng</button>
             </div>
         </div>
     `;
     document.body.insertAdjacentHTML('beforeend', html);
 }
 
-function initNavigationLogic() {
-    // Update cart badge from localStorage or your cart system
-    updateCartBadge();
+function initSafeScroll() {
+    updateFSBBadge();
     
-    // Auto-close mobile menu khi resize về desktop
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 768) {
-            document.getElementById('float-nav-widget').classList.remove('open');
-        }
-    });
-}
-
-// === SCROLL TRIGGER: Hiện khi scroll xuống 20% ===
-function initScrollTrigger() {
-    const widget = document.getElementById('float-nav-widget');
-    let scrollThreshold = 0;
-    
-    // Tính toán ngưỡng 20% của trang
-    function calculateThreshold() {
-        const documentHeight = Math.max(
-            document.body.scrollHeight,
-            document.body.offsetHeight,
-            document.documentElement.clientHeight,
-            document.documentElement.scrollHeight,
-            document.documentElement.offsetHeight
-        );
-        const windowHeight = window.innerHeight;
-        scrollThreshold = (documentHeight - windowHeight) * 0.2; // 20% của trang
-    }
-    
-    calculateThreshold();
-    
-    // Lắng nghe sự kiện scroll
-    window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset || document.documentElement.scrollTop;
+    // Logic Cuộn 50%
+    const widget = document.getElementById('fsb-widget');
+    const checkScroll = () => {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const docHeight = document.documentElement.scrollHeight;
+        const winHeight = window.innerHeight;
+        const scrollPercent = (scrollTop / (docHeight - winHeight)) * 100;
         
-        if (scrolled > scrollThreshold) {
-            widget.classList.add('show');
+        if (scrollPercent >= 50) {
+            widget.classList.add('is-visible');
         } else {
-            widget.classList.remove('show');
-        }
-    });
-    
-    // Tính lại khi resize
-    window.addEventListener('resize', calculateThreshold);
-}
-
-// === CÁC HÀM CHỨC NĂNG ===
-
-// Toggle widget (mobile only)
-window.toggleFloatNav = function() {
-    const widget = document.getElementById('float-nav-widget');
-    const icon = document.querySelector('.float-nav-toggle i');
-    
-    widget.classList.toggle('open');
-    
-    if (widget.classList.contains('open')) {
-        icon.className = 'fa-solid fa-angles-right';
-    } else {
-        icon.className = 'fa-solid fa-angles-left';
-    }
-}
-
-// Về trang chủ
-window.floatNavGoHome = function() {
-    window.location.href = '/index.htm'; // Thay đổi URL theo dự án của bạn
-}
-
-// Hiển thị giỏ hàng
-window.floatNavShowCart = function() {
-    // Có thể gọi hàm toggleQuickCart() từ widget-loader.js
-    if (typeof toggleQuickCart === 'function') {
-        toggleQuickCart();
-    } else {
-        // Hoặc chuyển đến trang giỏ hàng
-        window.location.href = '/cart/cart.htm'; // Thay đổi URL theo dự án của bạn
-    }
-}
-
-// Lấy địa chỉ và tính phí ship
-window.floatNavGetLocation = function() {
-    const modal = document.getElementById('location-modal-overlay');
-    modal.classList.add('show');
-    
-    // Reset input và result
-    document.getElementById('user-address-input').value = '';
-    document.getElementById('location-result-container').innerHTML = '';
-    
-    // Focus vào input
-    setTimeout(() => {
-        document.getElementById('user-address-input').focus();
-    }, 300);
-    
-    // Cho phép nhấn Enter để tính
-    document.getElementById('user-address-input').onkeypress = function(e) {
-        if (e.key === 'Enter') {
-            calculateShipping();
+            widget.classList.remove('is-visible');
+            widget.classList.remove('is-open'); // Đóng menu mobile khi ẩn
+            const icon = document.querySelector('.fsb-toggle-btn i');
+            if(icon) icon.className = 'fa-solid fa-angles-left';
         }
     };
+    window.addEventListener('scroll', checkScroll);
+    checkScroll();
 }
 
-// Đóng modal
-window.closeLocationModal = function(event) {
-    if (event && event.target !== event.currentTarget) return;
-    const modal = document.getElementById('location-modal-overlay');
-    modal.classList.remove('show');
+/* === LOGIC FUNCTION (Đã đổi tên hàm để tránh trùng lặp) === */
+window.toggleFSB = () => {
+    const w = document.getElementById('fsb-widget');
+    w.classList.toggle('is-open');
+    document.querySelector('.fsb-toggle-btn i').className = w.classList.contains('is-open') ? 'fa-solid fa-angles-right' : 'fa-solid fa-angles-left';
 }
+window.fsbGoHome = () => window.location.href = '/index.htm';
+window.fsbShowCart = () => typeof toggleQuickCart === 'function' ? toggleQuickCart() : window.location.href = '/cart/cart.htm';
+window.fsbScrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
-// Tính phí ship
-window.calculateShipping = function() {
-    const userAddress = document.getElementById('user-address-input').value.trim();
-    const resultContainer = document.getElementById('location-result-container');
-    
-    if (!userAddress) {
-        resultContainer.innerHTML = `
-            <div class="location-error">
-                <div class="location-error-icon">⚠️</div>
-                <p class="location-error-text">Vui lòng nhập địa chỉ!</p>
-            </div>
-        `;
-        return;
-    }
-    
-    // Hiển thị loading
-    resultContainer.innerHTML = `
-        <div class="location-loading">
-            <div class="location-spinner"></div>
-            <p style="color: #7f8c8d; font-size: 14px;">Đang tính toán khoảng cách...</p>
-        </div>
-    `;
-    
-    // Địa chỉ shop cố định: 68 Trung Tiến, Khâm Thiên, Hà Nội
-    const SHOP_ADDRESS = "68 Trung Tiến, Khâm Thiên, Hà Nội, Việt Nam";
-    const SHOP_LAT = 21.0164; // Tọa độ gần đúng của Trung Tiến, Khâm Thiên
-    const SHOP_LNG = 105.8266;
-    
-    // Sử dụng Google Maps Geocoding API
-    const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(userAddress)}&key=YOUR_GOOGLE_MAPS_API_KEY`;
-    
-    fetch(geocodeUrl)
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === "OK" && data.results.length > 0) {
-                const userLat = data.results[0].geometry.location.lat;
-                const userLng = data.results[0].geometry.location.lng;
-                
-                // Tính khoảng cách (km)
-                const distance = calculateDistance(SHOP_LAT, SHOP_LNG, userLat, userLng);
-                
-                // Kiểm tra khoảng cách > 5km
-                if (distance > 5) {
-                    resultContainer.innerHTML = `
-                        <div class="location-error">
-                            <div class="location-error-icon">😔</div>
-                            <p class="location-error-text">Quá xa! Không thể giao hàng</p>
-                            <p class="location-error-subtext">Khoảng cách: ${distance.toFixed(2)} km (Chỉ giao trong bán kính 5km)</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                // Tính phí ship dựa trên khoảng cách
-                const shippingFee = calculateShippingFee(distance);
-                
-                // Hiển thị kết quả
-                resultContainer.innerHTML = `
-                    <div class="location-result">
-                        <div class="location-result-item">
-                            <span class="location-result-label">📍 Khoảng cách</span>
-                            <span class="location-result-value">${distance.toFixed(2)} km</span>
-                        </div>
-                        <div class="location-result-item">
-                            <span class="location-result-label">💰 Phí vận chuyển</span>
-                            <span class="location-result-value highlight">${shippingFee.toLocaleString('vi-VN')} VNĐ</span>
-                        </div>
-                        <div class="location-result-item">
-                            <span class="location-result-label">⏱️ Thời gian giao</span>
-                            <span class="location-result-value">30-45 phút</span>
-                        </div>
-                    </div>
-                `;
-            } else {
-                resultContainer.innerHTML = `
-                    <div class="location-error">
-                        <div class="location-error-icon">🔍</div>
-                        <p class="location-error-text">Không tìm thấy địa chỉ</p>
-                        <p class="location-error-subtext">Vui lòng nhập địa chỉ chính xác hơn</p>
-                    </div>
-                `;
-            }
-        })
-        .catch(error => {
-            console.error("Lỗi:", error);
-            resultContainer.innerHTML = `
-                <div class="location-error">
-                    <div class="location-error-icon">❌</div>
-                    <p class="location-error-text">Có lỗi xảy ra</p>
-                    <p class="location-error-subtext">Vui lòng thử lại sau</p>
-                </div>
-            `;
-        });
-}
-
-// Hàm tính khoảng cách giữa 2 điểm (Haversine formula)
-function calculateDistance(lat1, lon1, lat2, lon2) {
-    const R = 6371; // Bán kính Trái Đất (km)
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLon = (lon2 - lon1) * Math.PI / 180;
-    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-              Math.sin(dLon/2) * Math.sin(dLon/2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    return R * c;
-}
-
-// Hàm tính phí ship theo khoảng cách
-function calculateShippingFee(distance) {
-    // Tùy chỉnh theo giá của bạn
-    if (distance <= 3) return 15000; // 0-3km: 15k
-    if (distance <= 5) return 20000; // 3-5km: 20k
-    if (distance <= 10) return 30000; // 5-10km: 30k (không còn sử dụng vì giới hạn 5km)
-    if (distance <= 15) return 40000; // 10-15km: 40k (không còn sử dụng vì giới hạn 5km)
-    return 50000 + Math.floor((distance - 15) / 5) * 10000; // >15km (không còn sử dụng vì giới hạn 5km)
-}
-
-// Cuộn lên đầu trang
-window.floatNavScrollTop = function() {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-}
-
-// Update cart badge
-window.updateCartBadge = function(count) {
-    const badge = document.getElementById('float-cart-badge');
+window.updateFSBBadge = (count) => {
+    const badge = document.getElementById('fsb-badge');
     if (!badge) return;
-    
-    // Nếu không truyền count, lấy từ localStorage hoặc cartData
     if (typeof count === 'undefined') {
-        // Kiểm tra nếu có cartData từ widget-loader.js
-        if (typeof cartData !== 'undefined') {
-            count = cartData.reduce((total, item) => total + item.qty, 0);
-        } else if (localStorage.getItem('cart')) {
-            const cart = JSON.parse(localStorage.getItem('cart'));
-            count = cart.reduce((total, item) => total + item.qty, 0);
-        } else {
-            count = 0;
-        }
+        if (typeof cartData !== 'undefined') count = cartData.reduce((t, i) => t + i.qty, 0);
+        else if (localStorage.getItem('cart')) try { count = JSON.parse(localStorage.getItem('cart')).reduce((t, i) => t + i.qty, 0); } catch(e){ count = 0; }
+        else count = 0;
     }
-    
     badge.textContent = count;
-    badge.style.display = count > 0 ? 'block' : 'none';
+    badge.style.display = count > 0 ? 'flex' : 'none';
+}
+
+window.fsbGetLoc = () => {
+    document.getElementById('fsb-widget').classList.remove('is-open');
+    document.querySelector('.fsb-toggle-btn i').className = 'fa-solid fa-angles-left';
+    document.getElementById('fsb-overlay').classList.add('show');
+    setTimeout(() => document.getElementById('fsb-inp').focus(), 100);
+}
+window.closeFSBLoc = (e) => { if(!e || e.target === e.currentTarget) document.getElementById('fsb-overlay').classList.remove('show'); }
+
+window.fsbCalc = () => {
+    const addr = document.getElementById('fsb-inp').value.trim();
+    const res = document.getElementById('fsb-res');
+    if(!addr) { res.innerHTML = '<span style="color:red">Vui lòng nhập địa chỉ</span>'; return; }
+    res.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+    
+    // API Của bạn
+    const API_KEY = "YOUR_GOOGLE_MAPS_API_KEY"; 
+    const SHOP = { lat: 21.0164, lng: 105.8266 };
+    
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(addr)}&key=${API_KEY}`)
+        .then(r => r.json()).then(d => {
+            if(d.status === 'OK' && d.results[0]) {
+                const loc = d.results[0].geometry.location;
+                const R = 6371; const dLat = (loc.lat-SHOP.lat)*Math.PI/180; const dLon = (loc.lng-SHOP.lng)*Math.PI/180;
+                const a = Math.sin(dLat/2)*Math.sin(dLat/2) + Math.cos(SHOP.lat*Math.PI/180)*Math.cos(loc.lat*Math.PI/180)*Math.sin(dLon/2)*Math.sin(dLon/2);
+                const dist = R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+                if(dist > 5) res.innerHTML = `<span style="color:red; font-weight:bold">Quá xa (${dist.toFixed(1)}km). Chỉ ship < 5km</span>`;
+                else res.innerHTML = `<span style="color:green; font-weight:bold">${dist.toFixed(1)}km - Ship: ${dist<=3?15:20}.000đ</span>`;
+            } else res.innerHTML = 'Không tìm thấy địa chỉ';
+        }).catch(() => res.innerHTML = 'Lỗi kết nối');
 }

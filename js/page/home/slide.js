@@ -4,7 +4,7 @@ document.addEventListener('htmlIncluded', function () {
   const heroSlider = new Swiper('.home-hero-slider', {
     loop: true,
     centeredSlides: true,
-    slidesPerView: 1.5,
+    slidesPerView: 1.5,  /* Giữ nguyên hoặc thay đổi breakpoint */
     spaceBetween: 30,
     speed: 700,
     grabCursor: true,
@@ -40,11 +40,11 @@ document.addEventListener('htmlIncluded', function () {
         spaceBetween: 30
       },
       1024: {
-        slidesPerView: 1.8,
+        slidesPerView: 1.5,  /* Giảm từ 1.8 → 1.5 */
         spaceBetween: 40
       },
       1280: {
-        slidesPerView: 2,
+        slidesPerView: 1.5,  /* Giảm từ 2 → 1.5 */
         spaceBetween: 50
       }
     },

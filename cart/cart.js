@@ -75,7 +75,7 @@ function renderCart() {
                         <div class="item-price">${formatPrice(item.price)}</div>
                     </div>
                     <button class="delete-btn" onclick="removeItem(${index})" title="Xóa sản phẩm">
-                        🗑️
+                        <i class="fa fa-trash-alt"></i>
                     </button>
                 </div>
                 <div class="item-footer">

@@ -11,7 +11,7 @@
 }
 
 .section_slider .swiper-slide {
-  aspect-ratio: 16/7; /* chống crop */
+  aspect-ratio: 18/9;  /* Giảm từ 16/7 → banner sẽ to hơn */
   transform: scale(0.75);
   transition: transform var(--transition-slow) ease, opacity var(--transition-slow) ease;
   opacity: 0.4;
@@ -22,7 +22,7 @@
 }
 
 .section_slider .swiper-slide-active {
-  transform: scale(1.1);
+  transform: scale(1.3);  /* Tăng từ 1.1 lên 1.3 */
   opacity: 1;
   z-index: 10;
 }
@@ -40,7 +40,7 @@
 
 /* Bullet pagination */
 .section_slider .swiper-pagination-bullet {
-  background: #b37c3daa;
+  background: #fb8908aa;
   opacity: 0.8;
   transition: all var(--transition-normal) ease;
 }
@@ -52,31 +52,30 @@
 }
 
 /* Navigation buttons */
-/* Nút Prev / Next auto theo slide chính giữa */
 .section_slider .swiper-button-prev,
 .section_slider .swiper-button-next {
-  width: 40px !important;
-  height: 40px !important;
-  background: 
-  var(--primary-color)!important;
+  width: 36px !important;
+  height: 36px !important;
+  background: #fb8908aa !important;
   border-radius: 50% !important;
-  color: #000 !important;
+  color: #fff !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
   z-index: 20 !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.25) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+  transition: all var(--transition-normal) ease !important;
 }
 
 /* vị trí nút: dựa theo khoảng scale 0.8 của slide bên cạnh */
 .section_slider .swiper-button-prev {
-  left: calc(20vw) !important;   /* đẩy ra theo tỉ lệ màn hình */
+  left: calc(15vw) !important;   /* đẩy ra theo tỉ lệ màn hình */
 }
 
 .section_slider .swiper-button-next {
-  right: calc(20vw) !important;
+  right: calc(15vw) !important;
 }
 
 /* Icon */
@@ -86,24 +85,26 @@
 }
 .swiper-button-prev svg,
 .swiper-button-next svg {
-  width: 20px !important;
-  height: 20px !important;
-  stroke: #000 !important;
-  stroke-width: 2 !important;
+  width: 18px !important;
+  height: 18px !important;
+  stroke: #fff !important;
+  stroke-width: 2.5 !important;
 }
 
 /* Hover */
 .section_slider .swiper-button-prev:hover,
 .section_slider .swiper-button-next:hover {
-  transform: translateY(-50%) scale(1.12) !important;
+  transform: translateY(-50%) scale(1.08) !important;
+  background: var(--primary-color) !important;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.3) !important;
 }
 @media (max-width: 1000px) {
 .section_slider .swiper-button-prev {
-  left: calc(10vw) !important;   /* đẩy ra theo tỉ lệ màn hình */
+  left: calc(8vw) !important;   /* đẩy ra theo tỉ lệ màn hình */
 }
 
 .section_slider .swiper-button-next {
-  right: calc(10vw) !important;
+  right: calc(8vw) !important;
 }
 
 }
@@ -123,15 +124,21 @@
   }
 
   .section_slider .swiper-button-prev {
-    left: 8px !important;
+    left: 6px !important;
   }
   .section_slider .swiper-button-next {
-    right: 8px !important;
+    right: 6px !important;
   }
 
   .section_slider .swiper-button-prev,
   .section_slider .swiper-button-next {
-    width: 38px !important;
-    height: 38px !important;
+    width: 34px !important;
+    height: 34px !important;
+  }
+
+  .swiper-button-prev svg,
+  .swiper-button-next svg {
+    width: 16px !important;
+    height: 16px !important;
   }
 }

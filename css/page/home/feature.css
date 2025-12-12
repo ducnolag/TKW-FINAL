@@ -157,7 +157,7 @@ Home Featured Menu Styles
 .featured-banner {
   position: relative;
   width: 100%;
-  height: 800px;
+  height: 600px;
   background: url('/assets/feature/feature1.png') center/cover no-repeat;
   display: flex;
   justify-content: center;
