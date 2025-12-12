@@ -579,6 +579,11 @@ function addToCart() {
     }
     
     localStorage.setItem('cart', JSON.stringify(cart));
+    
+    // ⭐ THÊM 2 DÒNG NÀY
+    window.updateCartCount();
+    window.dispatchEvent(new Event('cartUpdated'));
+    
     showToast(`✅ Đã thêm ${quantity} sản phẩm vào giỏ hàng!`, 'success');
 }
 
@@ -597,6 +602,10 @@ function buyNow() {
     }];
     
     localStorage.setItem('cart', JSON.stringify(cart));
+    
+    // ⭐ THÊM 2 DÒNG NÀY
+    window.updateCartCount();
+    window.dispatchEvent(new Event('cartUpdated'));
     
     // Tăng lượt mua
     let buys = parseInt(localStorage.getItem(`product_buys_${product.id}`) || '0');

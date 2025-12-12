@@ -166,6 +166,11 @@ document.addEventListener("htmlIncluded", function () {
     }
   });
 
+  // ⭐ THÊM: Lắng nghe Custom Event từ cùng tab
+  window.addEventListener('cartUpdated', function() {
+    window.updateCartCount();
+  });
+
   // ✅ Highlight menu item dựa trên URL hiện tại
   const currentPath = window.location.pathname;
   const navItems = document.querySelectorAll('.nav-item');
