@@ -16,7 +16,7 @@ function createFloatingNavigation() {
             .float-nav-container {
                 position: fixed;
                 top: 55%;
-                right: 15px;
+                right: 6px;
                 z-index: 9990;
                 display: flex;
                 flex-direction: column;
