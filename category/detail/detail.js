@@ -211,34 +211,194 @@ function createStatsHTML(productId) {
 }
 
 // ========== HIỂN THỊ GỢI Ý ==========
+let suggestBoxVisible = false;
+let suggestBoxMinimized = false;
+let autoShowTimeout = null;
+
 function createSuggestHTML() {
     return `
-        <div style="margin: 30px 0; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-            <h3 style="font-size: 18px; font-weight: 700; color: #1f2937; margin: 0 0 15px 0; display: flex; align-items: center; gap: 8px;">
-                <span style="color: #f97316;">🔥</span> Gợi ý mua kèm
-            </h3>
-            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px;">
+        <!-- Suggest Box -->
+        <div id="suggestBox" style="position: fixed; right: 0; bottom: 0; width: 100%; max-width: 360px; background: white; border-radius: 20px 20px 0 0; box-shadow: 0 -4px 32px rgba(0,0,0,0.25); z-index: 99999; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); max-height: 480px; overflow: hidden; margin: 0; transform: translateY(100%); opacity: 0; pointer-events: none;">
+            <!-- Header -->
+            <div style="background: linear-gradient(135deg, #f97316 0%, #dc2626 100%); padding: 14px 16px; color: white; display: flex; align-items: center; justify-content: space-between; border-radius: 20px 20px 0 0; position: sticky; top: 0; z-index: 10;">
+                <h3 style="font-size: 14px; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 6px;">
+                    <span style="font-size: 16px;">🔥</span> <span>Mua kèm</span>
+                </h3>
+                <button onclick="toggleSuggestBox()" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: all 0.3s; padding: 0;">−</button>
+            </div>
+            
+            <!-- Products List -->
+            <div style="padding: 10px; max-height: 400px; overflow-y: auto;">
                 ${suggestProducts.map(product => `
-                    <div style="border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden; transition: all 0.3s; cursor: pointer;">
-                        <a href="/category/detail/detail.htm?id=${product.id}" style="text-decoration: none; color: inherit; display: block;">
-                            <img src="${product.image}" alt="${product.title}" style="width: 100%; height: 120px; object-fit: cover;">
-                            <div style="padding: 10px;">
-                                <div style="font-weight: 600; font-size: 12px; color: #1f2937; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${product.title}</div>
-                                <div style="color: #f97316; font-weight: 700; font-size: 13px; margin-top: 4px;">${formatPrice(product.price_current)}</div>
+                    <div style="display: flex; align-items: center; gap: 8px; padding: 8px 6px; border-bottom: 1px solid #f3f4f6; transition: background 0.3s;">
+                        <a href="/category/detail/detail.htm?id=${product.id}" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0;">
+                            <img src="${product.image}" alt="${product.title}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid #e5e7eb; flex-shrink: 0;">
+                            <div style="flex: 1; min-width: 0;">
+                                <div style="font-weight: 600; font-size: 11px; color: #1f2937; margin-bottom: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${product.title}</div>
+                                <div style="color: #f97316; font-weight: 700; font-size: 12px;">${formatPrice(product.price_current)}</div>
                             </div>
                         </a>
-                        <button onclick="addSuggestToCart(event, '${product.title}')" style="width: calc(100% - 4px); margin: 0 2px 2px 2px; padding: 6px; background: #f97316; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600;">
-                            + Thêm
+                        <button onclick="addSuggestToCart(event, '${product.title}')" style="width: 30px; height: 30px; background: #f97316; color: white; border: none; border-radius: 50%; cursor: pointer; font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 6px rgba(249, 115, 22, 0.3); transition: all 0.2s; padding: 0;">
+                            +
                         </button>
                     </div>
                 `).join('')}
             </div>
         </div>
+
+        <!-- Floating Button (Khi Thu Gọn) -->
+        <div id="suggestFloatingBtn" style="position: fixed; right: 16px; bottom: 50px; width: 52px; height: 52px; background: linear-gradient(135deg, #f97316 0%, #dc2626 100%); color: white; border: none; border-radius: 50%; cursor: pointer; font-size: 24px; display: none; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(249, 115, 22, 0.4); transition: all 0.3s; z-index: 99998; padding: 0;" onclick="toggleSuggestBox()" title="Gợi ý mua kèm">
+            🔥
+        </div>
+
+        <style>
+            @media (max-width: 480px) {
+                #suggestBox {
+                    max-width: 100% !important;
+                    max-height: 420px !important;
+                    border-radius: 20px 20px 0 0 !important;
+                }
+                
+                #suggestBox > div:first-child {
+                    padding: 12px 14px !important;
+                }
+                
+                #suggestFloatingBtn {
+                    bottom: 50px !important;
+                    right: 12px !important;
+                    width: 48px !important;
+                    height: 48px !important;
+                    font-size: 20px !important;
+                }
+            }
+
+            @media (max-width: 768px) {
+                #suggestBox {
+                    max-width: 85% !important;
+                    right: 7.5% !important;
+                }
+            }
+        </style>
     `;
+}
+
+function showSuggestBox() {
+    const box = document.getElementById('suggestBox');
+    const floatingBtn = document.getElementById('suggestFloatingBtn');
+    
+    if (!box) return;
+    
+    box.style.transform = 'translateY(0)';
+    box.style.opacity = '1';
+    box.style.pointerEvents = 'auto';
+    
+    if (floatingBtn) {
+        floatingBtn.style.display = 'none';
+    }
+    
+    suggestBoxVisible = true;
+    suggestBoxMinimized = false;
+}
+
+function minimizeSuggestBox() {
+    const box = document.getElementById('suggestBox');
+    const floatingBtn = document.getElementById('suggestFloatingBtn');
+    
+    if (!box) return;
+    
+    // Thu gọn box
+    box.style.transform = 'translateY(100%)';
+    box.style.opacity = '0';
+    box.style.pointerEvents = 'none';
+    
+    // Hiển thị nút floating
+    if (floatingBtn) {
+        floatingBtn.style.display = 'flex';
+    }
+    
+    suggestBoxVisible = false;
+    suggestBoxMinimized = true;
+}
+
+function toggleSuggestBox() {
+    if (suggestBoxMinimized || !suggestBoxVisible) {
+        showSuggestBox();
+    } else {
+        minimizeSuggestBox();
+    }
+}
+
+function initSuggestBox() {
+    console.log('🔍 Khởi tạo suggest box...');
+    
+    const suggestBox = document.getElementById('suggestBox');
+    if (!suggestBox) {
+        console.warn('❌ Suggest box không tìm thấy trong DOM!');
+        return;
+    }
+    
+    console.log('✅ Tìm thấy suggest box!');
+    
+    // ⭐ KHI VÀO TRANG: CHỈ HIỂN THỊ FLOATING BUTTON THÔI (KHÔNG HIỆN SUGGEST BOX)
+    // Đặt trạng thái ban đầu
+    minimizeSuggestBox();
+    
+    // Show when scroll down 60%
+    let hasShown = false;
+    window.addEventListener('scroll', () => {
+        if (hasShown) return;
+        
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+        
+        console.log('📊 Scroll: ' + scrollPercent.toFixed(1) + '%');
+        
+        if (scrollPercent >= 60 && !suggestBoxVisible) {
+            console.log('✅ Đã cuộn 60%, hiển thị suggest box...');
+            showSuggestBox();
+            hasShown = true;
+        }
+    });
 }
 
 function addSuggestToCart(event, productName) {
     event.stopPropagation();
+    
+    // Tìm sản phẩm trong suggestProducts
+    const suggestProduct = suggestProducts.find(p => p.title === productName);
+    if (!suggestProduct) {
+        showToast('❌ Không tìm thấy sản phẩm!', 'error');
+        return;
+    }
+    
+    // Lấy giỏ hàng hiện tại
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    
+    // Kiểm tra sản phẩm đã có trong giỏ chưa
+    const existingItem = cart.find(item => item.id === suggestProduct.id);
+    
+    if (existingItem) {
+        // Nếu có rồi thì tăng số lượng
+        existingItem.quantity += 1;
+    } else {
+        // Nếu chưa có thì thêm mới
+        cart.push({
+            id: suggestProduct.id,
+            title: suggestProduct.title,
+            price: suggestProduct.price_current,
+            quantity: 1,
+            image: suggestProduct.image
+        });
+    }
+    
+    // Lưu vào localStorage
+    localStorage.setItem('cart', JSON.stringify(cart));
+    
+    // ⭐ CẬP NHẬT ICON GIỎ HÀNG NGAY LẬP TỨC
+    window.updateCartCount();
+    window.dispatchEvent(new Event('cartUpdated'));
+    
     showToast(`✅ Đã thêm ${productName} vào giỏ!`, 'success');
 }
 
@@ -912,6 +1072,12 @@ const getDetailProduct = async () => {
             productDetail.innerHTML = createDetailHTML(product);
             breadcrumbProduct.textContent = product.title;
             document.title = product.title + ' - Chi tiết sản phẩm';
+            
+            // ⭐ THÊM DÒNG NÀY - KHỞI TẠO SUGGEST BOX
+            setTimeout(() => {
+                console.log('Khởi tạo suggest box...');
+                initSuggestBox();
+            }, 300);
         } else {
             productDetail.innerHTML = '<div class="error">Không tìm thấy sản phẩm này!</div>';
         }

@@ -1,5 +1,4 @@
-
-        .detail-container {
+.detail-container {
             max-width: 1200px;
             margin: 20px auto;
             padding: 20px;
@@ -198,6 +197,24 @@
             padding: 100px 20px;
             font-size: 18px;
             color: #e74c3c;
+        }
+
+        /* Responsive suggest box */
+        @media (max-width: 768px) {
+            #suggestBox {
+                max-width: 100%;
+                border-radius: 20px 20px 0 0;
+            }
+        }
+
+        /* Smooth animation */
+        #suggestBox {
+            will-change: transform, opacity;
+        }
+
+        #suggestFloatingBtn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(249, 115, 22, 0.5);
         }
 
         @media (max-width: 768px) {
