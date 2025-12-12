@@ -198,13 +198,26 @@ let allData = null;
         });
       }
 
-      // ⭐ HIỂN THỊ SẢN PHẨM VỚI PHÂN TRANG
+      // ⭐ HIỂN THỊ SẢN PHẨM VỚI PHÂN TRANG - BỌC TRONG .products
       if (products.length > 0) {
-        let html = '';
+        let html = '<div class="products">';
         if (pageProducts.length > 0) {
           html += pageProducts.map(createProductHTML).join('');
         }
-        productsContainer.innerHTML = html + createPaginationHTML(totalPages);
+        html += '</div>';
+        html += createPaginationHTML(totalPages);
+        
+        productsContainer.innerHTML = html;
+        
+        // ⭐ APPLY VIEW MODE HIỆN TẠI
+        const productsDiv = productsContainer.querySelector('.products');
+        if (productsDiv) {
+          if (currentView === 'list') {
+            productsDiv.classList.add('list-view');
+          } else {
+            productsDiv.classList.remove('list-view');
+          }
+        }
       } else {
         productsContainer.innerHTML = '<div style="padding: 40px; text-align: center; color: #999; grid-column: 1/-1;">Không có sản phẩm phù hợp</div>';
       }
@@ -219,6 +232,7 @@ let allData = null;
       }
       gridView.classList.add('active');
       listView.classList.remove('active');
+      console.log('✅ Chuyển sang Grid view');
     });
 
     listView.addEventListener('click', () => {
@@ -229,6 +243,7 @@ let allData = null;
       }
       listView.classList.add('active');
       gridView.classList.remove('active');
+      console.log('✅ Chuyển sang List view');
     });
 
     // Sắp xếp

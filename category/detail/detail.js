@@ -1288,15 +1288,15 @@ function showToast(message, type = 'info') {
     if (type === 'success') {
         toast.style.background = '#dcfce7';
         toast.style.color = '#166534';
-        toast.style.borderLeft = '4px solid #10b981';
+        toast.style.borderLeft = '4px solid rgba(255,255,255,0.3)';
     } else if (type === 'error') {
         toast.style.background = '#fee2e2';
         toast.style.color = '#991b1b';
-        toast.style.borderLeft = '4px solid #ef4444';
+        toast.style.borderLeft = '4px solid rgba(255,255,255,0.3)';
     } else {
         toast.style.background = '#dbeafe';
         toast.style.color = '#0c4a6e';
-        toast.style.borderLeft = '4px solid #0ea5e9';
+        toast.style.borderLeft = '4px solid rgba(255,255,255,0.3)';
     }
     
     toast.textContent = message;
@@ -1337,4 +1337,228 @@ if (!document.getElementById('toastStyles')) {
         }
     `;
     document.head.appendChild(style);
+}
+
+// ========== HÀM QUẢN LÝ ĐÁNH GIÁ - CHỌN SAO ==========
+function selectRating(star) {
+    selectedRating = star;
+    const stars = document.querySelectorAll('.rating-star');
+    stars.forEach(s => {
+        const rating = parseInt(s.dataset.rating);
+        if (rating <= star) {
+            s.style.opacity = '1';
+        } else {
+            s.style.opacity = '0.4';
+        }
+    });
+}
+
+// ========== HÀM QUẢN LÝ REVIEW - TRẢ LỜI ==========
+function toggleReplyInput(reviewId) {
+    const replyBox = document.getElementById(`reply-box-${reviewId}`);
+    if (replyBox) {
+        replyBox.style.display = replyBox.style.display === 'none' ? 'block' : 'none';
+    }
+}
+
+function submitReply(reviewId) {
+    const nameInput = document.getElementById(`reply-name-${reviewId}`);
+    const contentInput = document.getElementById(`reply-content-${reviewId}`);
+    
+    const name = nameInput.value.trim();
+    const content = contentInput.value.trim();
+    
+    if (!name) {
+        showToast('❌ Vui lòng nhập tên!', 'error');
+        return;
+    }
+    if (!content) {
+        showToast('❌ Vui lòng viết nội dung trả lời!', 'error');
+        return;
+    }
+    
+    const review = allReviews.find(r => r.id === reviewId);
+    if (review) {
+        if (!review.replies) review.replies = [];
+        
+        review.replies.push({
+            name: name,
+            content: content,
+            date: new Date().toLocaleDateString('vi-VN'),
+            isAdmin: false
+        });
+        
+        saveReviews();
+        
+        const reviewsSection = document.querySelector('.reviews-section');
+        if (reviewsSection) {
+            reviewsSection.innerHTML = createReviewsHTML();
+        }
+        
+        showToast('✅ Đã gửi trả lời!', 'success');
+    }
+}
+
+function likeReview(reviewId) {
+    const review = allReviews.find(r => r.id === reviewId);
+    if (review) {
+        review.likes = (review.likes || 0) + 1;
+        saveReviews();
+        
+        const reviewsSection = document.querySelector('.reviews-section');
+        if (reviewsSection) {
+            reviewsSection.innerHTML = createReviewsHTML();
+        }
+        
+        showToast('👍 Cảm ơn bạn đã đánh giá hữu ích!', 'success');
+    }
+}
+
+// ========== HÀM LỌC & SẮP XẾP ĐÁNH GIÁ ==========
+function setFilter(filter) {
+    currentFilterType = filter;
+    visibleReviewCount = 5; // Reset về đầu khi lọc
+    
+    const reviewsSection = document.querySelector('.reviews-section');
+    if (reviewsSection) {
+        reviewsSection.innerHTML = createReviewsHTML();
+    }
+}
+
+function setSort(sort) {
+    currentSortType = sort;
+    visibleReviewCount = 5; // Reset về đầu khi sắp xếp
+    
+    const reviewsSection = document.querySelector('.reviews-section');
+    if (reviewsSection) {
+        reviewsSection.innerHTML = createReviewsHTML();
+    }
+}
+
+function loadMoreReviews() {
+    visibleReviewCount += LOAD_MORE_STEP;
+    
+    const reviewsSection = document.querySelector('.reviews-section');
+    if (reviewsSection) {
+        reviewsSection.innerHTML = createReviewsHTML();
+    }
+}
+
+// ========== HÀM QUẢN LÝ ẢNH ==========
+function openImageViewer(imageSrc) {
+    const viewer = document.getElementById('imageViewer');
+    const img = document.getElementById('viewerImage');
+    if (viewer && img) {
+        img.src = imageSrc;
+        viewer.style.display = 'flex';
+    }
+}
+
+function closeImageViewer() {
+    const viewer = document.getElementById('imageViewer');
+    if (viewer) {
+        viewer.style.display = 'none';
+    }
+}
+
+// ========== HÀM HIỂN THỊ MÃ GIẢM GIÁ ==========
+function openPromoPopup() {
+    const modal = document.createElement('div');
+    modal.id = 'promoModal';
+    modal.style.cssText = `
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.5);
+        display: flex;
+        align-items: flex-end;
+        z-index: 10001;
+        animation: fadeIn 0.3s ease;
+        padding: 0;
+    `;
+    
+    modal.innerHTML = `
+        <div style="background: white; width: 100%; max-height: 90vh; border-radius: 20px 20px 0 0; padding: 20px; overflow-y: auto; box-shadow: 0 -4px 32px rgba(0,0,0,0.15);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; position: sticky; top: 0; background: white; z-index: 1;">
+                <h3 style="margin: 0; font-size: 18px; font-weight: 700;">🎫 Kho Mã Giảm Giá</h3>
+                <button onclick="document.getElementById('promoModal').remove()" style="background: none; border: none; font-size: 24px; cursor: pointer; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; padding: 0;">×</button>
+            </div>
+            
+            ${promoCodes.map(promo => `
+                <div style="background: linear-gradient(135deg, ${promo.color}); color: white; padding: 16px; border-radius: 12px; margin-bottom: 12px; border-left: 4px solid rgba(255,255,255,0.3);">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
+                        <div style="font-size: 32px;">${promo.image}</div>
+                        <div style="flex: 1;">
+                            <h4 style="margin: 0; font-weight: 700; font-size: 16px;">${promo.title}</h4>
+                            <span style="background: rgba(255,255,255,0.3); padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; display: inline-block;">${promo.badge}</span>
+                        </div>
+                    </div>
+                    
+                    <p style="margin: 10px 0; font-size: 13px; line-height: 1.5;">${promo.description}</p>
+                    
+                    ${promo.code ? `
+                        <div style="background: rgba(0,0,0,0.15); padding: 12px; border-radius: 8px; margin-top: 10px;">
+                            <div style="font-size: 11px; color: rgba(255,255,255,0.8); margin-bottom: 6px;">Mã giảm giá:</div>
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <input type="text" value="${promo.code}" readonly style="flex: 1; padding: 8px; background: white; color: #1f2937; border: none; border-radius: 6px; font-weight: 700; font-family: monospace;">
+                                <button onclick="copyPromoCode('${promo.code}')" style="padding: 8px 12px; background: white; color: #1f2937; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 12px; white-space: nowrap;">📋 Copy</button>
+                            </div>
+                        </div>
+                    ` : ''}
+                    
+                    ${promo.codes ? `
+                        <div style="background: rgba(0,0,0,0.15); padding: 12px; border-radius: 8px; margin-top: 10px;">
+                            <div style="font-size: 11px; color: rgba(255,255,255,0.8); margin-bottom: 8px;">Mã giảm giá:</div>
+                            <div style="display: flex; flex-direction: column; gap: 8px;">
+                                ${promo.codes.map(c => `
+                                    <div style="display: flex; gap: 8px; align-items: center;">
+                                        <input type="text" value="${c.code}" readonly style="flex: 1; padding: 8px; background: white; color: #1f2937; border: none; border-radius: 6px; font-weight: 700; font-family: monospace;">
+                                        <span style="background: white; color: #10b981; padding: 6px 10px; border-radius: 6px; font-weight: 600; font-size: 11px;">${c.discount}</span>
+                                        <button onclick="copyPromoCode('${c.code}')" style="padding: 8px 12px; background: white; color: #1f2937; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 12px; white-space: nowrap;">📋</button>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('')}
+            
+            <div style="text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+                <button onclick="document.getElementById('promoModal').remove()" style="padding: 12px 30px; background: #f3f4f6; color: #1f2937; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 14px;">Đóng</button>
+            </div>
+        </div>
+        
+        <style>
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            
+            @media (max-width: 480px) {
+                #promoModal > div {
+                    padding: 16px !important;
+                }
+                
+                #promoModal h3 {
+                    font-size: 16px !important;
+                }
+                
+                #promoModal h4 {
+                    font-size: 14px !important;
+                }
+            }
+        </style>
+    `;
+    
+    document.body.appendChild(modal);
+    modal.onclick = (e) => {
+        if (e.target === modal) modal.remove();
+    };
+}
+
+function copyPromoCode(code) {
+    navigator.clipboard.writeText(code).then(() => {
+        showToast(`✅ Đã copy mã: ${code}`, 'success');
+    }).catch(() => {
+        showToast('❌ Lỗi copy mã!', 'error');
+    });
 }
