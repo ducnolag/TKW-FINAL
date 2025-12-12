@@ -1,4 +1,18 @@
-// Kiểm tra đăng nhập
+// Danh sách mã giảm giá hợp lệ
+        const validPromoCodes = {
+            'CHAOBANMOI': { type: 'percent', value: 10, desc: 'Giảm 10%' },
+            'THITOTNHA': { type: 'shipping', value: 15000, desc: 'Miễn phí ship 15k' },
+            'MUC10': { type: 'fixed', value: 10000, desc: 'Giảm 10k' },
+            'MUC20': { type: 'fixed', value: 20000, desc: 'Giảm 20k' },
+            'MUC30': { type: 'fixed', value: 30000, desc: 'Giảm 30k' },
+            'GIAM10': { type: 'percent', value: 10, desc: 'Giảm 10%' },
+            'GIAM20': { type: 'percent', value: 20, desc: 'Giảm 20%' },
+            'SALE30': { type: 'percent', value: 30, desc: 'Giảm 30%' }
+        };
+
+        let appliedPromoCode = '';
+
+        // Kiểm tra đăng nhập
         function checkAuth() {
             const currentUser = sessionStorage.getItem("currentUser");
             
@@ -62,6 +76,38 @@
             event.currentTarget.classList.add('active');
         }
 
+        // ✅ Áp dụng mã giảm giá
+        function applyPromoCode() {
+            const promoInput = document.getElementById('checkoutPromoInput');
+            const code = promoInput.value.trim().toUpperCase();
+
+            if (!code) {
+                alert('Vui lòng nhập mã giảm giá!');
+                return;
+            }
+
+            if (validPromoCodes[code]) {
+                appliedPromoCode = code;
+                localStorage.setItem('appliedPromoCode', code);
+                alert(`✅ Áp dụng mã thành công! ${validPromoCodes[code].desc}`);
+                promoInput.value = '';
+                // Reload trang để cập nhật giá
+                const user = checkAuth();
+                if (user) renderCheckout(user);
+            } else {
+                alert('❌ Mã giảm giá không hợp lệ');
+                promoInput.value = '';
+            }
+        }
+
+        // ✅ Xóa mã giảm giá
+        function removePromoCode() {
+            appliedPromoCode = '';
+            localStorage.removeItem('appliedPromoCode');
+            const user = checkAuth();
+            if (user) renderCheckout(user);
+        }
+
         // Xử lý đặt hàng
         function placeOrder(event) {
             event.preventDefault();
@@ -84,6 +130,24 @@
 
             // Lấy thông tin
             const cartItems = getCartItems();
+            const subtotal = calculateTotal(cartItems);
+            const shipping = 20000;
+            
+            // Tính discount
+            let discount = 0;
+            const promo = validPromoCodes[appliedPromoCode];
+            if (promo) {
+                if (promo.type === 'percent') {
+                    discount = subtotal * (promo.value / 100);
+                } else if (promo.type === 'fixed') {
+                    discount = promo.value;
+                } else if (promo.type === 'shipping') {
+                    discount = Math.min(promo.value, shipping);
+                }
+            }
+            
+            const total = subtotal + shipping - discount;
+
             const orderData = {
                 customer: {
                     name: formData.get('fullname'),
@@ -94,7 +158,11 @@
                     district: formData.get('district')
                 },
                 items: cartItems,
-                total: calculateTotal(cartItems),
+                subtotal: subtotal,
+                shipping: shipping,
+                discount: discount,
+                promoCode: appliedPromoCode,
+                total: total,
                 payment: paymentMethod.dataset.method,
                 note: formData.get('note'),
                 orderDate: new Date().toISOString()
@@ -106,10 +174,11 @@
             recordUserPurchases(cartItems);
 
             // Giả lập đặt hàng
-            alert(`✅ Đặt hàng thành công!\n\nTổng tiền: ${formatMoney(orderData.total)}\nPhương thức: ${paymentMethod.textContent.trim()}\n\nCảm ơn bạn đã đặt hàng!`);
+            alert(`✅ Đặt hàng thành công!\n\nTổng tiền: ${formatMoney(total)}\nPhương thức: ${paymentMethod.textContent.trim()}\n\nCảm ơn bạn đã đặt hàng!`);
             
-            // Xóa giỏ hàng và chuyển về trang chủ
+            // Xóa giỏ hàng, mã giảm giá và chuyển về trang chủ
             localStorage.removeItem('cart');
+            localStorage.removeItem('appliedPromoCode');
             setTimeout(() => {
                 window.location.href = "/index.htm";
             }, 2000);
@@ -169,7 +238,29 @@
             const cartItems = getCartItems();
             const subtotal = calculateTotal(cartItems);
             const shipping = 20000;
-            const total = subtotal + shipping;
+            
+            // Load mã giảm giá nếu có
+            const savedPromo = localStorage.getItem('appliedPromoCode') || '';
+            appliedPromoCode = savedPromo;
+            
+            // Tính discount
+            let discount = 0;
+            let discountText = '';
+            const promo = validPromoCodes[appliedPromoCode];
+            if (promo) {
+                if (promo.type === 'percent') {
+                    discount = subtotal * (promo.value / 100);
+                    discountText = `-${promo.value}%`;
+                } else if (promo.type === 'fixed') {
+                    discount = promo.value;
+                    discountText = `-${formatMoney(promo.value)}`;
+                } else if (promo.type === 'shipping') {
+                    discount = Math.min(promo.value, shipping);
+                    discountText = `Miễn phí ship ${formatMoney(promo.value)}`;
+                }
+            }
+            
+            const total = subtotal + shipping - discount;
 
             const html = `
                 <div class="header">
@@ -287,12 +378,37 @@
                             <div class="cart-item">
                                 <div class="item-image">${item.image}</div>
                                 <div class="item-details">
-                                    <div class="item-name">${item.name}</div>
+                                    <div class="item-name">${item.title}</div>
                                     <div class="item-quantity">Số lượng: ${item.quantity}</div>
                                 </div>
                                 <div class="item-price">${formatMoney(item.price * item.quantity)}</div>
                             </div>
                         `).join('')}
+
+                        <div style="margin-top: 20px; padding-top: 20px; border-top: 2px solid #e5e7eb;">
+                            <div style="margin-bottom: 15px;">
+                                <label style="display: block; font-weight: 600; color: #1f2937; margin-bottom: 8px; font-size: 14px;">
+                                    🎫 Mã giảm giá
+                                </label>
+                                <div style="display: flex; gap: 8px;">
+                                    <input type="text" id="checkoutPromoInput" placeholder="Nhập mã giảm giá..." style="flex: 1; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 14px; box-sizing: border-box;" />
+                                    <button type="button" onclick="applyPromoCode()" style="background: #f97316; color: white; padding: 10px 16px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px; white-space: nowrap;">
+                                        Áp dụng
+                                    </button>
+                                </div>
+                            </div>
+
+                            ${appliedPromoCode && validPromoCodes[appliedPromoCode] ? `
+                                <div style="background: #dcfce7; border: 1px solid #86efac; padding: 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                    <div style="color: #166534; font-weight: 600; font-size: 13px;">
+                                        ✅ Mã: <strong>${appliedPromoCode}</strong> - ${validPromoCodes[appliedPromoCode].desc}
+                                    </div>
+                                    <button type="button" onclick="removePromoCode()" style="background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600;">
+                                        ✕ Xóa
+                                    </button>
+                                </div>
+                            ` : ''}
+                        </div>
 
                         <div style="margin-top: 20px;">
                             <div class="summary-row">
@@ -303,6 +419,12 @@
                                 <span>Phí vận chuyển</span>
                                 <strong>${formatMoney(shipping)}</strong>
                             </div>
+                            ${discount > 0 ? `
+                            <div class="summary-row" style="color: #10b981;">
+                                <span>Giảm giá ${discountText}</span>
+                                <strong>-${formatMoney(discount)}</strong>
+                            </div>
+                            ` : ''}
                             <div class="summary-row total">
                                 <span>Tổng cộng</span>
                                 <span>${formatMoney(total)}</span>

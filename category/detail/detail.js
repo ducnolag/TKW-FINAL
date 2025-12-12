@@ -322,7 +322,10 @@ function closePromoPopup() {
 
 function copyPromoCode(code) {
     navigator.clipboard.writeText(code).then(() => {
-        alert(`✅ Đã sao chép mã: ${code}`);
+        // ✅ Lưu mã vào localStorage
+        localStorage.setItem('appliedPromoCode', code);
+        
+        alert(`✅ Đã sao chép mã: ${code}\nMã này sẽ tự động áp dụng trong giỏ hàng!`);
         closePromoPopup();
     });
 }
