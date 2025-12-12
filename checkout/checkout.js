@@ -1,4 +1,4 @@
-        // Kiểm tra đăng nhập
+// Kiểm tra đăng nhập
         function checkAuth() {
             const currentUser = sessionStorage.getItem("currentUser");
             
@@ -83,6 +83,7 @@
             }
 
             // Lấy thông tin
+            const cartItems = getCartItems();
             const orderData = {
                 customer: {
                     name: formData.get('fullname'),
@@ -92,14 +93,17 @@
                     city: formData.get('city'),
                     district: formData.get('district')
                 },
-                items: getCartItems(),
-                total: calculateTotal(getCartItems()),
+                items: cartItems,
+                total: calculateTotal(cartItems),
                 payment: paymentMethod.dataset.method,
                 note: formData.get('note'),
                 orderDate: new Date().toISOString()
             };
 
             console.log("Order data:", orderData);
+
+            // ✅ GHI NHẬN MUA HÀNG
+            recordUserPurchases(cartItems);
 
             // Giả lập đặt hàng
             alert(`✅ Đặt hàng thành công!\n\nTổng tiền: ${formatMoney(orderData.total)}\nPhương thức: ${paymentMethod.textContent.trim()}\n\nCảm ơn bạn đã đặt hàng!`);
@@ -109,6 +113,55 @@
             setTimeout(() => {
                 window.location.href = "/index.htm";
             }, 2000);
+        }
+
+        // ✅ HÀM GHI NHẬN MUA HÀNG
+        function recordUserPurchases(cartItems) {
+            // Lấy user từ sessionStorage (từ login)
+            const userSession = sessionStorage.getItem('currentUser');
+            const userLocal = localStorage.getItem('currentUser');
+            
+            let user = userSession || userLocal;
+            if (!user) {
+                console.log('Không tìm thấy user để ghi nhận mua hàng');
+                return;
+            }
+
+            try {
+                user = JSON.parse(user);
+                const username = user.username;
+
+                // Lấy purchases cũ
+                const purchasesSession = JSON.parse(sessionStorage.getItem('userPurchases') || '{}');
+                const purchasesLocal = JSON.parse(localStorage.getItem('userPurchases') || '{}');
+                
+                // Kết hợp cả 2
+                const allPurchases = { ...purchasesLocal, ...purchasesSession };
+                if (!allPurchases[username]) {
+                    allPurchases[username] = [];
+                }
+
+                // Thêm các sản phẩm vào danh sách mua
+                cartItems.forEach(item => {
+                    // Kiểm tra không thêm trùng
+                    if (!allPurchases[username].some(p => p.productId == item.id)) {
+                        allPurchases[username].push({
+                            productId: item.id,
+                            productTitle: item.title,
+                            purchaseDate: new Date().toLocaleDateString('vi-VN'),
+                            quantity: item.quantity
+                        });
+                    }
+                });
+
+                // Lưu vào cả sessionStorage và localStorage
+                sessionStorage.setItem('userPurchases', JSON.stringify(allPurchases));
+                localStorage.setItem('userPurchases', JSON.stringify(allPurchases));
+
+                console.log('✅ Ghi nhận mua hàng thành công:', allPurchases[username]);
+            } catch (e) {
+                console.error('Lỗi ghi nhận mua hàng:', e);
+            }
         }
 
         // Render trang

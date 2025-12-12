@@ -47,6 +47,7 @@
   box-shadow: var(--shadow-small);
   transition: transform var(--transition-normal) ease, box-shadow var(--transition-normal) ease;
   margin-bottom: 30px;
+  margin-top: 10px;
 }
 
 .item_product_main:hover {

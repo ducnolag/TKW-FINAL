@@ -1,4 +1,4 @@
-       // Kiểm tra đăng nhập
+// Kiểm tra đăng nhập
         function checkAuth() {
             const currentUser = sessionStorage.getItem("currentUser");
             
@@ -9,6 +9,16 @@
             }
             
             return JSON.parse(currentUser);
+        }
+
+        // Lấy danh sách sản phẩm đã mua
+        function getUserPurchases(username) {
+            const purchasesSession = JSON.parse(sessionStorage.getItem('userPurchases') || '{}');
+            const purchasesLocal = JSON.parse(localStorage.getItem('userPurchases') || '{}');
+            
+            // Kết hợp cả 2
+            const allPurchases = { ...purchasesLocal, ...purchasesSession };
+            return allPurchases[username] || [];
         }
 
         // Đăng xuất
@@ -55,7 +65,24 @@
 
         // Xem lịch sử đơn hàng
         function viewOrders() {
-            alert("Chức năng xem lịch sử đơn hàng đang được phát triển!");
+            const purchasesSection = document.querySelector('.purchases-section');
+            
+            if (!purchasesSection) {
+                alert("Bạn chưa có đơn hàng nào!");
+                return;
+            }
+            
+            // Toggle hiển thị/ẩn
+            if (purchasesSection.style.display === 'none') {
+                purchasesSection.style.display = 'block';
+                purchasesSection.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                purchasesSection.style.animation = 'slideDown 0.4s ease';
+            } else {
+                purchasesSection.style.display = 'none';
+            }
         }
 
         // Render profile page
@@ -63,6 +90,11 @@
             const loginDate = new Date(user.loginTime);
             const createdDate = user.createdAt ? new Date(user.createdAt) : new Date();
             const daysActive = Math.floor((Date.now() - createdDate.getTime()) / (1000 * 60 * 60 * 24));
+            
+            // Lấy danh sách mua hàng
+            const purchases = getUserPurchases(user.username);
+            const totalOrders = purchases.length;
+            const totalItems = purchases.reduce((sum, p) => sum + (p.quantity || 1), 0);
             
             // Xác định phương thức đăng nhập
             const loginMethod = user.loginMethod || 'email';
@@ -168,18 +200,18 @@
 
                     <div class="stat-card">
                         <div class="stat-icon">
-                            <i class="fas fa-shopping-cart"></i>
+                            <i class="fas fa-shopping-bag"></i>
                         </div>
-                        <div class="stat-value">0</div>
+                        <div class="stat-value">${totalOrders}</div>
                         <div class="stat-label">Đơn hàng</div>
                     </div>
 
                     <div class="stat-card">
                         <div class="stat-icon">
-                            <i class="fas fa-heart"></i>
+                            <i class="fas fa-box"></i>
                         </div>
-                        <div class="stat-value">0</div>
-                        <div class="stat-label">Yêu thích</div>
+                        <div class="stat-value">${totalItems}</div>
+                        <div class="stat-label">Sản phẩm đã mua</div>
                     </div>
 
                     <div class="stat-card">
@@ -190,6 +222,34 @@
                         <div class="stat-label">Điểm thành viên</div>
                     </div>
                 </div>
+
+                ${totalOrders > 0 ? `
+                <div class="purchases-section" style="display: none; margin-top: 40px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <h3 style="font-size: 20px; font-weight: 700; color: #1f2937; margin: 0 0 20px 0;">
+                        <i class="fas fa-history"></i> Lịch sử mua hàng
+                    </h3>
+                    
+                    <div style="display: grid; gap: 12px;">
+                        ${purchases.map(purchase => `
+                            <div style="padding: 15px; border: 1px solid #e5e7eb; border-radius: 8px; background: #f9fafb; display: flex; justify-content: space-between; align-items: center;">
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 600; color: #1f2937; font-size: 15px;">
+                                        📦 ${purchase.productTitle}
+                                    </div>
+                                    <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">
+                                        <i class="fas fa-calendar"></i> ${purchase.purchaseDate}
+                                    </div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="background: #f0f9ff; color: #0369a1; padding: 6px 12px; border-radius: 6px; font-weight: 600; font-size: 13px;">
+                                        Số lượng: ${purchase.quantity || 1}
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                ` : ''}
             `;
             
             document.getElementById('app').innerHTML = html;
