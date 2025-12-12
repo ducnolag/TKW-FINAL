@@ -81,6 +81,30 @@
     "price_old": 36000,
     "image": "",
     "status": "soldout"
+  },
+  {
+    "id": 11,
+    "title": "Mì Trộn Indomie Ngon Nhất Thế Giới 2",
+    "price_current": 37350,
+    "price_old": 41500,
+    "image": "",
+    "status": "soldout"
+  },
+  {
+    "id": 12,
+    "title": "Combo Bánh Gà Phô Mai",
+    "price_current": 23400,
+    "price_old": 26000,
+    "image": "",
+    "status": "soldout"
+  },
+  {
+    "id": 13,
+    "title": "Bánh Tráng Trộn Đặc Biệt",
+    "price_current": 32400,
+    "price_old": 36000,
+    "image": "",
+    "status": "soldout"
   }
 ]
 }
