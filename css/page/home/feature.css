@@ -68,13 +68,13 @@ Home Featured Menu Styles
 .featured-right {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 25px;
+  gap: 8px;
 }
 
 .menu-item {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   background: var(--white-color);
   border-radius: var(--border-radius-medium);
   overflow: hidden;
@@ -106,8 +106,8 @@ Home Featured Menu Styles
 
 .menu-info {
   text-align: center;
-  padding: 20px;
-  margin-bottom: 10px;
+  padding: 12px;
+  margin-top: 26px;
 }
 
 .menu-info h3 {
@@ -143,11 +143,15 @@ Home Featured Menu Styles
 }
 
 @media (max-width: 768px) {
-  .featured-right {
+  .featured-container {
     grid-template-columns: 1fr;
+    padding: 0 8px;
   }
-  .featured-left h2 {
-    font-size: 32px;
+  .featured-left {
+    display: none;
+  }
+  .featured-right {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -238,13 +242,17 @@ Home Featured Menu Styles
     padding: 0 10px;
   }
   .banner-content h2 {
-    font-size: 28px;
+    font-size: 20px;
   }
   .banner-content p {
-    font-size: 15px;
+    font-size: 12px;
   }
   .banner-btn {
     font-size: 16px;
     padding: 10px 28px;
+  }
+  .menu-info{
+    margin-top: 5px;
+    margin-bottom: 8px;
   }
 }

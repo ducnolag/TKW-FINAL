@@ -91,7 +91,7 @@
 
     .team-description {
       background: #fff;
-      padding: 50px 50px;
+      padding: 35px 35px;
       border-radius: 18px;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
       margin: 0 20px;
@@ -110,12 +110,14 @@
     }
 
     .team-description p {
-      font-size: 1.05rem;
-      line-height: 1.9;
+      font-size: 0.95rem;
+      line-height: 1.8;
       color: #333;
-      text-align: center;
+      text-align: justify;
+      text-align-last: center;
       font-weight: 500;
       letter-spacing: 0.3px;
+      word-break: break-word;
     }
 
     /* Responsive */
@@ -163,31 +165,31 @@
       }
 
       .team-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 35px;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
         margin-bottom: 45px;
       }
 
       .member-photo {
-        width: 140px;
-        height: 140px;
-        border: 4px solid #fff;
-        margin: 0 auto 18px;
+        width: 100px;
+        height: 100px;
+        border: 3px solid #fff;
+        margin: 0 auto 12px;
       }
 
       .team-member h3 {
-        font-size: 1rem;
+        font-size: 0.8rem;
       }
 
       .team-description {
-        padding: 35px 30px;
+        padding: 30px 25px;
         border-radius: 15px;
         margin: 0 10px;
       }
 
       .team-description p {
-        font-size: 0.95rem;
-        line-height: 1.75;
+        font-size: 0.9rem;
+        line-height: 1.7;
       }
     }
 
@@ -197,20 +199,20 @@
       }
 
       .team-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 25px;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
         margin-bottom: 35px;
       }
 
       .member-photo {
-        width: 110px;
-        height: 110px;
+        width: 85px;
+        height: 85px;
         border: 3px solid #fff;
-        margin: 0 auto 12px;
+        margin: 0 auto 10px;
       }
 
       .team-member h3 {
-        font-size: 0.9rem;
+        font-size: 0.75rem;
       }
 
       .team-description {
@@ -232,18 +234,20 @@
       }
 
       .team-grid {
-        gap: 20px;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
         margin-bottom: 30px;
       }
 
       .member-photo {
-        width: 100px;
-        height: 100px;
-        margin: 0 auto 10px;
+        width: 75px;
+        height: 75px;
+        border: 2px solid #fff;
+        margin: 0 auto 8px;
       }
 
       .team-member h3 {
-        font-size: 0.85rem;
+        font-size: 0.7rem;
       }
 
       .team-description {
