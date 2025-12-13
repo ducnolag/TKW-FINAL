@@ -16,6 +16,39 @@
         </div>
     </div>
 
+    <!-- Modal for Messages -->
+    <div class="modal-profile" id="messageModal">
+        <div class="modal-content-profile">
+            <div class="modal-header-profile">
+                <h2 id="modalTitle">Thông báo</h2>
+                <button class="close-btn-profile" onclick="closeMessageModal()">&times;</button>
+            </div>
+            <div class="modal-body-profile">
+                <p id="modalMessage"></p>
+            </div>
+            <div class="modal-actions-profile">
+                <button class="modal-btn-profile modal-btn-primary-profile" onclick="closeMessageModal()">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Confirmation -->
+    <div class="modal-profile" id="confirmModal">
+        <div class="modal-content-profile">
+            <div class="modal-header-profile">
+                <h2 id="confirmTitle">Xác nhận</h2>
+                <button class="close-btn-profile" onclick="closeConfirmModal()">&times;</button>
+            </div>
+            <div class="modal-body-profile">
+                <p id="confirmMessage"></p>
+            </div>
+            <div class="modal-actions-profile">
+                <button class="modal-btn-profile" onclick="closeConfirmModal()">Hủy</button>
+                <button class="modal-btn-profile modal-btn-primary-profile" id="confirmButton" onclick="confirmAction()">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+
     <script src="profile.js"></script>
 </body>
 </html>

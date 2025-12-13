@@ -1,7 +1,8 @@
 /* Team Banner */
     .team-banner {
       width: 100%;
-      padding: 80px 20px;
+      height: auto;
+      padding: 60px 20px;
       background: linear-gradient(135deg, rgba(30, 30, 30, 0.3) 0%, rgba(15, 15, 15, 0.95) 100%), 
                   url('/assets/feature/feature2.png') center/cover no-repeat;
       background-attachment: fixed;
@@ -31,8 +32,8 @@
     }
 
     .member-photo {
-      width: 180px;
-      height: 180px;
+      width: 160px;
+      height: 160px;
       margin: 0 auto 25px;
       border-radius: 50%;
       overflow: hidden;

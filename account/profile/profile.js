@@ -1,13 +1,68 @@
 // --- 1. KHỞI TẠO & DATA ---
 let currentUser = null;
 let currentTab = 'overview'; // Các trạng thái: 'overview', 'orders', 'edit'
+let pendingConfirmAction = null; // Lưu hàm cần thực hiện sau khi xác nhận
+
+// ===== MODAL FUNCTIONS =====
+function showMessageModal(title, message) {
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalMessage').textContent = message;
+    document.getElementById('messageModal').classList.add('active');
+}
+
+function closeMessageModal() {
+    document.getElementById('messageModal').classList.remove('active');
+}
+
+function showConfirmModal(title, message, onConfirm) {
+    document.getElementById('confirmTitle').textContent = title;
+    document.getElementById('confirmMessage').textContent = message;
+    pendingConfirmAction = onConfirm;
+    document.getElementById('confirmModal').classList.add('active');
+}
+
+function closeConfirmModal() {
+    document.getElementById('confirmModal').classList.remove('active');
+    pendingConfirmAction = null;
+}
+
+function confirmAction() {
+    if (pendingConfirmAction && typeof pendingConfirmAction === 'function') {
+        pendingConfirmAction();
+    }
+    closeConfirmModal();
+}
+
+// Đóng modal khi bấm ra ngoài
+document.addEventListener('DOMContentLoaded', function() {
+    const messageModal = document.getElementById('messageModal');
+    const confirmModal = document.getElementById('confirmModal');
+    
+    if (messageModal) {
+        messageModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeMessageModal();
+            }
+        });
+    }
+    
+    if (confirmModal) {
+        confirmModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeConfirmModal();
+            }
+        });
+    }
+});
 
 // Check đăng nhập
 function checkAuth() {
     const userJson = sessionStorage.getItem("currentUser");
     if (!userJson) {
-        alert("Bạn cần đăng nhập để xem trang này!");
-        window.location.href = "../login/login.html"; // Điều chỉnh đường dẫn nếu cần
+        showMessageModal("Thông báo", "Bạn cần đăng nhập để xem trang này!");
+        setTimeout(() => {
+            window.location.href = "../login/login.html";
+        }, 1500);
         return null;
     }
     return JSON.parse(userJson);
@@ -31,10 +86,10 @@ function switchTab(tabName) {
 
 // Đăng xuất
 function logout() {
-    if (confirm("Bạn có chắc muốn đăng xuất?")) {
+    showConfirmModal("Xác nhận đăng xuất", "Bạn có chắc muốn đăng xuất?", function() {
         sessionStorage.removeItem("currentUser");
-        window.location.href = "../index.htm"; // Về trang chủ
-    }
+        window.location.href = "/index.htm";
+    });
 }
 
 // Lưu hồ sơ (Logic cập nhật)
@@ -58,8 +113,10 @@ function saveProfile(event) {
     // Đoạn này tùy thuộc vào cách bạn lưu danh sách user lúc đăng ký.
     // Nếu bạn chỉ dùng session đơn giản thì bước 1 là đủ.
     
-    alert("Cập nhật hồ sơ thành công!");
-    switchTab('overview'); // Quay về trang chủ
+    showMessageModal("Thành công", "Cập nhật hồ sơ thành công!");
+    setTimeout(() => {
+        switchTab('overview'); // Quay về trang chủ
+    }, 1000);
 }
 
 // --- 3. RENDER GIAO DIỆN (VIEW) ---

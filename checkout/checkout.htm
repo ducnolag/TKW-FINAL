@@ -16,6 +16,38 @@
         </div>
     </div>
 
+    <!-- Modal for Messages -->
+    <div class="modal-checkout" id="messageModal">
+        <div class="modal-content-checkout">
+            <div class="modal-header-checkout">
+                <h2 id="modalTitle">Thông báo</h2>
+                <button class="close-btn-checkout" onclick="closeMessageModal()">&times;</button>
+            </div>
+            <div class="modal-body-checkout">
+                <p id="modalMessage"></p>
+            </div>
+            <div class="modal-actions-checkout">
+                <button class="modal-btn-checkout modal-btn-primary-checkout" onclick="closeMessageModal()">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Confirmation -->
+    <div class="modal-checkout" id="confirmModal">
+        <div class="modal-content-checkout">
+            <div class="modal-header-checkout">
+                <h2 id="confirmTitle">Xác nhận</h2>
+                <button class="close-btn-checkout" onclick="closeConfirmModal()">&times;</button>
+            </div>
+            <div class="modal-body-checkout">
+                <p id="confirmMessage"></p>
+            </div>
+            <div class="modal-actions-checkout">
+                <button class="modal-btn-checkout" onclick="closeConfirmModal()">Hủy</button>
+                <button class="modal-btn-checkout modal-btn-primary-checkout" id="confirmButton" onclick="confirmAction()">Xác nhận</button>
+            </div>
+        </div>
+    </div>
 
     <script src="checkout.js">
 

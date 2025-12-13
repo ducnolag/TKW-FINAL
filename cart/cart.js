@@ -2,6 +2,7 @@ let cart = [];
 const SHIPPING_FEE = 30000;
 let discountPercent = 0;
 let appliedPromoCode = '';
+let pendingConfirmAction = null; // Lưu hàm cần thực hiện sau khi xác nhận
 
 // Danh sách mã giảm giá hợp lệ
 const validPromoCodes = {
@@ -14,6 +15,58 @@ const validPromoCodes = {
     'GIAM20': { type: 'percent', value: 20, desc: 'Giảm 20%' },
     'SALE30': { type: 'percent', value: 30, desc: 'Giảm 30%' }
 };
+
+// ===== MODAL FUNCTIONS =====
+function showMessageModal(title, message) {
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalMessage').textContent = message;
+    document.getElementById('messageModal').classList.add('active');
+}
+
+function closeMessageModal() {
+    document.getElementById('messageModal').classList.remove('active');
+}
+
+function showConfirmModal(title, message, onConfirm) {
+    document.getElementById('confirmTitle').textContent = title;
+    document.getElementById('confirmMessage').textContent = message;
+    pendingConfirmAction = onConfirm;
+    document.getElementById('confirmModal').classList.add('active');
+}
+
+function closeConfirmModal() {
+    document.getElementById('confirmModal').classList.remove('active');
+    pendingConfirmAction = null;
+}
+
+function confirmAction() {
+    if (pendingConfirmAction && typeof pendingConfirmAction === 'function') {
+        pendingConfirmAction();
+    }
+    closeConfirmModal();
+}
+
+// Đóng modal khi bấm ra ngoài
+document.addEventListener('DOMContentLoaded', function() {
+    const messageModal = document.getElementById('messageModal');
+    const confirmModal = document.getElementById('confirmModal');
+    
+    if (messageModal) {
+        messageModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeMessageModal();
+            }
+        });
+    }
+    
+    if (confirmModal) {
+        confirmModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeConfirmModal();
+            }
+        });
+    }
+});
 
 function formatPrice(price) {
     return price.toLocaleString('vi-VN') + 'đ';
@@ -114,12 +167,13 @@ function decreaseQty(index) {
 }
 
 function removeItem(index) {
-    if (confirm('Bạn có chắc muốn xóa sản phẩm này?')) {
+    showConfirmModal("Xác nhận xóa", "Bạn có chắc muốn xóa sản phẩm này?", function() {
         cart.splice(index, 1);
         saveCart();
         renderCart();
         updateSummary();
-    }
+        showNotification('Đã xóa sản phẩm khỏi giỏ hàng', 'success');
+    });
 }
 
 function updateSummary() {
@@ -247,7 +301,7 @@ function removePromoCode() {
 
 function checkout() {
     if (cart.length === 0) {
-        alert('Giỏ hàng trống!');
+        showMessageModal("Giỏ hàng trống", "Giỏ hàng của bạn đang trống. Vui lòng thêm sản phẩm trước khi thanh toán!");
         return;
     }
     

@@ -6,6 +6,59 @@ const validPromoCodes = {
 };
 
 let appliedPromoCode = '';
+let pendingConfirmAction = null; // Lưu hàm cần thực hiện sau khi xác nhận
+
+// ===== MODAL FUNCTIONS =====
+function showMessageModal(title, message) {
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalMessage').textContent = message;
+    document.getElementById('messageModal').classList.add('active');
+}
+
+function closeMessageModal() {
+    document.getElementById('messageModal').classList.remove('active');
+}
+
+function showConfirmModal(title, message, onConfirm) {
+    document.getElementById('confirmTitle').textContent = title;
+    document.getElementById('confirmMessage').textContent = message;
+    pendingConfirmAction = onConfirm;
+    document.getElementById('confirmModal').classList.add('active');
+}
+
+function closeConfirmModal() {
+    document.getElementById('confirmModal').classList.remove('active');
+    pendingConfirmAction = null;
+}
+
+function confirmAction() {
+    if (pendingConfirmAction && typeof pendingConfirmAction === 'function') {
+        pendingConfirmAction();
+    }
+    closeConfirmModal();
+}
+
+// Đóng modal khi bấm ra ngoài
+document.addEventListener('DOMContentLoaded', function() {
+    const messageModal = document.getElementById('messageModal');
+    const confirmModal = document.getElementById('confirmModal');
+    
+    if (messageModal) {
+        messageModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeMessageModal();
+            }
+        });
+    }
+    
+    if (confirmModal) {
+        confirmModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeConfirmModal();
+            }
+        });
+    }
+});
 
 // --- AUTH & INIT ---
 function checkAuth() {
@@ -32,14 +85,14 @@ function calculateTotal(items) {
 
 // --- ACTIONS ---
 function removeItem(productId) {
-    if(!confirm('Bạn chắc chắn muốn xóa món này?')) return;
-    
-    let cart = getCartItems();
-    cart = cart.filter(item => item.id != productId);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    
-    showToast('Đã xóa món ăn', 'success');
-    renderCheckout(checkAuth());
+    showConfirmModal("Xác nhận xóa", "Bạn chắc chắn muốn xóa món này?", function() {
+        let cart = getCartItems();
+        cart = cart.filter(item => item.id != productId);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        
+        showToast('Đã xóa món ăn', 'success');
+        renderCheckout(checkAuth());
+    });
 }
 
 function showToast(msg, type = 'success') {
@@ -92,11 +145,23 @@ function placeOrder(event) {
     event.preventDefault();
     const form = event.target;
     
+    // Validate form
     if (!form.checkValidity()) {
         showToast('Vui lòng điền đủ thông tin nhận hàng', 'error');
-        // Highlight first invalid input
         const invalidInput = form.querySelector(':invalid');
         if(invalidInput) invalidInput.focus();
+        return;
+    }
+    
+    // Validate phone number
+    const phoneInput = form.querySelector('input[name="phone"]');
+    const phoneValue = phoneInput.value.trim();
+    
+    // Kiểm tra số điện thoại hợp lệ (10-11 chữ số, bắt đầu từ 0)
+    const phoneRegex = /^0\d{9,10}$/;
+    if (!phoneRegex.test(phoneValue)) {
+        showMessageModal("Lỗi", "Vui lòng nhập số điện thoại hợp lệ (10-11 chữ số, bắt đầu bằng 0)!");
+        phoneInput.focus();
         return;
     }
     
