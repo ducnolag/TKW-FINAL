@@ -10,6 +10,30 @@
   padding: 0 20px;
 }
 
+/* --- Bestseller Header (Similar to News Header) --- */
+.bestseller-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.bestseller-header h2 {
+  font-size: 42px;
+  font-weight: 900;
+  color: var(--text-color-dark);
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.bestseller-header p {
+  font-size: 16px;
+  color: var(--text-color-muted);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Legacy styles (for backward compatibility) */
 .section_title_base {
   text-align: center;
   margin-top: 35px;

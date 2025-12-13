@@ -1,0 +1,213 @@
+/* --- Thiết lập chung --- */
+.section-news {
+  padding: 50px 0;
+  background-color: #fff; /* Nền trắng như ảnh */
+}
+
+.news-container {
+  max-width: 1400px; /* Mở rộng chiều ngang để chứa đủ 4 cột */
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* --- Header: Giống Bestseller --- */
+.news-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.news-header h2 {
+  font-size: 42px;
+  font-weight: 900;
+  color: var(--text-color-dark);
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.news-header p {
+  font-size: 16px;
+  color: var(--text-color-muted);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Legacy styles */
+.news-header-custom {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.news-header-custom h2 {
+  font-size: 32px;
+  color: #a03030; /* Màu đỏ đất giống trong ảnh */
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+/* Trang trí gạch dưới header */
+.header-decoration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #ddd;
+}
+.header-decoration span {
+  width: 50px;
+  height: 1px;
+  background: #eee;
+}
+.heart-icon {
+  font-style: normal;
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: #ddd;
+}
+
+/* --- Grid Layout (4 cột) --- */
+.news-grid-custom {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 Cột trên Desktop */
+  gap: 30px;
+}
+
+/* --- Card Style --- */
+.news-card-custom {
+  background: #fff;
+  border: 1px solid #f0f0f0; /* Viền mờ */
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.news-card-custom:hover {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+  transform: translateY(-5px);
+  border: 2px solid var(--secondary-color);
+}
+
+/* Ảnh thumbnail */
+.card-thumb {
+  width: 100%;
+  padding-top: 75%; /* Tỉ lệ khung hình 4:3 */
+  position: relative;
+  overflow: hidden;
+}
+
+.card-thumb img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.news-card-custom:hover .card-thumb img {
+  transform: scale(1.05);
+}
+
+/* Nội dung bài viết */
+.card-body {
+  padding: 20px 15px;
+  flex-grow: 1; /* Đẩy footer xuống đáy */
+}
+
+.card-title {
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #333;
+  margin-bottom: 12px;
+  line-height: 1.4;
+  
+  /* Giới hạn 2 dòng */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-desc {
+  font-size: 13px;
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+  
+  /* Giới hạn 4 dòng */
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Footer (Tác giả, ngày tháng) */
+.card-footer {
+  padding: 15px;
+  border-top: 1px solid #eee; /* Đường gạch ngang mờ bên trên footer */
+  font-size: 12px;
+  color: #999;
+  background: #fff;
+}
+
+.meta-info {
+  margin-bottom: 4px;
+  /* Cắt chữ nếu tên quá dài */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --- RESPONSIVE (Mobile & Tablet) --- */
+
+/* Tablet (Màn hình vừa): 2 cột hoặc 3 cột tùy ý, ở đây để 2 cho thoáng */
+@media (max-width: 1024px) {
+  .news-grid-custom {
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px;
+  }
+}
+
+/* Mobile (Điện thoại): 2 cột (2x2) như yêu cầu */
+@media (max-width: 768px) {
+  .section-news {
+    padding: 30px 0;
+  }
+  
+  .news-container {
+    padding: 0 10px;
+  }
+
+  .news-header-custom h2 {
+    font-size: 24px;
+  }
+
+  .news-grid-custom {
+    grid-template-columns: repeat(2, 1fr); /* Giữ layout 2 cột */
+    gap: 10px; /* Khoảng cách nhỏ lại */
+  }
+
+  .card-body {
+    padding: 10px;
+  }
+
+  .card-title {
+    font-size: 12px; /* Chữ nhỏ hơn trên mobile */
+    margin-bottom: 8px;
+    height: 34px; /* Cố định chiều cao tiêu đề để thẳng hàng */
+  }
+
+  .card-desc {
+    font-size: 11px;
+    -webkit-line-clamp: 3; /* Giảm số dòng mô tả trên mobile */
+  }
+
+  .card-footer {
+    padding: 10px;
+    font-size: 10px;
+  }
+}
