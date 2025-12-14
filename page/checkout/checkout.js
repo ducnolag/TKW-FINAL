@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function checkAuth() {
     const currentUser = sessionStorage.getItem("currentUser");
     if (!currentUser) {
-        window.location.href = "/account/login/login.html#login";
+        window.location.href = "/page/account/login/login.html#login";
         return null;
     }
     return JSON.parse(currentUser);

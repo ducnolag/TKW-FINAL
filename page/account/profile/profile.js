@@ -61,7 +61,7 @@ function checkAuth() {
     if (!userJson) {
         showMessageModal("Thông báo", "Bạn cần đăng nhập để xem trang này!");
         setTimeout(() => {
-            window.location.href = "../login/login.html";
+            window.location.href = "/page/account/login/login.html";
         }, 1500);
         return null;
     }

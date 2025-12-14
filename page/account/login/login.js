@@ -179,7 +179,7 @@
             }));
 
             setTimeout(() => {
-                window.location.href = "../profile/profile.html";
+                window.location.href = "/page/account/profile/profile.html";
             }, 1000);
         }
 
@@ -198,7 +198,7 @@
             };
 
             sessionStorage.setItem("currentUser", JSON.stringify(mockGoogleUser));
-            window.location.href = "../profile/profile.html";
+            window.location.href = "/page/account/profile/profile.html";
         }
 
         function loginWithFacebook() {
@@ -211,7 +211,7 @@
             };
 
             sessionStorage.setItem("currentUser", JSON.stringify(mockFacebookUser));
-            window.location.href = "../profile/profile.html";
+            window.location.href = "/page/account/profile/profile.html";
         }
 
         function signupWithGoogle() {
@@ -249,7 +249,7 @@
             
             const currentUser = sessionStorage.getItem("currentUser");
             if (currentUser) {
-                window.location.href = "../profile/profile.html";
+                window.location.href = "/page/account/profile/profile.html";
             }
         };
 

@@ -36,7 +36,7 @@ let allData = null;
         : `<button class="btn btn-primary" onclick="event.stopPropagation(); openModal(${item.id}, '${item.title}', ${item.price_current});">MUA HÀNG</button>`;
       
       return `
-        <div class="product-item" onclick="window.location.href='/category/detail/detail.htm?id=${item.id}'" style="cursor: pointer;">
+        <div class="product-item" onclick="window.location.href='/page/category/detail/detail.htm?id=${item.id}'" style="cursor: pointer;">
           <div class="product-image">
             ${item.image ? `<img src="${item.image}" alt="${item.title}">` : `<img src="https://via.placeholder.com/280x250/f5f5f5/999?text=${encodeURIComponent(item.title)}" alt="${item.title}">`}
           </div>
@@ -380,8 +380,6 @@ let allData = null;
       
       window.updateCartCount();
       window.dispatchEvent(new Event('cartUpdated'));
-      
-      alert(`✅ Đã thêm ${quantity} sản phẩm vào giỏ hàng!`);
       closeModal();
     }
 
@@ -403,7 +401,7 @@ let allData = null;
       window.updateCartCount();
       window.dispatchEvent(new Event('cartUpdated'));
       
-      window.location.href = '/checkout/checkout.htm';
+      window.location.href = '/page/checkout/checkout.htm';
     }
 
     // Đóng modal khi bấm ra ngoài

@@ -17,7 +17,7 @@ document.addEventListener('htmlIncluded', function () {
       wrapper.innerHTML = products.map(item => `
         <div class="swiper-slide">
           <div class="item_product_main">
-            <a href="/category/detail/detail.htm?id=${item.id}" style="text-decoration: none; color: inherit;">
+            <a href="/page/category/detail/detail.htm?id=${item.id}" style="text-decoration: none; color: inherit;">
               <img src="${item.image}" alt="${item.title}" class="product-image">
 
               <div class="product-info">
@@ -31,7 +31,7 @@ document.addEventListener('htmlIncluded', function () {
             </a>
             
             <div class="product-button-wrapper">
-              <a href="/category/detail/detail.htm?id=${item.id}" 
+              <a href="/page/category/detail/detail.htm?id=${item.id}" 
                  class="product-button ${item.status === 'soldout' ? 'sold-out' : ''}" 
                  style="text-decoration: none;">
                 Xem chi tiết

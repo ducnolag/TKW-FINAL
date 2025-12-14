@@ -231,7 +231,7 @@ function createSuggestHTML() {
             <div style="padding: 10px; max-height: 400px; overflow-y: auto;">
                 ${suggestProducts.map(product => `
                     <div style="display: flex; align-items: center; gap: 8px; padding: 8px 6px; border-bottom: 1px solid #f3f4f6; transition: background 0.3s;">
-                        <a href="/category/detail/detail.htm?id=${product.id}" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0;">
+                        <a href="/page/category/detail/detail.htm?id=${product.id}" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0;">
                             <img src="${product.image}" alt="${product.title}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid #e5e7eb; flex-shrink: 0;">
                             <div style="flex: 1; min-width: 0;">
                                 <div style="font-weight: 600; font-size: 11px; color: #1f2937; margin-bottom: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${product.title}</div>
@@ -678,7 +678,7 @@ function createRelatedProductsHTML(allData, currentProduct) {
                         const emoji = foodEmojis[product.id % foodEmojis.length];
                         
                         return `
-                            <a href="/category/detail/detail.htm?id=${product.id}" class="related-product-card" style="text-decoration: none; color: inherit;">
+                            <a href="/page/category/detail/detail.htm?id=${product.id}" class="related-product-card" style="text-decoration: none; color: inherit;">
                                 <div class="related-card-badge">#${index + 1}</div>
                                 
                                 <div class="related-product-img-wrapper">
@@ -860,7 +860,7 @@ function openReviewForm() {
                 </p>
                 
                 <div style="display: flex; gap: 10px; flex-direction: column;">
-                    <button onclick="window.location.href='/account/login/login.html'" style="padding: 12px 24px; background: linear-gradient(135deg, #f97316 0%, #dc2626 100%); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 14px; transition: all 0.3s; box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);">
+                    <button onclick="window.location.href='/page/account/login/login.html'" style="padding: 12px 24px; background: linear-gradient(135deg, #f97316 0%, #dc2626 100%); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 14px; transition: all 0.3s; box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);">
                         ✅ Đi tới Đăng nhập
                     </button>
                     <button onclick="document.getElementById('loginPromptModal').remove()" style="padding: 12px 24px; background: #e5e7eb; color: #1f2937; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 14px; transition: all 0.3s;">
@@ -1249,7 +1249,7 @@ function buyNow() {
     
     // Chuyển hướng đến trang thanh toán
     setTimeout(() => {
-        window.location.href = '/checkout/checkout.htm';
+        window.location.href = '/page/checkout/checkout.htm';
     }, 300);
 }
 

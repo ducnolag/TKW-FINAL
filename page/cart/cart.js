@@ -105,7 +105,7 @@ function renderCart() {
                 <div class="empty-cart-icon">🛒</div>
                 <h3>Giỏ hàng trống</h3>
                 <p>Hãy thêm sản phẩm vào giỏ hàng để tiếp tục mua sắm</p>
-                <button class="shop-now-btn" onclick="window.location.href='../category/product/product.htm'">
+                <button class="shop-now-btn" onclick="window.location.href='/page/category/product/product.htm'">
                     Mua sắm ngay
                 </button>
             </div>
@@ -305,7 +305,7 @@ function checkout() {
         return;
     }
     
-    window.location.href = '../checkout/checkout.htm';
+    window.location.href = '/page/checkout/checkout.htm';
 }
 
 loadCart();
