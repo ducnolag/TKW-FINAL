@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Tiết Sản Phẩm - Tiệm Ăn Vặt</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initMap" async defer> </script>
+
+    <style>
+        /* --- Nhúng CSS phần header --- */
+        @import url('/src/css/again.css'); 
+        /* --- Nhúng CSS riêng cho trang chi tiết sản phẩm --- */
+        @import url('/page/category/product-detail/product-detail.css');
+
+    
+
+         /* --- CẤU HÌNH CHUNG --- */
+        :root { --primary-orange: #ff6b35; --primary-red: #d82b2b; --text-dark: #333; --bg-beige: #fff5e1; --box-bg: #fffbf5; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+        body { background-color: #fff; color: var(--text-dark); padding-bottom: 50px; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        .container { width: 1200px; max-width: 100%; margin: 0 auto; padding: 0 15px; }
+
+        /* --- BREADCRUMB & PAGE TITLE (One-line Style) --- */
+        .breadcrumb-container { margin: 20px 0 25px 0; }
+        .breadcrumb { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 10px; background-color: var(--box-bg); padding: 10px 20px; border-radius: 50px; border: 1px solid #eee; font-size: 13px; color: #888; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
+        .breadcrumb a { color: #555; font-weight: 500; transition: all 0.2s ease; display: flex; align-items: center; gap: 6px; }
+        .breadcrumb a:hover { color: var(--primary-orange); text-decoration: none; transform: translateY(-1px); }
+        .breadcrumb .home-icon i { font-size: 14px; color: var(--primary-orange); margin-bottom: 2px; }
+        .breadcrumb .separator { font-size: 10px; color: #ccc; display: flex; align-items: center; }
+        .breadcrumb .current { color: var(--primary-red); font-weight: 600; max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .page-main-title { font-size: 32px; font-weight: 900; color: #333; margin-bottom: 35px; text-transform: uppercase; line-height: 1.4; position: relative; display: inline-block; letter-spacing: 0.5px; background: linear-gradient(90deg, #333 30%, var(--primary-red) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .page-main-title::after { content: ""; position: absolute; bottom: -10px; left: 0; width: 80px; height: 5px; background: linear-gradient(90deg, var(--primary-orange), var(--primary-red)); border-radius: 10px; }
+        .page-main-title::before { content: ""; position: absolute; bottom: -10px; left: 90px; width: 8px; height: 5px; background-color: #ffd166; border-radius: 10px; }
+        .mobile-break { display: none; }
+
+        @media (max-width: 768px) { 
+            .breadcrumb-container { margin: 15px 0; }
+            .breadcrumb { font-size: 12px; padding: 8px 15px; width: 100%; justify-content: center; }
+            .page-main-title { font-size: 24px; text-align: center; display: block; margin-bottom: 25px; background: none; -webkit-text-fill-color: #333; } 
+            .page-main-title::after { left: 50%; transform: translateX(-55%); }
+            .page-main-title::before { left: 50%; transform: translateX(450%); }
+            .mobile-break { display: block; }
+        }
+        /* --- PRODUCT DETAIL (CSS Only - Giữ nguyên HTML/JS) --- */
+        .product-detail-wrapper { display: flex; gap: 40px; margin-bottom: 50px; align-items: flex-start; flex-wrap: wrap; }
+        .pd-left { flex: 1; min-width: 300px; }
+        .main-image-frame { width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.08); border: 1px solid #eee; }
+        .main-image-frame img { width: 100%; height: auto; display: block; transition: 0.3s; }
+        .main-image-frame:hover img { transform: scale(1.02); }
+
+        .pd-right { flex: 1.3; min-width: 300px; }
+        .pd-name { font-size: 24px; font-weight: 800; color: #222; margin-bottom: 15px; line-height: 1.35; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* --- CSS ZOOM ẢNH (LIGHTBOX) --- */
+        /* --- CSS ZOOM ẢNH (LIGHTBOX) - STYLE HIỆN ĐẠI --- */
+        .lightbox-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999999; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; cursor: zoom-out; backdrop-filter: blur(5px); }
+        .lightbox-overlay.active { opacity: 1; visibility: visible; }
+        .lightbox-img { max-width: 90%; max-height: 90%; object-fit: contain; transform: scale(0.9); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); border-radius: 4px; box-shadow: 0 5px 30px rgba(0,0,0,0.3); }
+        .lightbox-overlay.active .lightbox-img { transform: scale(1); }
+
+        /* ICON KÍNH LÚP (STYLE MỚI: TRÒN TRẮNG) */
+        .main-image-frame { position: relative; cursor: zoom-in; overflow: hidden; }
+        /* Tạo nút tròn trắng, đổ bóng, nằm góc phải */
+        .main-image-frame::after { content: '\f00e'; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; bottom: 15px; right: 15px; width: 45px; height: 45px; background: #fff; color: #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.15); font-size: 18px; pointer-events: none; opacity: 0; transform: translateY(10px); transition: all 0.3s ease; }
+        /* Khi di chuột vào ảnh thì nút mới trượt lên */
+        .main-image-frame:hover::after { opacity: 1; transform: translateY(0); }
+
+
+        /* Group giá tiền */
+        .pd-price-group { background: #fff5f5; padding: 15px 20px; border-radius: 12px; margin-bottom: 25px; border: 1px dashed #ffcccc; display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .price-new { font-size: 26px; font-weight: 800; color: var(--primary-red); margin-right: 5px; }
+        .price-old { font-size: 15px; color: #999; text-decoration: line-through; }
+        .stock-badge { background: #e6fffa; color: #00a884; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase; margin-left: auto; }
+        /* Style cho phần đánh giá tổng quan trên đầu */
+        .product-rating-overview { display: flex; align-items: center; gap: 8px; margin: 10px 0 20px 0; /* Cách trên dưới 1 chút */ font-size: 14px; }
+        .product-rating-overview .rating-stars { color: #ffc107; /* Màu vàng của sao */ font-size: 16px; }
+        .product-rating-overview .rating-number { font-weight: bold; color: var(--primary-orange); /* Lấy theo màu chủ đạo của bạn */ font-size: 16px; margin-top: 2px; }
+        .product-rating-overview .separator { color: #ccc; }
+        .product-rating-overview .scroll-link { color: #555; text-decoration: underline; cursor: pointer; transition: color 0.2s; }
+        .product-rating-overview .scroll-link:hover { color: var(--primary-orange); }
+        /* Mô tả */
+        .description-box { margin-bottom: 25px; border-left: 3px solid var(--primary-orange); padding-left: 15px; }
+        .desc-heading { font-size: 16px; font-weight: 700; color: #444; margin-bottom: 8px; }
+        .desc-text p { font-size: 14px; color: #555; margin-bottom: 6px; line-height: 1.5; }
+        .desc-text i { font-size: 13px; color: #999; display: block; margin-bottom: 8px; }
+
+        /* Tùy chọn (Options) */
+        .options-container { background: #fff; border: 1px solid #eee; padding: 15px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+        .option-row { display: flex; align-items: center; margin-bottom: 12px; justify-content: space-between; }
+        .option-row:last-child { margin-bottom: 0; }
+        .option-title { font-weight: 600; font-size: 14px; color: #333; min-width: 80px; }
+        /* Làm đẹp thẻ Select mặc định */
+        .custom-select { flex: 1; padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; outline: none; background-color: #fff; cursor: pointer; max-width: 200px; transition: border 0.3s; }
+        .custom-select:focus { border-color: var(--primary-orange); box-shadow: 0 0 0 2px rgba(255,107,53,0.1); }
+
+        /* Số lượng */
+        .qty-row { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; }
+        .qty-label { font-weight: 600; color: #444; font-size: 14px; }
+        .qty-wrapper { display: flex; align-items: center; border: 1px solid #ddd; border-radius: 5px; overflow: hidden; height: 40px; }
+        .qty-btn { width: 35px; height: 100%; border: none; background: #f9f9f9; cursor: pointer; font-weight: bold; font-size: 16px; color: #555; transition: 0.2s; }
+        .qty-btn:hover { background: #eee; color: var(--primary-orange); }
+        .qty-input { width: 45px; height: 100%; border: none; border-left: 1px solid #eee; border-right: 1px solid #eee; text-align: center; font-weight: bold; font-size: 15px; outline: none; color: #333; }
+
+        /* Nút mua hàng */
+        .btn-buy-now { width: 100%; padding: 14px; background: linear-gradient(90deg, var(--primary-orange), var(--primary-red)); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 800; text-transform: uppercase; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(216,43,43,0.3); margin-bottom: 20px; letter-spacing: 1px; }
+        .btn-buy-now:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(216,43,43,0.4); }
+
+        /* Thông tin phụ */
+        .prod-stats { font-size: 13px; color: #666; margin-bottom: 5px; display: flex; align-items: center; gap: 5px; }
+        .prod-stats strong { color: #333; }
+        .prod-note { margin-top: 15px; font-size: 12px; color: #888; background: #f8f8f8; padding: 10px; border-radius: 6px; line-height: 1.4; border: 1px solid #eee; }
+        .prod-note i { color: var(--primary-orange); margin-right: 5px; }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .product-detail-wrapper { flex-direction: column; gap: 20px; }
+            .pd-left, .pd-right { width: 100%; min-width: auto; }
+            .pd-name { font-size: 20px; }
+            .option-row { flex-wrap: wrap; gap: 5px; }
+            .custom-select { max-width: 100%; }
+        }
+        /* --- BEST SELLER SECTION --- */
+        .best-seller-section { padding: 50px 0 ; border-top: 1px solid #eee; margin-top: 50px; overflow: hidden; }
+        .bs-header-container { text-align: center; margin-bottom: 40px; }
+        .bs-subtitle { font-size: 18px; color: #333; margin-bottom: 5px; font-family: 'Times New Roman', serif; font-style: italic; }
+        .bs-main-title { font-size: 28px; font-weight: 700; color: #c0392b; margin: 0; }
+        .bs-divider { margin-top: 10px; color: #e0e0e0; font-size: 10px; letter-spacing: 5px; }
+        .bs-wrapper-container { position: relative; width: 100%; }
+        .swiper-best-seller { width: 100%; padding: 10px 5px 30px 5px !important; }
+        .bs-card { background: #fff; border: 1px solid #fff; border-radius: 8px; display: flex; flex-direction: column; overflow: hidden; transition: all 0.3s ease; height: auto; padding-bottom: 20px; }
+        .bs-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .bs-img-wrapper { background-color: #fff5e1; padding: 15px; aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; border-radius: 5px; margin-bottom: 10px; }
+        .bs-img-wrapper img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.5s; mix-blend-mode: multiply; }
+        .bs-card:hover .bs-img-wrapper img { transform: scale(1.05); }
+        .bs-content { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .bs-name { font-size: 14px; font-weight: 700; color: #333; margin: 0; line-height: 1.3; height: 36px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; text-transform: uppercase; }
+        .bs-price-row { display: flex; align-items: center; gap: 8px; font-size: 14px; margin-bottom: 10px; }
+        .price-current { color: #d82b2b; font-weight: 700; font-size: 16px; }
+        .price-old { color: #999; text-decoration: line-through; font-size: 13px; }
+        .btn-pill-outline { display: inline-block; padding: 6px 20px; border: 1px solid #d82b2b; border-radius: 50px; color: #d82b2b; font-size: 11px; font-weight: 700; text-transform: uppercase; background: #fff; transition: all 0.3s ease; }
+        .btn-pill-outline:hover { background-color: #d82b2b; color: #fff; }
+        .bs-button-next, .bs-button-prev { width: 40px; height: 40px; border-radius: 50%; background-color: #fff; border: 1px solid #eee; color: #555; display: flex; align-items: center; justify-content: center; position: absolute; top: 40%; z-index: 20; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: 0.3s; }
+        .bs-button-next:hover, .bs-button-prev:hover { background-color: #d82b2b; color: #fff; border-color: #d82b2b; }
+        .bs-button-prev { left: 0px; } .bs-button-next { right: 0px; }
+        @media (max-width: 992px) { .product-detail-wrapper { flex-direction: column; } .pd-left, .pd-right { width: 100%; } }
+
+        /* --- PHẦN ĐÁNH GIÁ (REVIEW) --- */
+        .review-section { margin-top: 50px; margin-bottom: 80px; }
+        .review-header { font-size: 22px; font-weight: 700; color: #333; text-transform: uppercase; margin-bottom: 25px; position: relative; padding-left: 15px; }
+        .review-header::before { content: ""; position: absolute; left: 0; top: 5px; bottom: 5px; width: 4px; background: linear-gradient(to bottom, var(--primary-orange), var(--primary-red)); border-radius: 2px; }
+        .review-box-wrapper { background-color: #fff; border: 1px solid #e5e5e5; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); overflow: hidden; }
+
+        /* DASHBOARD ĐÁNH GIÁ */
+        .review-dashboard { display: flex; gap: 40px; padding: 30px; border-bottom: 1px solid #eee; background-color: #fff; align-items: center; }
+        .rd-left { text-align: center; min-width: 200px; }
+        .rd-score .score-num { font-size: 48px; color: var(--primary-red); font-weight: 800; line-height: 1; }
+        .rd-score .score-stars { color: #ffc107; font-size: 18px; margin: 8px 0; }
+        .rd-score .score-count { font-size: 14px; color: #777; margin-bottom: 15px; }
+        .btn-write-review { background: linear-gradient(90deg, var(--primary-orange), var(--primary-red)); color: #fff; border: none; padding: 10px 25px; border-radius: 30px; cursor: pointer; font-weight: 600; font-size: 14px; box-shadow: 0 4px 10px rgba(216, 43, 43, 0.2); transition: transform 0.2s; }
+        .btn-write-review:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(216, 43, 43, 0.3); }
+        .rd-right { flex: 1; }
+        .filter-group { display: flex; flex-wrap: wrap; gap: 10px; }
+        .filter-btn { background: #f5f5f5; border: 1px solid transparent; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 13px; color: #555; transition: 0.2s; font-weight: 500; }
+        .filter-btn:hover { background-color: #eee; }
+        .filter-btn.active { background-color: #fff; border-color: var(--primary-orange); color: var(--primary-orange); box-shadow: 0 2px 8px rgba(255, 107, 53, 0.15); }
+
+        /* LIST REVIEW */
+        .user-review-list { padding: 0 30px; }
+        .review-item { padding: 25px 0; border-bottom: 1px solid #eee; }
+        .review-item:last-child { border-bottom: none; }
+        .ri-user-info { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+        .ri-name { font-weight: 700; color: #333; font-size: 15px; }
+        .ri-stars { color: #ffc107; font-size: 12px; }
+        .ri-verified { font-size: 12px; color: #27ae60; margin-bottom: 12px; display: flex; align-items: center; gap: 5px; font-weight: 500; }
+        .ri-content { font-size: 14px; color: #444; margin-bottom: 12px; line-height: 1.6; }
+        .ri-actions { font-size: 12px; color: #999; display: flex; align-items: center; gap: 15px; }
+        .action-link { cursor: pointer; color: #777; transition: 0.2s; display: flex; align-items: center; gap: 4px; }
+        .action-link:hover { color: var(--primary-orange); }
+
+        /* ADMIN REPLY */
+        .admin-reply { background-color: #f8f9fa; padding: 15px; margin-top: 15px; border-radius: 8px; border: 1px solid #eee; position: relative; margin-left: 20px; }
+        .admin-reply::before { content: ""; position: absolute; top: -6px; left: 20px; width: 12px; height: 12px; background-color: #f8f9fa; border-top: 1px solid #eee; border-left: 1px solid #eee; transform: rotate(45deg); }
+        .admin-info { margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+        .admin-name { font-weight: 700; font-size: 13px; color: #d82b2b; }
+        .admin-badge { background-color: #d82b2b; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; font-weight: 600; }
+        .admin-content { font-size: 13px; color: #555; line-height: 1.5; }
+
+        /* FORM REVIEW */
+        #review-form-view { padding: 40px; background-color: #fff; }
+        .review-notice { font-size: 16px; color: #333; text-align: center; margin-bottom: 25px; font-weight: 500; }
+        .rating-row { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 30px; }
+        .star-rating i { font-size: 28px; color: #e0e0e0; cursor: pointer; transition: 0.2s; padding: 0 5px; }
+        .star-rating i.active { color: #ffc107; transform: scale(1.1); }
+        .review-input-group input, .review-input-group textarea { width: 100%; padding: 12px 15px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 6px; outline: none; font-size: 14px; background: #fdfdfd; transition: border 0.3s; }
+        .review-input-group input:focus, .review-input-group textarea:focus { border-color: var(--primary-orange); background: #fff; }
+        .textarea-wrapper { position: relative; border: 1px solid #ddd; border-radius: 6px; overflow: hidden; margin-bottom: 20px; }
+        .textarea-wrapper textarea { border: none; margin-bottom: 0; height: 120px; resize: none; }
+        .file-attach { border-top: 1px solid #eee; padding: 10px 15px; background: #f9f9f9; }
+        .attach-btn { color: #555; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 500; }
+        .attach-btn:hover { color: var(--primary-orange); }
+        .btn-submit-review { background: linear-gradient(90deg, var(--primary-orange), var(--primary-red)); color: #fff; border: none; padding: 12px 40px; border-radius: 30px; font-weight: 700; cursor: pointer; font-size: 15px; box-shadow: 0 4px 15px rgba(216, 43, 43, 0.3); transition: 0.3s; }
+        .btn-submit-review:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(216, 43, 43, 0.4); }
+        .btn-close-review { background-color: transparent; color: #888; border: 1px solid #ddd; padding: 6px 15px; border-radius: 20px; cursor: pointer; font-size: 12px; transition: 0.2s; }
+        .btn-close-review:hover { background-color: #eee; color: #333; }
+
+        @media (max-width: 768px) {
+            .review-dashboard { flex-direction: column; gap: 20px; padding: 20px; }
+            .rd-left { min-width: auto; border-bottom: 1px solid #eee; padding-bottom: 20px; width: 100%; }
+            .filter-group { justify-content: center; }
+            .user-review-list { padding: 0 15px; }
+            .btn-submit-review { width: 100%; }
+        }
+        /* --- NÂNG CẤP REVIEW: PROGRESS BAR & PREVIEW & LIKE --- */
+        .rating-bars { margin-top: 15px; width: 100%; text-align: left; }
+        .bar-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #666; margin-bottom: 4px; }
+        .star-label { min-width: 35px; display: flex; align-items: center; gap: 3px; }
+        .star-label i { font-size: 10px; color: #ccc; }
+        .progress-bg { flex: 1; height: 6px; background: #eee; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: #ffc107; border-radius: 10px; }
+        .count-label { min-width: 30px; text-align: right; }
+        .preview-box { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+        .preview-img { width: 70px; height: 70px; object-fit: cover; border-radius: 6px; border: 1px solid #ddd; animation: popIn 0.3s ease; }
+        .action-link i { transition: transform 0.2s; }
+        .action-link.liked { color: #d82b2b; font-weight: 600; }
+        .action-link.liked i { transform: scale(1.2) rotate(-10deg); font-weight: 900; }
+        @keyframes popIn { from { opacity: 0; transform: scale(0.5); } to { opacity: 1; transform: scale(1); } }
+        @media (max-width: 768px) { .rd-left { display: flex; flex-direction: column; align-items: center; } .rating-bars { width: 80%; } }
+        /* --- CSS REPLY & LIGHTBOX --- */
+        .reply-list { margin-left: 20px; margin-top: 10px; border-left: 2px solid #eee; padding-left: 15px; }
+        .reply-item { background-color: #f8f9fa; padding: 10px; border-radius: 8px; margin-bottom: 8px; font-size: 0.9em; }
+        .reply-name { font-weight: bold; color: #333; margin-right: 5px; }
+        .reply-badge { background: #333; color: #fff; font-size: 0.7em; padding: 2px 6px; border-radius: 4px; margin-right: 5px; }
+        .reply-content { color: #555; margin-top: 2px; }
+        .reply-time { font-size: 0.8em; color: #999; margin-top: 4px; display: block; }
+        .reply-input-box { display: none; margin-top: 10px; margin-left: 20px; background: #fff; padding: 10px; border: 1px solid #ddd; border-radius: 8px; }
+        .reply-input-box input { width: 100%; padding: 8px; margin-bottom: 8px; border: 1px solid #eee; border-radius: 4px; font-size: 14px; }
+        .reply-input-box .btn-submit-reply { background-color: #ff6b35; color: #fff; border: none; padding: 6px 15px; border-radius: 4px; cursor: pointer; font-size: 13px; }
+        /* --- CSS POPUP MODAL (ĐÃ MINIFY) --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px); z-index: 9999; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-box { background: #fff; width: 480px; max-width: 90%; border-radius: 20px; padding: 25px; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.3); transform: scale(0.8); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .modal-overlay.active .modal-box { transform: scale(1); }
+        .modal-close { position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 20px; color: #999; cursor: pointer; transition: 0.2s; }
+        .modal-close:hover { color: #d82b2b; transform: rotate(90deg); }
+        .modal-header { font-size: 18px; font-weight: 700; color: #27ae60; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; border-bottom: 1px dashed #eee; padding-bottom: 15px; }
+        .modal-body { display: flex; gap: 15px; margin-bottom: 25px; }
+        .m-prod-img { width: 80px; height: 80px; border-radius: 10px; overflow: hidden; border: 1px solid #eee; flex-shrink: 0; }
+        .m-prod-img img { width: 100%; height: 100%; object-fit: cover; }
+        .m-prod-info { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        .m-prod-info h4 { font-size: 16px; font-weight: 700; color: #333; margin-bottom: 5px; line-height: 1.3; }
+        .m-attrs { font-size: 13px; color: #666; background: #f9f9f9; padding: 6px 10px; border-radius: 6px; margin-bottom: 8px; line-height: 1.5; }
+        .m-attrs span { display: inline-block; margin-right: 8px; position: relative; }
+        .m-attrs span:not(:last-child)::after { content: ","; }
+        .m-price-row { display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: #333; }
+        .m-total { font-weight: 800; color: #d82b2b; font-size: 16px; }
+        .modal-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .btn-modal-outline { background: #fff; border: 2px solid #d82b2b; color: #d82b2b; padding: 10px; border-radius: 30px; font-weight: 700; cursor: pointer; transition: 0.3s; font-size: 13px; text-transform: uppercase; }
+        .btn-modal-outline:hover { background: #fff5e1; }
+        .btn-modal-primary { background: linear-gradient(90deg, #ff6b35, #d82b2b); border: none; color: #fff; padding: 10px; border-radius: 30px; font-weight: 700; cursor: pointer; transition: 0.3s; font-size: 13px; text-transform: uppercase; box-shadow: 0 5px 15px rgba(216, 43, 43, 0.3); }
+        .btn-modal-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(216, 43, 43, 0.4); }
+        @media (max-width: 500px) { .modal-body { flex-direction: column; align-items: center; text-align: center; } .modal-actions { grid-template-columns: 1fr; } }
+        /* --- CSS TOAST MESSAGE & LOADING (NÂNG CẤP) --- */
+        /* Toast & Modal */
+       /* --- TOAST & MODAL (ĐÃ SỬA LỖI MÀU & VỊ TRÍ) --- */
+        /* 1. Phần Thông Báo (Toast) */
+        #toast-box { position: fixed; top: 30px; right: 30px; z-index: 999999; /* Luôn nổi trên cùng */ display: flex; flex-direction: column; gap: 10px; }
+        .toast { width: 340px; background: #fff; font-weight: 500; box-shadow: 0 5px 20px rgba(0,0,0,0.15); display: flex; align-items: center; border-radius: 6px; border-left: 5px solid #4caf50; /* ĐÃ SỬA: Dùng mã màu trực tiếp thay vì biến var(--green) */ transform: translateX(120%); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); padding: 16px 0; }
+        .toast.show { transform: translateX(0); }
+        .toast i.icon { margin: 0 15px; font-size: 22px; color: #4caf50; /* Màu xanh lá thành công */ }
+        .toast-msg { flex: 1; font-size: 14px; /* Tăng nhẹ cỡ chữ cho dễ đọc */ color: #333; line-height: 1.4; }
+        .toast-close { padding: 0 15px; cursor: pointer; color: #ccc; font-size: 18px; }
+        .toast-close:hover { color: #333; }
+
+        /* 2. Phần Modal (Cửa sổ bật lên) */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); /* Nền tối mờ */ z-index: 2000; /* Cao hơn web nhưng thấp hơn Toast */ display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.3s; padding: 15px; }
+        .modal-overlay.show { opacity: 1; visibility: visible; }
+        .modal-box { background: #fff; width: 600px; max-width: 100%; border-radius: 12px; overflow: hidden; transform: translateY(30px); transition: 0.4s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .modal-overlay.show .modal-box { transform: translateY(0); }
+        .modal-header { padding: 15px 25px; background: #ff6b35; /* ĐÃ SỬA: Đổi sang màu CAM (#ff6b35) để hợp với web của bạn */ color: #fff; display: flex; justify-content: space-between; align-items: center; }
+        .modal-title { font-weight: 800; font-size: 18px; text-transform: uppercase; }
+        .modal-close { cursor: pointer; font-size: 20px; transition: 0.2s; }
+        .modal-close:hover { transform: rotate(90deg); }
+        .modal-body { padding: 25px; font-size: 15px; line-height: 1.6; color: #444; }
+        
+        /* Hiệu ứng loading cho nút */
+        .btn-loading { position: relative; pointer-events: none; opacity: 0.8; }
+        .btn-loading span { visibility: hidden; }
+        .btn-loading::after { content: ""; position: absolute; width: 20px; height: 20px; top: 50%; left: 50%; margin-top: -10px; margin-left: -10px; border: 3px solid #fff; border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        /*     ---------------------------------------- */
+        /* --- CSS CHO PHẦN ĐÁNH GIÁ (, Load more, Filter) --- */
+        .load-more-container { text-align: center; margin-top: 30px; margin-bottom: 20px; clear: both; }
+        .load-more-container button { background-color: #fff; color: #333; border: 1px solid #ccc; padding: 10px 30px; font-size: 14px; font-weight: 600; border-radius: 30px; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .load-more-container button i { font-size: 12px; transition: transform 0.3s ease; }
+        .load-more-container button:hover { background-color: #ffb400; color: #fff; border-color: #ffb400; box-shadow: 0 4px 10px rgba(255, 180, 0, 0.3); }
+        .load-more-container button:hover i { transform: translateY(2px); }
+        .filter-btn.active { background-color: #ffb400 !important; color: #fff !important; border-color: #ffb400 !important; font-weight: bold; }
+        .user-review-list p { font-style: italic; background: #f9f9f9; border-radius: 8px; margin-top: 10px; padding: 15px; text-align: center; color: #999; }
+        /*     ---------------------------------------- */
+        /* --- CSS CHO PHẦN BỘ LỌC ĐÁNH GIÁ (FILTER) --- */
+        .filter-group { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; /* Tạo khoảng cách với phần điểm số */ }
+        .filter-btn { background: #fff; border: 1px solid #e0e0e0; /* Viền nhẹ cho trạng thái thường */ padding: 8px 18px; border-radius: 50px; /* Bo tròn kiểu viên thuốc */ cursor: pointer; font-size: 13px; color: #666; transition: all 0.3s ease; font-weight: 500; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
+        .filter-btn:hover { background-color: #fff5e1; /* Màu nền be nhạt khi di chuột */ border-color: #ff6b35; color: #ff6b35; transform: translateY(-1px); }
+        .filter-btn.active { background: linear-gradient(90deg, #ff6b35, #d82b2b); /* Gradient màu thương hiệu */ border-color: transparent; color: #fff; box-shadow: 0 4px 10px rgba(216, 43, 43, 0.3); font-weight: 700; }
+        /*     ---------------------------------------- */
+        /* --- CSS CHO PHẦN SẮP XẾP (SORT) --- */
+        /* Container bao quanh do JS tạo ra */
+        #sort-control-container { display: flex; justify-content: flex-end; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px dashed #eee; gap: 10px; }
+        /* Label "Sắp xếp:" */
+        #sort-control-container label { font-weight: 600; color: #444; font-size: 14px; margin-right: 0 !important; /* Ghi đè style inline trong JS */ }
+        /* Dropdown Select */
+        #sort-select {margin-right: 10px; padding: 8px 30px 8px 15px; border: 1px solid #ddd; border-radius: 20px; font-size: 14px; color: #333; outline: none; cursor: pointer; background-color: #fff; transition: all 0.3s ease; appearance: none; /* Ẩn mũi tên mặc định của trình duyệt */ -webkit-appearance: none; background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ff6b35%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"); background-repeat: no-repeat; background-position: right 12px center; background-size: 10px; min-width: 160px; }
+        #sort-select:hover { border-color: #ff6b35; background-color: #fffbf5; }
+        #sort-select:focus { border-color: #d82b2b; box-shadow: 0 0 0 1px #ff6b35; }
+
+        /* --- RESPONSIVE MOBILE --- */
+        @media (max-width: 768px) {
+            /* Đưa bộ lọc về giữa trên mobile */
+            .filter-group { justify-content: center; margin-top: 20px; }
+            /* Phần sắp xếp căn giữa và full width */
+            #sort-control-container { justify-content: space-between; /* Tách đều label và select */ background: #f9f9f9; padding: 10px 15px; border-radius: 8px; margin-top: 15px; }
+            #sort-select { min-width: auto; flex: 1; /* Dropdown tự giãn */ max-width: 200px; }
+        }
+        /*     ---------------------------------------- */
+        /*     ---------------------------------------- */
+        /* --- CSS CHO HỘP GỢI Ý MUA KÈM (RECOMMEND BOX) --- */
+        .suggest-box { position: fixed; bottom: 5px; /* chỉnh sửa từ 20px xuống 5px để sát đáy hơn */ right: 10px; width: 300px; background: #fff; border-radius: 12px 12px 0 0; box-shadow: 0 -5px 20px rgba(0,0,0,0.15); z-index: 1000; overflow: hidden; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 1px solid #ff6b35; }
+        /* Trạng thái thu gọn */
+        .suggest-box.collapsed { transform: translateY(calc(100% - 45px)); /* Chỉ chừa lại thanh tiêu đề */ }
+        /* Tiêu đề */
+        .suggest-header { background: #ff6b35; color: #fff; padding: 12px 15px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: bold; font-size: 15px; }
+        .suggest-header:hover { background: #e85d2a; }
+        /* Danh sách sản phẩm */
+        .suggest-body { max-height: 300px; overflow-y: auto; background: #fff; }
+        /* --- PHẦN SỬA ĐỔI QUAN TRỌNG TỪ ĐÂY --- */
+        /* 1. Khung bao ngoài (Giữ flex để xếp hàng ngang) */
+        .suggest-item { display: flex; align-items: center; padding: 10px; border-bottom: 1px solid #eee; transition: 0.2s; background: #fff; /* Đảm bảo nền trắng */ }
+        .suggest-item:hover { background-color: #fff5e1; /* Màu nền khi di chuột */ }
+
+        /* 2. Link sản phẩm (Chứa Ảnh + Tên + Giá) - MỚI */
+        /* Class này giúp bấm vào chữ hoặc ảnh thì chuyển trang */
+        .suggest-content-link { display: flex; /* Xếp ảnh và chữ nằm ngang */ align-items: center; /* Căn giữa dọc */ flex: 1; /* Chiếm hết khoảng trống để đẩy nút cộng sang phải */ text-decoration: none; /* Bỏ gạch chân */ color: #333; /* Màu chữ đen */ cursor: pointer; }
+        /* Ảnh sản phẩm (Nằm trong Link) */
+        .suggest-content-link img { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; margin-right: 10px; }
+        /* Thông tin chữ */
+        .suggest-info { flex: 1; }
+        .s-name { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
+        .s-price { font-size: 13px; color: #d82b2b; font-weight: bold; }
+
+        /* 3. Nút Cộng (Thêm vào giỏ) - ĐÃ SỬA */
+        .s-btn { width: 30px; height: 30px; background: #ff6b35; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; cursor: pointer; /* Mới thêm: Để tạo cảm giác nút bấm */ margin-left: 10px; /* Cách ra khỏi phần chữ một chút */ transition: transform 0.2s; }
+        /* Hiệu ứng nhún khi bấm nút cộng */
+        .s-btn:active { transform: scale(0.9); }
+        .s-btn:hover { background: #e85d2a; /* Đậm hơn khi di chuột vào nút */ }
+
+        /* Hiệu ứng rung lắc + lửa (Giữ nguyên) */
+        @keyframes bellRingburn { 0% { transform: rotate(0); text-shadow: none; } 10% { transform: rotate(15deg); } 30% { transform: rotate(-15deg); } 50% { transform: rotate(10deg); color: #ff5722; text-shadow: 0 0 10px #ff9800; } 100% { transform: rotate(0); color: #e31e24; text-shadow: none; } }
+        .animate-fire { animation: bellRingburn 2s infinite ease-in-out; /* Chạy liên tục, mỗi nhịp 1.5 giây */ }
+        /* --- CSS TÙY CHỈNH CHO TRẠNG THÁI THU NHỎ (COLLAPSED) --- */
+
+        /* 1. Biến khung thành hình tròn, màu cam khi thu nhỏ */
+        #suggest-box.collapsed { width: 60px; height: 60px; border-radius: 50%; background-color: #ff6b35; border: 2px solid #fff; box-shadow: 0 4px 15px rgba(255, 107, 53, 0.5); position: fixed; bottom: 20px; right: 5px; padding: 0 !important; overflow: hidden; display: flex; justify-content: center; align-items: center; }
+
+        /* 2. Ẩn chữ và icon mũi tên, chỉ giữ lại icon lửa */
+        #suggest-box.collapsed .suggest-header { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; padding: 0; margin: 0; }
+
+        /* Mẹo: Đặt font-size cha bằng 0 để ẩn chữ "Gợi ý mua kèm" mà không mất icon con */
+        #suggest-box.collapsed .suggest-title { font-size: 0; margin: 0; line-height: 0; }
+
+        /* 3. Hiển thị lại icon lửa và phóng to nó */
+        #suggest-box.collapsed .suggest-title i.animate-fire { font-size: 28px; color: #fff; display: block; margin: 0; }
+
+        /* 4. Ẩn hẳn mũi tên (chevron) khi thu nhỏ */
+        #suggest-box.collapsed .suggest-toggle-icon { display: none; }
+
+        /* 5. Ẩn danh sách sản phẩm (đề phòng) */
+        #suggest-box.collapsed .suggest-body { display: none; }
+        /* ------------------------------*/
+        /* ------------------------------*/
+        /* Promotionloader.js*/
+        /* ------------------------------*/
+        /* ------------------------------*/
+        /* --- CSS CHO CỤM ĐÁNH GIÁ & KHUYẾN MÃI --- */
+        .product-rating-overview { display: flex; align-items: center; justify-content: space-between; /* Đẩy 2 phần sang 2 bên hoặc dùng gap */ flex-wrap: wrap; gap: 15px; margin: 10px 0 20px 0; padding-bottom: 15px; border-bottom: 1px dashed #eee; }
+        .rating-group { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+        .rating-stars { color: #ffc107; }
+        .rating-number { font-weight: bold; color: var(--primary-orange); }
+        .scroll-link { text-decoration: underline; color: #555; cursor: pointer;}
+
+        /* Nút mở khuyến mãi */
+        .btn-open-promo { background-color: #ffeaea; color: var(--primary-red); border: 1px solid var(--primary-red); padding: 5px 12px; border-radius: 20px; font-size: 13px; font-weight: bold; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 5px; }
+        .btn-open-promo:hover { background-color: var(--primary-red); color: #fff; }
+        .btn-open-promo i { animation: tada 1.5s infinite; }
+
+        /* --- CSS CHO CỬA SỔ POPUP (MODAL) --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); /* Nền tối mờ */ z-index: 9999; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-box { background: #fff; padding: 20px; width: 90%; max-width: 400px; border-radius: 10px; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.2); transform: translateY(20px); transition: all 0.3s; }
+        .modal-overlay.active .modal-box { transform: translateY(0); }
+        .modal-close-btn { position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 24px; cursor: pointer; color: #888; }
+        .modal-title { text-align: center; color: var(--primary-orange); margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+
+        /* CSS cho nội dung bên trong file promotion.html khi load vào */
+        .promo-item { display: flex; align-items: center; background: #fffbf5; border: 1px dashed var(--primary-orange); padding: 10px; margin-bottom: 10px; border-radius: 8px; }
+        .promo-icon { font-size: 24px; margin-right: 10px; }
+        .promo-text { flex: 1; }
+        .promo-text strong { color: var(--text-dark); display: block; }
+        .promo-text p { font-size: 12px; color: #666; margin: 0; }
+        .btn-copy { background: var(--primary-orange); color: #fff; border: none; padding: 5px 10px; border-radius: 4px; font-size: 12px; cursor: pointer; }
+
+        /* Hiệu ứng rung nhẹ icon qua */
+        @keyframes tada { 0% { transform: scale(1); } 10%, 20% { transform: scale(0.9) rotate(-3deg); } 30%, 50%, 70%, 90% { transform: scale(1.1) rotate(3deg); } 40%, 60%, 80% { transform: scale(1.1) rotate(-3deg); } 100% { transform: scale(1) rotate(0); } }
+        /*     ---------------------------------------- */
+        /* --- CSS CHO STICKY BAR --- */
+        /* --- CSS CHO STICKY BAR --- */
+        /* --- CSS CHO STICKY BAR --- */
+        /* --- CSS CHO STICKY BAR --- */
+        /* --- CSS CHO STICKY BAR --- */
+        .sticky-bar { position: fixed; top: 0; left: 0; width: 100%; background: #fff; padding: 10px 5%; /* Căn lề chuẩn */ box-shadow: 0 -4px 20px rgba(0,0,0,0.1); z-index: 1000; /* Luôn nổi lên trên cùng */ display: flex; justify-content: space-between; align-items: center; transform: translateY(-110%); /* Mặc định ẩn xuống dưới đáy */ transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        /* Class này được JS thêm vào để hiện thanh lên */
+        .sticky-bar.active { transform: translateY(0); }
+        .sticky-content { display: flex; align-items: center; gap: 15px; }
+        .sticky-img { width: 45px; height: 45px; border-radius: 8px; object-fit: cover; border: 1px solid #eee; background: #f9f9f9; }
+        .sticky-info { display: flex; flex-direction: column; justify-content: center; }
+        .sticky-name { font-size: 14px; font-weight: 700; color: #333; max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; /* Cắt chữ nếu quá dài */ text-transform: uppercase; }
+        .sticky-price { font-size: 14px; color: var(--primary-red, #d82b2b); /* Dùng màu đỏ chủ đạo của web */ font-weight: 700; }
+        .sticky-btn { background: linear-gradient(90deg, #ff6b35, #d82b2b); /* Màu cam đỏ */ color: #fff; border: none; padding: 10px 25px; border-radius: 30px; font-weight: 800; font-size: 13px; cursor: pointer; box-shadow: 0 4px 10px rgba(216, 43, 43, 0.3); transition: all 0.2s; white-space: nowrap; }
+        .sticky-btn:hover { transform: scale(1.05); box-shadow: 0 6px 15px rgba(216, 43, 43, 0.4); }
+
+        /* Responsive: Trên màn hình điện thoại nhỏ thì ẩn tên đi cho đỡ chật */
+        @media (max-width: 480px) {
+            .sticky-name { display: none; } 
+            .sticky-bar { padding: 10px 15px; }
+        }
+        /*     ---------------------------------------- */
+    </style>
+</head>
+<body>
+<header>
+        <!-- Placeholder cho header - sẽ được load từ header.html  -->
+        <div data-include="/src/components/header.htm"></div>
+        <script type="module" src="/src/js/again.js"></script> 
+</header>
+
+<div class="container">   
+    <div class="breadcrumb-container">
+        <div class="breadcrumb">
+            <a href="index.html" class="home-icon"><i class="fa-solid fa-house"></i> Trang chủ</a> 
+            <span class="separator"><i class="fa-solid fa-chevron-right"></i></span>
+            <a href="products.html">Combo theo người</a> 
+            <span class="separator"><i class="fa-solid fa-chevron-right"></i></span>
+            <span class="current">COMBO MÌ TRỘN INDOMIE CHUA CAY SƯỜN SỤN (3 người)</span>
+        </div>
+    </div>
+
+    <h1 class="page-main-title">COMBO MÌ TRỘN INDOMIE <br class="mobile-break"> CHUA CAY SƯỜN SỤN (3 người)</h1>
+
+    <section class="product-detail-wrapper">
+        <div class="pd-left">
+            <div class="main-image-frame">
+                <img src="https://placehold.co/600x600/fff5e1/ff6b35?text=Combo+Mi+Tron+3+Nguoi" alt="Combo Mì Trộn">
+            </div>
+        </div>
+        <div class="pd-right">
+            <h2 class="pd-name">COMBO MÌ TRỘN INDOMIE CHUA CAY SƯỜN SỤN (3 Người)</h2>
+            <div class="pd-price-group">
+                <span class="price-new">133.000₫</span>
+                <span class="price-old">152.550₫</span>
+                <br>
+                <span class="stock-badge">Còn Hàng</span>
+            </div>
+
+            <div class="product-rating-overview">
+                <div class="rating-group">
+                    <div class="rating-stars" id="header-stars">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <span class="rating-number" id="header-rating-score">5.0</span>
+                    <span class="separator">|</span>
+                    <a href="#review-section" class="scroll-link" onclick="scrollToReviews(event)">
+                        Xem <span id="header-rating-count">0</span> đánh giá
+                    </a>
+                </div>
+
+                <div class="promo-btn-wrap">
+                    <button class="btn-open-promo" onclick="openPromoModal()">
+                        <i class="fa-solid fa-gift"></i> Săn Mã Giảm Giá
+                    </button>
+                </div>
+            </div>
+
+
+            <div class="description-box">
+                <h3 class="desc-heading">Mô tả sản phẩm</h3>
+                <div class="desc-text">
+                    <i style="color: #666; font-size: 12px; margin-bottom: 5px; display:block;">* Hình ảnh mang tính chất minh họa.</i>
+                    <p>Bao gồm: Combo mì Indomie chua cay sườn sụn + 3 Trà Đào</p>
+                    <p>Các món trong combo được đánh giá là các sản phẩm bán chạy nhất trong quán</p>
+                    <p>Phù hợp với khẩu phần dành cho 3 người ăn ạ !</p>
+                </div>
+            </div>
+            <div class="options-container">
+                <div class="option-row">
+                    <label class="option-title">Cấp Độ 1</label>
+                    <select class="custom-select"><option>Không Cay</option><option>Cay Ít</option><option>Cay Vừa</option></select>
+                </div>
+                <div class="option-row">
+                    <label class="option-title">Cấp Độ 2</label>
+                    <select class="custom-select"><option>Không Cay</option><option>Cay Ít</option></select>
+                </div>
+                <div class="option-row">
+                    <label class="option-title">Cấp Độ 3</label>
+                    <select class="custom-select"><option>Không Cay</option><option>Cay Ít</option></select>
+                </div>
+            </div>
+
+            <div class="qty-row">
+                <label class="qty-label">Số Lượng:</label>
+                <div class="qty-wrapper">
+                    <button class="qty-btn" onclick="if(this.nextElementSibling.value>1) this.nextElementSibling.value--">-</button>
+                    <input type="text" class="qty-input" value="1" readonly>
+                    <button class="qty-btn" onclick="this.previousElementSibling.value++">+</button>
+                </div>
+            </div>
+
+            <button class="btn-buy-now">MUA HÀNG</button>
+
+            <div class="product-stats" style="margin: 10px 0; font-size: 14px; color: #666;">
+                <span>
+                    <div class="prod-stats">Có <span id="buy-count">0</span> lượt mua sản phẩm </div>  
+                </span>
+                            </br>
+                <span >
+                    <div class="prod-stats">Có <span id="view-count">0</span> lượt xem sản phẩm </div>   
+                </span>
+            </div>
+    
+        
+            <div class="prod-note">
+                <i class="fa-solid fa-newspaper"></i>
+                <span>Website mới ra mắt – Số liệu hiển thị (lượt xem & lượt mua) sẽ được cập nhật liên tục.</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="best-seller-section">
+        <div class="bs-header-container">
+            <div class="bs-subtitle">Sản Phẩm Liên Quan
+            <h2 class="bs-main-title">CÓ THỂ BẠN SẼ THÍCH</h2>
+            <div class="bs-divider">
+                <i class="fa-solid fa-heart" style="font-size: 8px; color: #ddd;"></i> 
+                <i class="fa-solid fa-heart" style="font-size: 8px; color: #ddd;"></i> 
+                <i class="fa-solid fa-heart" style="font-size: 8px; color: #ddd;"></i>
+            </div>
+        </div>
+
+        <div class="bs-wrapper-container">
+            <div class="bs-button-prev"><i class="fa-solid fa-chevron-left"></i></div>
+            <div class="bs-button-next"><i class="fa-solid fa-chevron-right"></i></div>
+
+            <div class="swiper swiper-best-seller">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide bs-card">
+                        <div class="bs-img-wrapper"><img src="https://placehold.co/300x300/fff5e1/ff6b35?text=Top+Mo" alt="Tóp Mỡ"></div>
+                        <div class="bs-content">
+                            <h3 class="bs-name">Tóp Mỡ Rim Mắm Tỏi Ớt</h3>
+                            <div class="bs-price-row"><span class="price-current">79.088đ</span><span class="price-old">83.250đ</span></div>
+                            <a href="#" class="btn-pill-outline">MUA HÀNG</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide bs-card">
+                        <div class="bs-img-wrapper"><img src="https://placehold.co/300x300/fff5e1/d82b2b?text=Combo" alt="Combo"></div>
+                        <div class="bs-content">
+                            <h3 class="bs-name">Combo Ăn Vặt Thập Cẩm</h3>
+                            <div class="bs-price-row"><span class="price-current">76.950đ</span><span class="price-old">81.000đ</span></div>
+                            <a href="#" class="btn-pill-outline">TÙY CHỌN</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide bs-card">
+                        <div class="bs-img-wrapper"><img src="https://placehold.co/300x300/fff5e1/4caf50?text=Chan+Ga" alt="Chân Gà"></div>
+                        <div class="bs-content">
+                            <h3 class="bs-name">Chân Gà Rút Xương Sốt Thái</h3>
+                            <div class="bs-price-row"><span class="price-current">70.538đ</span><span class="price-old">74.250đ</span></div>
+                            <a href="#" class="btn-pill-outline">MUA HÀNG</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide bs-card">
+                        <div class="bs-img-wrapper"><img src="https://placehold.co/300x300/fff5e1/ffc107?text=Ga+Popcorn" alt="Gà Popcorn"></div>
+                        <div class="bs-content">
+                            <h3 class="bs-name">Gà Popcorn Chiên Lắc Phô Mai</h3>
+                            <div class="bs-price-row"><span class="price-current">44.460đ</span><span class="price-old">46.800đ</span></div>
+                            <a href="#" class="btn-pill-outline">MUA HÀNG</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide bs-card">
+                        <div class="bs-img-wrapper"><img src="https://placehold.co/300x300/fff5e1/9c27b0?text=Mi+Tron" alt="Mì Trộn"></div>
+                        <div class="bs-content">
+                            <h3 class="bs-name">Mì Trộn Indomie Đặc Biệt</h3>
+                            <div class="bs-price-row"><span class="price-current">37.350đ</span><span class="price-old">41.500đ</span></div>
+                            <a href="#" class="btn-pill-outline">TÙY CHỌN</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide bs-card">
+                        <div class="bs-img-wrapper"><img src="https://placehold.co/300x300/fff5e1/2196f3?text=Tra+Sua" alt="Trà Sữa"></div>
+                        <div class="bs-content">
+                            <h3 class="bs-name">Trà Sữa Trân Châu Đường Đen</h3>
+                            <div class="bs-price-row"><span class="price-current">30.000đ</span><span class="price-old">40.000đ</span></div>
+                            <a href="#" class="btn-pill-outline">MUA HÀNG</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide bs-card">
+                        <div class="bs-img-wrapper"><img src="https://placehold.co/300x300/fff5e1/2196f3?text=Tra+Sua" alt="Trà Sữa"></div>
+                        <div class="bs-content">
+                            <h3 class="bs-name">Trà Sữa Trân Châu Đường Đen</h3>
+                            <div class="bs-price-row"><span class="price-current">30.000đ</span><span class="price-old">40.000đ</span></div>
+                            <a href="#" class="btn-pill-outline">MUA HÀNG</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide bs-card">
+                        <div class="bs-img-wrapper"><img src="https://placehold.co/300x300/fff5e1/2196f3?text=Tra+Sua" alt="Trà Sữa"></div>
+                        <div class="bs-content">
+                            <h3 class="bs-name">Trà Sữa Trân Châu Đường Đen</h3>
+                            <div class="bs-price-row"><span class="price-current">30.000đ</span><span class="price-old">40.000đ</span></div>
+                            <a href="#" class="btn-pill-outline">MUA HÀNG</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+<section class="review-section container" id="review-section">
+    <h3 class="review-header">Đánh giá sản phẩm</h3>
+    
+    <div class="review-box-wrapper">
+        
+        <!-- MÀN HÌNH DANH SÁCH ĐÁNH GIÁ -->
+        <div id="review-list-view">
+            <div class="review-dashboard">
+                <div class="rd-left">
+                    <div class="rd-score">
+                        <span class="score-num">4.8</span>
+                        <div class="score-stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="score-count">(128 đánh giá)</div>
+                    </div>
+
+                    <!-- MỚI: THANH PHẦN TRĂM ĐÁNH GIÁ -->
+                    <div class="rating-bars">
+                        <div class="bar-item"> <span class="star-label">5 <i class="fa-solid fa-star"></i></span> <div class="progress-bg"><div class="progress-fill" style="width: 85%"></div></div> <span class="count-label">85%</span> </div>
+                        <div class="bar-item"> <span class="star-label">4 <i class="fa-solid fa-star"></i></span> <div class="progress-bg"><div class="progress-fill" style="width: 10%"></div></div> <span class="count-label">10%</span> </div>
+                        <div class="bar-item"> <span class="star-label">3 <i class="fa-solid fa-star"></i></span> <div class="progress-bg"><div class="progress-fill" style="width: 3%"></div></div> <span class="count-label">3%</span> </div>
+                        <div class="bar-item"> <span class="star-label">2 <i class="fa-solid fa-star"></i></span> <div class="progress-bg"><div class="progress-fill" style="width: 1%"></div></div> <span class="count-label">1%</span> </div>
+                        <div class="bar-item"> <span class="star-label">1 <i class="fa-solid fa-star"></i></span> <div class="progress-bg"><div class="progress-fill" style="width: 1%"></div></div> <span class="count-label">1%</span> </div>
+                    </div>
+
+                    <button class="btn-write-review" onclick="toggleReviewForm(true)">Gửi đánh giá của bạn</button>
+                </div>
+
+                <div class="rd-right">
+                    <div class="filter-group">
+                        <button class="filter-btn active">Tất cả</button>
+                        <button class="filter-btn">5 Sao (100)</button>
+                        <button class="filter-btn">4 Sao (15)</button>
+                        <button class="filter-btn">3 Sao (5)</button>
+                        <button class="filter-btn">Có hình ảnh (40)</button>
+                    </div>
+                </div>
+            </div>
+            <div class="user-review-list">
+                <!-- Item mẫu -->
+                <div class="review-item">
+                    <div class="ri-user-info">
+                        <span class="ri-name">Lag Đức</span>
+                        <span class="ri-stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </span>
+                    </div>
+                    <div class="ri-verified">
+                        <i class="fa-solid fa-circle-check"></i> Đã mua hàng tại Tiệm Ăn Vặt Ngon Nhất Thế Giới
+                    </div>
+                    <div class="ri-content">Đồ ăn ngon, giao hàng nhanh, đóng gói cẩn thận. Sẽ ủng hộ shop dài dài!</div>
+                    
+                    <!-- MỚI: NÚT LIKE CÓ JS -->
+                    <div class="ri-actions">
+                        <span class="action-link">Gửi trả lời</span> • 
+                        <span class="action-link" onclick="toggleLike(this)">
+                            <i class="fa-regular fa-thumbs-up"></i> Hữu ích (<span class="like-count">12</span>)
+                        </span> • 
+                        <span class="action-link"><i class="fa-solid fa-triangle-exclamation"></i> Báo cáo</span> 
+                        <span class="ri-time">• 13:21 25/11/2025</span>
+                    </div>
+
+                    <div class="admin-reply">
+                        <div class="admin-info">
+                            <span class="admin-name">Tiệm Ăn Vặt Ngon Nhất Thế Giới</span>
+                            <span class="admin-badge">Quản trị viên</span>
+                        </div>
+                        <div class="admin-content">
+                            Cảm ơn bạn rất nhiều vì đã dành thời gian để lại đánh giá! Chúng mình thật sự trân trọng sự ủng hộ của bạn.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MÀN HÌNH FORM VIẾT ĐÁNH GIÁ -->
+        <div id="review-form-view" style="display: none;">
+            <p class="review-notice">Chia sẻ cảm nhận của bạn về sản phẩm này nhé!</p>
+            <div style="text-align: center; margin-bottom: 20px;">
+                <button class="btn-close-review" onclick="toggleReviewForm(false)">Đóng lại</button>
+            </div>
+            
+            <div class="rating-row">
+                <span class="rating-label">Đánh giá của bạn:</span>
+                <div class="star-rating">
+                    <i class="fa-solid fa-star active" data-value="1"></i>
+                    <i class="fa-solid fa-star active" data-value="2"></i>
+                    <i class="fa-solid fa-star active" data-value="3"></i>
+                    <i class="fa-solid fa-star active" data-value="4"></i>
+                    <i class="fa-solid fa-star active" data-value="5"></i>
+                </div>
+            </div>
+
+            <form class="review-input-group" onsubmit="event.preventDefault(); alert('Cảm ơn bạn đã đánh giá!'); toggleReviewForm(false);">
+                <input type="text" placeholder="Nhập họ tên của bạn (Bắt buộc)" required>
+                <input type="email" placeholder="Nhập email của bạn (Không bắt buộc)">
+                <div class="textarea-wrapper">
+                    <textarea placeholder="Nhập nội dung đánh giá của bạn về sản phẩm này"></textarea>
+                    
+                    <!-- MỚI: INPUT FILE + PREVIEW ẢNH -->
+                    <div class="file-attach">
+                        <label class="attach-btn" for="review-file-input">
+                            <i class="fa-solid fa-camera"></i> Thêm ảnh/video thực tế
+                        </label>
+                        <!-- ID này phải khớp với JS -->
+                        <input type="file" id="review-file-input" hidden accept="image/*">
+                        
+                        <!-- Khung hiển thị ảnh xem trước -->
+                        <div id="preview-container" class="preview-box"></div>
+                    </div>
+                </div>
+                <div style="text-align: right; margin-top: 15px;">
+                    <button type="submit" class="btn-submit-review">Gửi đánh giá</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</section>
+
+<!-- --- MODAL POPUP MUA HÀNG (ĐÃ CẬP NHẬT NÚT LOADING) --- -->
+<div id="modal-cart-overlay" class="modal-overlay">
+    <div class="modal-box">
+        <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+        <div class="modal-header">
+            <i class="fa-solid fa-circle-check"></i> Sản phẩm đã được chọn!
+        </div>
+        
+        <div class="modal-body">
+            <div class="m-prod-img  main-image-frame" onclick="openZoom(this.querySelector('img').src)"> <!-- --- onlick goi funciion zoom anh --- -->
+                <img id="m-img"  src="" alt=""> 
+            </div>
+            <div class="m-prod-info">
+                <h4 id="m-name">Tên sản phẩm</h4>
+                <div id="m-attrs" class="m-attrs">
+                    <!-- JS điền vào -->
+                </div>
+                <div class="m-price-row">
+                    <span>Số lượng: <b id="m-qty">1</b></span>
+                    <span class="m-total" id="m-total">0đ</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn-modal-outline" onclick="addToCartAction()">
+                <i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ
+            </button>
+            <!-- QUAN TRỌNG: span để làm hiệu ứng loading -->
+            <button class="btn-modal-primary" onclick="cartAction()">
+                <span>Vào giỏ hàng</span>
+            </button>
+        </div>
+    </div>
+</div>
+<!-- --- zoom ảnh review  --- --- -->
+<div id="modal-image-overlay" class="modal-overlay" onclick="closeImageViewer()">
+    <div class="modal-box" style="width: auto; max-width: 90%; background: transparent; box-shadow: none; padding: 0;">
+        <button class="modal-close" onclick="closeImageViewer()" style="top: -30px; right: 0; color: #fff; font-size: 30px;">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <img id="full-image-view" src="" alt="Ảnh chi tiết" style="max-width: 100%; max-height: 80vh; border-radius: 8px;">
+    </div>
+</div>
+<!-- --- zoom ảnh sản phẩm  --- --- -->
+<div id="img-lightbox" class="lightbox-overlay" onclick="closeZoom()">
+    <img id="lightbox-src" class="lightbox-img" src="" alt="Zoom Image">
+</div>
+
+<!-- ---  STICKY BAR --- --- -->
+<div id="sticky-bar" class="sticky-bar">
+    <div class="sticky-content">
+        <img id="sticky-img" src="" alt="Sản phẩm" class="sticky-img">
+        <div class="sticky-info">
+            <div id="sticky-name" class="sticky-name">Đang tải...</div>
+            <div id="sticky-price" class="sticky-price">...</div>
+        </div>
+    </div>
+    <button class="sticky-btn" onclick="triggerMainBuy()">MUA NGAY</button>
+</div>
+<!-- --- CONTAINER THÔNG BÁO TOAST --- -->
+<div id="toast-container"></div>
+
+
+<!-- --- Chèn JS rieng --- -->
+<script src="/page/category/product-detail/js-product-detail/detail-actions.js"></script>
+<script src="/page/category/product-detail/js-product-detail/image-zoom.js"></script>
+<script src="/page/category/product-detail/js-product-detail/popup-toast.js"></script>
+<script src="/page/category/product-detail/js-product-detail/promotion-loader.js"></script>
+<script src="/page/category/product-detail/js-product-detail/recommend.js"></script>
+<script src="/page/category/product-detail/js-product-detail/review-outside.js"></script>
+<script src="/page/category/product-detail/js-product-detail/review.js"></script>
+<script src="/page/category/product-detail/js-product-detail/sticky.js"></script>
+<!-- --- Chèn JS chung --- -->
+<script src="/src/js/widget-loader/widget-loader.js"></script>
+<script src="/src/js/fake-notification/fake-notification.js"></script>
+<!-- Swiper JS (Best Seller)-->
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<script>
+    
+    // --- Best Seller Slider (Đã chọn phiên bản đầy đủ nhất) ---
+    var swiperBestSeller = new Swiper(".swiper-best-seller", {
+        slidesPerView: 4, // Mặc định cho màn hình lớn
+        spaceBetween: 20,
+        loop: true,
+        navigation: {
+            nextEl: ".bs-button-next",
+            prevEl: ".bs-button-prev",
+        },
+        // Responsive breakpoints
+        breakpoints: {
+            320: { // Mobile nhỏ
+                slidesPerView: 2,
+                spaceBetween: 10
+            },
+            768: { // Tablet
+                slidesPerView: 3,
+                spaceBetween: 15
+            },
+            1024: { // Desktop
+                slidesPerView: 4,
+                spaceBetween: 20
+            },
+        },
+    }); 
+</script>
+</body>
+</html>

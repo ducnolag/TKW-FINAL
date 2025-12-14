@@ -15,20 +15,28 @@
 </head>
 <body>
   <div data-include="/src/components/header.htm"></div>
-  <div class="breadcrumb">
-    <a href="/index.htm">Trang chủ</a>
-    <span>></span>
-    <span id="breadcrumbCategory">Tất cả sản phẩm</span>
-  </div>
+  
+  <div class="header-full-banner" style="background-image: url('https://via.placeholder.com/1920x300/d32f2f/ffffff?text=Mì+Trộn+Đỉnh+Cao+-+Khuyến+Mãi+Sốc!');">
+    <div class="banner-overlay">
+      <div class="banner-content-wrapper">
+        <div class="breadcrumb-banner">
+          <a href="/index.htm"><i class="fa-solid fa-house-chimney" style="color: var(--primary-red);"></i> Trang chủ</a>
+          <i class="fa-solid fa-chevron-right separator" style="color: #555;"></i>
+          <span id="breadcrumbCategory" style="color: var(--primary-red); font-weight: 900;">Thực đơn</span>
+        </div>
 
-  <div class="page-title" id="pageTitle">Tất cả sản phẩm</div>
+        <h1 class="banner-title" id="pageTitle" >TẤT CẢ SẢN PHẨM</h1>
+        <p class="banner-desc" style=" font-weight: 500;">Khám phá thế giới mì trộn, ăn vặt và đồ uống cực đã!</p>
+      </div>
+    </div>
+  </div>
 
   <button class="mobile-menu-toggle" id="menuToggle">☰</button>
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
   <div class="container">
     <aside class="sidebar" id="sidebar">
-      <h3>Menu</h3>
+      <h3><a href="#" style="color: #000000;">Menu</a></h3>
       <ul id="menu">
         <li data-category="all" class="active">Tất Cả</li>
         <li data-category="sale">Sản Phẩm Khuyến Mãi</li>
@@ -42,7 +50,7 @@
         <li data-category="special">Món Ngon Phải Thử</li>
       </ul>
 
-      <h3 style="margin-top: 30px;">Hướng dẫn</h3>
+      <h3 style="margin-top: 30px;"><a href="#down" style="color: #000000;">Hướng dẫn</a></h3>
       <ul>
         <li>Hướng dẫn mua hàng</li>
         <li>Hướng dẫn hủy đơn</li>
@@ -103,10 +111,11 @@
     </div>
   </div>
 
-  <script src="product.js">
-  
- 
-  </script>
-  <script type="module" src="/src/js/again.js"></script>
+  <div id="down"></div>
+
+<script src="product.js"></script>
+ <!-- --- Chèn JS chung --- -->
+<script src="/src/js/widget-loader/widget-loader.js"></script>
+<script type="module" src="/src/js/again.js"></script>
 </body>
 </html>
