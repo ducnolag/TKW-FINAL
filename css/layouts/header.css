@@ -738,3 +738,123 @@
     height: 34px;
   }
 }
+
+/* ... (Giữ nguyên nội dung cũ ở trên) ... */
+
+/* ===== HEADER MODAL (POPUP ĐĂNG XUẤT) ===== */
+.header-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: none; /* Mặc định ẩn */
+  justify-content: center;
+  align-items: center;
+  z-index: 10000; /* Cao hơn header main */
+  padding: 20px;
+}
+
+.header-modal.active {
+  display: flex;
+  animation: fadeInModal 0.3s ease;
+}
+
+.header-modal-content {
+  background: var(--white-color);
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 400px;
+  animation: slideUpModal 0.3s ease;
+  overflow: hidden;
+}
+
+.header-modal-header {
+  padding: 20px;
+  border-bottom: 1px solid #edf2f7;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-modal-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-color-dark);
+  margin: 0;
+}
+
+.header-close-btn {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #cbd5e0;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.header-close-btn:hover {
+  color: var(--text-color-dark);
+}
+
+.header-modal-body {
+  padding: 20px;
+  color: var(--text-color-light);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.header-modal-actions {
+  padding: 20px;
+  border-top: 1px solid #edf2f7;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.header-modal-btn {
+  padding: 10px 20px;
+  border: 1px solid #cbd5e0;
+  background: #ffffff;
+  color: var(--text-color-dark);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.header-modal-btn:hover {
+  background: #f7fafc;
+  border-color: #a0aec0;
+}
+
+.header-modal-btn.header-btn-primary {
+  background: var(--primary-color);
+  color: var(--white-color);
+  border-color: var(--primary-color);
+}
+
+.header-modal-btn.header-btn-primary:hover {
+  background: #e85d2a; /* Darker orange */
+  box-shadow: 0 4px 12px rgba(232, 93, 42, 0.3);
+}
+
+/* Animations */
+@keyframes fadeInModal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUpModal {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}

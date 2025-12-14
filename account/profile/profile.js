@@ -196,26 +196,30 @@ function renderMainContent(user, tab) {
                 </div>
                 <a href="/index.htm" class="home-btn"><i class="fas fa-arrow-left"></i> Trang chủ</a>
             </div>
-
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-icon"><i class="fas fa-shopping-cart"></i></div>
-                    <div class="stat-info"><div class="stat-value">${totalOrders}</div><div class="stat-label">Đơn hàng</div></div>
+                    <div class="stat-info">
+                        <div class="stat-value">${totalOrders}</div>
+                        <div class="stat-label">Đơn hàng đã đặt</div>
+                    </div>
                 </div>
+
                 <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-box"></i></div>
-                    <div class="stat-info"><div class="stat-value">${totalItems}</div><div class="stat-label">Sản phẩm</div></div>
+                    <div class="stat-icon"><i class="fas fa-box-open"></i></div>
+                    <div class="stat-info">
+                        <div class="stat-value">${totalItems}</div>
+                        <div class="stat-label">Sản phẩm đã mua</div>
+                    </div>
                 </div>
-                 <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-wallet"></i></div>
-                    <div class="stat-info"><div class="stat-value">0đ</div><div class="stat-label">Số dư</div></div>
-                </div>
+
                 <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-gem"></i></div>
-                    <div class="stat-info"><div class="stat-value">Member</div><div class="stat-label">Hạng</div></div>
+                    <div class="stat-icon"><i class="fas fa-crown"></i></div> <div class="stat-info">
+                        <div class="stat-value">Member</div>
+                        <div class="stat-label">Hạng thành viên</div>
+                    </div>
                 </div>
             </div>
-
             <div class="section-card collapsed-info">
                 <div class="section-header">
                      <h3 class="section-title"><i class="fas fa-user-circle"></i> Thông tin nhanh</h3>

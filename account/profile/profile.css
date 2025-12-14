@@ -205,40 +205,104 @@ body {
 }
 .home-btn:hover { color: var(--primary-dark); text-decoration: underline; }
 
-/* Stats Grid (Compact Horizontal) */
+/* =========================================
+   STATS GRID (PREMIUM STYLE)
+   ========================================= */
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
+    /* Tự động chia cột: Ít nhất 240px, còn lại tự giãn đều */
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
 }
 
 .stat-card {
     background: var(--bg-card);
-    padding: 15px;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-sm);
+    padding: 24px; /* Tăng padding cho thoáng */
+    border-radius: 16px; /* Bo góc mềm mại hơn */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0,0,0,0.03); /* Viền mờ tinh tế */
     display: flex;
-    align-items: center; /* Căn giữa dọc để tiết kiệm chiều cao */
-    gap: 15px;
-    transition: transform 0.2s;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    overflow: hidden; /* Để cắt phần icon trang trí */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
 
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(255, 107, 53, 0.1); /* Bóng màu cam nhẹ khi hover */
+    border-color: rgba(255, 107, 53, 0.2);
+}
+
+/* Icon chính */
 .stat-icon {
-    width: 42px;
-    height: 42px;
-    background: var(--primary-light);
-    color: var(--primary);
-    border-radius: 10px;
+    width: 56px;
+    height: 56px;
+    /* Gradient cam chủ đạo */
+    background: linear-gradient(135deg, #ff9f43 0%, var(--primary) 100%);
+    color: white;
+    border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.1rem;
+    font-size: 1.5rem;
+    box-shadow: 0 8px 16px rgba(255, 107, 53, 0.25); /* Bóng phát sáng cho icon */
+    position: relative;
+    z-index: 2;
 }
-.stat-info { display: flex; flex-direction: column; }
-.stat-value { font-size: 1.25rem; font-weight: 700; color: var(--text-main); line-height: 1.2; }
-.stat-label { font-size: 0.75rem; color: var(--text-muted); }
 
+.stat-info {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 2;
+}
+
+.stat-value {
+    font-size: 1.6rem; /* Số to hơn */
+    font-weight: 800;
+    color: var(--text-main);
+    line-height: 1.1;
+    margin-bottom: 4px;
+    letter-spacing: -0.5px;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* Icon trang trí chìm (Background Decor) */
+.stat-card::after {
+    content: '';
+    position: absolute;
+    right: -10px;
+    bottom: -15px;
+    font-family: "Font Awesome 6 Free"; /* Font Awesome */
+    font-weight: 900;
+    font-size: 80px;
+    opacity: 0.05; /* Rất mờ */
+    color: var(--text-main);
+    transform: rotate(-15deg);
+    pointer-events: none;
+    transition: transform 0.3s ease;
+}
+
+/* Tự động thêm icon chìm dựa trên thứ tự con (trick CSS) */
+/* Thẻ 1: Shopping Cart */
+.stat-card:nth-child(1)::after { content: '\f07a'; } 
+/* Thẻ 2: Box */
+.stat-card:nth-child(2)::after { content: '\f466'; } 
+/* Thẻ 3: Gem */
+.stat-card:nth-child(3)::after { content: '\f3a5'; }
+
+.stat-card:hover::after {
+    transform: rotate(0deg) scale(1.1); /* Hiệu ứng động khi hover */
+    opacity: 0.08;
+    color: var(--primary);
+}
 /* Section Card General */
 .section-card {
     background: var(--bg-card);
