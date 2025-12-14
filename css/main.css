@@ -5,8 +5,8 @@
 
 
 @import url('layouts/header.css');
-@import url('page/home/slide.css');
-@import url('page/home/feature.css');
-@import url('page/home/bestseller.css');
-@import url('page/home/news.css');
-@import url('page/home/co-folder.css');
+@import url('/home/css/slide.css');
+@import url('/home/css/feature.css');
+@import url('/home/css/bestseller.css');
+@import url('/home/css/co-folder.css');
+@import url('/home/css/news.css');
