@@ -3,37 +3,345 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chi Tiết Sản Phẩm</title>
-    <link rel="stylesheet" href="detail.css">
+    <title>Chi Tiết Sản Phẩm - Tiệm Ăn Vặt</title>
+    <link rel="stylesheet" href="/src/css/again.css"/>
+    <link rel="stylesheet" href="detail.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/src/css/again.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 
-    <!--Font Google-->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
     <div data-include="/src/components/header.htm"></div>
-    
-    <div class="breadcrumb">
-        <a href="/index.htm">Trang chủ</a>
-        <span>></span>
-        <a href="/page/category/product/product.htm">Sản phẩm</a>
-        <span>></span>
-        <span id="breadcrumbProduct">Chi tiết sản phẩm</span>
-    </div>
 
-    <!-- ✅ THÊM PHẦN NÀY -->
-    <div class="page-title" id="pageTitle">Chi tiết sản phẩm</div>
-
-    <div class="detail-container">
-        <div id="productDetail">
-            <div class="loading">Đang tải thông tin sản phẩm...</div>
+<div class="container">   
+    <div class="breadcrumb-container">
+        <div class="breadcrumb">
+            <a href="index.html" class="home-icon"><i class="fa-solid fa-house"></i> Trang chủ</a> 
+            <span class="separator"><i class="fa-solid fa-chevron-right"></i></span>
+            <a href="products.html">Combo theo người</a> 
+            <span class="separator"><i class="fa-solid fa-chevron-right"></i></span>
+            <span class="current">COMBO MÌ TRỘN INDOMIE CHUA CAY SƯỜN SỤN (3 người)</span>
         </div>
     </div>
-    <script src="detail.js">
-    </script>
-    <script type="module" src="/src/js/again.js"></script>
+
+    <h1 class="page-main-title">COMBO MÌ TRỘN INDOMIE <br class="mobile-break"> CHUA CAY SƯỜN SỤN (3 người)</h1>
+
+    <section class="product-detail-wrapper">
+        <div class="pd-left">
+            <div class="main-image-frame">
+                <img src="https://placehold.co/600x600/fff5e1/ff6b35?text=Combo+Mi+Tron+3+Nguoi" alt="Combo Mì Trộn">
+            </div>
+        </div>
+        <div class="pd-right">
+            <h2 class="pd-name">COMBO MÌ TRỘN INDOMIE CHUA CAY SƯỜN SỤN (3 Người)</h2>
+            <div class="pd-price-group">
+                <span class="price-new">133.000₫</span>
+                <span class="price-old">152.550₫</span>
+                <br>
+                <span class="stock-badge">Còn Hàng</span>
+            </div>
+
+            <div class="product-rating-overview">
+                <div class="rating-group">
+                    <div class="rating-stars" id="header-stars">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <span class="rating-number" id="header-rating-score">5.0</span>
+                    <span class="separator">|</span>
+                    <a href="#review-section" class="scroll-link" onclick="scrollToReviews(event)">
+                        Xem <span id="header-rating-count">0</span> đánh giá
+                    </a>
+                </div>
+
+                <div class="promo-btn-wrap">
+                    <button class="btn-open-promo" onclick="openPromoModal()">
+                        <i class="fa-solid fa-gift"></i> Săn Mã Giảm Giá
+                    </button>
+                </div>
+            </div>
+
+
+            <div class="description-box">
+                <h3 class="desc-heading">Mô tả sản phẩm</h3>
+                <div class="desc-text">
+                    <i style="color: #666; font-size: 12px; margin-bottom: 5px; display:block;">* Hình ảnh mang tính chất minh họa.</i>
+                    <p>Bao gồm: Combo mì Indomie chua cay sườn sụn + 3 Trà Đào</p>
+                    <p>Các món trong combo được đánh giá là các sản phẩm bán chạy nhất trong quán</p>
+                    <p>Phù hợp với khẩu phần dành cho 3 người ăn ạ !</p>
+                </div>
+            </div>
+
+            <div class="options-container">
+                <div class="option-group">
+                    <span class="option-title">Độ cay (Cấp độ 1):</span>
+                    <div class="tags-wrapper">
+                        <label class="tag-item">
+                            <input type="radio" name="spicy_level_1" value="no" >
+                            <span>Không Cay</span>
+                        </label>
+                        <label class="tag-item">
+                            <input type="radio" name="spicy_level_1" value="low">
+                            <span>Cay Ít</span>
+                        </label>
+                        <label class="tag-item">
+                            <input type="radio" name="spicy_level_1" value="medium" checked>
+                            <span>Cay Vừa</span>
+                        </label>
+                        <label class="tag-item">
+                            <input type="radio" name="spicy_level_1" value="high">
+                            <span>Siêu Cay</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <span class="option-title">Topping thêm (Cấp độ 2):</span>
+                    <div class="tags-wrapper">
+                        <label class="tag-item">
+                            <input type="radio" name="option_level_2" value="none" checked>
+                            <span>Không thêm</span>
+                        </label>
+                        <label class="tag-item">
+                            <input type="radio" name="option_level_2" value="egg">
+                            <span>Thêm Trứng</span>
+                        </label>
+                        <label class="tag-item">
+                            <input type="radio" name="option_level_2" value="cheese">
+                            <span>Thêm Phô Mai</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qty-row">
+                <label class="qty-label">Số Lượng:</label>
+                <div class="qty-wrapper">
+                    <button class="qty-btn" onclick="if(this.nextElementSibling.value>1) this.nextElementSibling.value--">-</button>
+                    <input type="text" class="qty-input" value="1" readonly>
+                    <button class="qty-btn" onclick="this.previousElementSibling.value++">+</button>
+                </div>
+            </div>
+
+            <div class="action-buttons-group">
+                <button class="btn-add-cart" onclick="addToCartAction()">
+                    <i class="fa-solid fa-cart-plus"></i>
+                    <span>Thêm vào giỏ</span>
+                </button>
+                
+                <button class="btn-buy-now" onclick="triggerMainBuy()">
+                    <span>MUA NGAY</span>
+                </button>
+            </div>
+
+            <div class="product-stats" style="margin: 10px 0; font-size: 14px; color: #666;">
+                <span>
+                    <div class="prod-stats">Có <span id="buy-count">0</span> lượt mua sản phẩm </div>  
+                </span>
+                            </br>
+                <span >
+                    <div class="prod-stats">Có <span id="view-count">0</span> lượt xem sản phẩm </div>   
+                </span>
+            </div>
+    
+        
+            <div class="prod-note">
+                <i class="fa-solid fa-newspaper"></i>
+                <span>Website mới ra mắt – Số liệu hiển thị (lượt xem & lượt mua) sẽ được cập nhật liên tục.</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="best-seller-section">
+        <div class="bs-header-container">
+            <div class="bs-subtitle">Sản Phẩm Liên Quan
+            <h2 class="bs-main-title">CÓ THỂ BẠN SẼ THÍCH</h2>
+            <div class="bs-divider">
+                <i class="fa-solid fa-heart" style="font-size: 8px; color: #ddd;"></i> 
+                <i class="fa-solid fa-heart" style="font-size: 8px; color: #ddd;"></i> 
+                <i class="fa-solid fa-heart" style="font-size: 8px; color: #ddd;"></i>
+            </div>
+        </div>
+
+        <div class="bs-wrapper-container">
+            <div class="bs-button-prev"><i class="fa-solid fa-chevron-left"></i></div>
+            <div class="bs-button-next"><i class="fa-solid fa-chevron-right"></i></div>
+
+            <div class="swiper swiper-best-seller">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide bs-card">
+                        <div class="bs-img-wrapper"><img src="https://placehold.co/300x300/fff5e1/ff6b35?text=Top+Mo" alt="Tóp Mỡ"></div>
+                        <div class="bs-content">
+                            <h3 class="bs-name">Tóp Mỡ Rim Mắm Tỏi Ớt</h3>
+                            <div class="bs-price-row"><span class="price-current">79.088đ</span><span class="price-old">83.250đ</span></div>
+                            <a href="#" class="btn-pill-outline">MUA HÀNG</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide bs-card"><div class="bs-img-wrapper"><img src="https://placehold.co/300x300/fff5e1/d82b2b?text=Combo" alt="Combo"></div><div class="bs-content"><h3 class="bs-name">Combo Ăn Vặt Thập Cẩm</h3><div class="bs-price-row"><span class="price-current">76.950đ</span><span class="price-old">81.000đ</span></div><a href="#" class="btn-pill-outline">TÙY CHỌN</a></div></div>
+                    <div class="swiper-slide bs-card"><div class="bs-img-wrapper"><img src="https://placehold.co/300x300/fff5e1/4caf50?text=Chan+Ga" alt="Chân Gà"></div><div class="bs-content"><h3 class="bs-name">Chân Gà Rút Xương Sốt Thái</h3><div class="bs-price-row"><span class="price-current">70.538đ</span><span class="price-old">74.250đ</span></div><a href="#" class="btn-pill-outline">MUA HÀNG</a></div></div>
+                    <div class="swiper-slide bs-card"><div class="bs-img-wrapper"><img src="https://placehold.co/300x300/fff5e1/ffc107?text=Ga+Popcorn" alt="Gà Popcorn"></div><div class="bs-content"><h3 class="bs-name">Gà Popcorn Chiên Lắc Phô Mai</h3><div class="bs-price-row"><span class="price-current">44.460đ</span><span class="price-old">46.800đ</span></div><a href="#" class="btn-pill-outline">MUA HÀNG</a></div></div>
+                    <div class="swiper-slide bs-card"><div class="bs-img-wrapper"><img src="https://placehold.co/300x300/fff5e1/9c27b0?text=Mi+Tron" alt="Mì Trộn"></div><div class="bs-content"><h3 class="bs-name">Mì Trộn Indomie Đặc Biệt</h3><div class="bs-price-row"><span class="price-current">37.350đ</span><span class="price-old">41.500đ</span></div><a href="#" class="btn-pill-outline">TÙY CHỌN</a></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<section class="review-section container" id="review-section">
+    <div class="review-header-container">
+        <h3 class="review-title">Đánh giá thực tế từ khách hàng</h3>
+        <div class="review-decor-line"></div>
+    </div>
+    
+    <div class="review-box-wrapper">
+        <div class="review-dashboard">
+            <div class="rd-summary">
+                <div class="rd-average">
+                    <span class="rd-score-big" id="avg-rating-score">0.0</span>
+                    <div class="rd-stars-big" id="avg-rating-stars"></div>
+                    <p class="rd-total-text">Dựa trên <b id="total-reviews-count">0</b> nhận xét</p>
+                </div>
+            </div>
+
+            <div class="rd-progress">
+                <div id="rating-progress-bars"></div>
+            </div>
+
+            <div class="rd-actions">
+                <p>Bạn đã dùng thử món này?</p>
+                <button class="btn-write-review-lg" onclick="openReviewForm()">
+                    <i class="fa-solid fa-pen-nib"></i> Viết đánh giá
+                </button>
+            </div>
+        </div>
+
+        <div id="review-gallery-container" class="review-gallery" style="display: none;">
+            <p class="gallery-title">📸 Hình ảnh từ người mua</p>
+            <div class="gallery-track" id="review-gallery-track">
+                </div>
+        </div>
+
+        <div class="review-filters">
+            <span class="filter-label">Lọc theo:</span>
+            <button class="r-filter-btn active" onclick="filterReviews('all')">Tất cả</button>
+            <button class="r-filter-btn" onclick="filterReviews('image')">Có hình ảnh</button>
+            <button class="r-filter-btn" onclick="filterReviews('5')">5 Sao</button>
+            <button class="r-filter-btn" onclick="filterReviews('4')">4 Sao</button>
+            <button class="r-filter-btn" onclick="filterReviews('3')">3 Sao</button>
+            <button class="r-filter-btn" onclick="filterReviews('2')">2 Sao</button>
+            <button class="r-filter-btn" onclick="filterReviews('1')">1 Sao</button>
+        </div>
+
+        <div id="review-list-container" class="review-list-container">
+            </div>
+
+        <div id="review-pagination" class="review-pagination" style="display: none;">
+            <button class="btn-load-more" onclick="loadMoreReviews()">Xem thêm đánh giá <i class="fa-solid fa-chevron-down"></i></button>
+        </div>
+    </div>
+</section>
+
+<div id="modal-cart-overlay" class="modal-overlay">
+    <div class="modal-box">
+        <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+        <div class="modal-header">
+            <i class="fa-solid fa-circle-check"></i> Sản phẩm đã được chọn!
+        </div>
+        
+        <div class="modal-body">
+            <div class="m-prod-img  main-image-frame" onclick="openZoom(this.querySelector('img').src)">
+                <img id="m-img"  src="" alt=""> 
+            </div>
+            <div class="m-prod-info">
+                <h4 id="m-name">Tên sản phẩm</h4>
+                <div id="m-attrs" class="m-attrs">
+                    </div>
+                <div class="m-price-row">
+                    <span>Số lượng: <b id="m-qty">1</b></span>
+                    <span class="m-total" id="m-total">0đ</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn-modal-outline" onclick="addToCartAction()">
+                <i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ
+            </button>
+            <button class="btn-modal-primary" onclick="cartAction()">
+                <span>Vào giỏ hàng</span>
+            </button>
+        </div>
+    </div>
+</div>
+<div id="modal-image-overlay" class="modal-overlay" onclick="closeImageViewer()">
+    <div class="modal-box" style="width: auto; max-width: 90%; background: transparent; box-shadow: none; padding: 0;">
+        <button class="modal-close" onclick="closeImageViewer()" style="top: -30px; right: 0; color: #fff; font-size: 30px;">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <img id="full-image-view" src="" alt="Ảnh chi tiết" style="max-width: 100%; max-height: 80vh; border-radius: 8px;">
+    </div>
+</div>
+<div id="img-lightbox" class="lightbox-overlay" onclick="closeZoom()">
+    <img id="lightbox-src" class="lightbox-img" src="" alt="Zoom Image">
+</div>
+
+<div id="sticky-bar" class="sticky-bar">
+    <div class="sticky-content">
+        <img id="sticky-img" src="" alt="Sản phẩm" class="sticky-img">
+        <div class="sticky-info">
+            <div id="sticky-name" class="sticky-name">Đang tải...</div>
+            <div id="sticky-price" class="sticky-price">...</div>
+        </div>
+    </div>
+    <button class="sticky-btn" onclick="triggerMainBuy()">MUA NGAY</button>
+</div>
+<div id="toast-container"></div>
+<div id="productDetail"></div>
+
+<script src="detail.js"></script>
+<script src="js_detail/detail-actions.js"></script>
+<script src="js_detail/image-zoom.js"></script>
+<!-- <script src="js_detail/popup-toast.js"></script> -->
+<script src="js_detail/promotion-loader.js"></script>
+<!-- ENABLE review.js để xử lý phần đánh giá -->
+<!-- <script src="js_detail/review.js"></script>
+<script src="js_detail/review-outside.js"></script> -->
+<script src="js_detail/sticky.js"></script>
+<script src="/src/js/fake-notification/fake-notification.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<script>
+    var swiperBestSeller = new Swiper(".swiper-best-seller", {
+        slidesPerView: 4, 
+        spaceBetween: 20,
+        loop: true,
+        navigation: { nextEl: ".bs-button-next", prevEl: ".bs-button-prev" },
+        breakpoints: {
+            320: { slidesPerView: 2, spaceBetween: 10 },
+            768: { slidesPerView: 3, spaceBetween: 15 },
+            1024: { slidesPerView: 4, spaceBetween: 20 },
+        },
+    }); 
+    
+    // [FIX 2] Script xử lý layout Mobile tránh bị che bởi thanh Sticky Bar
+    window.addEventListener('load', function() {
+        // Nếu màn hình nhỏ (Mobile)
+        if(window.innerWidth < 768) {
+            // Thêm padding bottom cho body để nội dung cuối cùng không bị nút MUA NGAY che mất
+            document.body.style.paddingBottom = "90px";
+            
+            // Tìm nút menu Header (giả sử header được load sau)
+            setTimeout(() => {
+                const header = document.querySelector('header'); 
+                if(header) {
+                    header.style.zIndex = "1000"; // Đảm bảo header luôn nổi cao nhất
+                }
+            }, 1000);
+        }
+    });
+</script>
+        <script type="module" src="/src/js/again.js"></script> 
 </body>
 </html>

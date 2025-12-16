@@ -153,7 +153,7 @@ function createModalStructure() {
 function openPromoModal() {
     const modal = document.getElementById('promo-modal-overlay');
     const iframe = document.getElementById('promo-iframe');
-    const targetUrl = '../HtmL/promotion.html'; 
+    const targetUrl = '/page/category/detail/js_detail/promotion-loader.html'; // URL nội dung khuyến mãi
 
     if (modal && iframe) {
         // Chỉ load nếu iframe đang trống (lần đầu mở)

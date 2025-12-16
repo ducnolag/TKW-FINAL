@@ -1,8 +1,13 @@
 /* =========================================
-   FILE: product-logic.js
+   FILE: detail-actions.js
+   Xử lý các hành động trên trang chi tiết sản phẩm
    ========================================= */
 
 document.addEventListener('DOMContentLoaded', function() {
+
+    // --- 0. LẤY PRODUCT ID TỪ URL ---
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get('id') || 'SP01'; // Mặc định 'SP01' nếu không có
 
     // --- 1. KHỞI TẠO BIẾN CƠ BẢN ---
     const basePriceElement = document.querySelector('.main-price');
@@ -17,33 +22,26 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentToppingPrice = 0;
 
     // --- 2. XỬ LÝ THỐNG KÊ (LƯỢT XEM & LƯỢT MUA) --- 
-    // (Phần mới thêm theo yêu cầu của bạn)
-    
     const viewDisplay = document.getElementById('view-count');
     const buyDisplay = document.getElementById('buy-count');
 
-    // 2.1. Tự động tăng LƯỢT XEM khi vào trang
-    function handleViewCount() {
-        // Lấy số cũ từ bộ nhớ, 
-        let views = localStorage.getItem('product_views_SP01') || 0;
-        views = parseInt(views) + 1; // Tăng thêm 1
-        
-        // Lưu lại vào bộ nhớ
-        localStorage.setItem('product_views_SP01', views);
-        
-        // Hiển thị ra màn hình
+    // 2.1. Hàm tăng LƯỢT XEM khi tải trang
+    function incrementViewCount() {
+        let views = localStorage.getItem(`product_views_${productId}`) || '0';
+        views = parseInt(views) + 1;
+        localStorage.setItem(`product_views_${productId}`, views);
         if(viewDisplay) viewDisplay.innerText = views.toLocaleString('vi-VN');
+        console.log("✅ Đã tăng lượt xem cho sản phẩm:", productId, "- Tổng lượt xem:", views);
     }
-    
-    // 2.2. Hiển thị LƯỢT MUA (Lấy từ bộ nhớ ra hiển thị trước)
+
+    // 2.2. Hiển thị LƯỢT MUA
     function initBuyCount() {
-        // Giả sử mặc định đã có 68 lượt mua
-        let buys = localStorage.getItem('product_buys_SP01') || 0;
+        let buys = localStorage.getItem(`product_buys_${productId}`) || 0;
         if(buyDisplay) buyDisplay.innerText = parseInt(buys).toLocaleString('vi-VN');
     }
 
     // Chạy ngay khi tải trang
-    handleViewCount();
+    incrementViewCount();
     initBuyCount();
 
 
@@ -128,18 +126,18 @@ document.addEventListener('DOMContentLoaded', function() {
     if (btnBuyNow) {
         btnBuyNow.addEventListener('click', () => {
             // 1. Tăng lượt mua
-            let buys = localStorage.getItem('product_buys_SP01') || 68;
+            let buys = localStorage.getItem(`product_buys_${productId}`) || 0;
             buys = parseInt(buys) + 1;
-            localStorage.setItem('product_buys_SP01', buys);
+            localStorage.setItem(`product_buys_${productId}`, buys);
             
             // Cập nhật ngay lên màn hình (để người dùng thấy nhảy số)
-            if(buyDisplay) buyDisplay.innerText = buys;
+            if(buyDisplay) buyDisplay.innerText = buys.toLocaleString('vi-VN');
 
             // 2. Chuyển trang hoặc thông báo
             // window.location.href = 'checkout.html'; // Bỏ comment dòng này nếu muốn chuyển trang thật
             showToast('Đang chuyển đến trang thanh toán...', 'success');
             
-            console.log("Đã ghi nhận 1 lượt mua mới!");
+            console.log("✅ Đã ghi nhận 1 lượt mua mới cho sản phẩm:", productId);
         });
     }
 
@@ -159,5 +157,60 @@ document.addEventListener('DOMContentLoaded', function() {
         toastBox.appendChild(toast);
         setTimeout(() => toast.classList.add('show'), 100);
         setTimeout(() => { toast.remove(); }, 3500);
+    }
+
+    // ========== HÀM HIỂN THỊ LƯỢT XEM & MUA ==========
+    function createStatsHTML(productId) {
+        // Tăng lượt xem khi vào trang
+        let views = parseInt(localStorage.getItem(`product_views_${productId}`) || '0');
+        views++;
+        localStorage.setItem(`product_views_${productId}`, views);
+        
+        const buys = parseInt(localStorage.getItem(`product_buys_${productId}`) || '0');
+        
+        return `
+            <div style="display: flex; gap: 20px; padding: 15px; background: #f3f4f6; border-radius: 10px; margin: 15px 0;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 18px;">👁️</span>
+                    <div>
+                        <div style="font-size: 12px; color: #6b7280;">Lượt xem</div>
+                        <div style="font-weight: 700; color: #1f2937;" id="view-count-display">${views.toLocaleString('vi-VN')}</div>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 18px;">🛍️</span>
+                    <div>
+                        <div style="font-size: 12px; color: #6b7280;">Lượt mua</div>
+                        <div style="font-weight: 700; color: #1f2937;" id="buy-count-display">${buys.toLocaleString('vi-VN')}</div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // ========== HÀM CẬP NHẬT LƯỢT HÀNG (MUA NGAY) ==========
+    function incrementBuyCount(productId) {
+        let buys = parseInt(localStorage.getItem(`product_buys_${productId}`) || '0');
+        buys++;
+        localStorage.setItem(`product_buys_${productId}`, buys);
+        
+        // Cập nhật UI nếu tồn tại
+        const buyElement = document.getElementById('buy-count-display') || document.getElementById('buy-count');
+        if (buyElement) {
+            buyElement.textContent = buys.toLocaleString('vi-VN');
+        }
+    }
+
+    // ========== HÀM CẬP NHẬT LƯỢT XEM ==========
+    function incrementViewCount(productId) {
+        let views = parseInt(localStorage.getItem(`product_views_${productId}`) || '0');
+        views++;
+        localStorage.setItem(`product_views_${productId}`, views);
+        
+        // Cập nhật UI nếu tồn tại
+        const viewElement = document.getElementById('view-count-display') || document.getElementById('view-count');
+        if (viewElement) {
+            viewElement.textContent = views.toLocaleString('vi-VN');
+        }
     }
 });

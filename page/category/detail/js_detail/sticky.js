@@ -30,15 +30,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// 3. Hàm kích hoạt nút mua chính (Proxy Click)
-// Khi bấm nút ở thanh dính, nó sẽ giả vờ bấm vào nút gốc để chạy logic thêm giỏ hàng
-function triggerMainBuy() {
-    const mainBtn = document.querySelector('.btn-buy-now');
-    if(mainBtn) {
-        // Tạo hiệu ứng bấm nhẹ
-        mainBtn.click(); 
-        
-        // Tùy chọn: Cuộn ngược lên để khách thấy Modal hiện ra (nếu Modal hiện ở giữa trang)
-        // mainBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-}
+// Hàm triggerMainBuy() trong sticky bar được xử lý trực tiếp từ HTML onclick
+// Không cần override tại đây, chỉ để detail.js xử lý
