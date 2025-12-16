@@ -6,12 +6,8 @@
     <title>Săn Deal - Tiệm Ăn Vặt</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
-    
+    <link rel="stylesheet" href="/src/css/again.css">
     <style>
-        /* --- Nhúng CSS phần header --- */
-        @import url('/src/css/again.css'); 
-        /* --- Nhúng CSS riêng cho trang chi tiết sản phẩm --- */
-        @import url('/page/promotion/promotion.css');
 
 
 
@@ -205,6 +201,17 @@
 </div>
 
 <div class="container">
+    <div class="container">
+    <div id="breadcrumb-container"></div> 
+    </div>
+
+<script src="/src/js/layouts/breadcrumb.js"></script>
+<script>
+    // Gọi hàm render
+    renderBreadcrumb([
+        { name: "Chương trình khuyến mãi", link: "" } // Link rỗng vì là trang hiện tại
+    ]);
+</script>
     <!-- --- HEAD--- -->
     <div class="page-header">
         <h1 class="page-title">Săn Deal Hời - Ăn Thả Ga</h1>

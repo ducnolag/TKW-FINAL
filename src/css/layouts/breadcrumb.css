@@ -1,27 +1,102 @@
-    .breadcrumb {
-      background: white;
-      padding: 15px 20px;
-      text-align: center;
-      border-bottom: 1px solid #eee;
+/* --- BREADCRUMB STYLES CHUYÊN NGHIỆP --- */
+.breadcrumb-wrapper {
+    background-color: #fffbf5; /* Màu nền nhẹ nhàng (theme be) */
+    padding: 12px 20px;
+    border-radius: 50px; /* Bo tròn viên thuốc */
+    border: 1px solid #ffefe0;
+    margin: 20px auto;
+    max-width: 1200px;
+    width: 100%;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình siêu nhỏ */
+}
+
+.breadcrumb-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.breadcrumb-item {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Link (Các mục có thể bấm) */
+.breadcrumb-item a {
+    text-decoration: none;
+    color: #555;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.breadcrumb-item a:hover {
+    background-color: #fff;
+    color: #ff6b35; /* Màu cam chủ đạo */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transform: translateY(-1px);
+}
+
+/* Icon ngôi nhà */
+.breadcrumb-item a i {
+    font-size: 14px;
+    color: #ff6b35;
+    margin-bottom: 2px;
+}
+
+/* Dấu phân cách (Mũi tên) */
+.breadcrumb-separator {
+    margin: 0 4px;
+    color: #ccc;
+    font-size: 10px;
+}
+
+/* Mục hiện tại (Không bấm được) */
+.breadcrumb-item.active {
+    color: #d82b2b; /* Màu đỏ nổi bật */
+    font-weight: 700;
+    pointer-events: none;
+    background: transparent;
+    padding: 4px 8px;
+    /* Cắt bớt nếu quá dài */
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Responsive Mobile */
+@media (max-width: 768px) {
+    .breadcrumb-wrapper {
+        margin: 10px 15px;
+        padding: 10px 15px;
+        border-radius: 8px; /* Mobile dùng bo góc vuông hơn chút */
+        width: auto;
+        overflow-x: auto; /* Cho phép trượt ngang nếu dài */
+        white-space: nowrap;
+        display: block; /* Để scroll ngang hoạt động tốt */
+    }
+    
+    .breadcrumb-list {
+        display: inline-flex; /* Giữ trên 1 dòng */
+        flex-wrap: nowrap;
     }
 
-    .breadcrumb a {
-      color: #666;
-      text-decoration: none;
-      margin: 0 5px;
+    .breadcrumb-item {
+        font-size: 13px;
+        flex-shrink: 0;
     }
-
-    .breadcrumb span {
-      color: #e74c3c;
-      margin: 0 5px;
-    }
-
-    .page-title {
-      text-align: center;
-      padding: 15px 15px;
-      background: white;
-      font-size: 30px;
-      font-weight: bold;
-      color: #333;
-      border-bottom: 1px solid #eee;
-    }
+}

@@ -874,11 +874,25 @@ function openReviewForm() {
         showLoginPrompt();
         return;
     }
-    // (Optional) Uncomment nếu muốn bắt buộc mua hàng
-    // if (!checkUserPurchased(window.currentProduct.id)) {
-    //     showToast('❌ Bạn phải mua sản phẩm này trước khi đánh giá!', 'error');
-    //     return;
-    // }
+
+    // ⭐ THÊM KIỂM TRA MÌNH MUA HÀNG
+    if (!checkUserPurchased(window.currentProduct.id)) {
+        const modal = document.createElement('div');
+        modal.style.cssText = `position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 10002; display: flex; align-items: center; justify-content: center;`;
+        modal.innerHTML = `
+            <div style="background: white; padding: 30px; border-radius: 12px; text-align: center; max-width: 380px; width: 90%;">
+                <i class="fa-solid fa-shopping-bag" style="font-size: 50px; color: #ff6b35; margin-bottom: 15px;"></i>
+                <h3 style="margin: 0 0 10px; color: #333;">Chỉ khách hàng đã mua mới được đánh giá</h3>
+                <p style="color: #666; margin-bottom: 20px; font-size: 14px;">Bạn cần mua sản phẩm này trước khi có thể viết đánh giá.</p>
+                <div style="display: flex; gap: 10px;">
+                    <button onclick="this.closest('div').parentElement.parentElement.remove()" style="flex: 1; padding: 12px; border: 1px solid #ddd; background: #fff; border-radius: 6px; cursor: pointer; font-weight: 500;">Đóng</button>
+                    <button onclick="addToCartAction(); this.closest('div').parentElement.parentElement.remove();" style="flex: 1; padding: 12px; background: #ff6b35; color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">Mua ngay</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        return;
+    }
     
     const oldModal = document.getElementById('reviewFormModal');
     if (oldModal) oldModal.remove();

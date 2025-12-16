@@ -341,6 +341,114 @@
             }, 1000);
         }
     });
+
+    
+    // ========== DỮ LIỆU GỢI Ý ==========
+const suggestDataList = [
+    { id: 991, title: "Trà Đào Cam Sả Khổng Lồ", price: 25000, image: "https://placehold.co/100x100/ffecd2/ff6b35?text=Tra+Dao" },
+    { id: 992, title: "Chân Gà Sốt Thái Cóc Non", price: 65000, image: "https://placehold.co/100x100/ffecd2/d82b2b?text=Chan+Ga" },
+    { id: 993, title: "Nem Chua Rán Hà Nội (5 cái)", price: 35000, image: "https://placehold.co/100x100/ffecd2/4caf50?text=Nem+Chua" }
+];
+
+// ========== LOGIC SUGGEST BOX ==========
+const SuggestBox = {
+    isOpen: false,
+    hasInteracted: false,
+    timer: null,
+
+    init() {
+        console.log("🚀 [SuggestBox] Bắt đầu khởi tạo...");
+
+        // 1. Xóa box cũ
+        const oldBox = document.querySelector('.suggest-box-wrapper');
+        if(oldBox) oldBox.remove();
+
+        // 2. Tạo HTML
+        const wrapper = document.createElement('div');
+        wrapper.className = 'suggest-box-wrapper';
+        wrapper.innerHTML = `
+            <div class="suggest-container" id="suggestContainer">
+                <div class="sg-header">
+                    <div class="sg-title"><i class="fa-solid fa-fire"></i> Mua kèm giảm giá</div>
+                    <div class="sg-close" onclick="SuggestBox.toggle(false)"><i class="fa-solid fa-minus"></i></div>
+                </div>
+                <div class="sg-body">
+                    ${suggestDataList.map(item => `
+                        <div class="sg-item">
+                            <img src="${item.image}" class="sg-img" alt="${item.title}">
+                            <div class="sg-info">
+                                <div class="sg-name">${item.title}</div>
+                                <div class="sg-price">${typeof formatPrice === 'function' ? formatPrice(item.price) : item.price.toLocaleString() + 'đ'}</div>
+                            </div>
+                            <button class="sg-add-btn" onclick="SuggestBox.addItem(${item.id})" title="Thêm vào giỏ">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            <div class="suggest-trigger-btn shake-anim" id="suggestTrigger" onclick="SuggestBox.toggle(true)">
+                <i class="fa-solid fa-gift"></i>
+            </div>
+        `;
+        
+        document.body.appendChild(wrapper);
+        console.log("✅ [SuggestBox] Đã thêm vào giao diện");
+
+        // 3. Hẹn giờ mở (Đang để 3s để test, sau test sửa số 3000 thành 15000)
+        console.log("⏳ [SuggestBox] Đang đếm ngược 3 giây...");
+        this.timer = setTimeout(() => {
+            console.log("⏰ [SuggestBox] Hết giờ! Kiểm tra điều kiện mở...");
+            if (!this.isOpen && !this.hasInteracted) {
+                console.log("🔓 [SuggestBox] Tự động mở box.");
+                this.toggle(true);
+            } else {
+                console.log("🚫 [SuggestBox] Không mở (Do người dùng đã mở trước đó).");
+            }
+        }, 3000); // <-- SỬA THÀNH 15000 SAU KHI TEST XONG
+    },
+
+    toggle(show) {
+        const container = document.getElementById('suggestContainer');
+        const trigger = document.getElementById('suggestTrigger');
+        
+        if (!container || !trigger) {
+            console.error("❌ [SuggestBox] Không tìm thấy phần tử HTML!");
+            return;
+        }
+
+        if (show) {
+            container.classList.add('active');
+            trigger.classList.add('hide');
+            trigger.classList.remove('shake-anim');
+            this.isOpen = true;
+            this.hasInteracted = true;
+        } else {
+            container.classList.remove('active');
+            trigger.classList.remove('hide');
+            this.isOpen = false;
+        }
+    },
+
+    addItem(id) {
+        const product = suggestDataList.find(p => p.id === id);
+        if (!product) return;
+        
+        // Logic thêm giỏ hàng (giữ nguyên logic cũ của bạn)
+        let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        const existingItem = cart.find(item => item.id === product.id);
+        if (existingItem) existingItem.quantity += 1;
+        else cart.push({ id: product.id, title: product.title, price: product.price, quantity: 1, image: product.image });
+        
+        localStorage.setItem('cart', JSON.stringify(cart));
+        if (window.updateCartCount) window.updateCartCount();
+        if (window.showToast) window.showToast(`✅ Đã thêm ${product.title}`, 'success');
+        else alert(`Đã thêm ${product.title}`);
+    }
+};
+
+// Gọi chạy ngay lập tức khi file JS load xong
+SuggestBox.init();
 </script>
         <script type="module" src="/src/js/again.js"></script> 
 </body>

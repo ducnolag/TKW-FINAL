@@ -186,6 +186,8 @@ let allData = null;
       breadcrumbCategory.textContent = titleText;
       categoryTitle.textContent = titleText;
 
+      
+
       // Cập nhật sidebar - đánh dấu danh mục hiện tại (chỉ nếu không phải tìm kiếm)
       if (!searchQuery) {
         const menuItems = document.querySelectorAll('#menu li[data-category]');

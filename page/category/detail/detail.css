@@ -223,29 +223,198 @@ a { text-decoration: none; color: inherit; transition: 0.3s; }
 .lightbox-overlay.active .lightbox-img { transform: scale(1); }
 
 /* --- SUGGEST BOX --- */
-.suggest-box { position: fixed; bottom: 5px; right: 10px; width: 300px; background: #fff; border-radius: 12px 12px 0 0; box-shadow: 0 -5px 20px rgba(0,0,0,0.15); z-index: 1000; overflow: hidden; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 1px solid #ff6b35; }
-.suggest-box.collapsed { transform: translateY(calc(100% - 45px)); }
-.suggest-header { background: #ff6b35; color: #fff; padding: 12px 15px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: bold; font-size: 15px; }
-.suggest-body { max-height: 300px; overflow-y: auto; background: #fff; }
-.suggest-item { display: flex; align-items: center; padding: 10px; border-bottom: 1px solid #eee; transition: 0.2s; background: #fff; }
-.suggest-item:hover { background-color: #fff5e1; }
-.suggest-content-link { display: flex; align-items: center; flex: 1; text-decoration: none; color: #333; cursor: pointer; }
-.suggest-content-link img { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; margin-right: 10px; }
-.suggest-info { flex: 1; }
-.s-name { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
-.s-price { font-size: 13px; color: #d82b2b; font-weight: bold; }
-.s-btn { width: 30px; height: 30px; background: #ff6b35; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; cursor: pointer; margin-left: 10px; transition: transform 0.2s; }
-.s-btn:active { transform: scale(0.9); }
-.animate-fire { animation: bellRingburn 2s infinite ease-in-out; }
-@keyframes bellRingburn { 0% { transform: rotate(0); text-shadow: none; } 10% { transform: rotate(15deg); } 30% { transform: rotate(-15deg); } 50% { transform: rotate(10deg); color: #ff5722; text-shadow: 0 0 10px #ff9800; } 100% { transform: rotate(0); color: #e31e24; text-shadow: none; } }
-/* Style thu gọn suggest box */
-#suggest-box.collapsed { width: 60px; height: 60px; border-radius: 50%; background-color: #ff6b35; border: 2px solid #fff; box-shadow: 0 4px 15px rgba(255, 107, 53, 0.5); position: fixed; bottom: 20px; right: 5px; padding: 0 !important; overflow: hidden; display: flex; justify-content: center; align-items: center; }
-#suggest-box.collapsed .suggest-header { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; padding: 0; margin: 0; }
-#suggest-box.collapsed .suggest-title { font-size: 0; margin: 0; line-height: 0; }
-#suggest-box.collapsed .suggest-title i.animate-fire { font-size: 28px; color: #fff; display: block; margin: 0; }
-#suggest-box.collapsed .suggest-toggle-icon { display: none; }
-#suggest-box.collapsed .suggest-body { display: none; }
+.suggest-box-wrapper {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9990; /* Thấp hơn modal nhưng cao hơn nội dung */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-family: 'Roboto', sans-serif;
+    pointer-events: none; /* Để click xuyên qua vùng trống */
+}
 
+/* Nút kích hoạt (Icon tròn) */
+.suggest-trigger-btn {
+    width: 55px;
+    height: 55px;
+    background: linear-gradient(135deg, #ff6b35, #d82b2b);
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(216, 43, 43, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #fff;
+    font-size: 24px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: auto;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 2;
+}
+
+.suggest-trigger-btn:hover {
+    transform: scale(1.1) rotate(10deg);
+}
+
+.suggest-trigger-btn.hide {
+    opacity: 0;
+    transform: scale(0);
+}
+
+/* Hiệu ứng rung chuông thu hút */
+.shake-anim {
+    animation: bellShake 3s infinite;
+}
+
+@keyframes bellShake {
+    0%, 100% { transform: rotate(0); }
+    10%, 30%, 50%, 70%, 90% { transform: rotate(-10deg); }
+    20%, 40%, 60%, 80% { transform: rotate(10deg); }
+}
+
+/* Hộp nội dung chính */
+.suggest-container {
+    background: #fff;
+    width: 320px;
+    border-radius: 16px;
+    box-shadow: 0 5px 30px rgba(0,0,0,0.15);
+    overflow: hidden;
+    margin-bottom: 10px;
+    border: 1px solid #ffefe0;
+    pointer-events: auto;
+    transform-origin: bottom right;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    
+    /* Trạng thái ẩn/hiện */
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+    visibility: hidden;
+}
+
+.suggest-container.active {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    visibility: visible;
+}
+
+/* Header của box */
+.sg-header {
+    background: linear-gradient(90deg, #ff6b35, #ff8f5e);
+    padding: 12px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+}
+
+.sg-title {
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: uppercase;
+}
+
+.sg-close {
+    cursor: pointer;
+    font-size: 18px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    transition: 0.2s;
+}
+
+.sg-close:hover { background: rgba(255,255,255,0.4); }
+
+/* Danh sách sản phẩm */
+.sg-body {
+    max-height: 280px;
+    overflow-y: auto;
+    padding: 5px 0;
+}
+
+.sg-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px dashed #eee;
+    transition: 0.2s;
+    gap: 12px;
+}
+
+.sg-item:last-child { border-bottom: none; }
+.sg-item:hover { background-color: #fffbf5; }
+
+.sg-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 6px;
+    object-fit: cover;
+    border: 1px solid #eee;
+}
+
+.sg-info { flex: 1; }
+.sg-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: #333;
+    line-height: 1.3;
+    margin-bottom: 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.sg-price {
+    font-size: 13px;
+    color: #d82b2b;
+    font-weight: 800;
+}
+
+/* Nút thêm nhanh */
+.sg-add-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #fff5e1;
+    color: #ff6b35;
+    border: 1px solid #ff6b35;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.sg-add-btn:hover {
+    background: #ff6b35;
+    color: #fff;
+    transform: rotate(90deg);
+}
+
+.suggest-box-wrapper {
+    position: fixed;
+    bottom: 20px; 
+    right: 20px;
+    z-index: 2147483647; /* Số lớn nhất có thể trong CSS để không bị cái nào che */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-family: 'Roboto', sans-serif;
+    pointer-events: none;
+}
+/* Các phần còn lại giữ nguyên như cũ */
 /* --- TOAST & MODAL --- */
 #toast-box { position: fixed; top: 30px; right: 30px; z-index: 999999; display: flex; flex-direction: column; gap: 10px; }
 .toast { width: 340px; background: #fff; font-weight: 500; box-shadow: 0 5px 20px rgba(0,0,0,0.15); display: flex; align-items: center; border-radius: 6px; border-left: 5px solid #4caf50; transform: translateX(120%); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); padding: 16px 0; }
@@ -531,6 +700,18 @@ a { text-decoration: none; color: inherit; transition: 0.3s; }
     
     .tag-item span { padding: 8px 12px; font-size: 13px; min-width: auto; }
     
-    .suggest-box { bottom: 80px !important; }
-    #suggest-box.collapsed { bottom: 90px; }
+    .suggest-box-wrapper {
+        bottom: 80px; /* Né thanh Mua Ngay ở dưới */
+        right: 15px;
+    }
+    
+    .suggest-container {
+        width: 280px; /* Nhỏ hơn chút trên mobile */
+    }
+
+    .suggest-trigger-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+    }
 }
