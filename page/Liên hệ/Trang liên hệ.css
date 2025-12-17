@@ -1,0 +1,211 @@
+
+    /* Reset cơ bản */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      background: linear-gradient(180deg,#f8fafc,#eef2ff);
+      color: #1f2937;
+      line-height: 1.6;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* ================= HEADER ================= */
+    .page-header {
+      padding: 24px 60px 10px;
+      position: relative;
+    }
+
+    /* Breadcrumb góc trái trên */
+    .breadcrumb {
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .breadcrumb a { color: #2563eb; }
+
+    /* Tiêu đề trang căn giữa */
+    .page-title {
+      text-align: center;
+      font-size: 38px;
+      font-weight: 700;
+      margin-top: 10px;
+      animation: fadeDown 0.8s ease;
+    }
+
+    /* ================= MAP ================= */
+    .map-wrapper {
+      margin-top: 20px;
+      width: 100%;
+      height: 420px;
+      overflow: hidden;
+      animation: zoomIn 1s ease;
+    }
+
+    .map-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      filter: saturate(125%) contrast(115%);
+    }
+
+    /* ================= PHẦN DƯỚI MAP ================= */
+    /* 👉 CHỈNH THEO YÊU CẦU:
+       - Tăng khoảng cách với map
+       - Giãn khoảng cách giữa form & thông tin bên phải */
+    .content {
+      max-width: 1200px;
+      margin: 80px auto;      /* tăng khoảng cách với map */
+      padding: 0 30px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 150px;              /* giãn 2 cột ra cho thoáng */
+      animation: fadeUp 1s ease;
+    }
+
+    /* ================= FORM LIÊN HỆ ================= */
+    .contact-form {
+      animation: fadeUp 1s ease;
+    }
+
+    .contact-form h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .form-group { margin-bottom: 18px; }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 6px;
+      color: #374151;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 13px 15px;
+      border-radius: 12px;
+      border: 1.5px solid #d1d5db;
+      font-size: 15px;
+      transition: all 0.25s ease;
+    }
+
+    /* Hover input cho mượt */
+    .form-group input:hover,
+    .form-group textarea:hover {
+      border-color: #93c5fd;
+    }
+
+    /* Focus đẹp */
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 4px rgba(37,99,235,0.18);
+      background: #f8fbff;
+    }
+
+    /* Sai điều kiện */
+    input:invalid, textarea:invalid {
+      border-color: #ef4444;
+    }
+
+    textarea { resize: vertical; min-height: 120px; }
+
+    /* Nút gửi */
+    .btn-submit {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #fff;
+      border: none;
+      padding: 15px 34px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 12px 28px rgba(37,99,235,0.35);
+    }
+
+    /* Hover nút gửi */
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 36px rgba(37,99,235,0.45);
+    }
+
+    /* 👉 THÔNG BÁO GỬI THÀNH CÔNG (CHỈ HIỆN KHI GỬI OK) */
+    .success-message {
+      font-size: 13px;
+      color: #16a34a;
+      margin-top: 14px;
+      display: none;
+      opacity: 0;
+      animation: fadeSuccess 0.6s ease forwards;
+    }
+
+    /* ================= THÔNG TIN BÊN PHẢI ================= */
+    .contact-info {
+      animation: fadeUp 1s ease 0.15s;
+    }
+
+    .contact-info h3 {
+      font-size: 22px;
+      margin-bottom: 18px;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+      color: #374151;
+      font-size: 15px;
+    }
+
+    .info-item svg {
+      width: 22px;
+      height: 22px;
+      fill: #2563eb;
+      flex-shrink: 0;
+    }
+
+    /* ================= ICON MẠNG XÃ HỘI ================= */
+    .link-social {
+      display: flex;
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    /* Hover icon: KHÔNG PHÓNG TO */
+    .link-social a:hover {
+      opacity: 0.8;
+    }
+
+    /* ================= RESPONSIVE ================= */
+    @media (max-width: 900px) {
+      .content { grid-template-columns: 1fr; }
+      .page-header { padding: 20px; }
+    }
+
+    /* ================= ANIMATION ================= */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes zoomIn {
+      from { opacity: 0; transform: scale(1.05); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Animation cho thông báo thành công */
+    @keyframes fadeSuccess {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }

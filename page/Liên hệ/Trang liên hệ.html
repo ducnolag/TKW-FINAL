@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Liên hệ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- CSS -->
+  <link rel="stylesheet" href="Trang liên hệ.css">
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<div class="page-header">
+  <!-- Breadcrumb góc trái trên -->
+  <div class="breadcrumb">
+    <a href="#">Trang chủ</a> / Liên hệ
+  </div>
+
+  <!-- Tiêu đề trang căn giữa -->
+  <div class="page-title">Liên hệ</div>
+</div>
+
+<!-- ================= MAP VỆ TINH FULL NGANG ================= -->
+<div class="map-wrapper">
+  <iframe src="https://www.google.com/maps?q=68%20Ng%C3%B5%20Trung%20Ti%E1%BB%81n%20H%C3%A0%20N%E1%BB%99i&t=k&z=17&output=embed"></iframe>
+</div>
+
+<!-- ================= PHẦN DƯỚI MAP ================= -->
+<div class="content">
+
+  <!-- ========== BÊN TRÁI: FORM LIÊN HỆ ========== -->
+  <div class="contact-form">
+    <!-- Tiêu đề form -->
+    <h2>Gửi tin nhắn cho chúng tôi</h2>
+
+    <!--
+      BỐ CỤC FORM GIỐNG ẢNH YÊU CẦU:
+      - Họ tên & Email: cùng 1 hàng
+      - Điện thoại: 1 hàng riêng
+      - Nội dung: full chiều ngang
+    -->
+    <form id="contactForm">
+
+      <!-- Hàng 1: Họ tên + Email -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="form-group">
+          <label>Họ và tên</label>
+          <input type="text" name="name" required minlength="3" placeholder="Họ và tên">
+        </div>
+
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" name="email" required placeholder="example@gmail.com">
+        </div>
+      </div>
+
+      <!-- Điện thoại -->
+      <div class="form-group">
+        <label>Số điện thoại</label>
+        <input type="tel" name="phone" pattern="[0-9]{9,11}" required placeholder="VD: 0987654321">
+      </div>
+
+      <!-- Nội dung -->
+      <div class="form-group">
+        <label>Nội dung liên hệ</label>
+        <textarea name="message" required minlength="10" placeholder="Nhập nội dung liên hệ..."></textarea>
+      </div>
+
+      <!-- Nút gửi -->
+      <button type="submit" class="btn-submit">Gửi liên hệ</button>
+
+      <!-- Thông báo thành công -->
+      <div class="success-message" id="successMsg">Đã gửi tin nhắn thành công.</div>
+    </form>
+  </div>
+
+  <!-- ========== BÊN PHẢI: THÔNG TIN + ICON ========== -->
+  <div class="contact-info">
+    <h3>Thông tin cửa hàng</h3>
+
+    <!-- Địa chỉ -->
+  <div class="info-item">
+    <!-- Location icon – Glyph style -->
+    <svg viewBox="0 0 24 24">
+      <path d="M12 2C8.1 2 5 5.1 5 9c0 5.3 7 13 7 13s7-7.7 7-13c0-3.9-3.1-7-7-7zm0 9.5c-1.4 0-2.5-1.1-2.5-2.5S10.6 6.5 12 6.5s2.5 1.1 2.5 2.5S13.4 11.5 12 11.5z"/>
+    </svg>
+    68 Ngõ Trung Tiền, Quốc Tử Giám, Hà Nội
+  </div>
+
+  <!-- Điện thoại -->
+  <div class="info-item">
+    <!-- Phone icon – Glyph style -->
+    <svg viewBox="0 0 24 24">
+      <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1v3.5a1 1 0 01-1 1C10.3 21.01 2.99 13.7 2.99 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.59a1 1 0 01-.25 1.01l-2.19 2.19z"/>
+    </svg>
+    0843 373 274
+  </div>
+
+  <!-- Email -->
+  <div class="info-item">
+    <!-- Mail icon – Glyph style -->
+    <svg viewBox="0 0 24 24">
+      <path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+    </svg>
+    tavnntg@gmail.com
+  </div>
+
+  <!-- Thời gian mở cửa -->
+  <div class="info-item">
+    <!-- Clock icon – Glyph style -->
+    <svg viewBox="0 0 24 24">
+      <path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm1 11h4a1 1 0 000-2h-3V7a1 1 0 00-2 0v5a1 1 0 001 1z"/>
+    </svg>
+    Thứ 2 – Chủ nhật: 08:00 – 21:00
+  </div>
+
+    <!-- Icon mạng xã hội:-->
+    <div class="link-social">
+
+      <!-- Instagram -->
+      <a class="instagram" href="https://www.instagram.com/seraphine_no2025/?hl=en" target="_blank" title="Theo dõi trên Instagram">
+        <!-- SVG Instagram-->
+        <svg xmlns="http://www.w3.org/2000/svg" 
+             viewBox="0 0 41 40" 
+             style="width:46px !important; height:46px !important;">
+            <rect x="0.0375977" width="40.0333" height="39.9917" rx="10" fill="red"></rect>
+
+            <path d="M20.053 14.2183C16.8578 14.2183 14.2694 16.8053 14.2694 19.9959C14.2694 23.1877 16.8578 25.7747 20.053 25.7747C23.2456 25.7747 25.8365 23.1877 25.8365 19.9959C25.8365 16.8053 23.2456 14.2183 20.053 14.2183ZM20.053 23.7501C17.9775 23.7501 16.2948 22.0692 16.2948 19.9971C16.2948 17.9238 17.9775 16.2441 20.053 16.2441C22.1284 16.2441 23.8086 17.9238 23.8086 19.9971C23.8086 22.0692 22.1284 23.7501 20.053 23.7501Z" fill="white"></path>	
+			<path d="M26.0667 15.3531C26.8115 15.3531 27.4153 14.7499 27.4153 14.0058C27.4153 13.2618 26.8115 12.6586 26.0667 12.6586C25.3219 12.6586 24.7181 13.2618 24.7181 14.0058C24.7181 14.7499 25.3219 15.3531 26.0667 15.3531Z" fill="white"></path>
+			<path d="M30.7293 12.6361C30.1426 11.1252 28.9479 9.93041 27.4354 9.34678C26.5609 9.01809 25.6364 8.84188 24.7006 8.82188C23.4958 8.76939 23.1143 8.75439 20.0592 8.75439C17.0042 8.75439 16.6126 8.75439 15.4179 8.82188C14.4846 8.84063 13.5601 9.01684 12.6856 9.34678C11.1718 9.93041 9.97709 11.1252 9.39161 12.6361C9.06258 13.5109 8.88619 14.4333 8.86742 15.3681C8.81363 16.5703 8.79736 16.9515 8.79736 20.0046C8.79736 23.0565 8.79736 23.4452 8.86742 24.6412C8.88619 25.576 9.06258 26.4983 9.39161 27.3744C9.97834 28.8841 11.1731 30.0789 12.6868 30.6637C13.5576 31.0037 14.4821 31.1961 15.4204 31.2261C16.6251 31.2786 17.0067 31.2949 20.0617 31.2949C23.1168 31.2949 23.5083 31.2949 24.7031 31.2261C25.6376 31.2074 26.5621 31.0299 27.4379 30.7025C28.9504 30.1164 30.1451 28.9228 30.7318 27.4119C31.0609 26.5371 31.2373 25.6148 31.256 24.6799C31.3098 23.4777 31.3261 23.0965 31.3261 20.0434C31.3261 16.9902 31.3261 16.6028 31.256 15.4068C31.2398 14.4595 31.0646 13.5209 30.7293 12.6361ZM29.2056 24.5487C29.1968 25.2686 29.0667 25.9822 28.8165 26.6583C28.4349 27.6418 27.658 28.4192 26.6747 28.7966C26.0054 29.0453 25.2998 29.1753 24.5855 29.1853C23.397 29.2403 23.0617 29.254 20.0142 29.254C16.9642 29.254 16.6526 29.254 15.4416 29.1853C14.7298 29.1765 14.0217 29.0453 13.3537 28.7966C12.3666 28.4204 11.5847 27.6431 11.2031 26.6583C10.9579 25.9909 10.8253 25.2848 10.814 24.5725C10.7602 23.3852 10.7477 23.0503 10.7477 20.0059C10.7477 16.9602 10.7477 16.6491 10.814 15.4381C10.8228 14.7182 10.9529 14.0058 11.2031 13.3297C11.5847 12.3437 12.3666 11.5676 13.3537 11.1902C14.0217 10.9427 14.7298 10.8115 15.4416 10.8015C16.6314 10.7477 16.9654 10.7327 20.0142 10.7327C23.063 10.7327 23.3757 10.7327 24.5855 10.8015C25.2998 10.8102 26.0054 10.9415 26.6747 11.1902C27.658 11.5688 28.4349 12.3462 28.8165 13.3297C29.0617 13.9971 29.1943 14.7032 29.2056 15.4156C29.2594 16.6041 29.2731 16.9377 29.2731 19.9834C29.2731 23.0219 29.2731 23.3539 29.2196 24.5431C29.2195 24.5469 29.2164 24.55 29.2126 24.55H29.2068C29.2061 24.55 29.2056 24.5494 29.2056 24.5487Z" fill="white"></path>	
+		 </svg>	
+      </a>
+
+      <!-- Facebook -->
+      <a class="fb" href="https://www.facebook.com/profile.php?id=61584753532303" target="_blank" title="Theo dõi trên Facebook">
+        <!-- SVG Facebook -->
+        <svg xmlns="http://www.w3.org/2000/svg" 
+             viewBox="0 0 41 40" 
+             style="width:46px !important; height:46px !important;">
+            <rect x="0.071953" width="40.0333" height="39.9917" rx="10" fill="red"></rect>
+            <path d="M23.6002 11.2515L21.1667 11.2476C18.4328 11.2476 16.666 13.0583 16.666 15.861C16.666 17.0358 15.7137 17.9881 14.5389 17.9881H14.2193C14.0079 17.9881 13.8367 18.1593 13.8367 18.3707V21.8738C13.8367 22.0852 14.0079 22.2564 14.2193 22.2564H17.3291V32.0471C17.3291 32.2585 17.5003 32.4297 17.7117 32.4297H21.4373C21.6487 32.4297 21.8199 32.2585 21.8199 32.0471V22.2564H25.4894C25.7008 22.2564 25.872 22.0852 25.872 21.8738V18.4929C25.872 18.2815 25.7008 18.1103 25.4894 18.1103H21.8199V16.1558C21.8199 15.0155 22.2807 14.5819 23.4081 14.5819H25.5933C25.8047 14.5819 25.9759 14.4107 25.9759 14.1993V11.6337C25.9759 11.4229 25.8047 11.2518 25.5933 11.2515Z" fill="white"></path>
+        </svg>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+<!-- ================= EMAILJS ================= -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<script src="Trang liên hệ.js"></script>
+
+</body>
+</html>

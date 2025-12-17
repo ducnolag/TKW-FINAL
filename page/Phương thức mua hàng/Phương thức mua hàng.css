@@ -1,0 +1,226 @@
+/* ================= RESET CƠ BẢN ================= */
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:'Inter',sans-serif;
+}
+
+/* ================= BODY ================= */
+body{
+    background:#f9fafb;
+    color:#333;
+}
+
+/* ================= CONTAINER CHÍNH ================= */
+.container{
+    max-width:1200px; /* tăng nhẹ chiều ngang tổng */
+    margin:40px auto;
+    padding:0 20px;
+}
+
+/* ================= TIÊU ĐỀ ================= */
+h1{
+    text-align:center;
+    font-size:36px;
+    font-weight:700;
+    color:#e11d48;
+}
+
+.subtitle{
+    text-align:center;
+    margin-top:8px;
+    color:#6b7280;
+}
+
+/* ================= KHỐI SECTION ================= */
+.section{
+    background:#fff;
+    border-radius:22px;
+    padding:30px;
+    margin-top:30px;
+    box-shadow:0 20px 40px rgba(0,0,0,.08);
+}
+
+/* ================= TIÊU ĐỀ SECTION ================= */
+.section-title{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:22px;
+    font-weight:600;
+    margin-bottom:25px;
+}
+
+/* ================= ICON SVG (GlyphSearch) ================= */
+.icon{
+    width:26px;
+    height:26px;
+    stroke:#e11d48;
+}
+
+/* ================= KÊNH MUA SẮM ================= */
+.methods{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:22px;
+}
+
+.method-card{
+    background:#fff7f7;
+    border:1px solid #fee2e2;
+    border-radius:18px;
+    padding:22px;
+    transition:.4s;
+    position:relative;
+    overflow:hidden;
+}
+
+/* hiệu ứng hover nổi + ánh sáng */
+.method-card::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:radial-gradient(circle at top left,rgba(255,255,255,.6),transparent 30%);
+    opacity:0;
+    transition:.4s;
+}
+
+.method-card:hover::after{
+    opacity:1;
+}
+
+.method-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 15px 15px rgba(225,29,72,.3);
+}
+
+.method-card h3{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:18px;
+    color:#be123c;
+    margin-bottom:8px;
+}
+
+/* ================= KHU VỰC GIAN HÀNG ================= */
+.store-wrapper{
+    display:grid;
+    grid-template-columns:1.7fr 1.3fr; /* TĂNG CHIỀU NGANG ẢNH */
+    gap:30px;
+    align-items:stretch;
+}
+
+/* ================= KHỐI GIAN HÀNG BÊN TRÁI ================= */
+.store{
+    border-left:6px solid #e11d48;
+    padding-left:22px;
+    margin-bottom:30px;
+    transition:.3s;
+}
+
+.store:hover{
+    transform:translateX(8px);
+}
+
+.store:last-child{
+    margin-bottom:0;
+}
+
+.store h3{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:#e11d48;
+    margin-bottom:6px;
+}
+
+.store p{
+    color:#555;
+    margin-bottom:14px;
+}
+
+/* ================= NÚT HÃNG GIAO HÀNG ================= */
+.brand-buttons{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+}
+
+.brand-btn{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:11px 18px;
+    border-radius:999px;
+    background:#fff;
+    border:1px solid #e5e7eb;
+    text-decoration:none;
+    font-weight:500;
+    color:#111;
+    transition:.35s;
+}
+
+.brand-btn img{
+    width:22px;
+    height:22px;
+}
+
+/* hiệu ứng hover nút */
+.brand-btn:hover{
+    transform:translateY(-5px) scale(1.05);
+    box-shadow:0 5px 10px rgba(68, 62, 62, 0.25);
+}
+
+/* ================= ẢNH BÊN PHẢI GIAN HÀNG ================= */
+.store-image{
+    width:100%;
+    height:100%;
+    min-width:420px; /* ảnh to rõ hơn */
+    border-radius:22px;
+    object-fit:cover;
+    box-shadow:0 15px 25px rgba(0,0,0,.25);
+    transition:.6s;
+}
+
+/* hiệu ứng hover zoom + ánh sáng */
+.store-image:hover{
+    transform:scale(1.06);
+    filter:brightness(1.05);
+}
+
+/* ================= KHỐI LỜI KHUYÊN ================= */
+.highlight{
+    background:linear-gradient(135deg,#fff7ed,#ffedd5);
+    border:2px dashed #fb923c;
+    border-radius:22px;
+    padding:30px;
+    margin-top:35px;
+}
+
+.highlight ul{
+    margin-top:12px;
+    padding-left:20px;
+}
+
+.highlight li{
+    margin-bottom:10px;
+    color:#7c2d12;
+    line-height:1.5;
+}
+
+/* ================= RESPONSIVE MOBILE ================= */
+@media(max-width:900px){
+    .store-wrapper{
+        grid-template-columns:1fr;
+    }
+    .store-image{
+        min-height:260px;
+    }
+}
+
+@media(max-width:600px){
+    h1{font-size:28px;}
+    .section{padding:22px;}
+}
