@@ -484,7 +484,7 @@ const getDetailProduct = async () => {
 
         const data = await response.json();
         window.allProductData = data;
-        const allProducts = [...data.sale, ...data.newsale];
+        const allProducts = data.sale || [];
         const product = allProducts.find(p => p.id == productId);
 
         if (product) {
@@ -537,7 +537,7 @@ async function loadProductFromURL() {
         const response = await fetch('/data/product.json');
         if (!response.ok) throw new Error('Không thể tải dữ liệu sản phẩm');
         const data = await response.json();
-        const allProducts = [...data.sale, ...data.newsale];
+        const allProducts = data.sale || [];
         const product = allProducts.find(p => p.id == productId);
         if (product) {
             currentProduct = product;
@@ -584,6 +584,103 @@ function updateDetailPageUI(product, views) {
     const buyCountElement = document.getElementById('buy-count');
     if (buyCountElement) buyCountElement.textContent = buyCount.toLocaleString('vi-VN');
     
+    // ============ CẬP NHẬT THÊM TỪ JSON ============
+    // Description
+    const descText = document.querySelector('.desc-text');
+    if (descText && product.description) {
+        descText.innerHTML = `<i style="color: #666; font-size: 12px; margin-bottom: 5px; display:block;">* Hình ảnh mang tính chất minh họa.</i>
+                             <p>${product.description}</p>`;
+    }
+    
+    // Rating & Sold
+    if (product.rating !== undefined) {
+        const ratingScore = document.getElementById('header-rating-score');
+        if (ratingScore) ratingScore.textContent = product.rating.toFixed(1);
+        
+        // Render stars
+        const headerStars = document.getElementById('header-stars');
+        if (headerStars) {
+            const fullStars = Math.floor(product.rating);
+            const hasHalfStar = product.rating % 1 !== 0;
+            let starsHTML = '';
+            
+            for (let i = 0; i < fullStars; i++) {
+                starsHTML += '<i class="fa-solid fa-star"></i>';
+            }
+            if (hasHalfStar) {
+                starsHTML += '<i class="fa-solid fa-star-half-stroke"></i>';
+            }
+            for (let i = fullStars + (hasHalfStar ? 1 : 0); i < 5; i++) {
+                starsHTML += '<i class="fa-regular fa-star"></i>';
+            }
+            headerStars.innerHTML = starsHTML;
+        }
+    }
+    
+    if (product.sold !== undefined) {
+        const soldInfo = document.querySelector('.sold-count') || 
+                        document.querySelector('[data-sold]') ||
+                        document.createElement('span');
+        if (soldInfo) soldInfo.textContent = `Đã bán: ${product.sold.toLocaleString('vi-VN')}`;
+    }
+    
+    // Quantity (Stock)
+    if (product.quantity !== undefined) {
+        const stockBadge = document.querySelector('.stock-badge');
+        if (stockBadge) {
+            if (product.quantity > 0) {
+                stockBadge.textContent = `Còn ${product.quantity} sản phẩm`;
+                stockBadge.classList.add('in-stock');
+                stockBadge.classList.remove('out-of-stock');
+            } else {
+                stockBadge.textContent = 'Hết hàng';
+                stockBadge.classList.remove('in-stock');
+                stockBadge.classList.add('out-of-stock');
+            }
+        }
+    }
+    
+    // Options (Độ cay, Thêm topping, etc)
+    if (product.options && product.options.length > 0) {
+        const optionsContainer = document.querySelector('.options-container');
+        if (optionsContainer) {
+            let optionsHTML = '';
+            
+            product.options.forEach((option, idx) => {
+                optionsHTML += `
+                    <div class="option-group">
+                        <span class="option-title">${option.name}:</span>
+                        <div class="tags-wrapper">
+                `;
+                
+                if (option.choices && option.choices.length > 0) {
+                    option.choices.forEach((choice, choiceIdx) => {
+                        const isChecked = choiceIdx === 0 ? 'checked' : '';
+                        optionsHTML += `
+                            <label class="tag-item">
+                                <input type="radio" name="option_${idx}" value="${choice}" ${isChecked}>
+                                <span>${choice}</span>
+                            </label>
+                        `;
+                    });
+                }
+                
+                optionsHTML += `
+                        </div>
+                    </div>
+                `;
+            });
+            
+            optionsContainer.innerHTML = optionsHTML;
+        }
+    } else {
+        // Ẩn options container nếu không có options
+        const optionsContainer = document.querySelector('.options-container');
+        if (optionsContainer) {
+            optionsContainer.style.display = 'none';
+        }
+    }
+    
     // Sticky Bar (Kiểm tra kỹ vì có thể element này chưa render)
     const stickyImg = document.getElementById('sticky-img');
     if (stickyImg) stickyImg.src = product.image || 'https://via.placeholder.com/60x60/f5f5f5/999';
@@ -623,14 +720,42 @@ function updateCartCount() {
     cartCountElements.forEach(el => el.textContent = cartCount);
 }
 
+function getSelectedOptions() {
+    const options = [];
+    const optionInputs = document.querySelectorAll('.option-group input[type="radio"]:checked');
+    optionInputs.forEach(input => {
+        const optionName = input.name;
+        const optionGroup = input.closest('.option-group');
+        const optionTitle = optionGroup?.querySelector('.option-title')?.textContent?.replace(':', '').trim();
+        if (optionTitle && input.value) {
+            options.push({
+                name: optionTitle,
+                value: input.value
+            });
+        }
+    });
+    return options;
+}
+
 function addToCartAction() {
     const quantity = parseInt(document.querySelector('.qty-input')?.value || 1);
     if (!currentProduct) {
         showToast('❌ Lỗi: Không tìm thấy sản phẩm', 'error');
         return;
     }
+    
+    const selectedOptions = getSelectedOptions();
     let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    const existingItem = cart.find(item => item.id === currentProduct.id);
+    
+    // Tạo unique key kết hợp ID và options để phân biệt các sản phẩm khác nhau
+    const optionKey = selectedOptions.length > 0 ? JSON.stringify(selectedOptions) : '';
+    const cartItemKey = `${currentProduct.id}_${optionKey}`;
+    
+    const existingItem = cart.find(item => {
+        const itemOptionKey = item.selectedOptions ? JSON.stringify(item.selectedOptions) : '';
+        return item.id === currentProduct.id && itemOptionKey === optionKey;
+    });
+    
     if (existingItem) {
         existingItem.quantity += quantity;
     } else {
@@ -639,7 +764,8 @@ function addToCartAction() {
             title: currentProduct.title,
             price: currentProduct.price_current,
             quantity: quantity,
-            image: currentProduct.image
+            image: currentProduct.image,
+            selectedOptions: selectedOptions.length > 0 ? selectedOptions : null
         });
     }
     localStorage.setItem('cart', JSON.stringify(cart));
@@ -657,8 +783,16 @@ function triggerMainBuy() {
         showToast('❌ Lỗi: Không tìm thấy sản phẩm', 'error');
         return;
     }
+    
+    const selectedOptions = getSelectedOptions();
     let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    const existingItem = cart.find(item => item.id === currentProduct.id);
+    
+    const optionKey = selectedOptions.length > 0 ? JSON.stringify(selectedOptions) : '';
+    const existingItem = cart.find(item => {
+        const itemOptionKey = item.selectedOptions ? JSON.stringify(item.selectedOptions) : '';
+        return item.id === currentProduct.id && itemOptionKey === optionKey;
+    });
+    
     if (existingItem) {
         existingItem.quantity += quantity;
     } else {
@@ -667,7 +801,8 @@ function triggerMainBuy() {
             title: currentProduct.title,
             price: currentProduct.price_current,
             quantity: quantity,
-            image: currentProduct.image
+            image: currentProduct.image,
+            selectedOptions: selectedOptions.length > 0 ? selectedOptions : null
         });
     }
     localStorage.setItem('cart', JSON.stringify(cart));
@@ -1078,6 +1213,94 @@ window.loadMoreReviews = () => {
 
 window.openImageViewer = openImageViewer;
 
+// ========== HÀM LOAD SẢN PHẨM CÙNG DANH MỤC ==========
+async function loadRelatedProducts() {
+    try {
+        const params = new URLSearchParams(window.location.search);
+        const productId = params.get('id');
+        
+        if (!productId) return;
+        
+        const response = await fetch('/data/product.json');
+        const data = await response.json();
+        const allProducts = data.sale || [];
+        
+        // Tìm sản phẩm hiện tại để lấy danh mục
+        const currentProd = allProducts.find(p => p.id == productId);
+        if (!currentProd) return;
+        
+        // Trích xuất danh mục từ path hình ảnh (VD: /assets/product/mitron/20.png -> mitron)
+        const imagePath = currentProd.image || '';
+        const categoryMatch = imagePath.match(/\/assets\/product\/(\w+)\//);
+        const category = categoryMatch ? categoryMatch[1] : null;
+        
+        if (!category) return;
+        
+        // Lấy danh mục gốc từ JSON
+        const categoryProducts = data[category] || [];
+        
+        // Lọc sản phẩm cùng danh mục, loại trừ sản phẩm hiện tại, lấy tối đa 5 sản phẩm
+        const relatedProducts = categoryProducts
+            .filter(p => p.id != productId)
+            .slice(0, 5);
+        
+        // Render HTML vào best-seller-section
+        const swiperWrapper = document.querySelector('.swiper-best-seller .swiper-wrapper');
+        if (!swiperWrapper || relatedProducts.length === 0) return;
+        
+        swiperWrapper.innerHTML = relatedProducts.map(product => `
+            <div class="swiper-slide bs-card" data-product-id="${product.id}">
+                <div class="bs-img-wrapper">
+                    <img src="${product.image}" alt="${product.title}">
+                </div>
+                <div class="bs-content">
+                    <h3 class="bs-name">${product.title}</h3>
+                    <div class="bs-price-row">
+                        <span class="price-current">${formatPrice(product.price_current)}</span>
+                        <span class="price-old">${formatPrice(product.price_old)}</span>
+                    </div>
+                    <a href="/page/category/detail/detail.htm?id=${product.id}" class="btn-pill-outline" onclick="event.stopPropagation();">Xem Chi Tiết</a>
+                </div>
+            </div>
+        `).join('');
+        
+        // Thêm event listener cho cards để navigate khi click
+        document.querySelectorAll('.swiper-best-seller .bs-card').forEach(card => {
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', function(e) {
+                // Nếu click vào nút "MUA HÀNG" thì đã xử lý rồi (stopPropagation)
+                if (e.target.closest('.btn-pill-outline')) return;
+                
+                const productId = this.getAttribute('data-product-id');
+                if (productId) {
+                    window.location.href = `/page/category/detail/detail.htm?id=${productId}`;
+                }
+            });
+        });
+        
+        // Khởi tạo lại Swiper sau khi cập nhật HTML
+        if (typeof Swiper !== 'undefined' && window.swiperBestSeller) {
+            window.swiperBestSeller.destroy();
+            window.swiperBestSeller = new Swiper(".swiper-best-seller", {
+                slidesPerView: 4,
+                spaceBetween: 20,
+                loop: true,
+                navigation: { nextEl: ".bs-button-next", prevEl: ".bs-button-prev" },
+                breakpoints: {
+                    320: { slidesPerView: 2, spaceBetween: 10 },
+                    768: { slidesPerView: 3, spaceBetween: 15 },
+                    1024: { slidesPerView: 4, spaceBetween: 20 },
+                },
+            });
+        }
+        
+        console.log(`✅ Đã load ${relatedProducts.length} sản phẩm danh mục ${category}`);
+    } catch (error) {
+        console.error('❌ Lỗi khi load sản phẩm liên quan:', error);
+    }
+}
+
 // ========== CHẠY KHỞI TẠO CUỐI CÙNG ==========
 // Gọi getDetailProduct sau cùng để đảm bảo mọi function/object đã được định nghĩa
 getDetailProduct();
+loadRelatedProducts();

@@ -6,6 +6,17 @@ let allData = null;
     let currentPage = 1; // ⭐ THÊM
     const productsPerPage = 12; // ⭐ THÊM - 12 sản phẩm/trang (4 dòng × 3 cột)
 
+    // ⭐ THÊM: Mapping danh mục sang tên Tiếng Việt
+    const categoryNames = {
+      'all': 'Tất cả sản phẩm',
+      'micay': 'Mì Cay',
+      'mitron': 'Mì Trộn',
+      'anvat': 'Ăn Vặt',
+      'ankem': 'Ăn Kèm',
+      'douong': 'Đồ Uống',
+      'combo': 'Combo'
+    };
+
     // Lấy category hoặc search query từ URL parameter
     const urlParams = new URLSearchParams(window.location.search);
     const categoryFromURL = urlParams.get('category');
@@ -143,7 +154,7 @@ let allData = null;
 
       // Nếu có tìm kiếm, hiển thị kết quả tìm kiếm
       if (searchQuery) {
-        const allProducts = [...allData.sale, ...allData.newsale];
+        const allProducts = allData.sale || [];
         products = allProducts.filter(product => 
           product.title.toLowerCase().includes(searchQuery.toLowerCase())
         );
@@ -151,14 +162,14 @@ let allData = null;
       } else {
         // Hiển thị theo danh mục
         if (category === 'all') {
-          products = [...allData.sale, ...allData.newsale];
-          titleText = 'Tất cả sản phẩm';
-        } else if (category === 'sale') {
-          products = allData.sale;
-          titleText = 'Sản phẩm khuyến mãi';
-        } else if (category === 'newsale') {
-          products = allData.newsale;
-          titleText = 'Sản phẩm mới';
+          products = allData.sale || [];
+          titleText = categoryNames['all'];
+        } else if (allData[category]) {
+          products = allData[category];
+          titleText = categoryNames[category] || category;
+        } else {
+          products = [];
+          titleText = 'Không có sản phẩm';
         }
       }
 
