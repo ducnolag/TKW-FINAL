@@ -720,14 +720,42 @@ function updateCartCount() {
     cartCountElements.forEach(el => el.textContent = cartCount);
 }
 
+function getSelectedOptions() {
+    const options = [];
+    const optionInputs = document.querySelectorAll('.option-group input[type="radio"]:checked');
+    optionInputs.forEach(input => {
+        const optionName = input.name;
+        const optionGroup = input.closest('.option-group');
+        const optionTitle = optionGroup?.querySelector('.option-title')?.textContent?.replace(':', '').trim();
+        if (optionTitle && input.value) {
+            options.push({
+                name: optionTitle,
+                value: input.value
+            });
+        }
+    });
+    return options;
+}
+
 function addToCartAction() {
     const quantity = parseInt(document.querySelector('.qty-input')?.value || 1);
     if (!currentProduct) {
         showToast('❌ Lỗi: Không tìm thấy sản phẩm', 'error');
         return;
     }
+    
+    const selectedOptions = getSelectedOptions();
     let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    const existingItem = cart.find(item => item.id === currentProduct.id);
+    
+    // Tạo unique key kết hợp ID và options để phân biệt các sản phẩm khác nhau
+    const optionKey = selectedOptions.length > 0 ? JSON.stringify(selectedOptions) : '';
+    const cartItemKey = `${currentProduct.id}_${optionKey}`;
+    
+    const existingItem = cart.find(item => {
+        const itemOptionKey = item.selectedOptions ? JSON.stringify(item.selectedOptions) : '';
+        return item.id === currentProduct.id && itemOptionKey === optionKey;
+    });
+    
     if (existingItem) {
         existingItem.quantity += quantity;
     } else {
@@ -736,7 +764,8 @@ function addToCartAction() {
             title: currentProduct.title,
             price: currentProduct.price_current,
             quantity: quantity,
-            image: currentProduct.image
+            image: currentProduct.image,
+            selectedOptions: selectedOptions.length > 0 ? selectedOptions : null
         });
     }
     localStorage.setItem('cart', JSON.stringify(cart));
@@ -754,8 +783,16 @@ function triggerMainBuy() {
         showToast('❌ Lỗi: Không tìm thấy sản phẩm', 'error');
         return;
     }
+    
+    const selectedOptions = getSelectedOptions();
     let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    const existingItem = cart.find(item => item.id === currentProduct.id);
+    
+    const optionKey = selectedOptions.length > 0 ? JSON.stringify(selectedOptions) : '';
+    const existingItem = cart.find(item => {
+        const itemOptionKey = item.selectedOptions ? JSON.stringify(item.selectedOptions) : '';
+        return item.id === currentProduct.id && itemOptionKey === optionKey;
+    });
+    
     if (existingItem) {
         existingItem.quantity += quantity;
     } else {
@@ -764,7 +801,8 @@ function triggerMainBuy() {
             title: currentProduct.title,
             price: currentProduct.price_current,
             quantity: quantity,
-            image: currentProduct.image
+            image: currentProduct.image,
+            selectedOptions: selectedOptions.length > 0 ? selectedOptions : null
         });
     }
     localStorage.setItem('cart', JSON.stringify(cart));
@@ -1175,6 +1213,94 @@ window.loadMoreReviews = () => {
 
 window.openImageViewer = openImageViewer;
 
+// ========== HÀM LOAD SẢN PHẨM CÙNG DANH MỤC ==========
+async function loadRelatedProducts() {
+    try {
+        const params = new URLSearchParams(window.location.search);
+        const productId = params.get('id');
+        
+        if (!productId) return;
+        
+        const response = await fetch('/data/product.json');
+        const data = await response.json();
+        const allProducts = data.sale || [];
+        
+        // Tìm sản phẩm hiện tại để lấy danh mục
+        const currentProd = allProducts.find(p => p.id == productId);
+        if (!currentProd) return;
+        
+        // Trích xuất danh mục từ path hình ảnh (VD: /assets/product/mitron/20.png -> mitron)
+        const imagePath = currentProd.image || '';
+        const categoryMatch = imagePath.match(/\/assets\/product\/(\w+)\//);
+        const category = categoryMatch ? categoryMatch[1] : null;
+        
+        if (!category) return;
+        
+        // Lấy danh mục gốc từ JSON
+        const categoryProducts = data[category] || [];
+        
+        // Lọc sản phẩm cùng danh mục, loại trừ sản phẩm hiện tại, lấy tối đa 5 sản phẩm
+        const relatedProducts = categoryProducts
+            .filter(p => p.id != productId)
+            .slice(0, 5);
+        
+        // Render HTML vào best-seller-section
+        const swiperWrapper = document.querySelector('.swiper-best-seller .swiper-wrapper');
+        if (!swiperWrapper || relatedProducts.length === 0) return;
+        
+        swiperWrapper.innerHTML = relatedProducts.map(product => `
+            <div class="swiper-slide bs-card" data-product-id="${product.id}">
+                <div class="bs-img-wrapper">
+                    <img src="${product.image}" alt="${product.title}">
+                </div>
+                <div class="bs-content">
+                    <h3 class="bs-name">${product.title}</h3>
+                    <div class="bs-price-row">
+                        <span class="price-current">${formatPrice(product.price_current)}</span>
+                        <span class="price-old">${formatPrice(product.price_old)}</span>
+                    </div>
+                    <a href="/page/category/detail/detail.htm?id=${product.id}" class="btn-pill-outline" onclick="event.stopPropagation();">Xem Chi Tiết</a>
+                </div>
+            </div>
+        `).join('');
+        
+        // Thêm event listener cho cards để navigate khi click
+        document.querySelectorAll('.swiper-best-seller .bs-card').forEach(card => {
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', function(e) {
+                // Nếu click vào nút "MUA HÀNG" thì đã xử lý rồi (stopPropagation)
+                if (e.target.closest('.btn-pill-outline')) return;
+                
+                const productId = this.getAttribute('data-product-id');
+                if (productId) {
+                    window.location.href = `/page/category/detail/detail.htm?id=${productId}`;
+                }
+            });
+        });
+        
+        // Khởi tạo lại Swiper sau khi cập nhật HTML
+        if (typeof Swiper !== 'undefined' && window.swiperBestSeller) {
+            window.swiperBestSeller.destroy();
+            window.swiperBestSeller = new Swiper(".swiper-best-seller", {
+                slidesPerView: 4,
+                spaceBetween: 20,
+                loop: true,
+                navigation: { nextEl: ".bs-button-next", prevEl: ".bs-button-prev" },
+                breakpoints: {
+                    320: { slidesPerView: 2, spaceBetween: 10 },
+                    768: { slidesPerView: 3, spaceBetween: 15 },
+                    1024: { slidesPerView: 4, spaceBetween: 20 },
+                },
+            });
+        }
+        
+        console.log(`✅ Đã load ${relatedProducts.length} sản phẩm danh mục ${category}`);
+    } catch (error) {
+        console.error('❌ Lỗi khi load sản phẩm liên quan:', error);
+    }
+}
+
 // ========== CHẠY KHỞI TẠO CUỐI CÙNG ==========
 // Gọi getDetailProduct sau cùng để đảm bảo mọi function/object đã được định nghĩa
 getDetailProduct();
+loadRelatedProducts();
