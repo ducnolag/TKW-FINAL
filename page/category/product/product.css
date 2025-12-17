@@ -13,7 +13,7 @@
       font-weight: 800;
       color: #ff6b35;
       padding: 30px 20px;
-      margin-bottom: 25px;
+      margin-bottom: 10px;
       letter-spacing: 0.5px;
       text-transform: uppercase;
       animation: slideDown 0.5s ease-out;
@@ -125,8 +125,8 @@
 
     .products {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 15px;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
       transition: all 0.3s;
     }
 
@@ -134,22 +134,175 @@
       grid-template-columns: 1fr;
     }
 
+    /* ===== PRODUCT CARD STYLES (sử dụng .bs-card từ best-seller-section) ===== */
     .product-item {
       background: white;
       border-radius: 8px;
       overflow: hidden;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      transition: transform 0.3s;
+      transition: transform 0.3s, border 0.3s, box-shadow 0.3s;
+      border: 2px solid transparent;
     }
 
+    /* Sử dụng .bs-card styles (tương thích với best-seller-section) */
+    .bs-card {
+      background: #fff;
+      border: 1px solid #fff;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      height: auto;
+      padding-bottom: 20px;
+    }
+
+    .bs-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      border: 2px solid #d82b2b;
+    }
+
+    .bs-img-wrapper {
+      background-color: #fff5e1;
+      padding: 15px;
+      aspect-ratio: 1/1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    .bs-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: transform 0.5s;
+      mix-blend-mode: multiply;
+    }
+
+    .bs-card:hover .bs-img-wrapper img {
+      transform: scale(1.05);
+    }
+
+    .bs-content {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      padding: 0 10px;
+    }
+
+    .bs-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #333;
+      margin: 0;
+      line-height: 1.3;
+      height: 36px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      text-transform: uppercase;
+    }
+
+    .bs-price-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .price-current {
+      color: #d82b2b;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .price-old {
+      font-size: 12px;
+      color: #999;
+      text-decoration: line-through;
+    }
+
+    .btn-pill-outline {
+      display: inline-block;
+      padding: 6px 20px;
+      border: 1px solid #d82b2b;
+      border-radius: 50px;
+      color: #d82b2b;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      background: #fff;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .btn-pill-outline:hover {
+      background-color: #d82b2b;
+      color: #fff;
+    }
+
+    /* ===== LIST VIEW STYLES ===== */
+    .products.list-view {
+      grid-template-columns: 1fr;
+    }
+
+    /* List View - BS Card */
+    .products.list-view .bs-card {
+      display: flex;
+      flex-direction: row;
+      padding-bottom: 0;
+      height: auto;
+    }
+
+    .products.list-view .bs-img-wrapper {
+      width: 280px;
+      height: 280px;
+      min-width: 280px;
+      margin-bottom: 0;
+      flex-shrink: 0;
+    }
+
+    .products.list-view .bs-content {
+      flex: 1;
+      text-align: left;
+      align-items: flex-start;
+      padding: 25px 30px;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .products.list-view .bs-name {
+      height: auto;
+      text-transform: none;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .products.list-view .bs-price-row {
+      margin-bottom: 15px;
+    }
+
+    .products.list-view .btn-pill-outline {
+      margin-top: auto;
+    }
+
+    /* Legacy product.item list-view support */
     .products.list-view .product-item {
       display: flex;
       flex-direction: row;
     }
 
     .products.list-view .product-image {
-      width: 300px;
-      height: 250px;
+      width: 280px;
+      height: 280px;
       flex-shrink: 0;
     }
 
@@ -159,18 +312,12 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 20px 30px;
-    }
-
-    .product-item:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-      border: 2px solid red;
+      padding: 25px 30px;
     }
 
     .product-image {
       width: 100%;
-      height: 200px;
+      height: 280px;
       background: #f5f5f5;
       display: flex;
       align-items: center;
@@ -195,6 +342,7 @@
       margin-bottom: 10px;
       min-height: 40px;
       font-weight: 500;
+      padding: 0 5px;
     }
 
     .price-section {
@@ -207,18 +355,6 @@
 
     .products.list-view .price-section {
       justify-content: flex-start;
-    }
-
-    .price-current {
-      font-size: 20px;
-      font-weight: bold;
-      color: #e74c3c;
-    }
-
-    .price-old {
-      font-size: 14px;
-      color: #999;
-      text-decoration: line-through;
     }
 
     .product-actions {
@@ -344,6 +480,22 @@
 
       .products.list-view .product-item {
         flex-direction: column;
+      }
+
+      .products.list-view .bs-card {
+        flex-direction: column;
+      }
+
+      .products.list-view .bs-img-wrapper {
+        width: 100%;
+        height: 200px;
+        min-width: auto;
+      }
+
+      .products.list-view .bs-content {
+        text-align: center;
+        align-items: center;
+        padding: 15px;
       }
 
       .products.list-view .product-image {

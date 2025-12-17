@@ -10,12 +10,13 @@
   padding: 0 20px;
 }
 
-/* --- Bestseller Header (Similar to News Header) --- */
+/* --- Bestseller Header (Cập nhật từ detail style) --- */
 .bestseller-header {
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
 }
 
+/* Giữ backward compatibility */
 .bestseller-header h2 {
   font-size: 42px;
   font-weight: 900;
@@ -23,6 +24,7 @@
   margin-bottom: 15px;
   text-transform: uppercase;
   letter-spacing: 1px;
+  margin: 0;
 }
 
 .bestseller-header p {
@@ -31,6 +33,34 @@
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
+}
+
+/* Thêm style bs-header-container từ detail */
+.bs-header-container {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.bs-subtitle {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 5px;
+  font-family: 'Times New Roman', serif;
+  font-style: italic;
+}
+
+.bs-main-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #c0392b;
+  margin: 0;
+}
+
+.bs-divider {
+  margin-top: 10px;
+  color: #e0e0e0;
+  font-size: 10px;
+  letter-spacing: 5px;
 }
 
 /* Legacy styles (for backward compatibility) */
@@ -63,15 +93,165 @@
   margin-top: 5px;
 }
 
-/* Product Card */
+/* --- BEST SELLER CARD STYLES (từ detail) --- */
+.bs-wrapper-container {
+  position: relative;
+  width: 100%;
+}
+
+.swiper_product_sale {
+  width: 100%;
+  padding: 10px 5px 30px 5px !important;
+}
+
+.bs-card {
+  background: #fff;
+  border: 1px solid #fff;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  height: auto;
+  padding-bottom: 20px;
+}
+
+.bs-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  border: 2px solid #d82b2b;
+}
+
+.bs-img-wrapper {
+  background-color: #fff5e1;
+  padding: 15px;
+  aspect-ratio: 1/1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.bs-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.5s;
+  mix-blend-mode: multiply;
+}
+
+.bs-card:hover .bs-img-wrapper img {
+  transform: scale(1.05);
+}
+
+.bs-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.bs-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+  line-height: 1.3;
+  height: 36px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-transform: uppercase;
+}
+
+.bs-price-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.price-current {
+  color: #d82b2b;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.price-old {
+  font-size: 12px;
+  color: #999;
+  text-decoration: line-through;
+}
+
+.btn-pill-outline {
+  display: inline-block;
+  padding: 6px 20px;
+  border: 1px solid #d82b2b;
+  border-radius: 50px;
+  color: #d82b2b;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: #fff;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-pill-outline:hover {
+  background-color: #d82b2b;
+  color: #fff;
+}
+
+/* Navigation Buttons (từ detail) */
+.bs-button-next,
+.bs-button-prev {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #fff;
+  border: 1px solid #eee;
+  color: #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 40%;
+  z-index: 20;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+
+.bs-button-next:hover,
+.bs-button-prev:hover {
+  background-color: #d82b2b;
+  color: #fff;
+  border-color: #d82b2b;
+}
+
+.bs-button-prev {
+  left: 0px;
+}
+
+.bs-button-next {
+  right: 0px;
+}
+
+/* Legacy product card (DEPRECATED) */
 .item_product_main {
   background: var(--white-color);
   border-radius: var(--border-radius-medium);
   overflow: hidden;
   box-shadow: var(--shadow-small);
-  transition: transform var(--transition-normal) ease, box-shadow var(--transition-normal) ease;
+  transition: transform var(--transition-normal) ease, box-shadow var(--transition-normal) ease, border 0.3s ease;
   margin-bottom: 30px;
   margin-top: 10px;
+  border: 2px solid transparent;
 }
 
 .item_product_main:hover {
@@ -116,19 +296,6 @@
   margin-bottom: 15px;
 }
 
-.price-current {
-  font-size: 20px;
-  font-weight: bold;
-  color: var(--secondary-color);
-  margin-right: 8px;
-}
-
-.price-old {
-  font-size: 14px;
-  color: #999;
-  text-decoration: line-through;
-}
-
 .product-button-wrapper {
   display: flex;
   justify-content: center;
@@ -158,72 +325,5 @@
 .product-button.sold-out {
   border-color: #999;
   color: #999;
-}
-
-/* Swiper Styles */
-.swiper_product_sale {
-  padding: 0 50px 20px;
-  position: relative;
-}
-
-
-.swiper-button-prev,
-.swiper-button-next {
-  width: 35px !important;
-  height: 35px !important;
-  background: rgba(var(--primary-rgb), 0.8) !important;
-  border: none !important;
-  border-radius: var(--border-radius-circle) !important;
-  color: var(--white-color) !important;
-  transition: var(--transition-normal) !important;
-  box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.2) !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  cursor: pointer !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  z-index: 100;
-}
-
-.swiper-button-prev {
-  left: 15px !important;
-}
-
-.swiper-button-next {
-  right: 15px !important;
-}
-
-/* Fix SVG icon size */
-.swiper-button-prev::after,
-.swiper-button-next::after {
-  font-size: 0 !important;
-  width: 0 !important;
-  height: 0 !important;
-  content: '' !important;
-}
-
-.swiper-button-prev svg,
-.swiper-button-next svg {
-  width: 10px !important;
-  height: 10px !important;
-  display: block !important;
-  stroke: var(--white-color) !important;
-  fill: none !important;
-  stroke-width: 2 !important;
-}
-
-.swiper-button-prev:hover,
-.swiper-button-next:hover {
-  background: var(--primary-color) !important;
-  box-shadow: 0 6px 20px rgba(var(--primary-rgb), 0.4) !important;
-  transform: translateY(-50%) scale(1.08) !important;
-}
-
-.swiper-button-disabled {
-  opacity: 0.5 !important;
-  cursor: not-allowed !important;
 }
 

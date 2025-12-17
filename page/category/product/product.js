@@ -35,19 +35,19 @@ let allData = null;
         : `<button class="btn btn-primary" onclick="event.stopPropagation(); openModal(${item.id}, '${item.title}', ${item.price_current});">MUA HÀNG</button>`;
       
       return `
-        <div class="product-item" onclick="window.location.href='/page/category/detail/detail.htm?id=${item.id}'" style="cursor: pointer;">
-          <div class="product-image">
-            ${item.image ? `<img src="${item.image}" alt="${item.title}">` : `<img src="https://via.placeholder.com/280x250/f5f5f5/999?text=${encodeURIComponent(item.title)}" alt="${item.title}">`}
+        <div class="product-item bs-card" onclick="window.location.href='/page/category/detail/detail.htm?id=${item.id}'" style="cursor: pointer;">
+          <div class="bs-img-wrapper">
+            ${item.image ? `<img src="${item.image}" alt="${item.title}">` : `<img src="https://via.placeholder.com/280x250/fff5e1/ff6b35?text=${encodeURIComponent(item.title)}" alt="${item.title}">`}
           </div>
-          <div class="product-info">
-            <h3 class="product-title">${item.title}</h3>
-            <div class="price-section">
+          <div class="bs-content">
+            <h3 class="bs-name">${item.title}</h3>
+            <div class="bs-price-row">
               <span class="price-current">${formatPrice(item.price_current)}</span>
               <span class="price-old">${formatPrice(item.price_old)}</span>
             </div>
-            <div class="product-actions">
-              ${statusButton}
-            </div>
+            <a href="/page/category/detail/detail.htm?id=${item.id}" class="btn-pill-outline">
+              ${item.status === 'soldout' ? 'TÙY CHỌN' : 'MUA HÀNG'}
+            </a>
           </div>
         </div>
       `;

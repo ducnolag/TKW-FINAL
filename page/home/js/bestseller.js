@@ -13,30 +13,23 @@ document.addEventListener('htmlIncluded', function () {
       const wrapper = document.querySelector('.swiper_product_sale .swiper-wrapper');
       if (!wrapper) return;
 
-      // 2. Render sản phẩm vào slider
+      // 2. Render sản phẩm vào slider (giống .bs-card structure)
       wrapper.innerHTML = products.map(item => `
-        <div class="swiper-slide">
-          <div class="item_product_main">
-            <a href="/page/category/detail/detail.htm?id=${item.id}" style="text-decoration: none; color: inherit;">
-              <img src="${item.image}" alt="${item.title}" class="product-image">
-
-              <div class="product-info">
-                <h3 class="product-title">${item.title}</h3>
-
-                <div class="product-price">
-                  <span class="price-current">${item.price_current.toLocaleString()}₫</span>
-                  <span class="price-old">${item.price_old.toLocaleString()}₫</span>
-                </div>
-              </div>
+        <div class="swiper-slide bs-card">
+          <div class="bs-img-wrapper">
+            <a href="/page/category/detail/detail.htm?id=${item.id}" style="text-decoration: none; color: inherit; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+              <img src="${item.image}" alt="${item.title}" style="width: 100%; height: 100%; object-fit: contain;">
             </a>
-            
-            <div class="product-button-wrapper">
-              <a href="/page/category/detail/detail.htm?id=${item.id}" 
-                 class="product-button ${item.status === 'soldout' ? 'sold-out' : ''}" 
-                 style="text-decoration: none;">
-                Xem chi tiết
-              </a>
+          </div>
+          <div class="bs-content">
+            <h3 class="bs-name">${item.title}</h3>
+            <div class="bs-price-row">
+              <span class="price-current">${item.price_current.toLocaleString()}₫</span>
+              <span class="price-old">${item.price_old.toLocaleString()}₫</span>
             </div>
+            <a href="/page/category/detail/detail.htm?id=${item.id}" class="btn-pill-outline">
+              ${item.status === 'soldout' ? 'TÙY CHỌN' : 'MUA HÀNG'}
+            </a>
           </div>
         </div>
       `).join('');
@@ -45,27 +38,19 @@ document.addEventListener('htmlIncluded', function () {
       setTimeout(() => {
         new Swiper('.swiper_product_sale', {
           slidesPerView: 4,
-          spaceBetween: 24,
+          spaceBetween: 20,
           speed: 600,
           loop: true,
-
-          autoplay: {
-            delay: 2500,
-            disableOnInteraction: false,
-          },
-
           navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
+            nextEl: '.bs-button-next',
+            prevEl: '.bs-button-prev',
           },
-
           grabCursor: true,
-
           breakpoints: {
-            320:  { slidesPerView: 1, spaceBetween: 16 },
-            640:  { slidesPerView: 2, spaceBetween: 16 },
-            992:  { slidesPerView: 3, spaceBetween: 20 },
-            1200: { slidesPerView: 4, spaceBetween: 24 }
+            320:  { slidesPerView: 1, spaceBetween: 10 },
+            640:  { slidesPerView: 2, spaceBetween: 15 },
+            992:  { slidesPerView: 3, spaceBetween: 15 },
+            1200: { slidesPerView: 4, spaceBetween: 20 }
           }
         });
       }, 100);

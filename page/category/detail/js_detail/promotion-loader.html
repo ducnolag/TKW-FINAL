@@ -151,22 +151,50 @@
         .toast-msg { flex: 1; font-size: 13px; color: #333; }
         .toast-close { padding: 0 15px; cursor: pointer; color: #ccc; }
 
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.3s; padding: 15px; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.3s; padding: 15px; cursor: pointer; }
         .modal-overlay.show { opacity: 1; visibility: visible; }
-        .modal-box { background: #fff; width: 600px; max-width: 100%; border-radius: 12px; overflow: hidden; transform: translateY(30px); transition: 0.4s ease; }
+        .modal-box { background: #fff; width: 600px; max-width: 100%; border-radius: 12px; overflow: hidden; transform: translateY(30px); transition: 0.4s ease; cursor: default; }
         .modal-overlay.show .modal-box { transform: translateY(0); }
         .modal-header { padding: 15px 25px; background: var(--primary); color: #fff; display: flex; justify-content: space-between; align-items: center; }
         .modal-title { font-weight: 800; font-size: 18px; }
         
-        /* --- SỬA CSS NÚT ĐÓNG (MODAL CLOSE) --- */
-        .modal-close { cursor: pointer; font-size: 22px; /* Thiết lập kích thước vuông để khi xoay tâm nằm chính giữa */ width: 36px; height: 36px; /* Căn icon ra giữa khung */ display: flex; align-items: center; justify-content: center; border-radius: 50%; /* Bo tròn vùng hover */ /* Quan trọng: Tạo độ mượt khi thay đổi trạng thái */ transition: all 0.4s ease; }
-        /* Hiệu ứng khi di chuột vào */
-        .modal-close:hover { /* Xoay 90 độ (1/4 vòng) hoặc 180 độ (nửa vòng) tùy bạn thích */ /* Đổi màu nền nhẹ để người dùng dễ nhận biết */ background-color: rgba(255, 255, 255, 0.2); /* Phóng to nhẹ icon một chút */ transform: rotate(90deg) scale(1.1); }
+        /* --- CSS NÚT ĐÓNG (MODAL CLOSE) --- */
+        .modal-close { 
+            cursor: pointer; font-size: 32px; width: 44px; height: 44px; 
+            display: flex; align-items: center; justify-content: center; 
+            border-radius: 50%; border: 3px solid rgba(255,255,255,0.5);
+            transition: all 0.3s ease; flex-shrink: 0;
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+            line-height: 1;
+        }
+        .modal-close:hover { 
+            background: rgba(255,255,255,0.4);
+            border-color: #fff;
+            transform: rotate(90deg) scale(1.2);
+        }
 
         .modal-body { padding: 25px; max-height: 70vh; overflow-y: auto; }
         .modal-desc-block { margin-bottom: 20px; }
         .modal-desc-block h4 { font-size: 14px; font-weight: 700; border-bottom: 2px solid #eee; padding-bottom: 5px; margin-bottom: 8px; color: #555; text-transform: uppercase; }
         .modal-desc-block p { font-size: 14px; line-height: 1.6; color: #555; }
+
+        /* Modal Footer - Nút đóng ở cuối */
+        .modal-footer { 
+            padding: 20px 25px; border-top: 2px solid #eee; 
+            display: flex; justify-content: center; gap: 15px;
+            background: #fafafa;
+        }
+        .btn-close-modal {
+            background: var(--primary); color: #fff; border: none;
+            padding: 14px 40px; border-radius: 8px; font-size: 15px; font-weight: 800;
+            cursor: pointer; transition: 0.3s; text-transform: uppercase; letter-spacing: 0.5px;
+            box-shadow: 0 4px 8px rgba(255, 107, 53, 0.2);
+        }
+        .btn-close-modal:hover {
+            background: var(--primary-dark); transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(255, 107, 53, 0.4);
+        }
 
         @media (max-width: 900px) { .promo-grid { grid-template-columns: 1fr; } }
 
@@ -204,7 +232,7 @@
             
             <div class="cc-thumb">
                 <div class="cc-badge">Đang diễn ra</div>
-                <img src="../img/Khuyenmai/1080x/6.png" alt="Mỳ Trộn">
+                <img src="/assets/promotion/1080x/6.png" alt="Mỳ Trộn">
             </div>
             <div class="cc-body">
                 <div class="cc-title">Mỳ Trộn Không Khô - Mỳ Cay Không Cay</div>
@@ -219,14 +247,14 @@
             </div>
         </div>
 
-        <div class="common-card type-program" id="card-afternoon"
+        <div class="common-card type-program wait" id="card-afternoon"
             data-title="Xế Chiều Nạp MOOD"
             data-detail="Nạp năng lượng tỉnh táo cho buổi chiều."
             data-terms="- Khung giờ: 13:30 - 17:30.<br>- Giảm 5% toàn bộ menu Đồ uống.">
             
             <div class="cc-thumb">
                 <div class="cc-badge" id="status-afternoon">Sắp diễn ra</div>
-                <img src="../img/Khuyenmai/1080x/3.png" alt="Xế Chiều">
+                <img src="/assets/promotion/1080x/3.png" alt="Xế Chiều">
             </div>
             <div class="cc-body">
                 <div class="cc-title">Xế Chiều Nạp MOOD</div>
@@ -240,14 +268,14 @@
             </div>
         </div>
 
-        <div class="common-card type-program" id="card-night"
+        <div class="common-card type-program wait" id="card-night"
             data-title="Cú Đêm Diệt Mồi"
             data-detail="Đói bụng đêm khuya đã có menu ăn vặt trợ giá."
             data-terms="- Khung giờ: 22:30 - 02:30 sáng.<br>- Giảm 5% các món Ăn vặt.">
             
             <div class="cc-thumb">
                 <div class="cc-badge" id="status-night">Sắp diễn ra</div>
-                <img src="../img/Khuyenmai/1080x/2.png" alt="Cú Đêm">
+                <img src="/assets/promotion/1080x/2.png" alt="Cú Đêm">
             </div>
             <div class="cc-body">
                 <div class="cc-title">Cú Đêm Diệt Mồi</div>
@@ -273,7 +301,7 @@
             
             <div class="cc-thumb">
                 <div class="cc-badge">GIẢM 10%</div>
-                <img src="../img/Khuyenmai/1080x/1.png" alt="Bạn Mới">
+                <img src="/assets/promotion/1080x/1.png" alt="Bạn Mới">
             </div>
             <div class="cc-body">
                 <div class="cc-title">Chào Bạn Mới</div>
@@ -294,7 +322,7 @@
             
             <div class="cc-thumb">
                 <div class="cc-badge">FREESHIP 15K</div>
-                <img src="../img/Khuyenmai/1080x/4.png" alt="Free Ship">
+                <img src="/assets/promotion/1080x/4.png" alt="Free Ship">
             </div>
             <div class="cc-body">
                 <div class="cc-title">Tiếp Sức Mùa Thi</div>
@@ -315,7 +343,7 @@
             
             <div class="cc-thumb">
                 <div class="cc-badge">COMBO 30K</div>
-                <img src="../img/Khuyenmai/1080x/5.png" alt="Combo">
+                <img src="/assets/promotion/1080x/5.png" alt="Combo">
             </div>
             <div class="cc-body">
                 <div class="cc-title">Mua Càng Nhiều - Ưu Đãi Càng Hời</div>
@@ -352,6 +380,9 @@
                 <h4>Điều kiện áp dụng</h4>
                 <p id="modalTermsContent" style="white-space: pre-line;">...</p>
             </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-close-modal" onclick="closeModal()">Đóng</button>
         </div>
     </div>
 </div>

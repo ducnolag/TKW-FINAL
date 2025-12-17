@@ -217,22 +217,38 @@ document.addEventListener("htmlIncluded", function () {
   const currentPath = window.location.pathname;
   const navItems = document.querySelectorAll('.nav-item');
   
-  navItems.forEach(item => {
-    const link = item.querySelector('.nav-link');
-    if (link) {
-      const href = link.getAttribute('href');
-      // So sánh tương đối để active đúng mục
-      if (href && href !== '#' && currentPath.includes(href.replace('/index.htm', ''))) {
-        navItems.forEach(el => el.classList.remove('active'));
-        item.classList.add('active');
+  // Không highlight menu nếu đang ở trang cart
+  if (!currentPath.includes('/page/cart/')) {
+    navItems.forEach(item => {
+      const link = item.querySelector('.nav-link');
+      if (link) {
+        const href = link.getAttribute('href');
+        
+        // Kiểm tra các trường hợp khác nhau
+        let isActive = false;
+        
+        // Trang chủ
+        if ((currentPath === '/' || currentPath === '/index.htm') && href === '/index.htm') {
+          isActive = true;
+        }
+        // Trang sản phẩm (bao gồm cả detail pages)
+        else if ((currentPath.includes('/page/category/') || currentPath.includes('/page/checkout/')) && href === '/page/category/product/product.htm') {
+          isActive = true;
+        }
+        // Trang khuyến mãi
+        else if (currentPath.includes('/page/promotion/') && href === '/page/promotion/promotion.html') {
+          isActive = true;
+        }
+        
+        if (isActive) {
+          navItems.forEach(el => el.classList.remove('active'));
+          item.classList.add('active');
+        }
       }
-    }
-  });
-  
-  // Xử lý riêng cho trang chủ
-  if (currentPath === '/' || currentPath === '/index.htm') {
+    });
+  } else {
+    // Xóa active từ tất cả menu khi ở trang cart
     navItems.forEach(el => el.classList.remove('active'));
-    if (navItems[0]) navItems[0].classList.add('active');
   }
 });
 
