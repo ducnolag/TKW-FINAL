@@ -1,0 +1,796 @@
+/* ========================================
+    Thiết lập chung
+   ======================================== */
+:root {
+    --primary-color: #ff6b35;
+    --secondary-color: #d82b2b;
+    --dark-color: #1a1a1a;
+    --light-color: #f8f9fa;
+    --text-color: #333;
+    --gray-color: #6c757d;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-color);
+    line-height: 1.7;
+    overflow-x: hidden;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 50px;
+}
+/* ========================================
+   Nút bấm chung
+   ======================================== */
+.btn-custom {
+    background: var(--primary-color);
+    color: var(--light-color);
+    border: none;
+    padding: 12px 35px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 0;
+    transition: all 0.3s ease;
+    display: inline-block;
+    font-size: 14px;
+}
+
+.btn-custom:hover {
+    background: var(--secondary-color);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(247, 179, 43, 0.3);
+}
+
+.btn-custom-light {
+    background: transparent;
+    color: #fff;
+    border: 2px solid var(--primary-color);
+    padding: 12px 35px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 0;
+    transition: all 0.3s ease;
+    display: inline-block;
+    font-size: 14px;
+}
+
+.btn-custom-light:hover {
+    background: var(--primary-color);
+    color: var(--dark-color);
+}
+
+/* ========================================
+   Nhãn phụ
+   ======================================== */
+.intro-label,
+.product-label,
+.section-label-center {
+    font-family: 'Satisfy', cursive;
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.section-label-center {
+    text-align: center;
+}
+
+/* ========================================
+   Tiêu đề chính
+   ======================================== */
+.intro-title,
+.product-title,
+.section-title-center {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--dark-color);
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.section-title-center {
+    text-align: justify;
+}
+
+/* ========================================
+   Phần giới thiệu đầu
+   ======================================== */
+.welcome-intro-section {
+    padding: 100px 0;
+    background: #fff;
+}
+
+.intro-content {
+    padding-right: 40px;
+}
+
+.intro-text {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+.intro-description {
+    color: var(--gray-color);
+    margin-bottom: 30px;
+    line-height: 1.8;
+}
+/* ảnh giới thiệu */
+/* Container làm mốc */
+.intro-image-stack {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* MAIN */
+.main-image{
+  position: relative;
+  z-index: 10;
+  width: 80%;
+  height: 80%;
+  margin: 0 auto;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.main-image img{
+  width: 100%;
+  height: 360px;
+  display: block;
+  object-fit: cover;
+}
+
+
+/* Ảnh lớp dưới */
+.sub-image {
+  position: absolute;
+  z-index: 1;
+  width: 180px;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.sub-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 14px;
+}
+
+/*chỉnh  layout */
+.sub-image-1 {
+  bottom: 40px;
+  left: -40px;
+}
+
+.sub-image-2 {
+  bottom: -40px;
+  right: -30px;
+}
+
+/*animation ảnh */
+.main-float {
+  width: 100%;
+}
+
+.float-y { animation: float-y 4s ease-in-out infinite; }
+.float-x { animation: float-x 5s ease-in-out infinite; }
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
+}
+
+@keyframes float-x {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(12px); }
+}
+
+
+/* ========================================
+  Phần video 
+   ======================================== */
+.video-cta-section {
+  position: relative;
+  height: 40vh;                 /* chỉnh chiều cao section */
+  min-height: 520px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;       
+}
+
+/* Video nền */
+.video-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* Overlay tối */
+.video-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1;
+}
+
+/* Nội dung */
+.video-content {
+  position: relative;
+  z-index: 2;
+  padding-bottom: 80px;      
+  color: #fff;
+}
+
+.video-title {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.video-subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  max-width: 720px;
+  margin: 0 auto 24px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .video-cta-section {
+    height: 70vh;
+    min-height: 420px;
+  }
+
+  .video-title {
+    font-size: 2.2rem;
+  }
+
+  .video-content {
+    padding-bottom: 50px;
+  }
+}
+
+/* ========================================
+   Các section sản phẩm
+   ======================================== */
+.categories {
+    background: #f9f9f9;
+}
+
+.section-kicker {
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  font-size: 0.9rem;
+  color: #5b4a3a;
+  margin-bottom: 6px;
+}
+
+.section-title {
+  font-weight: 800;
+  color: #ff6b35;
+  margin: 0;
+}
+
+/* Card */
+.service-card {
+  border-radius: 18px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 18px 45px rgba(0,0,0,0.08);
+  transition: transform .25s ease, box-shadow .25s ease;
+  height: 100%;
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 26px 60px rgba(0,0,0,0.12);
+}
+
+/* Media */
+.service-card_media {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+}
+
+.service-card_media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .35s ease;
+}
+
+.service-card:hover .service-card_media img {
+  transform: scale(1.06);
+}
+
+/* Body */
+.service-card_body {
+  position: relative;
+  padding: 44px 22px 22px;
+  background: #fff;
+  text-align: center;
+  min-height: 210px;
+}
+
+/* Icon circle */
+.service-card_icon {
+  position: absolute;
+  left: 50%;
+  top: -28px;
+  transform: translateX(-50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  background: #fff;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+.service-card_icon i {
+  font-size: 20px;
+  color: #5b4a3a;
+}
+
+.service-card_title {
+  font-weight: 800;
+  color: #ff6b35;
+  margin-bottom: 10px;
+  font-size: 1.25rem;
+}
+
+.service-card_desc {
+  color: #6b6b6b;
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+
+.service-card_link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  color: #5b4a3a;
+  text-decoration: none;
+}
+
+.service-card_link:hover {
+  text-decoration: underline;
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+  .service-card__media { height: 200px; }
+  .service-card__body { min-height: unset; }
+}
+
+/* ========================================
+   TESTIMONIAL SECTION - Phần đánh giá
+   ======================================== */
+.testimonial-section {
+    position: relative;
+    padding: 50px 0;
+    background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.testimonial-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+}
+
+.testimonial-content {
+    position: relative;
+    z-index: 2;
+}
+
+.testimonial-avatar {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 20px;
+    position: relative;
+}
+
+.testimonial-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 5px solid var(--primary-color);
+    object-fit: cover;
+}
+
+.verified-badge {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 35px;
+    height: 35px;
+    background: #4CAF50;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #fff;
+}
+
+.verified-badge i {
+    color: #fff;
+    font-size: 14px;
+}
+
+.testimonial-stars {
+    margin-bottom: 30px;
+}
+
+.testimonial-stars i {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin: 0 3px;
+}
+
+.testimonial-quote {
+    color: #fff;
+    font-size: 1.3rem;
+    font-style: italic;
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+
+.testimonial-name {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.testimonial-role {
+    color: var(--primary-color);
+    font-size: 1rem;
+    margin-bottom: 30px;
+}
+
+.testimonial-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dot.active,
+.dot:hover {
+    background: var(--primary-color);
+    transform: scale(1.2);
+}
+
+/* ========================================
+   VALUES SECTION - Phần giá trị cam kết
+   ======================================== */
+.values-section {
+    background: #fff;
+}
+
+.value-card {
+    background: #fff;
+    padding: 40px 30px;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+    transition: all 0.3s ease;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.value-card:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+}
+
+.value-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+    transition: all 0.3s ease;
+}
+
+.value-card:hover .value-icon {
+    transform: rotateY(360deg);
+}
+
+.value-icon i {
+    font-size: 2rem;
+    color: var(--light-color);
+}
+
+.value-card h4 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--dark-color);
+}
+
+.value-card p {
+    color: var(--gray-color);
+    line-height: 1.8;
+    margin-bottom: 0;
+}
+
+/* ========================================
+   TEAM SECTION - Phần đội ngũ
+   ======================================== */
+.team-section {
+    background: var(--light-color);
+}
+
+.chef-card {
+    background: #fff;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.chef-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+.chef-image {
+    position: relative;
+    overflow: hidden;
+    height: 400px;
+}
+
+.chef-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.chef-card:hover .chef-image img {
+    transform: scale(1.1);
+}
+
+.chef-badge {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: var(--primary-color);
+    color: var(--dark-color);
+    padding: 8px 20px;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.chef-badge.badge-manager {
+    background: var(--secondary-color);
+    color: #fff;
+}
+
+.chef-info {
+    padding: 30px;
+    text-align: center;
+}
+
+.chef-info h4 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--dark-color);
+}
+
+.chef-info p {
+    color: var(--gray-color);
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+.chef-social {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.chef-social a {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #e0e0e0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray-color);
+    transition: all 0.3s ease;
+}
+
+.chef-social a:hover {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--dark-color);
+    transform: translateY(-3px);
+}
+
+/* ========================================
+   DELIVERY SECTION - Phần cam kết giao hàng
+   ======================================== */
+.delivery-section {
+    background: #fff;
+}
+
+.delivery-description {
+    font-size: 1.1rem;
+    color: var(--gray-color);
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.8;
+}
+
+/* ========================================
+   FOOTER CTA - Phần lời cảm ơn cuối
+   ======================================== */
+.footer-cta-section {
+    background: var(--dark-color) !important;
+}
+
+.footer-cta-section h3 {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.footer-cta-section .lead {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+.footer-cta-section p {
+    opacity: 0.8;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN - Điều chỉnh responsive
+   ======================================== */
+@media (max-width: 991px) {
+    .intro-title,
+    .product-title,
+    .section-title-center {
+        font-size: 2.2rem;
+    }
+    
+    .video-title {
+        font-size: 2.2rem;
+    }
+    
+    .intro-content,
+    .product-content {
+        padding: 20px 0;
+        margin-bottom: 30px;
+    }
+    
+    .chef-image {
+        height: 350px;
+    }
+}
+
+@media (max-width: 767px) {
+    .intro-title,
+    .product-title,
+    .section-title-center {
+        font-size: 1.8rem;
+    }
+    
+    .video-title {
+        font-size: 1.8rem;
+    }
+    
+    .intro-label,
+    .product-label,
+    .section-label-center {
+        font-size: 1.4rem;
+    }
+    
+    .play-button {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .play-button i {
+        font-size: 1.5rem;
+    }
+    
+    .testimonial-quote {
+        font-size: 1.1rem;
+    }
+    
+    .chef-image {
+        height: 300px;
+    }
+    
+    .intro-images img {
+        height: 200px;
+    }
+    
+    .product-section {
+        padding: 60px 0;
+    }
+    
+    .video-cta-section {
+        padding: 100px 0;
+    }
+}
+
+/* ========================================
+   ANIMATIONS - Hiệu ứng chuyển động
+   ======================================== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ========================================
+   UTILITIES - Các class hỗ trợ
+   ======================================== */
+.bg-light {
+    background-color: var(--light-color) !important;
+}
+
+.bg-dark {
+    background-color: var(--dark-color) !important;
+}
