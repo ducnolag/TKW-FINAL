@@ -164,19 +164,13 @@ document.addEventListener("htmlIncluded", function () {
       
       for (const [key, label] of Object.entries(categories)) {
         if (data[key]) {
-          const column = document.createElement('div');
-          column.className = 'mega-column';
+          // Tạo link cho danh mục
+          const categoryLink = document.createElement('a');
+          categoryLink.href = `/page/category/product/product.htm?category=${key}`;
+          categoryLink.className = 'mega-category-link';
+          categoryLink.textContent = label;
           
-          // Tạo link đến trang danh mục
-          let columnHTML = `<h4><a href="/page/category/product/product.htm?category=${key}" style="color: inherit; text-decoration: none; display: block;">${label}</a></h4>`;
-          
-          // Hiển thị 5 sản phẩm đầu tiên
-          data[key].slice(0, 5).forEach(product => {
-            columnHTML += `<a href="/page/category/detail/detail.htm?id=${product.id}">${product.title}</a>`;
-          });
-          
-          column.innerHTML = columnHTML;
-          megaCategory.appendChild(column);
+          megaCategory.appendChild(categoryLink);
         }
       }
     } catch (error) {

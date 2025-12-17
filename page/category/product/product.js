@@ -6,6 +6,17 @@ let allData = null;
     let currentPage = 1; // ⭐ THÊM
     const productsPerPage = 12; // ⭐ THÊM - 12 sản phẩm/trang (4 dòng × 3 cột)
 
+    // ⭐ THÊM: Mapping danh mục sang tên Tiếng Việt
+    const categoryNames = {
+      'all': 'Tất cả sản phẩm',
+      'micay': 'Mì Cay',
+      'mitron': 'Mì Trộn',
+      'anvat': 'Ăn Vặt',
+      'ankem': 'Ăn Kèm',
+      'douong': 'Đồ Uống',
+      'combo': 'Combo'
+    };
+
     // Lấy category hoặc search query từ URL parameter
     const urlParams = new URLSearchParams(window.location.search);
     const categoryFromURL = urlParams.get('category');
@@ -152,10 +163,10 @@ let allData = null;
         // Hiển thị theo danh mục
         if (category === 'all') {
           products = allData.sale || [];
-          titleText = 'Tất cả sản phẩm';
+          titleText = categoryNames['all'];
         } else if (allData[category]) {
           products = allData[category];
-          titleText = `Danh mục: ${category}`;
+          titleText = categoryNames[category] || category;
         } else {
           products = [];
           titleText = 'Không có sản phẩm';
