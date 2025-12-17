@@ -28,7 +28,7 @@ document.addEventListener('htmlIncluded', function () {
               <span class="price-old">${item.price_old.toLocaleString()}₫</span>
             </div>
             <a href="/page/category/detail/detail.htm?id=${item.id}" class="btn-pill-outline">
-              ${item.status === 'soldout' ? 'TÙY CHỌN' : 'MUA HÀNG'}
+              ${item.status === 'soldout' ? 'XEM CHI TIẾT' : 'MUA HÀNG'}
             </a>
           </div>
         </div>

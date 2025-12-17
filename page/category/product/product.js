@@ -31,7 +31,7 @@ let allData = null;
 
     function createProductHTML(item) {
       const statusButton = item.status === 'soldout' 
-        ? `<button class="btn" onclick="event.stopPropagation(); openModal(${item.id}, '${item.title}', ${item.price_current});">TÙY CHỌN</button>`
+        ? `<button class="btn" onclick="event.stopPropagation(); openModal(${item.id}, '${item.title}', ${item.price_current});">Xem Chi Tiết</button>`
         : `<button class="btn btn-primary" onclick="event.stopPropagation(); openModal(${item.id}, '${item.title}', ${item.price_current});">MUA HÀNG</button>`;
       
       return `
@@ -46,7 +46,7 @@ let allData = null;
               <span class="price-old">${formatPrice(item.price_old)}</span>
             </div>
             <a href="/page/category/detail/detail.htm?id=${item.id}" class="btn-pill-outline">
-              ${item.status === 'soldout' ? 'TÙY CHỌN' : 'MUA HÀNG'}
+              ${item.status === 'soldout' ? 'Xem Chi Tiết' : 'MUA HÀNG'}
             </a>
           </div>
         </div>

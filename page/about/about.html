@@ -9,14 +9,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Satisfy&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="about.css">
+    <link rel="stylesheet" href="/src/css/again.css">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="about.js"></script>
+    <script src="/utils/include.js"></script>
 </head>
 <body>
-    <div> </div>
+    <div data-include="/src/components/header.htm"></div>
     <!-- ========== WELCOME SECTION ========== -->
-
     <section class="welcome-intro-section py-3">
         <div class="container">
             <div class="row align-items-center">
@@ -27,139 +27,170 @@
                         <h1 class="intro-title">Tiệm Ăn Vặt Ngon Nhất Thế Giới</h1>
                         <p class="intro-text">Chào mừng bạn đến với Tiệm Ăn Vặt Ngon Nhất Thế Giới. Nơi mỗi món ăn đều là niềm vui trọn vẹn.</p>
                         <p class="intro-description">Với chúng tôi, cái tên này là một lời nhắc nhở, một kim chỉ nam cho mọi hoạt động vận hành. Đó là khát khao và mục tiêu mà Tiệm nỗ lực phấn đấu mỗi ngày: Biến mỗi món ăn trao tay khách hàng đều trở thành niềm vui trọn vẹn nhất.</p>
-                        <button class="btn-custom">Liên Hệ Ngay</button>
+                        <a href="/page/lienhe/lienhe.html" class="btn-custom">Liên Hệ Ngay</a>
                     </div>
                 </div>
                 
                 <!-- Grid hình ảnh -->
                 <div class="col-lg-6">
-                    <div class="intro-images">
-                        <div class="row g-3">
-                            <div class="col-6">
-                                <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600" alt="Food 1" class="img-fluid rounded">
-                            </div>
-                            <div class="col-6">
-                                <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600" alt="Food 2" class="img-fluid rounded">
-                            </div>
-                            <div class="col-6">
-                                <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600" alt="Food 3" class="img-fluid rounded">
-                            </div>
-                            <div class="col-6">
-                                <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600" alt="Food 4" class="img-fluid rounded">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  <div class="intro-image-stack">
+    <!-- ẢNH CHÍNH -->
+    <div class="main-image float-y">
+        <div class="main-image">
+      <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800"
+           alt="Main"
+           class="img-fluid">
+        </div>
+    </div>
+
+    <!-- ẢNH / SHAPE LỚP DƯỚI -->
+    <div class="sub-image sub-image-1 float-x">
+      <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400"
+           alt="">
+    </div>
+
+    <div class="sub-image sub-image-2 float-x">
+      <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400"
+           alt="">
+    </div>
+
+  </div>
+</div>
+
             </div>
         </div>
     </section>
 
     <!-- ========== VIDEO SECTION ========== -->
     <section class="video-cta-section">
-        <div class="video-overlay"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center video-content">
-                    <div class="play-button">
-                        <i class="fas fa-play"></i>
-                    </div>
-                    <h2 class="video-title">Chúng Tôi Là Ai?</h2>
-                    <p class="video-subtitle">Xuất phát điểm từ những người trẻ có niềm đam mê bất tận với ẩm thực đường phố</p>
-                    <button class="btn-custom-light">Đặt Món Ngay</button>
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- VIDEO BACKGROUND -->
+  <video class="video-bg" autoplay muted loop playsinline>
+    <source src="assets/videos/intro.mp4" type="video/mp4">
+  </video>
 
-    <!-- ========== PRODUCT SECTION 1  - ========== -->
-    <section class="product-section py-3 bg-light">
-        <div class="container">
-            <div class="row align-items-center">
-                <!-- Text -->
-                <div class="col-lg-6">
-                    <div class="product-content">
-                        <span class="product-label">Our Quality</span>
-                        <h2 class="product-title">Thế Giới Ăn Vặt</h2>
-                        <p class="product-description">Nơi lưu giữ ký ức tuổi thơ nhưng ở phiên bản hoàn thiện hơn. Từ những gói miếng gà giòn rụm, xiên que nóng hổi cho đến bánh tráng trộn đẫm sốt.</p>
-                        <p class="product-detail">Tuyệt đối không sử dụng nguyên liệu trôi nổi. Rau phải tươi, thịt phải sạch, nguồn gốc xuất xứ rõ ràng. Với mục tiêu mang đến những món ăn vặt giòn tan, đậm đà và cuốn hút.</p>
-                        <!--<button class="btn-custom">Xem Thêm</button> -->
-                    </div>
-                </div>
+  <div class="video-overlay"></div>
 
-                <!-- Hình ảnh -->
-                <div class="col-lg-6">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1562967914-608f82629710?w=800" alt="Snack Land" class="img-fluid">
-                        <!-- Trang trí -->
-                        <div class="product-decoration">
-                            <i class="fas fa-drumstick-bite"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center video-content">
+        <h2 class="video-title">Chúng Tôi Là Ai?</h2>
+        <p class="video-subtitle">
+          Xuất phát điểm từ những người trẻ có niềm đam mê bất tận với ẩm thực đường phố
+        </p>
+        <a href="/page/category/product/product.htm" class="btn-custom-light">Đặt Món Ngay</a>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- ========== PRODUCT SECTION 2 - Thử thách Mì Cay (Hình trái, text phải) ========== -->
-    <section class="product-section py-3">
-        <div class="container">
-            <div class="row align-items-center">
-                <!-- Hình ảnh -->
-                <div class="col-lg-6 order-lg-1 order-2">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800" alt="Spicy Challenge" class="img-fluid">
-                        <!-- Trang trí -->
-                        <div class="product-decoration">
-                            <i class="fas fa-fire"></i>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Text -->
-                <div class="col-lg-6 order-lg-2 order-1">
-                    <div class="product-content">
-                        <span class="product-label">Our Quality</span>
-                        <h2 class="product-title">Thử Thách Mì Cay</h2>
-                        <p class="product-description">Không chỉ dừng lại ở vị cay, nước dùng của Tiệm được hầm từ xương tạo nên vị ngọt tự nhiên, kết hợp cùng hải sản tươi mới.</p>
-                        <p class="product-detail">Với 7 cấp độ cay được phân chia rõ ràng, từ "cay nhẹ nhàng" kích thích vị giác đến "cay bùng nổ" dành cho những người thích chinh phục. Đây là trải nghiệm mà bạn không thể bỏ lỡ.</p>
-                        <!--<button class="btn-custom">Đặt Món Ngay</button>-->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+   <!-- ========== CATEGORIES   ========== -->
+<section class="categories py-5">
+  <div class="container">
+    <div class="text-center mb-4">
+      <div class="section-kicker">DANH MỤC NỔI BẬT</div>
+      <h2 class="section-title">Thế Giới Ăn Vặt & Đồ Uống</h2>
+    </div>
 
-    <!-- ========== PRODUCT SECTION 3 - Mì Trộn Độc Quyền (Text trái, hình phải) ========== -->
-    <section class="product-section py-3 bg-light">
-        <div class="container">
-            <div class="row align-items-center">
-                <!-- Text -->
-                <div class="col-lg-6">
-                    <div class="product-content">
-                        <span class="product-label">Our Quality</span>
-                        <h2 class="product-title">Mì Trộn Độc Quyền</h2>
-                        <p class="product-description">Nếu Mì Cay là sự bùng nổ, thì Mì Trộn là sự cân bằng tinh tế. Sợi mì dai mềm quyện trong loại nước sốt bí truyền hội tụ đủ vị: Mặn - Ngọt - Chua - Cay.</p>
-                        <p class="product-detail">Với 2 loại mỳ được phục vụ là mỳ Indomie và mỳ Việt Nam, nhất định sẽ mang lại trải nhiệm đặc biệt, đáng nhớ. Đây là dòng sản phẩm "Best-seller" khiến khách hàng quay lại Tiệm nhiều nhất.</p>
-                        <button class="btn-custom">Xem Menu</button>
-                    </div>
-                </div>
-                
-                <!-- Hình ảnh -->
-                <div class="col-lg-6">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=800" alt="Signature Noodles" class="img-fluid">
-                        <!-- Trang trí -->
-                        <div class="bestseller-badge">
-                            <i class="fas fa-star"></i> Best Seller
-                        </div>
-                        <div class="product-decoration">
-                            <i class="fas fa-crown"></i>
-                        </div>
-                    </div>
-                </div>
+    <div class="row g-4">
+      <!-- Card 1 -->
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="service-card">
+          <div class="service-card_media">
+            <img src="https://images.unsplash.com/photo-1562967914-608f82629710?w=900" alt="Ăn vặt" />
+          </div>
+
+          <div class="service-card_body">
+            <div class="service-card_icon">
+              <i class="fa-solid fa-drumstick-bite"></i>
             </div>
+
+            <h3 class="service-card_title">Ăn vặt</h3>
+            <p class="service-card_desc">
+              Bánh tráng, xiên que, gà giòn… nguyên liệu sạch, đậm vị và cuốn hút.
+            </p>
+
+            <a href="/page/category/product/product.htm" class="service-card_link">
+              Xem thêm <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
         </div>
-    </section>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="service-card">
+          <div class="service-card_media">
+            <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=900" alt="Mì cay" />
+          </div>
+
+          <div class="service-card_body">
+            <div class="service-card_icon">
+              <i class="fa-solid fa-fire"></i>
+            </div>
+
+            <h3 class="service-card_title">Thử thách mì cay</h3>
+            <p class="service-card_desc">
+              7 cấp độ cay rõ ràng, nước dùng hầm xương, hải sản tươi – cực “đã”.
+            </p>
+
+            <a href="/page/category/product/product.htm" class="service-card_link">
+              Xem thêm <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="service-card">
+          <div class="service-card_media">
+            <img src="https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=900" alt="Mì trộn" />
+          </div>
+
+          <div class="service-card_body">
+            <div class="service-card_icon">
+              <i class="fa-solid fa-crown"></i>
+            </div>
+
+            <h3 class="service-card_title">Mì trộn độc quyền</h3>
+            <p class="service-card_desc">
+              Sốt bí truyền đủ vị mặn-ngọt-chua-cay, “best-seller” quay lại hoài.
+            </p>
+
+            <a href="/page/category/product/product.htm" class="service-card_link">
+              Xem thêm <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="service-card">
+          <div class="service-card_media">
+            <img src="https://images.unsplash.com/photo-1510626176961-4b57d4fbad03?w=900" alt="Đồ uống" />
+          </div>
+
+          <div class="service-card_body">
+            <div class="service-card_icon">
+              <i class="fa-solid fa-mug-hot"></i>
+            </div>
+
+            <h3 class="service-card_title">Đồ uống</h3>
+            <p class="service-card_desc">
+              Trà trái cây, soda, cacao, sữa tươi… giải nhiệt, cân vị cùng đồ ăn vặt.
+            </p>
+
+            <a href="/page/category/product/product.htm" class="service-card_link">
+              Xem thêm <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
 
     <!-- ========== TESTIMONIAL SECTION - Đánh giá khách hàng ========== -->
     <section class="testimonial-section">
@@ -247,79 +278,6 @@
         </div>
     </section>
 
-    <!-- ========== TEAM SECTION  ========== 
-    <section class="team-section py-5 bg-light">
-        <div class="container">
-            <div class="text-center mb-5">
-                <span class="section-label-center">Always Quality</span>
-                <h2 class="section-title-center">Đội Ngũ Đầu Bếp Tài Năng</h2>
-            </div>
-        -->
-           <!----> 
-            <div class="row g-4">
-                <!-- Chef Card 1 -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="chef-card">
-                        <div class="chef-image">
-                            <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=600" alt="Chef 1">
-                            <span class="chef-badge">CHEF</span>
-                        </div>
-                        <div class="chef-info">
-                            <h4>Nguyễn Văn Bình</h4>
-                            <p>Mọi thứ chúng tôi làm đều xuất phát từ tình yêu với ẩm thực và khách hàng.</p>
-                            <!-- Social icons -->
-                            <div class="chef-social">
-                                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                <a href="#"><i class="fab fa-twitter"></i></a>
-                                <a href="#"><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Chef Card 2 -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="chef-card">
-                        <div class="chef-image">
-                            <img src="https://images.unsplash.com/photo-1583394293214-28ded15ee548?w=600" alt="Chef 2">
-                            <span class="chef-badge badge-manager">MANAGER</span>
-                        </div>
-                        <div class="chef-info">
-                            <h4>Trần Thị Cúc</h4>
-                            <p>Mọi thứ chúng tôi làm đều xuất phát từ tình yêu với ẩm thực và khách hàng.</p>
-                            <!-- Social icons -->
-                            <div class="chef-social">
-                                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                <a href="#"><i class="fab fa-twitter"></i></a>
-                                <a href="#"><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Chef Card 3 -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="chef-card">
-                        <div class="chef-image">
-                            <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600" alt="Chef 3">
-                            <span class="chef-badge">CHEF</span>
-                        </div>
-                        <div class="chef-info">
-                            <h4>Lê Minh Đức</h4>
-                            <p>Mọi thứ chúng tôi làm đều xuất phát từ tình yêu với ẩm thực và khách hàng.</p>
-                            <!-- Social icons -->
-                            <div class="chef-social">
-                                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                <a href="#"><i class="fab fa-twitter"></i></a>
-                                <a href="#"><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- ========== DELIVERY GUARANTEE SECTION - Cam kết giao hàng ========== -->
     <section class="delivery-section py-5">
         <div class="container">
@@ -328,7 +286,7 @@
                     <span class="section-label-center">We guarantee</span>
                     <h2 class="section-title-center">Giao Hàng Trong 30 Phút!</h2>
                     <p class="delivery-description">Nếu bạn đang ở trong cuộc họp, làm việc muộn vào buổi tối và cần thêm một chút năng lượng. Hãy để chúng tôi và chúng tôi sẽ ở đó.</p>
-                    <button class="btn-custom mt-4">Đặt Món Ngay</button>
+                    <a href="/page/category/product/product.htm" class="btn-custom mt-4" style="display: inline-block;">Đặt Món Ngay</a>
                 </div>
             </div>
         </div>
@@ -347,6 +305,7 @@
         </div>
     </section>
 
-
+    <script src="about.js"></script>
+    <script type="module" src="/src/js/again.js"></script>
 </body>
 </html>

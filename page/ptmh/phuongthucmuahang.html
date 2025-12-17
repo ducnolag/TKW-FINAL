@@ -5,13 +5,24 @@
 <title>Phương thức mua hàng</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
  <!-- CSS -->
-  <link rel="stylesheet" href="Phương thức mua hàng.css">
+  <link rel="stylesheet" href="phuongthucmuahang.css">
+  <link rel="stylesheet" href="/src/css/again.css">
+  <script src="/utils/include.js"></script>
 </head>
 
 <body>
+  <div data-include="/src/components/header.htm"></div>
+  <div id="breadcrumb-container"></div>
+  <script src="/src/js/layouts/breadcrumb.js"></script>
+  <script>
+      renderBreadcrumb([
+          { name: "Phương thức mua hàng", link: "" }
+      ]);
+  </script>
 <div class="container">
 
 <h1>Phương thức mua hàng</h1>
@@ -142,6 +153,7 @@
     </ul>
 </div>
 
+<script type="module" src="/src/js/again.js"></script>
 </div>
 </body>
 </html>

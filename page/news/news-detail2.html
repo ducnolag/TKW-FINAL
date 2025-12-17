@@ -10,11 +10,27 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="news.css">
   <link rel="stylesheet" href="sidebar.css">
-
+  <link rel="stylesheet" href="/src/css/main.css">
+  <link rel="stylesheet" href="/src/css/base/reset.css">
+  <link rel="stylesheet" href="/src/css/base/variables.css">
+  <link rel="stylesheet" href="/src/css/base/typography.css">
+  <link rel="stylesheet" href="/src/css/layouts/header.css">
+  <link rel="stylesheet" href="/src/css/layouts/breadcrumb.css">
+  <script src="/utils/include.js"></script>
 
   
 </head>
 <body>
+  <div data-include="/src/components/header.htm"></div>
+  <div id="breadcrumb-container"></div>
+  <script src="/src/js/layouts/breadcrumb.js"></script>
+  <script>
+      renderBreadcrumb([
+          { name: "Trang chủ", link: "/index.htm" },
+          { name: "Tin tức", link: "/page/news/news.html" },
+          { name: "Chi tiết bài viết", link: "" }
+      ]);
+  </script>
   <main class="container py-4">
     <div class="row">
       <!-- SIDEBAR (Bên phải) -->

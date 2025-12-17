@@ -239,6 +239,22 @@ document.addEventListener("htmlIncluded", function () {
         else if (currentPath.includes('/page/promotion/') && href === '/page/promotion/promotion.html') {
           isActive = true;
         }
+        // Trang giới thiệu
+        else if (currentPath.includes('/page/about/') && href === '/page/about/about.html') {
+          isActive = true;
+        }
+        // Trang tin tức
+        else if (currentPath.includes('/page/news/') && href === '/page/news/news.html') {
+          isActive = true;
+        }
+        // Trang phương thức mua hàng
+        else if (currentPath.includes('/page/ptmh/') && href === '/page/ptmh/phuongthucmuahang.html') {
+          isActive = true;
+        }
+        // Trang liên hệ
+        else if (currentPath.includes('/page/lienhe/') && href === '/page/lienhe/lienhe.html') {
+          isActive = true;
+        }
         
         if (isActive) {
           navItems.forEach(el => el.classList.remove('active'));
