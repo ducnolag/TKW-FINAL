@@ -366,9 +366,14 @@ function renderCheckout(user) {
                         <div class="cart-list" style="max-height: 350px; overflow-y: auto; margin-bottom: 10px;">
                             ${cartItems.map(item => `
                                 <div class="cart-item">
-                                    <div class="item-thumb">${item.image}</div>
+                                    <div class="item-thumb"><img src="${item.image}" alt="${item.title}" style="width: 100%; height: 100%; object-fit: cover;"></div>
                                     <div class="item-details">
                                         <div class="item-name">${item.title}</div>
+                                        ${item.selectedOptions && item.selectedOptions.length > 0 ? `
+                                            <div class="item-options" style="font-size: 12px; color: #666; margin-top: 4px;">
+                                                ${item.selectedOptions.map(opt => `<div>${opt.name}: ${opt.value}</div>`).join('')}
+                                            </div>
+                                        ` : ''}
                                         <div class="item-meta">SL: ${item.quantity}</div>
                                     </div>
                                     <div class="item-actions">

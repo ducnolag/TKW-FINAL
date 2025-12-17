@@ -125,6 +125,11 @@ function renderCart() {
                 <div class="item-header">
                     <div>
                         <div class="item-name">${item.title}</div>
+                        ${item.selectedOptions && item.selectedOptions.length > 0 ? `
+                            <div style="font-size: 12px; color: #666; margin-top: 4px;">
+                                ${item.selectedOptions.map(opt => `<div>${opt.name}: <strong>${opt.value}</strong></div>`).join('')}
+                            </div>
+                        ` : ''}
                         <div class="item-price">${formatPrice(item.price)}</div>
                     </div>
                     <button class="delete-btn" onclick="removeItem(${index})" title="Xóa sản phẩm">
