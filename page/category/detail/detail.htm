@@ -15,15 +15,17 @@
     <div data-include="/src/components/header.htm"></div>
 
 <div class="container">   
-    <div class="breadcrumb-container">
-        <div class="breadcrumb">
-            <a href="index.html" class="home-icon"><i class="fa-solid fa-house"></i> Trang chủ</a> 
-            <span class="separator"><i class="fa-solid fa-chevron-right"></i></span>
-            <a href="products.html">Combo theo người</a> 
-            <span class="separator"><i class="fa-solid fa-chevron-right"></i></span>
-            <span class="current">COMBO MÌ TRỘN INDOMIE CHUA CAY SƯỜN SỤN (3 người)</span>
-        </div>
-    </div>
+    <div id="breadcrumb-container"></div>
+
+<script src="/src/js/layouts/breadcrumb.js"></script>
+<script src="detail-breadcrumb.js"></script>
+<script>
+    // Breadcrumb mặc định (sẽ bị ghi đè nếu có ID sản phẩm)
+    renderBreadcrumb([
+        { name: "Combo theo người", link: "/page/category/product/product.htm" },
+        { name: "COMBO MÌ TRỘN INDOMIE CHUA CAY SƯỜN SỤN (3 người)", link: "" }
+    ]);
+</script>
 
     <h1 class="page-main-title">COMBO MÌ TRỘN INDOMIE <br class="mobile-break"> CHUA CAY SƯỜN SỤN (3 người)</h1>
 

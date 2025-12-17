@@ -20,7 +20,6 @@ let allData = null;
 
     const productsContainer = document.getElementById('productsContainer');
     const pageTitle = document.getElementById('pageTitle');
-    const breadcrumbCategory = document.getElementById('breadcrumbCategory');
     const categoryTitle = document.getElementById('categoryTitle');
     const gridView = document.getElementById('gridView');
     const listView = document.getElementById('listView');
@@ -183,7 +182,6 @@ let allData = null;
 
       // Cập nhật tiêu đề
       pageTitle.textContent = titleText;
-      breadcrumbCategory.textContent = titleText;
       categoryTitle.textContent = titleText;
 
       

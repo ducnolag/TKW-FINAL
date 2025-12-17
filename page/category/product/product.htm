@@ -15,11 +15,15 @@
 </head>
 <body>
   <div data-include="/src/components/header.htm"></div>
-  <div class="breadcrumb">
-    <a href="/index.htm">Trang chủ</a>
-    <span>></span>
-    <span id="breadcrumbCategory">Tất cả sản phẩm</span>
-  </div>
+  <div id="breadcrumb-container"></div>
+
+<script src="/src/js/layouts/breadcrumb.js"></script>
+<script>
+    // Gọi hàm render
+    renderBreadcrumb([
+        { name: "Tất cả sản phẩm", link: "" }
+    ]);
+</script>
 
   <div class="page-title" id="pageTitle">Tất cả sản phẩm</div>
 
