@@ -143,7 +143,7 @@ let allData = null;
 
       // Nếu có tìm kiếm, hiển thị kết quả tìm kiếm
       if (searchQuery) {
-        const allProducts = [...allData.sale, ...allData.newsale];
+        const allProducts = allData.sale || [];
         products = allProducts.filter(product => 
           product.title.toLowerCase().includes(searchQuery.toLowerCase())
         );
@@ -151,14 +151,14 @@ let allData = null;
       } else {
         // Hiển thị theo danh mục
         if (category === 'all') {
-          products = [...allData.sale, ...allData.newsale];
+          products = allData.sale || [];
           titleText = 'Tất cả sản phẩm';
-        } else if (category === 'sale') {
-          products = allData.sale;
-          titleText = 'Sản phẩm khuyến mãi';
-        } else if (category === 'newsale') {
-          products = allData.newsale;
-          titleText = 'Sản phẩm mới';
+        } else if (allData[category]) {
+          products = allData[category];
+          titleText = `Danh mục: ${category}`;
+        } else {
+          products = [];
+          titleText = 'Không có sản phẩm';
         }
       }
 

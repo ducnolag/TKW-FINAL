@@ -484,7 +484,7 @@ const getDetailProduct = async () => {
 
         const data = await response.json();
         window.allProductData = data;
-        const allProducts = [...data.sale, ...data.newsale];
+        const allProducts = data.sale || [];
         const product = allProducts.find(p => p.id == productId);
 
         if (product) {
@@ -537,7 +537,7 @@ async function loadProductFromURL() {
         const response = await fetch('/data/product.json');
         if (!response.ok) throw new Error('Không thể tải dữ liệu sản phẩm');
         const data = await response.json();
-        const allProducts = [...data.sale, ...data.newsale];
+        const allProducts = data.sale || [];
         const product = allProducts.find(p => p.id == productId);
         if (product) {
             currentProduct = product;
@@ -583,6 +583,103 @@ function updateDetailPageUI(product, views) {
     const buyCount = parseInt(localStorage.getItem(`product_buys_${product.id}`) || '0');
     const buyCountElement = document.getElementById('buy-count');
     if (buyCountElement) buyCountElement.textContent = buyCount.toLocaleString('vi-VN');
+    
+    // ============ CẬP NHẬT THÊM TỪ JSON ============
+    // Description
+    const descText = document.querySelector('.desc-text');
+    if (descText && product.description) {
+        descText.innerHTML = `<i style="color: #666; font-size: 12px; margin-bottom: 5px; display:block;">* Hình ảnh mang tính chất minh họa.</i>
+                             <p>${product.description}</p>`;
+    }
+    
+    // Rating & Sold
+    if (product.rating !== undefined) {
+        const ratingScore = document.getElementById('header-rating-score');
+        if (ratingScore) ratingScore.textContent = product.rating.toFixed(1);
+        
+        // Render stars
+        const headerStars = document.getElementById('header-stars');
+        if (headerStars) {
+            const fullStars = Math.floor(product.rating);
+            const hasHalfStar = product.rating % 1 !== 0;
+            let starsHTML = '';
+            
+            for (let i = 0; i < fullStars; i++) {
+                starsHTML += '<i class="fa-solid fa-star"></i>';
+            }
+            if (hasHalfStar) {
+                starsHTML += '<i class="fa-solid fa-star-half-stroke"></i>';
+            }
+            for (let i = fullStars + (hasHalfStar ? 1 : 0); i < 5; i++) {
+                starsHTML += '<i class="fa-regular fa-star"></i>';
+            }
+            headerStars.innerHTML = starsHTML;
+        }
+    }
+    
+    if (product.sold !== undefined) {
+        const soldInfo = document.querySelector('.sold-count') || 
+                        document.querySelector('[data-sold]') ||
+                        document.createElement('span');
+        if (soldInfo) soldInfo.textContent = `Đã bán: ${product.sold.toLocaleString('vi-VN')}`;
+    }
+    
+    // Quantity (Stock)
+    if (product.quantity !== undefined) {
+        const stockBadge = document.querySelector('.stock-badge');
+        if (stockBadge) {
+            if (product.quantity > 0) {
+                stockBadge.textContent = `Còn ${product.quantity} sản phẩm`;
+                stockBadge.classList.add('in-stock');
+                stockBadge.classList.remove('out-of-stock');
+            } else {
+                stockBadge.textContent = 'Hết hàng';
+                stockBadge.classList.remove('in-stock');
+                stockBadge.classList.add('out-of-stock');
+            }
+        }
+    }
+    
+    // Options (Độ cay, Thêm topping, etc)
+    if (product.options && product.options.length > 0) {
+        const optionsContainer = document.querySelector('.options-container');
+        if (optionsContainer) {
+            let optionsHTML = '';
+            
+            product.options.forEach((option, idx) => {
+                optionsHTML += `
+                    <div class="option-group">
+                        <span class="option-title">${option.name}:</span>
+                        <div class="tags-wrapper">
+                `;
+                
+                if (option.choices && option.choices.length > 0) {
+                    option.choices.forEach((choice, choiceIdx) => {
+                        const isChecked = choiceIdx === 0 ? 'checked' : '';
+                        optionsHTML += `
+                            <label class="tag-item">
+                                <input type="radio" name="option_${idx}" value="${choice}" ${isChecked}>
+                                <span>${choice}</span>
+                            </label>
+                        `;
+                    });
+                }
+                
+                optionsHTML += `
+                        </div>
+                    </div>
+                `;
+            });
+            
+            optionsContainer.innerHTML = optionsHTML;
+        }
+    } else {
+        // Ẩn options container nếu không có options
+        const optionsContainer = document.querySelector('.options-container');
+        if (optionsContainer) {
+            optionsContainer.style.display = 'none';
+        }
+    }
     
     // Sticky Bar (Kiểm tra kỹ vì có thể element này chưa render)
     const stickyImg = document.getElementById('sticky-img');

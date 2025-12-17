@@ -154,8 +154,12 @@ document.addEventListener("htmlIncluded", function () {
       megaCategory.innerHTML = '';
       
       const categories = {
-        'sale': 'Sản Phẩm Khuyến Mãi',
-        'newsale': 'Sản Phẩm Mới'
+        'micay': 'Mì Cay',
+        'mitron': 'Mì Trộn',
+        'anvat': 'Ăn Vặt',
+        'ankem': 'Ăn Kèm',
+        'douong': 'Đồ Uống',
+        'combo': 'Combo'
       };
       
       for (const [key, label] of Object.entries(categories)) {
@@ -166,12 +170,10 @@ document.addEventListener("htmlIncluded", function () {
           // Tạo link đến trang danh mục
           let columnHTML = `<h4><a href="/page/category/product/product.htm?category=${key}" style="color: inherit; text-decoration: none; display: block;">${label}</a></h4>`;
           
-          // Nếu muốn hiển thị list sản phẩm con thì bỏ comment đoạn dưới
-          /*
+          // Hiển thị 5 sản phẩm đầu tiên
           data[key].slice(0, 5).forEach(product => {
-            columnHTML += `<a href="/page/category/product/product.htm?category=${key}">${product.title}</a>`;
+            columnHTML += `<a href="/page/category/detail/detail.htm?id=${product.id}">${product.title}</a>`;
           });
-          */
           
           column.innerHTML = columnHTML;
           megaCategory.appendChild(column);
