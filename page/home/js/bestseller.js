@@ -1,73 +1,32 @@
-import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.mjs';
-
-// Khi include HTML xong
-document.addEventListener('htmlIncluded', function () {
-
-  // 1. Load sản phẩm từ file product.json
-  fetch('/data/product.json')
-    .then(res => res.json())
-    .then(data => {
-      const products = data.sale;
-
-      // Chọn wrapper của slider
-      const wrapper = document.querySelector('.swiper_product_sale .swiper-wrapper');
-      if (!wrapper) return;
-
-      // 2. Render sản phẩm vào slider
-      wrapper.innerHTML = products.map(item => `
-        <div class="swiper-slide">
-          <div class="item_product_main">
-            <a href="/page/category/detail/detail.htm?id=${item.id}" style="text-decoration: none; color: inherit;">
-              <img src="${item.image}" alt="${item.title}" class="product-image">
-
-              <div class="product-info">
-                <h3 class="product-title">${item.title}</h3>
-
-                <div class="product-price">
-                  <span class="price-current">${item.price_current.toLocaleString()}₫</span>
-                  <span class="price-old">${item.price_old.toLocaleString()}₫</span>
-                </div>
-              </div>
-            </a>
-            
-            <div class="product-button-wrapper">
-              <a href="/page/category/detail/detail.htm?id=${item.id}" 
-                 class="product-button ${item.status === 'soldout' ? 'sold-out' : ''}" 
-                 style="text-decoration: none;">
-                Xem chi tiết
-              </a>
-            </div>
-          </div>
-        </div>
-      `).join('');
-
-      // 3. Sau khi render xong thì khởi tạo Swiper
-      setTimeout(() => {
-        new Swiper('.swiper_product_sale', {
-          slidesPerView: 4,
-          spaceBetween: 24,
-          speed: 600,
-          loop: true,
-
-          autoplay: {
-            delay: 2500,
-            disableOnInteraction: false,
-          },
-
-          navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-          },
-
-          grabCursor: true,
-
-          breakpoints: {
-            320:  { slidesPerView: 1, spaceBetween: 16 },
-            640:  { slidesPerView: 2, spaceBetween: 16 },
-            992:  { slidesPerView: 3, spaceBetween: 20 },
-            1200: { slidesPerView: 4, spaceBetween: 24 }
-          }
-        });
-      }, 100);
-    });
+var swiperBestSeller = new Swiper(".swiper-best-seller", {
+    slidesPerView: 4,      
+    spaceBetween: 20,      // Giảm khoảng cách từ 30 xuống 20 cho gọn
+    loop: true,            
+    grabCursor: true,      
+    autoplay: {            
+        delay: 4000,
+        disableOnInteraction: false,
+    },
+    navigation: {          
+        nextEl: ".bs-button-next",
+        prevEl: ".bs-button-prev",
+    },
+    breakpoints: {
+        0: {
+            slidesPerView: 2, // Mobile hiện 2 cái rõ ràng
+            spaceBetween: 10,
+        },
+        740: {
+            slidesPerView: 3, 
+            spaceBetween: 15,
+        },
+        1024: {
+            slidesPerView: 4, // PC hiện 4
+            spaceBetween: 20,
+        },
+        1200: {
+            slidesPerView: 5, // Màn hình to hẳn thì hiện 5 cho nó nhỏ lại bớt
+            spaceBetween: 20,
+        }
+    },
 });
