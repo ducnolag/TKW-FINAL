@@ -1,110 +1,757 @@
 {
   "sale":[
-  {
-    "id": 1,
-    "title": "Chân Gà Rút Xương Sốt Thái",
-    "price_current": 74250,
-    "price_old": 82500,
-    "image": "/assets/90.webp",
-    "status": "soldout"
-  },
-  {
-    "id": 2,
-    "title": "Gà Popcorn Chiên Lắc Phô Mai",
-    "price_current": 46800,
-    "price_old": 52000,
-    "image": "",
-    "status": "soldout"
-  },
-  {
-    "id": 3,
-    "title": "Mì Trộn Indomie Ngon Nhất Thế Giới",
-    "price_current": 37350,
-    "price_old": 41500,
-    "image": "",
-    "status": "soldout"
-  },
-  {
-    "id": 4,
-    "title": "Combo Bánh Gà Phô Mai",
-    "price_current": 23400,
-    "price_old": 26000,
-    "image": "",
-    "status": "soldout"
-  },
-  {
-    "id": 5,
-    "title": "Bánh Tráng Trộn Đặc Biệt",
-    "price_current": 32400,
-    "price_old": 36000,
-    "image": "",
-    "status": "soldout"
-  }
+  
 ],
 "newsale":[
-  {
-    "id": 6,
-    "title": "Chân Gà Rút Xương Sốt Chinsu",
-    "price_current": 74250,
-    "price_old": 82500,
-    "image": "",
-    "status": "soldout"
-  },
-  {
-    "id": 7,
-    "title": "Gà Popcorn Chiên Lắc Phô Mai",
-    "price_current": 46800,
-    "price_old": 52000,
-    "image": "",
-    "status": "soldout"
-  },
-  {
-    "id": 8,
-    "title": "Mì Trộn Indomie Ngon Nhất Thế Giới 2",
-    "price_current": 37350,
-    "price_old": 41500,
-    "image": "",
-    "status": "soldout"
-  },
-  {
-    "id": 9,
-    "title": "Combo Bánh Gà Phô Mai",
-    "price_current": 23400,
-    "price_old": 26000,
-    "image": "",
-    "status": "soldout"
-  },
-  {
-    "id": 10,
-    "title": "Bánh Tráng Trộn Đặc Biệt",
-    "price_current": 32400,
-    "price_old": 36000,
-    "image": "",
-    "status": "soldout"
-  },
-  {
-    "id": 11,
-    "title": "Mì Trộn Indomie Ngon Nhất Thế Giới 2",
-    "price_current": 37350,
-    "price_old": 41500,
-    "image": "",
-    "status": "soldout"
-  },
-  {
-    "id": 12,
-    "title": "Combo Bánh Gà Phô Mai",
-    "price_current": 23400,
-    "price_old": 26000,
-    "image": "",
-    "status": "soldout"
-  },
-  {
-    "id": 13,
-    "title": "Bánh Tráng Trộn Đặc Biệt",
-    "price_current": 32400,
-    "price_old": 36000,
-    "image": "",
-    "status": "soldout"
-  }
-]
+  
+],
+
+
+
+  "micay": [
+    {
+      "id": 1,
+      "title": "Mì cay hải sản",
+      "price_current": 52650,
+      "price_old": 58500,
+      "image": "/../assets/product/micay/1.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Mì cay với tôm, mực, chả cá và rau nấm tươi ngon",
+      "rating": 4.9,
+      "sold": 1200,
+      "options": [
+        {
+          "name": "Độ cay",
+          "choices": ["Cấp 0", "Cấp 1", "Cấp 2", "Cấp 3", "Cấp 4", "Cấp 5", "Cấp 6", "Cấp 7"]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Mì cay kim chi ba chỉ bò",
+      "price_current": 52650,
+      "price_old": 58500,
+      "image": "/../assets/product/micay/2.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Mì, ba chỉ bò, viên rau củ, rau, nấm",
+      "rating": 5.0,
+      "sold": 1500,
+      "options": [
+        {
+          "name": "Độ cay",
+          "choices": ["Cấp 0", "Cấp 1", "Cấp 2", "Cấp 3", "Cấp 4", "Cấp 5", "Cấp 6", "Cấp 7"]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Mì cay đùi gà",
+      "price_current": 56250,
+      "price_old": 62500,
+      "image": "/../assets/product/micay/3.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Mì cay với đùi gà mềm ngọt, nấm và rau cải",
+      "rating": 4.7,
+      "sold": 800,
+      "options": [
+        {
+          "name": "Độ cay",
+          "choices": ["Cấp 0", "Cấp 1", "Cấp 2", "Cấp 3", "Cấp 4", "Cấp 5", "Cấp 6", "Cấp 7"]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Mì cay kim chi thập cẩm",
+      "price_current": 56250,
+      "price_old": 62500,
+      "image": "/../assets/product/micay/4.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Mì, ba chỉ bò, sườn sụn, xúc xích, viên rau củ, rau, nấm",
+      "rating": 5.0,
+      "sold": 2000,
+      "options": [
+        {
+          "name": "Độ cay",
+          "choices": ["Cấp 0", "Cấp 1", "Cấp 2", "Cấp 3", "Cấp 4", "Cấp 5", "Cấp 6", "Cấp 7"]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Mì cay kim chi sườn sụn",
+      "price_current": 52650,
+      "price_old": 58500,
+      "image": "/../assets/product/micay/5.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Mì, sườn sụn, viên rau củ, rau, nấm",
+      "rating": 4.8,
+      "sold": 900,
+      "options": [
+        {
+          "name": "Độ cay",
+          "choices": ["Cấp 0", "Cấp 1", "Cấp 2", "Cấp 3", "Cấp 4", "Cấp 5", "Cấp 6", "Cấp 7"]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Mì cay kim chi xúc xích",
+      "price_current": 49050,
+      "price_old": 54500,
+      "image": "/../assets/product/micay/6.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Mì, xúc xích, viên rau củ, rau, nấm",
+      "rating": 4.6,
+      "sold": 600,
+      "options": [
+        {
+          "name": "Độ cay",
+          "choices": ["Cấp 0", "Cấp 1", "Cấp 2", "Cấp 3", "Cấp 4", "Cấp 5", "Cấp 6", "Cấp 7"]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Mì cay Chay Thanh tịnh",
+      "price_current": 45450,
+      "price_old": 50500,
+      "image": "/../assets/product/micay/7.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Mì cay chay gồm các topping toàn rau như: súp lơ, bắp cải tím, nấm kim châm, nấm đùi gà và kim chi",
+      "rating": 4.5,
+      "sold": 300,
+      "options": [
+        {
+          "name": "Độ cay",
+          "choices": ["Cấp 0", "Cấp 1", "Cấp 2", "Cấp 3", "Cấp 4", "Cấp 5", "Cấp 6", "Cấp 7"]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "Mì cay Chay Nấm",
+      "price_current": 43650,
+      "price_old": 48500,
+      "image": "/../assets/product/micay/8.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Mì cay chay với các loại nấm tươi ngon bổ dưỡng",
+      "rating": 4.4,
+      "sold": 250,
+      "options": [
+        {
+          "name": "Độ cay",
+          "choices": ["Cấp 0", "Cấp 1", "Cấp 2", "Cấp 3", "Cấp 4", "Cấp 5", "Cấp 6", "Cấp 7"]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "title": "Mì cay Chay kim chi",
+      "price_current": 32850,
+      "price_old": 36500,
+      "image": "/../assets/product/micay/9.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Mì cay chay với các loại nấm tươi ngon bổ dưỡng",
+      "rating": 4.4,
+      "sold": 250,
+      "options": [
+        {
+          "name": "Độ cay",
+          "choices": ["Cấp 0", "Cấp 1", "Cấp 2", "Cấp 3", "Cấp 4", "Cấp 5", "Cấp 6", "Cấp 7"]
+        }
+      ]
+    }
+  ],
+  "mitron": [
+    {
+      "id": 20,
+      "title": "Mì trộn ngon nhất thế giới",
+      "price_current": 37350,
+      "price_old": 41500,
+      "image": "/../assets/product/mitron/20.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Món mì trộn đặc biệt với công thức sốt độc quyền siêu ngon",
+      "rating": 5.0,
+      "sold": 3000,
+      "options": [
+        {
+          "name": "Cấp độ",
+          "choices": ["Cấp 1", "Cấp 2", "Cấp 3"]
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "title": "Mì Trộn Ba Chỉ Bò",
+      "price_current": 34650,
+      "price_old": 38500,
+      "image": "/../assets/product/mitron/21.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Mì trộn ba chỉ bò Mỹ mềm ngọt",
+      "rating": 4.8,
+      "sold": 1200,
+      "options": [
+        {
+          "name": "Cấp độ",
+          "choices": ["Cấp 1", "Cấp 2", "Cấp 3"]
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "title": "Mì Trộn Tôm Surimi",
+      "price_current": 31050,
+      "price_old": 34500,
+      "image": "/../assets/product/mitron/22.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Mì trộn đậm đà với tôm surimi dai ngon",
+      "rating": 4.6,
+      "sold": 500,
+      "options": [
+        {
+          "name": "Cấp độ",
+          "choices": ["Cấp 1", "Cấp 2", "Cấp 3"]
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "title": "Mì trộn thập cẩm",
+      "price_current": 32400,
+      "price_old": 36000,
+      "image": "/../assets/product/mitron/23.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Mì trộn đầy đủ topping xúc xích, bò viên, tôm viên, rau củ",
+      "rating": 4.9,
+      "sold": 1800,
+      "options": [
+        {
+          "name": "Cấp độ",
+          "choices": ["Cấp 1", "Cấp 2", "Cấp 3"]
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "title": "Mì Trộn Chua Cay Ba Chỉ Bò",
+      "price_current": 34650,
+      "price_old": 38500,
+      "image": "/../assets/product/mitron/24.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Mì trộn vị chua cay kích thích vị giác cùng ba chỉ bò",
+      "rating": 4.9,
+      "sold": 1100,
+      "options": [
+        {
+          "name": "Cấp độ",
+          "choices": ["Cấp 1", "Cấp 2", "Cấp 3"]
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "title": "Mì trộn bò viên",
+      "price_current": 28350,
+      "price_old": 31500,
+      "image": "/../assets/product/mitron/25.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Mì trộn bò viên dai giòn",
+      "rating": 4.5,
+      "sold": 600,
+      "options": [
+        {
+          "name": "Cấp độ",
+          "choices": ["Cấp 1", "Cấp 2", "Cấp 3"]
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "title": "Mì trộn thập cẩm bò khô",
+      "price_current": 34650,
+      "price_old": 38501,
+      "image": "/../assets/product/mitron/26.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Mì trộn thập cẩm thêm bò khô cay xé sợi",
+      "rating": 5.0,
+      "sold": 950,
+      "options": [
+        {
+          "name": "Cấp độ",
+          "choices": ["Cấp 1", "Cấp 2", "Cấp 3"]
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "title": "Mì Việt Nam trộn chua cay sườn sụn",
+      "price_current": 32850,
+      "price_old": 36500,
+      "image": "/../assets/product/mitron/27.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Mì tôm Việt Nam trộn sốt chua cay và sườn sụn",
+      "rating": 4.7,
+      "sold": 800,
+      "options": [
+        {
+          "name": "Cấp độ",
+          "choices": ["Cấp 1", "Cấp 2", "Cấp 3"]
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "title": "Mì Việt Nam trộn tóp mỡ chua cay",
+      "price_current": 31950,
+      "price_old": 35500,
+      "image": "/../assets/product/mitron/28.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Mì VN, tóp mỡ, rau củ, sốt chua cay",
+      "rating": 4.8,
+      "sold": 850,
+      "options": [
+        {
+          "name": "Cấp độ",
+          "choices": ["Cấp 1", "Cấp 2", "Cấp 3"]
+        }
+      ]
+    }
+  ],
+  "anvat": [
+    {
+      "id": 40,
+      "title": "Gà popcorn chiên lắc phô mai",
+      "price_current": 46800,
+      "price_old": 52000,
+      "image": "/../assets/product/anvat/40.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "200g gà viên popcorn chiên giòn béo ngậy thơm ngon vị thịt lắc cùng phô mai"
+    },
+    {
+      "id": 41,
+      "title": "Khoai tây chiên lắc phô mai",
+      "price_current": 37800,
+      "price_old": 42000,
+      "image": "/../assets/product/anvat/41.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "200g khoai tây cọng Bỉ chiên giòn lắc phô mai béo ngậy"
+    },
+    {
+      "id": 42,
+      "title": "Khoai lang kén",
+      "price_current": 31500,
+      "price_old": 35000,
+      "image": "/../assets/product/anvat/42.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Khoai lang kén thơm ngon béo ngậy"
+    },
+    {
+      "id": 43,
+      "title": "Cá viên chiên kiểu Sài Gòn",
+      "price_current": 46800,
+      "price_old": 52000,
+      "image": "/../assets/product/anvat/43.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Viên rau củ, tôm viên, bò viên, mực xoắn, tôm surimi, đậu hũ phô mai, đậu bắp, tỏi ớt, sốt"
+    },
+    {
+      "id": 44,
+      "title": "Xúc xích chiên 1 cái",
+      "price_current": 10800,
+      "price_old": 12000,
+      "image": "/../assets/product/anvat/44.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Thơm lừng, giòn tan! Lớp vỏ ngoài được chiên và nướng vàng ươm"
+    },
+    {
+      "id": 45,
+      "title": "5 đậu hũ phô mai chiên",
+      "price_current": 22500,
+      "price_old": 25000,
+      "image": "/../assets/product/anvat/45.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Vỏ ngoài giòn tan, bên trong tan chảy. Đậu hũ mềm mịn kết hợp với phô mai béo ngậy"
+    },
+    {
+      "id": 46,
+      "title": "1 dồi sụn",
+      "price_current": 18000,
+      "price_old": 20000,
+      "image": "/../assets/product/anvat/46.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Vỏ ngoài giòn tan, bên trong là nhân thịt thơm lừng, xen lẫn sụn non giòn rụm"
+    },
+    {
+      "id": 47,
+      "title": "Kim bắp",
+      "price_current": 27000,
+      "price_old": 30000,
+      "image": "/../assets/product/anvat/47.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Cuộn trong lá rong biển giòn dai, ôm trọn nhân trứng, rau củ và thịt tươi ngon"
+    },
+    {
+      "id": 129,
+      "title": "Bánh tráng nướng",
+      "price_current": 21600,
+      "price_old": 27000,
+      "image": "/../assets/product/anvat/129.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Bùng nổ vị giác với lớp vỏ giòn tan rụm trong miệng, quyện cùng vị thơm lừng của trứng, hành lá, và ruốc"
+    },
+    {
+      "id": 130,
+      "title": "Khô gà lá chanh",
+      "price_current": 30000,
+      "price_old": 37500,
+      "image": "/../assets/product/anvat/130.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Thịt gà tươi mềm tẩm ướp đậm đà, kết hợp hoàn hảo với hương thơm nồng nàn đặc trưng của lá chanh sấy giòn"
+    },
+    {
+      "id": 131,
+      "title": "Ba chỉ bò xào",
+      "price_current": 54000,
+      "price_old": 67500,
+      "image": "/../assets/product/anvat/131.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Thịt ba chỉ bò mềm tan thấm đẫm gia vị, xào cùng hành tây, rau củ giòn ngọt"
+    },
+    {
+      "id": 132,
+      "title": "Sườn sụn heo rang muối",
+      "price_current": 66000,
+      "price_old": 82500,
+      "image": "/../assets/product/anvat/132.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Sườn sụn giòn rụm bọc ngoài lớp bột vàng óng, thấm đều vị mặn mặn, cay cay đặc trưng của muối rang"
+    },
+    {
+      "id": 133,
+      "title": "Ngô chiên",
+      "price_current": 36000,
+      "price_old": 45000,
+      "image": "/../assets/product/anvat/133.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Được chiên vàng ruộm cùng lớp bột giòn tan, phủ bên ngoài là hương thơm lừng của bơ và vị mặn ngọt hài hòa"
+    },
+    {
+      "id": 134,
+      "title": "300g Bò khô",
+      "price_current": 90000,
+      "price_old": 112500,
+      "image": "/../assets/product/anvat/134.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Bò khô cay, thơm lừng hấp dẫn"
+    },
+    {
+      "id": 135,
+      "title": "Khô heo cháy tỏi",
+      "price_current": 30000,
+      "price_old": 37500,
+      "image": "/../assets/product/anvat/135.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Thịt heo khô mềm, dai vừa phải, quyện cùng tỏi phi vàng giòn thơm lừng và vị cay nhẹ"
+    },
+    {
+      "id": 136,
+      "title": "200gr tóp mỡ",
+      "price_current": 114000,
+      "price_old": 142500,
+      "image": "/../assets/product/anvat/136.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Tóp mỡ giòn tan vừa phải, rang cùng nước mắm ớt tỏi đậm đà, mang lại hương vị mặn ngọt, cay the khó cưỡng"
+    },
+    {
+      "id": 137,
+      "title": "Lạp Xưởng nướng đá",
+      "price_current": 14400,
+      "price_old": 18000,
+      "image": "/../assets/product/anvat/137.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Lạp xưởng nướng đá nóng hổi, vỏ ngoài giòn dai, bên trong thịt mềm ngọt đậm đà"
+    },
+    {
+      "id": 138,
+      "title": "Bánh mì que",
+      "price_current": 6000,
+      "price_old": 7500,
+      "image": "/../assets/product/anvat/138.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Lớp pate thơm béo và chút tương ớt cay nhẹ, món ăn vặt nhỏ gọn nhưng gây nghiện"
+    },
+    {
+      "id": 139,
+      "title": "Chân gà rút xương (không sốt)",
+      "price_current": 54000,
+      "price_old": 67500,
+      "image": "/../assets/product/anvat/139.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Chân gà dai giòn sần sật, đã được rút xương tiện lợi"
+    },
+    {
+      "id": 140,
+      "title": "Chân gà rút xương sốt thái",
+      "price_current": 66000,
+      "price_old": 82500,
+      "image": "/../assets/product/anvat/140.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Chân gà dai ngon hòa quyện trong lớp sốt Thái cay nồng, chua ngọt đậm đà"
+    },
+    {
+      "id": 141,
+      "title": "Bánh tráng trộn",
+      "price_current": 36000,
+      "price_old": 45000,
+      "image": "/../assets/product/anvat/141.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Bánh tráng mềm dẻo trộn đều cùng khô bò, trứng cút, xoài xanh chua giòn"
+    }
+  ],
+  "ankem": [
+    {
+      "id": 50,
+      "title": "Kim chi 200gr",
+      "price_current": 27000,
+      "price_old": 30000,
+      "image": "/../assets/product/ankem/50.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Thơm ngon nhà làm, điểm 10 chất lượng"
+    },
+    {
+      "id": 51,
+      "title": "Rau củ",
+      "price_current": 4500,
+      "price_old": 5000,
+      "image": "/../assets/product/ankem/51.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Rau củ tươi ăn kèm"
+    },
+    {
+      "id": 52,
+      "title": "Thịt băm",
+      "price_current": 13500,
+      "price_old": 15000,
+      "image": "/../assets/product/ankem/52.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Thịt băm xào đậm đà ăn kèm"
+    },
+    {
+      "id": 53,
+      "title": "Sườn sụn",
+      "price_current": 22500,
+      "price_old": 25000,
+      "image": "/../assets/product/ankem/53.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Sườn sụn non giòn sần sật"
+    }
+  ],
+  "douong": [
+    {
+      "id": 60,
+      "title": "Coca",
+      "price_current": 13500,
+      "price_old": 15000,
+      "image": "/../assets/product/douong/60.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Vị gas mát lạnh, ngọt ngào vừa phải, hoàn hảo để giải nhiệt"
+    },
+    {
+      "id": 61,
+      "title": "Soda dâu",
+      "price_current": 22500,
+      "price_old": 25000,
+      "image": "/../assets/product/douong/61.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Hương vị dâu tây tươi mát và quyến rũ"
+    },
+    {
+      "id": 62,
+      "title": "Trà đào",
+      "price_current": 18000,
+      "price_old": 20000,
+      "image": "/../assets/product/douong/62.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Trà đào thơm ngon, đậm vị đào"
+    },
+    {
+      "id": 63,
+      "title": "Trà sữa thái đỏ",
+      "price_current": 18000,
+      "price_old": 20000,
+      "image": "/../assets/product/douong/63.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Trà thái đỏ thơm ngon, ngọt ngào, mát lạnh với đá"
+    },
+    {
+      "id": 64,
+      "title": "Trà quất lắc sữa",
+      "price_current": 22500,
+      "price_old": 25000,
+      "image": "/../assets/product/douong/64.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Trà quất lắc sữa – Chua thanh quyện béo, lắc một ngụm là mê!"
+    },
+    {
+      "id": 65,
+      "title": "Nước lọc",
+      "price_current": 12000,
+      "price_old": 15000,
+      "image": "/../assets/product/douong/65.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Nước tinh khiết đóng chai"
+    },
+    {
+      "id": 66,
+      "title": "Sting vàng",
+      "price_current": 18000,
+      "price_old": 22500,
+      "image": "/../assets/product/douong/66.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Nước tăng lực Sting vàng sảng khoái"
+    },
+    {
+      "id": 67,
+      "title": "Warrior tím",
+      "price_current": 18000,
+      "price_old": 22500,
+      "image": "/../assets/product/douong/67.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Nước tăng lực Warrior hương nho"
+    }
+  ],
+  "combo": [
+    {
+      "id": 80,
+      "title": "Combo ăn vặt thập cẩm size M",
+      "price_current": 81000,
+      "price_old": 90000,
+      "image": "/../assets/product/combo/80.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Bao gồm: khoai tây chiên, gà popcorn, gà donut, viên phô mai hải sản, nem chua rán, đậu hũ phô mai, tôm su, sủi cảo, mực xoắn, xx cocktail, hồ lô, viên rau củ, tôm viên, bò viên, đậu bắp"
+    },
+    {
+      "id": 81,
+      "title": "Combo ăn vặt thập cẩm size L",
+      "price_current": 154800,
+      "price_old": 172000,
+      "image": "/../assets/product/combo/81.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Bao gồm: x2 (khoai tây chiên, gà popcorn, gà donut, viên phô mai hải sản, nem chua rán, đậu hũ phô mai, tôm su, sủi cảo, mực xoắn, xx cocktail, hồ lô, viên rau củ, tôm viên, bò viên, đậu bắp)"
+    },
+    {
+      "id": 82,
+      "title": "Combo 5 miếng gà nugget",
+      "price_current": 22500,
+      "price_old": 25000,
+      "image": "/../assets/product/combo/82.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "5 vòng gà donut chiên giòn"
+    },
+    {
+      "id": 83,
+      "title": "Combo 5 nem chua rán",
+      "price_current": 27000,
+      "price_old": 30000,
+      "image": "/../assets/product/combo/83.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Cắn miếng sẽ cảm nhận ngay lớp vỏ ngoài vàng rụm, giòn tan, vị nem bên trong dai mềm"
+    },
+    {
+      "id": 84,
+      "title": "Combo 5 phô mai que",
+      "price_current": 36000,
+      "price_old": 40000,
+      "image": "/../assets/product/combo/84.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Vị chảy tận trong miệng, cuốn không dứt được"
+    },
+    {
+      "id": 85,
+      "title": "Combo 3 lạp xưởng chiên",
+      "price_current": 54000,
+      "price_old": 60000,
+      "image": "/../assets/product/combo/85.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Từng miếng lạp xưởng được chiên, nướng khéo léo, béo ngậy vừa phải"
+    },
+    {
+      "id": 86,
+      "title": "Combo 2 đùi gà chiên",
+      "price_current": 75600,
+      "price_old": 84000,
+      "image": "/../assets/product/combo/86.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Lớp da được chiên giòn tan, vàng ruộm, bao bọc lấy phần thịt gà mềm ngọt"
+    },
+    {
+      "id": 87,
+      "title": "Combo 10 viên phô mai hải sản chiên",
+      "price_current": 34200,
+      "price_old": 38000,
+      "image": "/../assets/product/combo/87.png",
+      "status": "available",
+      "quantity": 100,
+      "description": "Càng ăn càng cuốn với lớp vỏ ngoài giòn tan, nóng hổi, vị ngọt tươi của hải sản bên trong"
+    }
+  ]
 }
