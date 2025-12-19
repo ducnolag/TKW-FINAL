@@ -852,17 +852,237 @@
                   }
               ],
     "ankem":  [
-                  {
-                      "id":  90,
-                      "title":  "Kim chi 200gr",
-                      "price_current":  27000,
-                      "price_old":  30000,
-                      "image":  "/../assets/product/ankem/50.png",
-                      "status":  "available",
-                      "quantity":  100,
-                      "description":  "Thơm ngon nhà làm, điểm 10 chất lượng"
-                  }
-              ],
+                {
+                    "id": 344,
+                    "title": "Xúc xích chiên",
+                    "price_current": 10800,
+                    "price_old": 12000,
+                    "image": "/../assets/product/ankem/344.png",
+                    "status": "available",
+                    "quantity": 100,
+                    "description": "Thơm lừng, giòn tan! Lớp vỏ ngoài được chiên và nướng vàng ươm"
+                },
+                {
+                    "id": 345,
+                    "title": "Đậu hũ phô mai chiên",
+                    "price_current": 6300,
+                    "price_old": 7000,
+                    "image": "/../assets/product/ankem/345.png",
+                    "status": "available",
+                    "quantity": 100,
+                    "description": "Vỏ ngoài giòn tan, bên trong tan chảy. Đậu hũ mềm mịn kết hợp với phô mai béo ngậy"
+                },
+                {
+                    "id": 346,
+                    "title": "Dồi sụn",
+                    "price_current": 18000,
+                    "price_old": 20000,
+                    "image": "/../assets/product/ankem/346.png",
+                    "status": "available",
+                    "quantity": 100,
+                    "description": "Vỏ ngoài giòn tan, bên trong là nhân thịt thơm lừng, xen lẫn sụn non giòn rụm"
+                },
+                {
+                    "id": 350,
+                    "title": "Ba chỉ bò xào",
+                    "price_current": 54000,
+                    "price_old": 67500,
+                    "image": "/../assets/product/ankem/350.png",
+                    "status": "available",
+                    "quantity": 100,
+                    "description": "Thịt ba chỉ bò mềm tan thấm đẫm gia vị, xào cùng hành tây, rau củ giòn ngọt"
+                },
+                {
+                    "id": 352,
+                    "title": "Ngô chiên",
+                    "price_current": 36000,
+                    "price_old": 45000,
+                    "image": "/../assets/product/ankem/352.png",
+                    "status": "available",
+                    "quantity": 100,
+                    "description": "Được chiên vàng ruộm cùng lớp bột giòn tan, phủ bên ngoài là hương thơm lừng của bơ và vị mặn ngọt hài hòa"
+                },
+                {
+                    "id": 355,
+                    "title": "Tóp mỡ",
+                    "price_current": 114000,
+                    "price_old": 142500,
+                    "image": "/../assets/product/ankem/355.png",
+                    "status": "available",
+                    "quantity": 100,
+                    "description": "200g Tóp mỡ giòn tan vừa phải, rang cùng nước mắm ớt tỏi đậm đà, mang lại hương vị mặn ngọt, cay the khó cưỡng"
+                },
+                {
+                    "id": 356,
+                    "title": "Lạp Xưởng nướng đá",
+                    "price_current": 14400,
+                    "price_old": 18000,
+                    "image": "/../assets/product/ankem/356.png",
+                    "status": "available",
+                    "quantity": 100,
+                    "description": "Lạp xưởng nướng đá nóng hổi, vỏ ngoài giòn dai, bên trong thịt mềm ngọt đậm đà"
+                },
+                {
+                    "id": 360,
+                    "title": "Hồ lô chiên",
+                    "price_current": 9000,
+                    "price_old": 10000,
+                    "image": "/../assets/product/ankem/360.png",
+                    "status": "available",
+                    "quantity": 100,
+                    "description": "3 viên hồ lô tròn xinh, được chiên vàng rụm với hương thơm lôi cuốn, mang đến vị ngọt béo của nhân thịt đậm đà"
+                },
+                {
+                    "id": 361,
+                    "title": "Trứng cút",
+                    "price_current": 9000,
+                    "price_old": 10000,
+                    "image": "/../assets/product/ankem/361.png",
+                    "status": "available",
+                    "quantity": 100,
+                    "description": "3 viên trứng cút nóng hổi, được chế biến đơn giản nhưng hấp dẫn"
+                },
+                {
+                    "id": 362,
+                    "title": " Mực xoắn chiên",
+                    "price_current": 9000,
+                    "price_old": 10000,
+                    "image": "/../assets/product/ankem/362.png",
+                    "status": "available",
+                    "quantity": 100,
+                    "description": "3 viên mực được cắt xoắn điệu nghệ, chiên ngập dầu đến độ vàng rụm"
+                },
+                {
+                    "id": 363,
+                    "title": "Viên phô mai trứng cá",
+                    "price_current": 5400,
+                    "price_old": 6000,
+                    "image": "/../assets/product/ankem/363.png",
+                    "status": "available",
+                    "quantity": 100,
+                    "description": "Vỏ ngoài giòn rụm, bên trong là sự hòa quyện hoàn hảo của cá tươi, trứng cá mặn mà, và lớp phô mai tan chảy"
+                },
+                {
+                    "id": 364,
+                    "title": "Viên phô mai trứng muối",
+                    "price_current": 5400,
+                    "price_old": 6000,
+                    "image": "/../assets/product/ankem/364.png",
+                    "status": "available",
+                    "quantity": 100,
+                    "description": "Vỏ ngoài giòn rụm, bên trong là sự hòa quyện hoàn hảo của trứng muối và lớp phô mai tan chảy"
+                },
+                {
+                    "id": 365,
+                    "title": " Tôm surimi chiên",
+                    "price_current": 10800,
+                    "price_old": 12000,
+                    "image": "/../assets/product/ankem/365.png",
+                    "status": "available",
+                    "quantity": 100,
+                    "description": "3 viên tôm surimi chiên giòn rụm"
+                },
+                {
+                    "id": 366,
+                    "title": "Sủi cảo chiên",
+                    "price_current": 36000,
+                    "price_old": 4000,
+                    "image": "/../assets/product/ankem/366.png",
+                    "status": "available",
+                    "quantity": 100,
+                    "description": "Vỏ ngoài giòn ngon,  bên trong nhân thịt đầy đặn, đậm đà"
+                },
+                {
+                    "id": 367,
+                    "title": "Rau củ",
+                    "price_current": 4500,
+                    "price_old": 5000,
+                    "image": "/../assets/product/ankem/367.png",
+                    "status": "available",
+                    "quantity": 100,
+                    "description": "Mang đến vị ngọt tự nhiên, giúp bạn không cảm thấy ngán khi thưởng thức đồ ăn vặt với những loại rau củ cơ bản nhưng dinh dưỡng, hợp vị "
+                },
+                {
+                    "id": 368,
+                    "title": "Xúc xích cocktail chiên",
+                    "price_current": 5400,
+                    "price_old": 6000,
+                    "image": "/../assets/product/ankem/368.png",
+                    "status": "available",
+                    "quantity": 100,
+                    "description": "Xích cocktail chiên giòn rụm"
+                },
+                {
+                    "id": 369,
+                    "title": "Viên rau củ",
+                    "price_current": 2700,
+                    "price_old": 3000,
+                    "image": "/../assets/product/ankem/369.png",
+                    "status": "available",
+                    "quantity": 100,
+                    "description": "Được chiên giòn rụm bên ngoài, mềm ngọt bên trong, mang đến công thức ăn vặt healthy và thú vị"
+                },
+                {
+                    "id": 370,
+                    "title": "Thịt băm",
+                    "price_current": 13500,
+                    "price_old": 15000,
+                    "image": "/../assets/product/ankem/370.png",
+                    "status": "available",
+                    "quantity": 100,
+                    "description": "Được tẩm ướp theo công thức đặc biệt với sốt đậm đà, mang đến vị ngon béo ngậy"
+                },
+                {
+                    "id": 371,
+                    "title": "Bò viên",
+                    "price_current": 2700,
+                    "price_old": 3000,
+                    "image": "/../assets/product/ankem/371.png",
+                    "status": "available",
+                    "quantity": 100,
+                    "description": "Được chiên giòn rụm bên ngoài, mềm ngọt bên trong"
+                },
+                {
+                    "id": 372,
+                    "title": "Tôm viên",
+                    "price_current": 2700,
+                    "price_old": 3000,
+                    "image": "/../assets/product/ankem/372.png",
+                    "status": "available",
+                    "quantity": 100,
+                    "description": "Được chiên giòn rụm bên ngoài, mềm ngọt bên trong"
+                },
+                {
+                    "id": 373,
+                    "title": "Gà xiên que",
+                    "price_current": 10800,
+                    "price_old": 12000,
+                    "image": "/../assets/product/ankem/373.png",
+                    "status": "available",
+                    "quantity": 100,
+                    "description": "Thịt gà tươi ngon, được tẩm ướp đậm đà theo công thức bí truyền, sau đó được nướng vàng ruộm, thơm lừng"
+                },
+                {
+                    "id": 374,
+                    "title": "Lạp xưởng",
+                    "price_current": 18000,
+                    "price_old": 20000,
+                    "image": "/../assets/product/ankem/374.png",
+                    "status": "available",
+                    "quantity": 100,
+                    "description": "Từng miếng lạp xưởng được chiên, nướng khéo léo, béo ngậy vừa phải, với công thức hương vị mặn ngọt hài hòa"
+                },
+                {
+                    "id": 377,
+                    "title": "Kim chi",
+                    "price_current": 13500,
+                    "price_old": 15000,
+                    "image": "/../assets/product/ankem/377.png",
+                    "status": "available",
+                    "quantity": 100,
+                    "description": "Thơm ngon nhà làm, điểm 10 chất lượng"
+                }
+                ],
     "douong":  [
                    {
                        "id":  120,
@@ -1066,87 +1286,8 @@
                    }
                ],
     "combo":  [
-                  {
-                      "id":  80,
-                      "title":  "Combo ăn vặt thập cẩm size M",
-                      "price_current":  81000,
-                      "price_old":  90000,
-                      "image":  "/../assets/product/combo/80.png",
-                      "status":  "available",
-                      "quantity":  100,
-                      "description":  "Bao gồm: khoai tây chiên, gà popcorn, gà donut, viên phô mai hải sản, nem chua rán, đậu hũ phô mai, tôm su, sủi cảo, mực xoắn, xx cocktail, hồ lô, viên rau củ, tôm viên, bò viên, đậu bắp"
-                  },
-                  {
-                      "id":  81,
-                      "title":  "Combo ăn vặt thập cẩm size L",
-                      "price_current":  154800,
-                      "price_old":  172000,
-                      "image":  "/../assets/product/combo/81.png",
-                      "status":  "available",
-                      "quantity":  100,
-                      "description":  "Bao gồm: x2 (khoai tây chiên, gà popcorn, gà donut, viên phô mai hải sản, nem chua rán, đậu hũ phô mai, tôm su, sủi cảo, mực xoắn, xx cocktail, hồ lô, viên rau củ, tôm viên, bò viên, đậu bắp)"
-                  },
-                  {
-                      "id":  82,
-                      "title":  "Combo 5 miếng gà nugget",
-                      "price_current":  22500,
-                      "price_old":  25000,
-                      "image":  "/../assets/product/combo/82.png",
-                      "status":  "available",
-                      "quantity":  100,
-                      "description":  "5 vòng gà donut chiên giòn"
-                  },
-                  {
-                      "id":  83,
-                      "title":  "Combo 5 nem chua rán",
-                      "price_current":  27000,
-                      "price_old":  30000,
-                      "image":  "/../assets/product/combo/83.png",
-                      "status":  "available",
-                      "quantity":  100,
-                      "description":  "Cắn miếng sẽ cảm nhận ngay lớp vỏ ngoài vàng rụm, giòn tan, vị nem bên trong dai mềm"
-                  },
-                  {
-                      "id":  84,
-                      "title":  "Combo 5 phô mai que",
-                      "price_current":  36000,
-                      "price_old":  40000,
-                      "image":  "/../assets/product/combo/84.png",
-                      "status":  "available",
-                      "quantity":  100,
-                      "description":  "Vị chảy tận trong miệng, cuốn không dứt được"
-                  },
-                  {
-                      "id":  85,
-                      "title":  "Combo 3 lạp xưởng chiên",
-                      "price_current":  54000,
-                      "price_old":  60000,
-                      "image":  "/../assets/product/combo/85.png",
-                      "status":  "available",
-                      "quantity":  100,
-                      "description":  "Từng miếng lạp xưởng được chiên, nướng khéo léo, béo ngậy vừa phải"
-                  },
-                  {
-                      "id":  86,
-                      "title":  "Combo 2 đùi gà chiên",
-                      "price_current":  75600,
-                      "price_old":  84000,
-                      "image":  "/../assets/product/combo/86.png",
-                      "status":  "available",
-                      "quantity":  100,
-                      "description":  "Lớp da được chiên giòn tan, vàng ruộm, bao bọc lấy phần thịt gà mềm ngọt"
-                  },
-                  {
-                      "id":  87,
-                      "title":  "Combo 10 viên phô mai hải sản chiên",
-                      "price_current":  34200,
-                      "price_old":  38000,
-                      "image":  "/../assets/product/combo/87.png",
-                      "status":  "available",
-                      "quantity":  100,
-                      "description":  "Càng ăn càng cuốn với lớp vỏ ngoài giòn tan, nóng hổi, vị ngọt tươi của hải sản bên trong"
-                  }
-              ],
+
+                ],
     "sale":  [
                  
              ]
