@@ -1,6 +1,23 @@
 
 
 /* ================= CONTAINER CHÍNH ================= */
+:root {
+    --primary: #ff6b35;
+    --primary-dark: #e85d2a;
+    --text-heading: #1a1a1a;
+    --text-body: #4a4a4a;
+    --text-placeholder: #9ca3af;
+    --bg-page: #f8f9fa;
+    --bg-card: #ffffff;
+    --border-color: #e5e7eb;
+    --focus-ring: rgba(255, 107, 53, 0.25);
+    --radius-md: 12px;
+    --radius-sm: 8px;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
 .container{
     max-width:1200px; /* tăng nhẹ chiều ngang tổng */
     margin:20px auto;
@@ -12,22 +29,22 @@ h1{
     text-align:center;
     font-size:36px;
     font-weight:700;
-    color:#e11d48;
+    color:var(--primary);
 }
 
 .subtitle{
     text-align:center;
     margin-top:8px;
-    color:#6b7280;
+    color:var(--text-placeholder);
 }
 
 /* ================= KHỐI SECTION ================= */
 .section{
-    background:#fff;
-    border-radius:22px;
+    background:var(--bg-card);
+    border-radius:var(--radius-md);
     padding:30px;
     margin-top:30px;
-    box-shadow:0 20px 40px rgba(0,0,0,.08);
+    box-shadow:var(--shadow-md);
 }
 
 /* ================= TIÊU ĐỀ SECTION ================= */
@@ -44,7 +61,7 @@ h1{
 .icon{
     width:26px;
     height:26px;
-    stroke:#e11d48;
+    stroke:var(--primary);
 }
 
 /* ================= KÊNH MUA SẮM ================= */
@@ -55,9 +72,9 @@ h1{
 }
 
 .method-card{
-    background:#fff7f7;
-    border:1px solid #fee2e2;
-    border-radius:18px;
+    background:var(--bg-card);
+    border:1px solid var(--border-color);
+    border-radius:var(--radius-md);
     padding:22px;
     transition:.4s;
     position:relative;
@@ -80,7 +97,7 @@ h1{
 
 .method-card:hover{
     transform:translateY(-8px);
-    box-shadow:0 15px 15px rgba(225,29,72,.3);
+    box-shadow:0 15px 15px rgba(255, 107, 53, .3);
 }
 
 .method-card h3{
@@ -88,7 +105,7 @@ h1{
     align-items:center;
     gap:10px;
     font-size:18px;
-    color:#be123c;
+    color:var(--primary);
     margin-bottom:8px;
 }
 
@@ -102,7 +119,7 @@ h1{
 
 /* ================= KHỐI GIAN HÀNG BÊN TRÁI ================= */
 .store{
-    border-left:6px solid #e11d48;
+    border-left:6px solid var(--primary);
     padding-left:22px;
     margin-bottom:30px;
     transition:.3s;
@@ -120,12 +137,12 @@ h1{
     display:flex;
     align-items:center;
     gap:10px;
-    color:#e11d48;
+    color:var(--primary);
     margin-bottom:6px;
 }
 
 .store p{
-    color:#555;
+    color:var(--text-body);
     margin-bottom:14px;
 }
 
@@ -142,11 +159,11 @@ h1{
     gap:8px;
     padding:11px 18px;
     border-radius:999px;
-    background:#fff;
-    border:1px solid #e5e7eb;
+    background:var(--bg-card);
+    border:1px solid var(--border-color);
     text-decoration:none;
     font-weight:500;
-    color:#111;
+    color:var(--text-heading);
     transition:.35s;
 }
 
@@ -158,7 +175,7 @@ h1{
 /* hiệu ứng hover nút */
 .brand-btn:hover{
     transform:translateY(-5px) scale(1.05);
-    box-shadow:0 5px 10px rgba(68, 62, 62, 0.25);
+    box-shadow:0 5px 10px rgba(255, 107, 53, 0.25);
 }
 
 /* ================= ẢNH BÊN PHẢI GIAN HÀNG ================= */
@@ -181,8 +198,8 @@ h1{
 /* ================= KHỐI LỜI KHUYÊN ================= */
 .highlight{
     background:linear-gradient(135deg,#fff7ed,#ffedd5);
-    border:2px dashed #fb923c;
-    border-radius:22px;
+    border:2px dashed var(--primary);
+    border-radius:var(--radius-md);
     padding:30px;
     margin-top:35px;
 }
@@ -194,7 +211,7 @@ h1{
 
 .highlight li{
     margin-bottom:10px;
-    color:#7c2d12;
+    color:var(--primary-dark);
     line-height:1.5;
 }
 

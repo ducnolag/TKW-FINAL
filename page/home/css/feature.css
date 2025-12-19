@@ -51,7 +51,7 @@ Home Featured Menu Styles
 }
 
 .btn-main {
-  background: var(--accent-color);
+  background: linear-gradient(135deg, #ff6b35 0%, #df2626 100%);
   color: var(--white-color);
   padding: 10px 28px;
   font-weight: var(--font-weight-semibold);
@@ -61,7 +61,7 @@ Home Featured Menu Styles
 }
 
 .btn-main:hover {
-  background: #ab0202;
+  background: linear-gradient(135deg, #ff6b35 20%, #df2626 100%);
   color: #fff;
 }
 
@@ -119,7 +119,7 @@ Home Featured Menu Styles
 }
 
 .btn-order {
-  background: var(--accent-color);
+  background: linear-gradient(135deg, #ff6b35 0%, #df2626 100%);
   color: var(--white-color);
   padding: 8px 20px;
   border-radius: var(--border-radius-large);
@@ -130,7 +130,7 @@ Home Featured Menu Styles
 }
 
 .btn-order:hover {
-  background: #ab0202;
+  background: linear-gradient(135deg, #ff6b35 20%, #df2626 100%);
   color: #fff;
 }
 
@@ -204,7 +204,7 @@ Home Featured Menu Styles
 
 /* Nút đặt hàng */
 .banner-btn {
-  background: var(--accent-color);
+  background: linear-gradient(135deg, #ff6b35 0%, #df2626 100%);
   color: var(--white-color);
   padding: 14px 40px;
   border-radius: var(--border-radius-large);
@@ -216,7 +216,7 @@ Home Featured Menu Styles
 }
 
 .banner-btn:hover {
-  background: #ab0202;
+  background: linear-gradient(135deg, #ff6b35 20%, #df2626 100%);
   color: #fff;
   transform: translateY(-3px);
 }

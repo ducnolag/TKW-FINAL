@@ -31,7 +31,7 @@ body {
    Nút bấm chung
    ======================================== */
 .btn-custom {
-    background: var(--accent-color);
+    background: linear-gradient(135deg, #ff6b35 0%, #df2626 100%);
     color: var(--light-color);
     border: none;
     padding: 14px 40px;
@@ -50,7 +50,7 @@ body {
 
 
 .btn-custom:hover {
-  background: #ab0202;
+  background: linear-gradient(135deg, #ff6b35 20%, #df2626 100%);
   color: #fff;
     transform: translateY(-3px);
     box-shadow: 0 8px 24px rgba(216, 43, 43, 0.4);
@@ -61,7 +61,7 @@ body {
 }
 
 .btn-custom-light {
-    background: var(--accent-color);
+    background: linear-gradient(135deg, #ff6b35 0%, #df2626 100%);
     color: #fff;
     padding: 14px 40px;
     font-weight: 600;
@@ -78,8 +78,8 @@ body {
 
 
 .btn-custom-light:hover {
-      background: #ab0202;
-  color: #fff;
+    background: linear-gradient(135deg, #ff6b35 20%, #df2626 100%);
+    color: #fff;
     border-color: #fff;
     transform: translateY(-3px);
 }

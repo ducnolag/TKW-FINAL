@@ -203,14 +203,14 @@
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  background: var(--accent-color);
+  background: linear-gradient(135deg, #ff6b35 0%, #f38585 100%);
   transition: all 0.3s ease;
   text-decoration: none;
   cursor: pointer;
 }
 
 .btn-pill-outline:hover {
-  background: #ab0202;
+  background: linear-gradient(135deg, #ff6b35 20%, #df2626 100%);
   color: #fff;
 }
 
@@ -220,9 +220,8 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: #fff;
-  border: 1px solid #eee;
-  color: #555;
+  background-color: #ffb195;
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -236,9 +235,9 @@
 
 .bs-button-next:hover,
 .bs-button-prev:hover {
-  background-color: var(--red-primary);
+  background-color: #e85d2a;
   color: #fff;
-  border-color: var(--red-primary);
+  border-color: #e85d2a;
 }
 
 .bs-button-prev {

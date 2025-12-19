@@ -54,9 +54,9 @@
 /* Navigation buttons */
 .section_slider .swiper-button-prev,
 .section_slider .swiper-button-next {
-  width: 36px !important;
-  height: 36px !important;
-  background: #fb8908aa !important;
+  width: 40px !important;
+  height: 40px !important;
+  background-color: #f89876 !important;  
   border-radius: 50% !important;
   color: #fff !important;
   top: 50% !important;
@@ -95,7 +95,7 @@
 .section_slider .swiper-button-prev:hover,
 .section_slider .swiper-button-next:hover {
   transform: translateY(-50%) scale(1.08) !important;
-  background: var(--primary-color) !important;
+  background-color: #f89876 !important;
   box-shadow: 0 3px 12px rgba(0,0,0,0.3) !important;
 }
 @media (max-width: 1000px) {

@@ -65,7 +65,7 @@
 
 .category-menu a:hover,
 .category-menu li.active a {
-  background: var(--red-light);
+  background: linear-gradient(135deg, #ff6b35 0%, #df2626 100%);
   color: #fff;
   transform: translateX(5px);
 }
