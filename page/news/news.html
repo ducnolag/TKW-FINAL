@@ -10,36 +10,24 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="news.css">
   <link rel="stylesheet" href="sidebar.css">
-  <link rel="stylesheet" href="/src/css/again.css">
-  <script src="/utils/include.js"></script>
 </head>
 
 <body>
-  <div data-include="/src/components/header.htm"></div>
-  <div id="breadcrumb-container"></div>
-  <script src="/src/js/layouts/breadcrumb.js"></script>
-  <script>
-      renderBreadcrumb([
-          { name: "Tin tức", link: "" }
-      ]);
-  </script>
   <main class="container py-4">
 
     <div class="row">
-      <!-- CỘT DANH SÁCH BÀI VIẾT (BÊN TRÁI) -->
-      <div class="col-lg-8 col-12 mb-4">
-        <h2 class="page-title">Tin tức</h2>
-
-        <!-- JS sẽ render toàn bộ bài viết vào đây -->
-        <div id="news-list"></div>
-      </div>
 
       <!-- SIDEBAR  -->
       <div class="col-lg-4 col-12">
         <div id="sidebar-container" class="sidebar"></div>
       </div>
-    </div>
 
+      <!-- CỘT DANH SÁCH BÀI VIẾT  -->
+      <div class="col-lg-8 col-12 mb-4">
+        <div id="news-list"></div>
+      </div>
+</div>
+      
   </main>
 
   <!-- MODAL ZOOM ẢNH-->
@@ -48,11 +36,11 @@
     <img class="modal-content" id="modalImage" alt="Zoom ảnh">
   </div>
 
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
+  <script src="new-detail/news-data.js"></script>
   <script src="news.js"></script>
   <script src="load-sidebar.js"></script>
-  <script type="module" src="/src/js/again.js"></script>
+
 </body>
 </html>
