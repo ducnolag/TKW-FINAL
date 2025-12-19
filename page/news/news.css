@@ -23,27 +23,6 @@ img {
   display: block;
 }
 
-/* ==================== TIÊU ĐỀ TRANG ==================== */
-.page-title {
-  font-size: 32px;
-  font-weight: 700;
-  color: #2c3e50;
-  margin-bottom: 30px;
-  padding-bottom: 15px;
-  border-bottom: 3px solid #ff6b35;
-  position: relative;
-}
-
-.page-title::after {
-  content: '';
-  position: absolute;
-  bottom: -3px;
-  left: 0;
-  width: 100px;
-  height: 3px;
-  background: #e74c3c;
-}
-
 /* ==================== CARD BÀI VIẾT ==================== */
 .news-card {
   background: #fff;
@@ -208,10 +187,10 @@ img {
 
 @keyframes zoom {
   from {
-    transform: scale(0);
+    transform: scale(0.9);
   }
   to {
-    transform: scale(0.5);
+    transform: scale(1);
   }
 }
 
@@ -263,16 +242,22 @@ img {
 }
 
 /* Ảnh đại diện */
-.news-detail-image {
-  margin-bottom: 30px;
+.news-detail-image{
   border-radius: 12px;
   overflow: hidden;
+  background: #f6f6f6;    
+  max-height: 500px;        
+  place-items: center;
 }
 
-.news-detail-image img {
+.news-detail-image img{
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: contain;      
+  object-position: center;
+  display: block;
 }
+
 
 /* Nội dung bài viết */
 .news-detail-content {
@@ -456,74 +441,6 @@ img {
 .btn-share-link:hover {
   background: #7f8c8d;
   transform: translateY(-2px);
-}
-
-/* Bài viết liên quan */
-.related-posts {
-  margin-bottom: 40px;
-}
-
-.section-title {
-  font-size: 22px;
-  font-weight: 700;
-  color: #2c3e50;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.related-post-card {
-  background: #fff;
-  border: 1px solid #eee;
-  border-radius: 10px;
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-.related-post-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.related-post-image {
-  height: 150px;
-  overflow: hidden;
-}
-
-.related-post-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-
-.related-post-card:hover .related-post-image img {
-  transform: scale(1.1);
-}
-
-.related-post-content {
-  padding: 15px;
-}
-
-.related-post-content h4 {
-  font-size: 16px;
-  margin-bottom: 8px;
-}
-
-.related-post-content h4 a {
-  color: #2c3e50;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.related-post-content h4 a:hover {
-  color: #e74c3c;
-}
-
-.related-post-date {
-  font-size: 13px;
-  color: #7f8c8d;
 }
 
 /* Phần bình luận */

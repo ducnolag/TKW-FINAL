@@ -103,19 +103,19 @@ function initTestimonialSlider() {
         {
             avatar: 'https://i.pravatar.cc/150?img=32',
             quote: 'Món ăn ở Tiệm thực sự tuyệt vời! Từ vị cay của mì cay đến sự cân bằng của mì trộn, tất cả đều hoàn hảo. Tôi đã trở thành khách hàng thường xuyên của Tiệm.',
-            name: 'Nguyễn Văn A',
+            name: 'Nguyễn Minh Châu',
             role: 'Khách hàng thân thiết'
         },
         {
             avatar: 'https://i.pravatar.cc/150?img=33',
             quote: 'Chất lượng món ăn luôn đảm bảo, phục vụ nhiệt tình. Đặc biệt là món mì trộn độc quyền, thật sự không thể cưỡng lại được!',
-            name: 'Trần Thị B',
+            name: 'Trần Thị Bình',
             role: 'Food Blogger'
         },
         {
             avatar: 'https://i.pravatar.cc/150?img=34',
             quote: 'Tiệm đã làm tôi thay đổi quan niệm về đồ ăn vặt. Mọi thứ đều được chế biến cẩn thận và sạch sẽ. Tôi rất tin tưởng vào chất lượng của Tiệm.',
-            name: 'Lê Minh C',
+            name: 'Lê Minh Qaung',
             role: 'Khách hàng VIP'
         }
     ];
@@ -217,27 +217,6 @@ function initParallaxEffect() {
     });
 }
 
-/* ========================================
-   Hiệu ứng hover cho chef cards
-   ======================================== */
-const chefCards = document.querySelectorAll('.chef-card');
-
-chefCards.forEach(card => {
-    card.addEventListener('mouseenter', function() {
-        const badge = this.querySelector('.chef-badge');
-        if (badge) {
-            badge.style.transform = 'scale(1.1)';
-            badge.style.transition = 'transform 0.3s ease';
-        }
-    });
-    
-    card.addEventListener('mouseleave', function() {
-        const badge = this.querySelector('.chef-badge');
-        if (badge) {
-            badge.style.transform = 'scale(1)';
-        }
-    });
-});
 
 /* ========================================
    Hiệu ứng cho value cards
