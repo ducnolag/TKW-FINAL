@@ -11,7 +11,7 @@ function renderBreadcrumb(items, containerId = 'breadcrumb-container') {
     let html = `<nav aria-label="breadcrumb" class="breadcrumb-wrapper">
                     <ol class="breadcrumb-list">
                         <li class="breadcrumb-item">
-                            <a href="/index.html"><i class="fa-solid fa-house"></i> Trang chủ</a>
+                            <a href="/index.htm"><i class="fa-solid fa-house"></i> Trang chủ</a>
                         </li>`;
 
     // 2. Tạo dữ liệu Schema JSON-LD cho SEO
