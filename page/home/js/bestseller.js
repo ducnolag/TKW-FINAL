@@ -7,7 +7,14 @@ document.addEventListener('htmlIncluded', function () {
   fetch('/data/product.json')
     .then(res => res.json())
     .then(data => {
-      const products = data.sale;
+      // Lấy tất cả sản phẩm từ các category
+      const products = [
+        ...(data.micay || []),
+        ...(data.mitron || []),
+        ...(data.anvat || []),
+        ...(data.ankem || []),
+        ...(data.douong || [])
+      ].slice(0, 8); // Lấy 8 sản phẩm đầu tiên làm bestseller
 
       // Chọn wrapper của slider
       const wrapper = document.querySelector('.swiper_product_sale .swiper-wrapper');

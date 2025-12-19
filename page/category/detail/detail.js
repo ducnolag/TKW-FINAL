@@ -484,7 +484,13 @@ const getDetailProduct = async () => {
 
         const data = await response.json();
         window.allProductData = data;
-        const allProducts = data.sale || [];
+        const allProducts = [
+          ...(data.micay || []),
+          ...(data.mitron || []),
+          ...(data.anvat || []),
+          ...(data.ankem || []),
+          ...(data.douong || [])
+        ];
         const product = allProducts.find(p => p.id == productId);
 
         if (product) {
@@ -537,7 +543,13 @@ async function loadProductFromURL() {
         const response = await fetch('/data/product.json');
         if (!response.ok) throw new Error('Không thể tải dữ liệu sản phẩm');
         const data = await response.json();
-        const allProducts = data.sale || [];
+        const allProducts = [
+          ...(data.micay || []),
+          ...(data.mitron || []),
+          ...(data.anvat || []),
+          ...(data.ankem || []),
+          ...(data.douong || [])
+        ];
         const product = allProducts.find(p => p.id == productId);
         if (product) {
             currentProduct = product;
@@ -1223,7 +1235,13 @@ async function loadRelatedProducts() {
         
         const response = await fetch('/data/product.json');
         const data = await response.json();
-        const allProducts = data.sale || [];
+        const allProducts = [
+          ...(data.micay || []),
+          ...(data.mitron || []),
+          ...(data.anvat || []),
+          ...(data.ankem || []),
+          ...(data.douong || [])
+        ];
         
         // Tìm sản phẩm hiện tại để lấy danh mục
         const currentProd = allProducts.find(p => p.id == productId);

@@ -154,7 +154,14 @@ let allData = null;
 
       // Nếu có tìm kiếm, hiển thị kết quả tìm kiếm
       if (searchQuery) {
-        const allProducts = allData.sale || [];
+        // Kết hợp tất cả sản phẩm từ các category
+        const allProducts = [
+          ...(allData.micay || []),
+          ...(allData.mitron || []),
+          ...(allData.anvat || []),
+          ...(allData.ankem || []),
+          ...(allData.douong || [])
+        ];
         products = allProducts.filter(product => 
           product.title.toLowerCase().includes(searchQuery.toLowerCase())
         );
@@ -162,7 +169,13 @@ let allData = null;
       } else {
         // Hiển thị theo danh mục
         if (category === 'all') {
-          products = allData.sale || [];
+          products = [
+            ...(allData.micay || []),
+            ...(allData.mitron || []),
+            ...(allData.anvat || []),
+            ...(allData.ankem || []),
+            ...(allData.douong || [])
+          ];
           titleText = categoryNames['all'];
         } else if (allData[category]) {
           products = allData[category];
