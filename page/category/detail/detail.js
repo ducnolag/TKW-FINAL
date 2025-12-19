@@ -578,8 +578,13 @@ function updateDetailPageUI(product, views) {
         mainImg.alt = product.title;
     }
     
-    const titleElement = document.querySelector('.pd-name') || document.querySelector('.page-main-title');
-    if (titleElement) titleElement.textContent = product.title;
+// Cập nhật tên sản phẩm ở cột bên phải (H2)
+    const pdNameElement = document.querySelector('.pd-name');
+    if (pdNameElement) pdNameElement.textContent = product.title;
+    
+    // Cập nhật tiêu đề chính to đùng ở trên cùng (H1)
+    const mainTitleElement = document.querySelector('.page-main-title') || document.getElementById('mainTitle');
+    if (mainTitleElement) mainTitleElement.innerHTML = product.title.replace('\n', '<br>'); // Hỗ trợ xuống dòng nếu có
     
     const priceNewElement = document.querySelector('.price-new');
     if (priceNewElement) priceNewElement.textContent = formatPrice(product.price_current);

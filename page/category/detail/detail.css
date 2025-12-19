@@ -22,9 +22,56 @@ a { text-decoration: none; color: inherit; transition: 0.3s; }
 .breadcrumb .home-icon i { font-size: 14px; color: var(--primary-color); margin-bottom: 2px; }
 .breadcrumb .separator { font-size: 10px; color: #ccc; display: flex; align-items: center; }
 .breadcrumb .current { color: var(--secondary-color); font-weight: 600; max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.page-main-title { font-size: 32px; font-weight: 900; color: var(--text-dark); margin-bottom: 35px; text-transform: uppercase; line-height: 1.4; position: relative; display: inline-block; letter-spacing: 0.5px; background: linear-gradient(90deg, var(--text-dark) 30%, var(--secondary-color) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.page-main-title::after { content: ""; position: absolute; bottom: -10px; left: 0; width: 80px; height: 5px; background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); border-radius: 10px; }
-.page-main-title::before { content: ""; position: absolute; bottom: -10px; left: 90px; width: 8px; height: 5px; background-color: #ffd166; border-radius: 10px; }
+.page-main-title {
+    /* Font chữ và kích thước */
+    font-size: 32px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+    
+    /* Layout */
+    margin-bottom: 35px;
+    position: relative;
+    display: inline-block;
+
+    /* MÀU SẮC & HIỆU ỨNG (Đã fix lỗi tàng hình) */
+    /* 1. Đặt màu gốc (backup) để lỡ gradient lỗi vẫn hiện chữ màu đen */
+    color: #333; 
+    
+    /* 2. Tạo Gradient: Chuyển từ Đen xám sang Đỏ cam (màu chủ đạo của web bạn) */
+    /* Mình dùng mã màu cứng (#333, #d82b2b) thay vì var() để tránh lỗi biến chưa load */
+    background: linear-gradient(90deg, #333 30%, #d82b2b 100%);
+    
+    /* 3. Cắt nền theo chữ */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Thanh gạch chân dài (màu chuyển sắc) */
+.page-main-title::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 80px;
+    height: 5px;
+    background: linear-gradient(90deg, #ff6b35, #d82b2b); /* Cam sang Đỏ */
+    border-radius: 10px;
+}
+
+/* Dấu chấm tròn trang trí màu vàng */
+.page-main-title::before {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 90px;
+    width: 8px;
+    height: 5px;
+    background-color: #ffd166; /* Vàng */
+    border-radius: 10px;
+}
 .mobile-break { display: none; }
 
 @media (max-width: 768px) { 
