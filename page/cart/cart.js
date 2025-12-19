@@ -221,12 +221,20 @@ function updatePromoDisplay() {
     if (appliedPromoCode && validPromoCodes[appliedPromoCode]) {
         const promo = validPromoCodes[appliedPromoCode];
         promoDisplay.innerHTML = `
-            <div style="background: #dcfce7; border: 1px solid #86efac; padding: 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
-                <div style="color: #166534; font-weight: 600;">
-                    ✅ Mã: <strong>${appliedPromoCode}</strong> - ${promo.desc}
+            <div class="promo-tag">
+                <div class="promo-tag-content">
+                    <div class="promo-tag-badge">✓</div>
+                    <div class="promo-tag-info">
+                        <span class="promo-tag-label">Mã áp dụng</span>
+                        <div>
+                            <span class="promo-tag-code">${appliedPromoCode}</span>
+                            <span class="promo-tag-desc"> • ${promo.desc}</span>
+                        </div>
+                    </div>
                 </div>
-                <button onclick="removePromoCode()" style="background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600;">
-                    ✕ Xóa
+                <button onclick="removePromoCode()" class="promo-remove-btn" title="Xóa mã giảm giá">
+                    <i class="fa fa-times"></i>
+                    <span>Xóa</span>
                 </button>
             </div>
         `;
