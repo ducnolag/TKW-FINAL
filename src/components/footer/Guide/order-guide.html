@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Hướng dẫn mua hàng</title>
+
+  <!-- NOTE: Giữ nguyên font Inter như bản gốc -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+
+  <!-- NOTE: Giữ nguyên Material Icons như bản gốc -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+
+  <!-- NOTE: CSS thuần (thay cho Tailwind) -->
+  <link rel="stylesheet" href="guide.css"/>
+</head>
+
+<!-- NOTE: Dark mode: thêm class "dark" vào body nếu muốn -->
+<body class="app">
+  <main class="container">
+    <header class="page-header">
+      <h1 class="page-title">Hướng dẫn mua hàng</h1>
+      <div class="page-divider"></div>
+    </header>
+
+    <div class="card">
+      <section>
+        <p class="text-muted">
+          Đây là quy trình từng bước giúp quý khách đặt hàng nhanh chóng và nhận trọn vẹn ưu đãi độc quyền (Combo và Tích điểm Hội viên) trên Website của Tiệm.
+        </p>
+      </section>
+
+      <section class="step">
+        <h3 class="step-title">
+          <span class="step-badge">01</span>
+          Bước 1: Chọn món và Chuyển đến Giỏ hàng
+        </h3>
+
+        <ul class="step-list">
+          <li>
+            <strong class="text-strong">Chọn món:</strong>
+            <span class="text-muted">
+              Duyệt qua các mục Thực đơn (Mì Trộn/Mì Cay, Đồ Ăn Vặt, Đồ Uống) và thêm món yêu thích vào Giỏ hàng.
+            </span>
+          </li>
+
+          <li>
+            <strong class="text-strong">Kiểm tra Giỏ hàng:</strong>
+            <span class="text-muted">
+              Nhấn vào biểu tượng <strong class="text-strong">Giỏ Hàng</strong>
+              (<span class="material-icons icon-inline">shopping_cart</span>)
+              để kiểm tra lại các món đã chọn.
+            </span>
+          </li>
+
+          <li>
+            <strong class="text-strong">Tiến hành đặt hàng:</strong>
+            <span class="text-muted">
+              Nhấn <strong class="text-strong">"ĐẶT HÀNG"</strong> để chuyển sang trang Thanh toán.
+            </span>
+          </li>
+        </ul>
+      </section>
+
+      <section class="step">
+        <h3 class="step-title">
+          <span class="step-badge">02</span>
+          Bước 2: Hoàn tất Thông tin Nhận hàng
+        </h3>
+
+        <p class="text-muted mb-4">
+          Tại cột <strong class="text-strong">"Thông tin nhận hàng"</strong> bên trái màn hình, quý khách vui lòng điền đầy đủ và chính xác các thông tin sau:
+        </p>
+
+        <ol class="step-ol">
+          <li>
+            <strong class="text-strong">Đăng nhập/Đăng ký:</strong>
+            Nhấn <strong class="text-strong">"Đăng nhập"</strong> nếu bạn đã là Hội viên. Nếu là khách hàng mới, vui lòng điền <strong class="text-strong">Số điện thoại</strong> để tự động đăng ký Hội viên mới.
+          </li>
+
+          <li>
+            <strong class="text-strong">Thông tin cá nhân:</strong>
+            Điền <strong class="text-strong">Email, Họ và tên</strong>, và <strong class="text-strong">Số điện thoại</strong> (bắt buộc).
+          </li>
+
+          <li>
+            <strong class="text-strong">Địa chỉ chi tiết:</strong>
+            Điền địa chỉ chi tiết (Số nhà, tên đường).
+          </li>
+
+          <li>
+            <strong class="text-strong">Ghi chú (tùy chọn):</strong>
+            Điền các yêu cầu đặc biệt như "ít cay", v.v.
+          </li>
+        </ol>
+      </section>
+
+      <section class="step">
+        <h3 class="step-title">
+          <span class="step-badge">03</span>
+          Bước 3: Áp dụng Mã giảm giá &amp; Kiểm tra Đơn hàng
+        </h3>
+
+        <p class="text-muted mb-4">
+          Kiểm tra cột <strong class="text-strong">"Đơn hàng (X sản phẩm)"</strong> bên phải màn hình:
+        </p>
+
+        <ol class="step-ol">
+          <li>
+            <strong class="text-strong">Nhập Mã giảm giá:</strong>
+            Nhập <strong class="text-strong">Mã Voucher</strong> (đã đổi từ Điểm tích lũy) vào ô <strong class="text-strong">"Nhập mã giảm giá"</strong> và nhấn <strong class="text-strong">"Áp dụng"</strong>.
+            Xem lại phần <strong class="text-strong">Giảm giá trên đơn</strong> để xác nhận Voucher đã được áp dụng thành công.
+          </li>
+
+          <li>
+            <strong class="text-strong">Kiểm tra Tổng cộng:</strong>
+            Kiểm tra lại <strong class="text-strong">Tạm tính, Phí vận chuyển</strong> và <strong class="text-strong">Tổng cộng</strong> cuối cùng.
+          </li>
+        </ol>
+      </section>
+
+      <section class="step">
+        <h3 class="step-title">
+          <span class="step-badge">04</span>
+          Bước 4: Lựa chọn Phương thức Thanh toán
+        </h3>
+
+        <p class="text-muted mb-4">
+          Tại khu vực <strong class="text-strong">"Thanh toán"</strong> ở giữa màn hình, quý khách chọn 1 trong các hình thức thanh toán dưới đây:
+        </p>
+
+        <ul class="step-list">
+          <li>
+            <strong class="text-strong">Thanh toán khi nhận hàng (COD):</strong>
+            <span class="text-muted">Hình thức phổ biến và thuận tiện nhất.</span>
+          </li>
+
+          <li>
+            <strong class="text-strong">Chuyển khoản:</strong>
+            <span class="text-muted">
+              Bạn có thể chọn chuyển khoản qua ngân hàng <strong class="text-strong">Techcombank/VietQR</strong> hoặc <strong class="text-strong">MBBank/VietQR</strong> (Hình thức này cần chuyển khoản thủ công sau khi đặt hàng).
+            </span>
+          </li>
+
+          <li>
+            <strong class="text-strong">Thanh toán qua MoMo QR đa năng:</strong>
+            <span class="text-muted">Thanh toán trực tuyến an toàn và nhanh chóng.</span>
+          </li>
+        </ul>
+      </section>
+
+      <section class="step">
+        <h3 class="step-title">
+          <span class="step-badge">05</span>
+          Bước 5: Hoàn tất Đặt hàng và Tích Điểm
+        </h3>
+
+        <ul class="final-list">
+          <li class="final-item">
+            <span class="material-icons icon-success">check_circle</span>
+            <p class="text-muted">
+              Sau khi điền đủ thông tin và chọn phương thức thanh toán, nhấn nút <strong class="text-link-blue">"ĐẶT HÀNG"</strong> màu xanh dương để gửi đơn hàng.
+            </p>
+          </li>
+
+          <li class="final-item">
+            <span class="material-icons icon-warning">stars</span>
+            <p class="text-muted">
+              <strong class="text-strong">Tích điểm:</strong> Điểm thưởng Hội viên sẽ được tự động tích lũy vào tài khoản của bạn ngay sau khi đơn hàng được giao thành công.
+            </p>
+          </li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="support">
+      <p class="text-muted">
+        Cần hỗ trợ thêm? <a class="support-link" href="#">Liên hệ CSKH</a>
+      </p>
+    </div>
+  </main>
+</body>
+</html>
