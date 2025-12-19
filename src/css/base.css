@@ -1,0 +1,198 @@
+/* =========================================================
+   BASE STYLE - UNIFIED VARIABLES & GLOBAL STYLES
+   Tập trung tất cả variables và styles base cho toàn bộ project
+   ========================================================= */
+
+:root {
+  /* ========== MÀU SẮC CHÍNH ========== */
+  --primary-color: #ff6b35;         /* Cam chủ đạo */
+  --primary-dark: #e85d2a;          /* Cam đậm - hover */
+  --primary-light: #fff5f2;         /* Cam nhạt - background */
+  --primary-rgb: 255, 107, 53;      /* RGB cho transparency */
+  
+  --secondary-color: #d82b2b;       /* Đỏ thứ cấp */
+  --accent-color: #e21b1b;          /* Accent đỏ */
+  
+  --warning-color: #ffc107;
+  --warning-rgb: 255, 193, 7;
+  --success-color: #4caf50;
+  --info-color: #2196f3;
+  
+  /* ========== MÀU NỀN ========== */
+  --bg-primary: #ffffff;            /* Nền chính */
+  --bg-secondary: #f8f9fa;          /* Nền phụ - trang */
+  --bg-light: #f4f6f8;              /* Nền nhạt */
+  --bg-cream: #fff7ed;              /* Nền kem/beige */
+  --bg-box: #fffbf5;                /* Nền box nhạt */
+  
+  /* ========== MÀU CHỮ ========== */
+  --text-dark: #1a1a1a;             /* Chữ đen chính */
+  --text-color: #333333;            /* Chữ tối thường */
+  --text-body: #4a4a4a;             /* Chữ body */
+  --text-light: #4a5568;            /* Chữ nhạt */
+  --text-muted: #6b7280;            /* Chữ xám */
+  --text-placeholder: #9ca3af;      /* Placeholder */
+  
+  --white-color: #ffffff;
+  
+  /* ========== MÀU ĐƯỜNG VIỀN ========== */
+  --border-color: #e5e7eb;
+  --border-light: #eee;
+  --line-color: #ffe4cf;
+  
+  /* ========== FONT ========== */
+  --font-family-sans-serif: 'Roboto', sans-serif;
+  --font-family-system: system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  
+  --font-weight-normal: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extra-bold: 800;
+  --font-weight-black: 900;
+  
+  /* ========== BORDER RADIUS ========== */
+  --border-radius-sm: 8px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 16px;
+  --border-radius-xl: 25px;
+  --border-radius-circle: 50%;
+  
+  /* ========== SHADOWS ========== */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-small: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 4px 15px rgba(0, 0, 0, 0.15);
+  --shadow-large: 0 8px 25px rgba(0, 0, 0, 0.2);
+  --shadow-soft: 0 14px 32px rgba(17, 24, 39, 0.1);
+  --shadow-modal: 0 22px 65px rgba(17, 24, 39, 0.28);
+  
+  /* ========== TRANSITIONS ========== */
+  --transition-fast: 0.2s;
+  --transition-normal: 0.3s;
+  --transition-slow: 0.5s;
+  --transition: all 0.2s ease;
+  
+  /* ========== LAYOUT ========== */
+  --container-max-width: 1200px;
+  --container-padding: 15px;
+}
+
+/* ========== RESET & GLOBAL STYLES ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-family-sans-serif);
+  background-color: var(--bg-secondary);
+  color: var(--text-color);
+  line-height: 1.6;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+/* ========== CONTAINER ========== */
+.container {
+  width: var(--container-max-width);
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+/* ========== LINKS ========== */
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition);
+}
+
+a:hover {
+  opacity: 0.85;
+}
+
+/* ========== IMAGES ========== */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ========== TYPOGRAPHY ========== */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--font-weight-bold);
+  line-height: 1.3;
+  color: var(--text-dark);
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+/* ========== FORM ELEMENTS ========== */
+input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  padding: 0.75rem;
+  transition: var(--transition);
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+}
+
+/* ========== BUTTONS ========== */
+button, .btn {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  border-radius: var(--border-radius-md);
+  transition: var(--transition);
+  font-weight: var(--font-weight-semibold);
+}
+
+button:hover, .btn:hover {
+  transform: translateY(-2px);
+}
+
+/* ========== UTILITIES ========== */
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+
+.p-1 { padding: 0.5rem; }
+.p-2 { padding: 1rem; }
+.p-3 { padding: 1.5rem; }
+.p-4 { padding: 2rem; }

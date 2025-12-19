@@ -1,38 +1,16 @@
 /* =========================================================
-   POLICY PAGE - tone cam/trắng/đỏ + responsive + effects
-   NOTE: dùng system font stack để tránh lỗi font
+   POLICY PAGE - Variables từ base.css
    ========================================================= */
-
-:root{
-  --bg: #ffffff;
-  --text: #111827;
-  --muted: #6b7280;
-
-  --orange: #ff6a00;
-  --orange2:#ff8a1f;
-  --red:    #e11d48;
-
-  --cream:  #fff7ed;
-  --line:   #ffe4cf;
-
-  --radius: 16px;
-  --shadow-soft: 0 14px 32px rgba(17,24,39,.10);
-  --shadow-modal: 0 22px 65px rgba(17,24,39,.28);
-
-  --max: 1100px;
-
-  /* NOTE: System font stack an toàn */
-  --font: system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
-}
+/* Sử dụng: --primary-color, --text-dark, --text-muted, --bg-primary, --border-radius-lg */
 
 *{ box-sizing:border-box; }
 html{ scroll-behavior:smooth; }
 
 body{
   margin:0;
-  font-family: var(--font);
-  color: var(--text);
-  background: var(--bg);
+  font-family: var(--font-family-system);
+  color: var(--text-dark);
+  background: var(--bg-primary);
 }
 
 /* =========================
@@ -130,9 +108,9 @@ body{
   width:100%;
   text-align:left;
 
-  background: var(--cream);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
+  background: var(--bg-cream);
+  border: 1px solid var(--line-color);
+  border-radius: var(--border-radius-lg);
 
   padding: 18px 18px;
   display:flex;
@@ -199,7 +177,7 @@ body{
   place-items:center;
   flex: 0 0 auto;
 
-  background: linear-gradient(135deg, var(--orange), var(--red));
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   color: #fff;
 
   box-shadow: 0 10px 26px rgba(255,106,0,.20);
@@ -216,7 +194,7 @@ body{
 }
 
 .policy-item.is-active .pill{
-  background: linear-gradient(135deg, var(--red), var(--orange));
+  background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
   box-shadow: 0 10px 30px rgba(225,29,72,.18);
 }
 
@@ -272,7 +250,7 @@ body{
 .dialog-sub{
   margin: 6px 0 0;
   font-size: 13px;
-  color: var(--muted);
+  color: var(--text-muted);
   line-height: 1.45;
 }
 
@@ -380,7 +358,7 @@ body{
 
 .btn.primary{
   border-color: transparent;
-  background: linear-gradient(135deg, var(--orange), var(--red));
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   color:#fff;
   box-shadow: 0 12px 28px rgba(255,106,0,.20);
 }

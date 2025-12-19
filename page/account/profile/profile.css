@@ -1,25 +1,7 @@
 /* =========================================
-   1. VARIABLES & RESET & GLOBAL
+   1. VARIABLES & RESET & GLOBAL - từ base.css
    ========================================= */
-:root {
-    /* Màu chủ đạo (Cam của bạn) */
-    --primary: #ff6b35;
-    --primary-light: #fff5f2;
-    --primary-dark: #e85d2a;
-    
-    /* Màu trung tính */
-    --secondary: #2d3748;
-    --text-main: #1a202c;     /* Chữ đen chính */
-    --text-muted: #718096;    /* Chữ xám phụ */
-    --bg-body: #f7fafc;       /* Nền tổng thể */
-    --bg-card: #ffffff;       /* Nền thẻ/khung */
-    
-    /* Hiệu ứng */
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
-    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-    --radius: 12px;
-    --transition: all 0.2s ease;
-}
+/* Sử dụng: --primary-color, --text-main, --bg-body, --bg-card, --border-radius-md */
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 

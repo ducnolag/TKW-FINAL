@@ -1,14 +1,7 @@
 /* ========================================
-    Thiết lập chung
+    Thiết lập chung - Variables từ base.css
    ======================================== */
-:root {
-    --primary-color: #ff6b35;
-    --secondary-color: #d82b2b;
-    --dark-color: #1a1a1a;
-    --light-color: #f8f9fa;
-    --text-color: #333;
-    --gray-color: #6c757d;
-}
+/* Sử dụng: --primary-color, --secondary-color, --text-color, --bg-secondary, --text-light */
 
 * {
     margin: 0;
@@ -21,6 +14,7 @@ body {
     color: var(--text-color);
     line-height: 1.7;
     overflow-x: hidden;
+    background-color: var(--bg-secondary);
 }
 .container {
   max-width: 1200px;
