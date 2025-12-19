@@ -1,7 +1,14 @@
 /* ========================================
-    Thiết lập chung - Variables từ base.css
+    Thiết lập chung
    ======================================== */
-/* Sử dụng: --primary-color, --secondary-color, --text-color, --bg-secondary, --text-light */
+:root {
+    --primary-color: #ff6b35;
+    --secondary-color: #d82b2b;
+    --dark-color: #1a1a1a;
+    --light-color: #f8f9fa;
+    --text-color: #333;
+    --gray-color: #6c757d;
+}
 
 * {
     margin: 0;
@@ -14,7 +21,6 @@ body {
     color: var(--text-color);
     line-height: 1.7;
     overflow-x: hidden;
-    background-color: var(--bg-secondary);
 }
 .container {
   max-width: 1200px;
@@ -25,14 +31,13 @@ body {
    Nút bấm chung
    ======================================== */
 .btn-custom {
-    background: var(--primary-color);
+    background: var(--accent-color);
     color: var(--light-color);
     border: none;
     padding: 14px 40px;
     font-weight: 600;
-    text-transform: uppercase;
     letter-spacing: 1px;
-    border-radius: 8px;
+    border-radius: 16px;
     transition: all 0.3s ease;
     display: inline-block;
     font-size: 14px;
@@ -43,21 +48,10 @@ body {
     overflow: hidden;
 }
 
-.btn-custom::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.1);
-    transition: left 0.3s ease;
-    z-index: 0;
-}
 
 .btn-custom:hover {
-    background: var(--secondary-color);
-    color: #fff;
+  background: #ab0202;
+  color: #fff;
     transform: translateY(-3px);
     box-shadow: 0 8px 24px rgba(216, 43, 43, 0.4);
 }
@@ -67,14 +61,12 @@ body {
 }
 
 .btn-custom-light {
-    background: transparent;
+    background: var(--accent-color);
     color: #fff;
-    border: 2px solid #fff;
     padding: 14px 40px;
     font-weight: 600;
-    text-transform: uppercase;
     letter-spacing: 1px;
-    border-radius: 8px;
+    border-radius: 16px;
     transition: all 0.3s ease;
     display: inline-block;
     font-size: 14px;
@@ -84,21 +76,10 @@ body {
     overflow: hidden;
 }
 
-.btn-custom-light::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: #fff;
-    transition: left 0.3s ease;
-    z-index: -1;
-}
 
 .btn-custom-light:hover {
-    background: transparent;
-    color: #000;
+      background: #ab0202;
+  color: #fff;
     border-color: #fff;
     transform: translateY(-3px);
 }
@@ -321,7 +302,7 @@ body {
 }
 
 .section-title {
-  font-weight: 800;
+  font-weight: 600;
   color: #ff6b35;
   margin: 0;
 }
@@ -390,7 +371,7 @@ body {
 }
 
 .service-card_title {
-  font-weight: 800;
+  font-weight: 600;
   color: #ff6b35;
   margin-bottom: 10px;
   font-size: 1.25rem;
@@ -412,6 +393,7 @@ body {
 }
 
 .service-card_link:hover {
+    color: #ab0202;
   text-decoration: underline;
 }
 

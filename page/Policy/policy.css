@@ -3,15 +3,7 @@
    ========================================================= */
 /* Sử dụng: --primary-color, --text-dark, --text-muted, --bg-primary, --border-radius-lg */
 
-*{ box-sizing:border-box; }
-html{ scroll-behavior:smooth; }
 
-body{
-  margin:0;
-  font-family: var(--font-family-system);
-  color: var(--text-dark);
-  background: var(--bg-primary);
-}
 
 /* =========================
    HERO / BANNER

@@ -61,7 +61,8 @@ Home Featured Menu Styles
 }
 
 .btn-main:hover {
-  background: #ad1816;
+  background: #ab0202;
+  color: #fff;
 }
 
 /* --- Bên phải (món ăn) --- */
@@ -129,7 +130,8 @@ Home Featured Menu Styles
 }
 
 .btn-order:hover {
-  background: #ad1816;
+  background: #ab0202;
+  color: #fff;
 }
 
 /* --- Responsive --- */
@@ -214,7 +216,8 @@ Home Featured Menu Styles
 }
 
 .banner-btn:hover {
-  background: #c41616;
+  background: #ab0202;
+  color: #fff;
   transform: translateY(-3px);
 }
 

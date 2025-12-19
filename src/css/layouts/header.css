@@ -152,7 +152,9 @@
 .nav-item {
   position: relative;
 }
-
+.fa-shopping-cart:before{
+  color: #fff;
+}
 .nav-link {
   display: flex;
   align-items: center;

@@ -5,7 +5,10 @@
   --warning-color: #ffc107;           /* NEW */
   --warning-rgb: 255, 193, 7;         /* NEW */
   --secondary-color: #c8102e;
-  --accent-color: #e21b1b;
+  --accent-color: #e61616;
+  --red-dark: #c0392b;
+  --red-primary: #d82b2b;
+  --red-light: #e74c3c;
   --text-color-dark: #2d3748;
   --text-color-light: #4a5568;
   --background-color: #f8f9fa;

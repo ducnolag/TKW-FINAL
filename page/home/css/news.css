@@ -44,21 +44,21 @@
   font-size: 18px;
   color: #333;
   margin-bottom: 5px;
-  font-family: 'Times New Roman', serif;
+  font-family: "Roboto", sans-serif;
   font-style: italic;
 }
 
 .news-main-title {
   font-size: 28px;
   font-weight: 700;
-  color: #c0392b;
+  color: var(--red-dark);
   margin: 0;
 }
 
 .page-title {
   font-size: 32px;
   font-weight: 700;
-  color: #d82b2b;
+  color: var(--red-primary);
   margin: 0 0 15px 0;
   text-transform: uppercase;
 }

@@ -67,7 +67,7 @@
 
 /* Mục hiện tại (Không bấm được) */
 .breadcrumb-item.active {
-    color: #d82b2b; /* Màu đỏ nổi bật */
+    color: var(--red-primary); /* Màu đỏ nổi bật */
     font-weight: 700;
     pointer-events: none;
     background: transparent;

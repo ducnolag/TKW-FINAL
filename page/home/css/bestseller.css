@@ -45,21 +45,21 @@
   font-size: 18px;
   color: #333;
   margin-bottom: 5px;
-  font-family: 'Times New Roman', serif;
+  font-family: "Roboto", sans-serif;
   font-style: italic;
 }
 
 .bs-main-title {
   font-size: 28px;
   font-weight: 700;
-  color: #c0392b;
+  color: var(--red-dark);
   margin: 0;
 }
 
 .page-title {
   font-size: 32px;
   font-weight: 700;
-  color: #d82b2b;
+  color: var(--red-primary);
   margin: 0 0 15px 0;
   text-transform: uppercase;
 }
@@ -127,7 +127,7 @@
 .bs-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  border: 2px solid #d82b2b;
+  border: 2px solid var(--red-primary);
 }
 
 .bs-img-wrapper {
@@ -184,7 +184,7 @@
 }
 
 .price-current {
-  color: #d82b2b;
+  color: var(--red-primary);
   font-weight: 700;
   font-size: 16px;
 }
@@ -198,20 +198,19 @@
 .btn-pill-outline {
   display: inline-block;
   padding: 6px 20px;
-  border: 1px solid #d82b2b;
   border-radius: 50px;
-  color: #d82b2b;
+  color: #fff;
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  background: #fff;
+  background: var(--accent-color);
   transition: all 0.3s ease;
   text-decoration: none;
   cursor: pointer;
 }
 
 .btn-pill-outline:hover {
-  background-color: #d82b2b;
+  background: #ab0202;
   color: #fff;
 }
 
@@ -237,9 +236,9 @@
 
 .bs-button-next:hover,
 .bs-button-prev:hover {
-  background-color: #d82b2b;
+  background-color: var(--red-primary);
   color: #fff;
-  border-color: #d82b2b;
+  border-color: var(--red-primary);
 }
 
 .bs-button-prev {
