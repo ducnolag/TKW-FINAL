@@ -30,51 +30,6 @@
   color: #e74c3c;
 }
 
-/* TÌM KIẾM */
-.widget-search {
-  padding: 0;
-  background: transparent;
-  box-shadow: none;
-}
-
-.search-form {
-  display: flex;
-  align-items: center;
-  background: #fff;
-  border-radius: 50px;
-  padding: 5px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.search-input {
-  flex: 1;
-  border: none;
-  outline: none;
-  padding: 12px 20px;
-  font-size: 15px;
-  background: transparent;
-}
-
-.search-button {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  border: none;
-  background: #e74c3c;
-  color: #fff;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  transition: all 0.3s ease;
-}
-
-.search-button:hover {
-  background: #e74c3c;
-  transform: scale(1.1);
-}
-
 /* DANH MỤC */
 .category-menu {
   list-style: none;
