@@ -55,6 +55,14 @@
   margin: 0;
 }
 
+.page-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #d82b2b;
+  margin: 0 0 15px 0;
+  text-transform: uppercase;
+}
+
 .news-divider {
   margin-top: 10px;
   display: flex;

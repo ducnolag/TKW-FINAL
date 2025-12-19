@@ -56,6 +56,14 @@
   margin: 0;
 }
 
+.page-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #d82b2b;
+  margin: 0 0 15px 0;
+  text-transform: uppercase;
+}
+
 .bs-divider {
   margin-top: 10px;
   color: #e0e0e0;

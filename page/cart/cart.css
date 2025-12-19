@@ -69,12 +69,11 @@
 }
 
 .page-title {
-    font-size: 28px;
-    font-weight: 700;
+    font-size: 30px;
+    font-weight: 900;
     color: #333;
     margin: 0;
 }
-
 .item-badge {
     display: flex;
     align-items: center;

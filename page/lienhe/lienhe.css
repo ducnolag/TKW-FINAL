@@ -27,10 +27,11 @@
     /* Tiêu đề trang căn giữa */
     .page-title {
       text-align: center;
-      font-size: 38px;
-      font-weight: 700;
+      font-size: 42px;
+      font-weight: 900;
       margin-top: 10px;
       animation: fadeDown 0.8s ease;
+      color: #333;
     }
 
     /* ================= MAP ================= */

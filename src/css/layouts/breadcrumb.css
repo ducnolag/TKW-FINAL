@@ -6,7 +6,7 @@
     border: 1px solid #ffefe0;
     margin: 20px auto;
     max-width: 1200px;
-    width: 100%;
+    width: fit-content;
     box-shadow: 0 2px 10px rgba(0,0,0,0.03);
     display: flex;
     align-items: center;
@@ -20,7 +20,7 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 0px;
 }
 
 .breadcrumb-item {
@@ -29,6 +29,7 @@
     font-size: 14px;
     color: #666;
     font-weight: 500;
+    padding: 0px 4px;
 }
 
 /* Link (Các mục có thể bấm) */
