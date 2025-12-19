@@ -6,6 +6,7 @@
 
 @import url('layouts/header.css');
 @import url('layouts/chatbot.css');
+@import url('layouts/footer.css');
 @import url('/page/home/css/slide.css');
 @import url('/page/home/css/feature.css');
 @import url('/page/home/css/bestseller.css');

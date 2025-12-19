@@ -8,13 +8,15 @@
   <!-- NOTE: Giữ đúng font + icons như trang guide -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-
+  <link rel="stylesheet" href="/src/css/again.css"/>
   <!-- NOTE: DÙNG CHUNG CSS guide.css như bạn yêu cầu -->
   <link rel="stylesheet" href="guide.css"/>
+
 </head>
 
 <!-- NOTE: Nếu muốn dark mode: thêm class "dark" vào body -->
 <body class="app">
+  <div data-include="/src/components/header.htm"></div>
   <main class="container">
 
     <!-- NOTE: Header giống trang hướng dẫn mua hàng -->
@@ -111,10 +113,12 @@
     <!-- NOTE: Footer giống trang guide -->
     <div class="support">
       <p class="text-muted">
-        Cần hỗ trợ thêm? <a class="support-link" href="lienhe.html">Liên hệ CSKH</a>
+        Cần hỗ trợ thêm? <a class="support-link" href="/page/lienhe/lienhe.html">Liên hệ</a>
       </p>
     </div>
 
   </main>
+  <div data-include="/src/components/footer.html"></div>
+  <script type="module" src="/src/js/again.js"></script>
 </body>
 </html>
