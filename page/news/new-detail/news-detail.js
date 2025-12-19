@@ -143,5 +143,76 @@
     }
 
     renderPost(post);
+
+    // Xử lý form bình luận
+    const commentForm = document.getElementById("news-comments");
+    const commentsList = document.getElementById("comments-list");
+    let comments = JSON.parse(localStorage.getItem(`comments_${id}`)) || [];
+
+    // Hiển thị bình luận đã lưu
+    function renderComments() {
+      if (comments.length === 0) {
+        commentsList.innerHTML = '<div class="comments-empty">Chưa có bình luận nào. Hãy là người đầu tiên!</div>';
+        return;
+      }
+
+      commentsList.innerHTML = comments
+        .map(
+          (c) =>
+            `<div class="comment-item">
+            <div class="comment-header">
+              <span class="comment-author">${esc(c.name)}</span>
+              <span class="comment-date">${c.date}</span>
+            </div>
+            <div class="comment-text">${esc(c.text)}</div>
+          </div>`
+        )
+        .join("");
+    }
+
+    // Render bình luận ban đầu
+    renderComments();
+
+    // Xử lý gửi bình luận
+    commentForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const name = document.querySelector(".comment-name").value.trim();
+      const email = document.querySelector(".comment-email").value.trim();
+      const text = document.querySelector(".comment-text").value.trim();
+
+      if (!name || !text) {
+        alert("Vui lòng điền đầy đủ tên và nội dung bình luận!");
+        return;
+      }
+
+      // Tạo bình luận mới
+      const newComment = {
+        name,
+        email,
+        text,
+        date: new Date().toLocaleDateString("vi-VN"),
+      };
+
+      // Thêm vào danh sách
+      comments.push(newComment);
+
+      // Lưu vào localStorage
+      localStorage.setItem(`comments_${id}`, JSON.stringify(comments));
+
+      // Render lại
+      renderComments();
+
+      // Reset form
+      commentForm.reset();
+
+      // Scroll đến bình luận vừa gửi
+      setTimeout(() => {
+        const lastComment = commentsList.querySelector(".comment-item:last-child");
+        if (lastComment) {
+          lastComment.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+      }, 100);
+    });
   });
 })();

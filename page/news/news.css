@@ -613,3 +613,89 @@ img {
     align-items: flex-start;
   }
 }
+
+/* ==================== STYLING BÌNH LUẬN ==================== */
+.comments-list {
+  margin-bottom: 30px;
+}
+
+.comment-item {
+  background: #f9f9f9;
+  border-left: 4px solid #f1c40f;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.comment-author {
+  font-weight: 600;
+  color: #333;
+  font-size: 15px;
+}
+
+.comment-date {
+  font-size: 12px;
+  color: #999;
+}
+
+.comment-text {
+  color: #555;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.btn-submit-comment {
+  background: #f1c40f;
+  color: #333;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-submit-comment:hover {
+  background: #e8b818;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.comment-form input,
+.comment-form textarea {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.comment-form input:focus,
+.comment-form textarea:focus {
+  border-color: #f1c40f;
+  outline: none;
+  box-shadow: 0 0 5px rgba(241, 196, 15, 0.3);
+}
+
+.comments-empty {
+  text-align: center;
+  color: #999;
+  padding: 20px;
+  font-style: italic;
+}

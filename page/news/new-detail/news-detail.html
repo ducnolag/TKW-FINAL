@@ -93,18 +93,21 @@
               <i class="far fa-comments"></i> Gửi bình luận
             </h3>
 
+            <!-- Danh sách bình luận -->
+            <div id="comments-list" class="comments-list mb-4"></div>
+
             <form id="news-comments" class="comment-form">
               <div class="row">
                 <div class="col-md-6 mb-3">
-                  <input type="text" class="form-control" placeholder="Tên của bạn *" required>
+                  <input type="text" class="form-control comment-name" placeholder="Tên của bạn *" required>
                 </div>
                 <div class="col-md-6 mb-3">
-                  <input type="email" class="form-control" placeholder="Email của bạn">
+                  <input type="email" class="form-control comment-email" placeholder="Email của bạn">
                 </div>
               </div>
 
               <div class="mb-3">
-                <textarea class="form-control" rows="4" placeholder="Nội dung bình luận *" required></textarea>
+                <textarea class="form-control comment-text" rows="4" placeholder="Nội dung bình luận *" required></textarea>
               </div>
 
               <button type="submit" class="btn-submit-comment">
@@ -126,7 +129,7 @@
   <script src="../load-sidebar.js"></script>
   <script src="./news-data.js"></script>
 <script src="./news-detail.js"></script>
-
+ <div data-include="/src/components/chatbot.html"></div>
   <script type="module" src="/src/js/again.js"></script>
 </body>
 </html>
