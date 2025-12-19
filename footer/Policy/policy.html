@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Chính sách - Tiệm Ăn Vặt Ngon Nhất Thế Giới</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="policy.css">
+</head>
+
+<body>
+  <!-- =========================================================
+       HERO / BANNER
+       ========================================================= -->
+  <header class="hero" aria-label="Banner">
+    <div class="hero-inner">
+      <!--  tiêu đề trang tại đây -->
+      <h1>Chính sách</h1>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       NỘI DUNG
+       ========================================================= -->
+  <main class="wrap">
+    <!-- JS sẽ render danh sách chính sách -->
+    <div class="grid" id="policyGrid" aria-label="Danh sách chính sách"></div>
+  </main>
+
+  <!-- =========================================================
+       MODAL / POPUP
+       ========================================================= -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="dialog" role="document">
+      <div class="dialog-head">
+        <div>
+          <h2 class="dialog-title" id="modalTitle">Tiêu đề</h2>
+          <p class="dialog-sub" id="modalSub">Mô tả ngắn</p>
+        </div>
+
+        <!-- nút X đóng popup -->
+        <button class="close-btn" id="closeBtn" aria-label="Đóng">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18" stroke="#111827" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- nội dung chính sách được -->
+      <div class="dialog-body" id="modalBody"></div>
+
+      <div class="dialog-foot">
+        <button class="btn" id="closeBtn2">Đóng</button>
+        <button class="btn primary" id="okBtn">Tôi đã hiểu</button>
+      </div>
+    </div>
+  </div>
+  <script src="policy.js"></script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Footer</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="footer.css">
+</head>
+
+<body>
+<footer class="footer">
+  <div class="footer_container">
+    <div class="footer_grid">
+      <!-- Cột 1: Logo + Liên hệ -->
+      <div class="footer_col">
+        <a class="footer_logo" href="index.html" aria-label="Trang chủ">
+          <img src="assets/logo.png" alt="Tiệm Ăn Vặt Ngon Nhất Thế Giới">
+        </a>
+        <ul class="footer_contact">
+          <li>
+            <i class="fa-solid fa-location-dot"></i>
+            <span>68 Ngõ Trung Tiền, P. Khâm Thiên, Q. Đống Đa, Hà Nội, Việt Nam</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-phone"></i>
+            <a href="tel:0343130254">0343130254</a>
+          </li>
+          <li>
+            <i class="fa-solid fa-headset"></i>
+            <a href="tel:19001533">1900-1533</a>
+          </li>
+
+          <li>
+            <i class="fa-solid fa-envelope"></i>
+            <a href="mailto:tavnntg@gmail.com">tavnntg@gmail.com</a>
+          </li>
+        </ul>
+      </div>
+
+
+      <!-- Cột 2: Giờ mở cửa -->
+      <div class="footer_col">
+        <h4 class="footer_title">Giờ mở cửa</h4>
+        <p class="footer_text">
+          Từ 09:00 - 21:30 tất cả các ngày trong tuần (bao gồm cả các ngày lễ, ngày Tết).
+        </p>
+      </div>
+
+      <!-- Cột 3: Chính sách (desktop list / mobile dropdown) -->
+      <div class="footer_col">
+        <button class="footer_acc" type="button" aria-expanded="false" aria-controls="ft-policy">
+          <span class="footer_title">Chính sách</span>
+          <span class="footer_acc-ico" aria-hidden="true">+</span>
+        </button>
+
+        <div id="ft-policy" class="footer_panel">
+          <ul class="footer_list">
+            <li><a href="/Policy/policy.html">Chính sách thanh toán khi đặt hàng</a></li>
+            <li><a href="/Policy/policy.html">Chính sách giao hàng</a></li>
+            <li><a href="/Policy/policy.html">Chính sách bảo mật thông tin</a></li>
+            <li><a href="/Policy/policy.html">Chính sách về sản phẩm</a></li>
+            <li><a href="/Policy/policy.html">Chính sách đổi trả</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Cột 4: Kết nối + Hướng dẫn -->
+      <div class="footer_col">
+        <h4 class="footer_title">Kết nối với chúng tôi</h4>
+
+        <div class="footer_social">
+          <a class="footer_social-btn" href="https://www.facebook.com/profile.php?id=61583334732388" aria-label="Facebook">
+            <i class="fa-brands fa-facebook-f"></i>
+          </a>
+          <a class="footer_social-btn" href="#" aria-label="Instagram">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+          <a class="footer_social-btn" href="#" aria-label="TikTok">
+            <i class="fa-brands fa-tiktok"></i>
+          </a>
+        </div>
+
+        <button class="footer_acc footer_acc--mt" type="button" aria-expanded="false" aria-controls="ft-more">
+          <span class="footer_title">Hướng dẫn</span>
+          <span class="footer_acc-ico" aria-hidden="true">+</span>
+        </button>
+
+        <div id="ft-more" class="footer_panel">
+          <ul class="footer_list">
+            <li><a href="lienhe.html">Liên hệ</a></li>
+            <li><a href="/Guide/order-guide.html">Hướng dẫn mua hàng</a></li>
+            <li><a href="/Guide/cancel-guide.html">Hướng dẫn hủy đơn</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer_bottom">
+      © 2022 <strong>Tiệm Ăn Vặt Ngon Nhất Thế Giới</strong>
+    </div>
+  </div>
+</footer>
+ <script src="footer.js"></script>
+</body>
+</html>
