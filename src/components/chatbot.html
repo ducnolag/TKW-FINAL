@@ -1,0 +1,27 @@
+
+
+<div id="pro-bot-widget">
+    <div id="pro-bot-window">
+        <div class="pro-bot-header">
+            <i class="fa-solid fa-headset"></i>
+            <b>Trợ lý Tiệm Ăn Vặt</b>
+        </div>
+        <div id="pro-bot-body">
+            <div class="msg-wrap msg-left">
+                Chào bạn! 🎧 Bạn cần xem món ngon hay nhận ưu đãi từ Tiệm ạ?
+                <div class="pro-bot-opts">
+                    <button class="pro-btn-opt" onclick="proSelect('menu')">🍱 Menu</button>
+                    <button class="pro-btn-opt" onclick="proSelect('promo')">🎁 Ưu đãi</button>
+                    <button class="pro-btn-opt" onclick="proSelect('call')">📞 Hotline</button>
+                </div>
+            </div>
+        </div>
+        <div class="pro-bot-footer">
+            <input type="text" id="pro-bot-input" placeholder="Nhập tin nhắn..." onkeypress="if(event.key==='Enter') proSend()">
+            <i class="fa-solid fa-paper-plane" onclick="proSend()" style="color:var(--bot-main); cursor:pointer"></i>
+        </div>
+    </div>
+    <div id="pro-bot-trigger" onclick="toggleProBot()">
+        <i class="fa-solid fa-headset fa-xl"></i>
+    </div>
+</div>

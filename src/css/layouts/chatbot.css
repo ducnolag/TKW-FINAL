@@ -1,0 +1,130 @@
+    :root {
+        --bot-main: #ff6b35; /* Màu cam thương hiệu */
+        --bot-gradient: linear-gradient(135deg, #ff6b35 0%, #df2626 100%);
+    }
+
+    /* Nút kích hoạt Icon tai nghe */
+    #pro-bot-widget { position: fixed; bottom: 20px; right: 20px; z-index: 10001; }
+    #pro-bot-trigger {
+        width: 60px; height: 60px; background: var(--bot-gradient);
+        border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        color: white; cursor: pointer; box-shadow: 0 8px 20px rgba(255,107,53,0.3);
+    }
+
+    /* Khung Chat tối ưu Mobile */
+    #pro-bot-window {
+        position: absolute; bottom: 75px; right: 0; 
+        width: 350px; height: 520px; 
+        background: white; border-radius: 20px; display: none;
+        flex-direction: column; box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        overflow: hidden; animation: botSlideIn 0.3s ease;
+    }
+    @keyframes botSlideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+    .pro-bot-header {
+        background: var(--bot-gradient); color: white;
+        padding: 15px 20px; display: flex; align-items: center; gap: 12px;
+    }
+
+    #pro-bot-body {
+        flex: 1; padding: 15px; overflow-y: auto;
+        background: #fdfaf7; display: flex; flex-direction: column; gap: 12px;
+    }
+
+    /* Bubble tin nhắn */
+    .msg-wrap { max-width: 85%; padding: 10px 14px; border-radius: 15px; font-size: 14.5px; line-height: 1.5; }
+    .msg-left { background: white; align-self: flex-start; border-bottom-left-radius: 2px; color: #333; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    .msg-right { background: var(--bot-main); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+
+/* Tối ưu Card sản phẩm trong Chatbot */
+.bot-prod-item {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    display: flex;
+    gap: 12px;
+    padding: 10px;
+    margin-top: 8px;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    transition: transform 0.2s ease;
+    height: 90px; /* Cố định chiều cao để đồng bộ các slice */
+}
+
+.bot-prod-item:hover {
+    transform: translateY(-2px);
+    border-color: var(--bot-main);
+}
+
+.bot-prod-item img {
+    width: 70px;
+    height: 70px;
+    border-radius: 10px;
+    object-fit: cover; /* Giữ ảnh không bị bóp méo */
+    flex-shrink: 0;
+    background: #f9f9f9;
+}
+
+.bot-prod-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden; /* Cắt bỏ phần text thừa nếu quá dài */
+}
+
+.bot-prod-info b {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    text-overflow: ellipsis; /* Tạo dấu ... nếu tên món quá dài */
+    overflow: hidden;
+}
+
+.bot-prod-info span {
+    color: var(--bot-main);
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.bot-prod-btn { 
+    font-size: 12px;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 700;
+    margin-top: 4px;
+    display: inline-block;
+    transition: 0.2s;
+}
+
+.bot-prod-btn:hover {
+    color: var(--bot-main);
+    text-decoration: underline;
+}
+
+
+    /* Footer nhập liệu */
+    .pro-bot-footer { padding: 12px 15px; background: white; border-top: 1px solid #eee; display: flex; align-items: center; }
+    .pro-bot-footer input { flex: 1; border: none; outline: none; font-size: 14px; }
+
+    .pro-bot-opts { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+    .pro-btn-opt {
+        background: white; border: 1px solid var(--bot-main); color: var(--bot-main);
+        padding: 6px 14px; border-radius: 20px; cursor: pointer; font-size: 13px;
+    }
+
+    @media (max-width: 480px) {
+        #pro-bot-window { 
+        width: 320px; 
+        height: 480px; 
+    }
+    .bot-prod-item {
+        height: 85px; /* Thu nhỏ nhẹ trên mobile */
+        padding: 8px;
+    }
+    .bot-prod-item img {
+        width: 65px;
+        height: 65px;
+    }
+    }
