@@ -203,7 +203,7 @@ body {
     display: flex; align-items: center; gap: 6px;
     transition: var(--transition);
 }
-.home-btn:hover { color: var(--primary-dark); text-decoration: underline; }
+.home-btn:hover { color: #cf633c;  }
 
 /* =========================================
    STATS GRID (PREMIUM STYLE)

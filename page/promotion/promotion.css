@@ -14,6 +14,12 @@
         .container { width: 1100px; max-width: 100%; margin: 0 auto; padding: 0 15px; }
         
         /* Banner & Header */
+        /* Khi màn hình nhỏ hơn 768px (Điện thoại/Máy tính bảng) */
+        @media screen and (max-width: 1000px) {
+            .promo-banner-img {
+                content: url("/assets/promotion/banner/Design1.png"); /* Link ảnh cho điện thoại */
+            }
+}
         .promo-banner-area {
             margin-top: 5px; margin-bottom: 30px; 
             box-shadow: 0 8px 20px rgba(0,0,0,0.08);
@@ -31,7 +37,7 @@
 
         /* --- 2. LAYOUT CARD CHUNG --- */
         .promo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
-
+        #voucher-container {margin-bottom: 50px;}
         .common-card {
             background: #fff; border-radius: 16px; overflow: hidden;
             box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: 0.3s;

@@ -157,11 +157,8 @@ function createSafeNav() {
                     <span id="fsb-badge" class="fsb-badge" style="display:none">0</span>
                     <span class="fsb-tooltip">Giỏ hàng</span>
                 </button>
-                <button class="fsb-item" style="--icon-c: var(--fsb-map)" onclick="fsbGetLoc()">
-                    <i class="fa-solid fa-map-location-dot"></i>
-                    <span class="fsb-tooltip">Tính phí Ship</span>
-                </button>
-                <a href="https://m.me/shopanvat" target="_blank" class="fsb-item" style="--icon-c: var(--fsb-mess)">
+
+                <a href="https://www.facebook.com/messages/t/888891197636534" target="_blank" class="fsb-item" style="--icon-c: var(--fsb-mess)">
                     <i class="fa-brands fa-facebook-messenger"></i>
                     <span class="fsb-tooltip">Chat Messenger</span>
                 </a>
@@ -172,16 +169,7 @@ function createSafeNav() {
             </div>
         </div>
 
-        <div id="fsb-overlay" class="fsb-overlay" onclick="closeFSBLoc(event)">
-            <div class="fsb-box" onclick="event.stopPropagation()">
-                <i class="fa-solid fa-truck-fast" style="font-size:40px; color:#e67e22; margin-bottom:10px"></i>
-                <h3 style="margin:5px 0; color:#333">Phí vận chuyển</h3>
-                <input type="text" id="fsb-inp" class="fsb-inp" placeholder="Nhập địa chỉ..." autocomplete="off">
-                <button class="fsb-btn" onclick="fsbCalc()">Kiểm tra</button>
-                <div id="fsb-res" style="margin-top:15px; font-size:14px"></div>
-                <button onclick="closeFSBLoc()" style="background:none; border:none; color:#999; margin-top:10px; cursor:pointer">Đóng</button>
-            </div>
-        </div>
+       
     `;
     document.body.insertAdjacentHTML('beforeend', html);
 }
@@ -217,7 +205,7 @@ window.toggleFSB = () => {
     document.querySelector('.fsb-toggle-btn i').className = w.classList.contains('is-open') ? 'fa-solid fa-angles-right' : 'fa-solid fa-angles-left';
 }
 window.fsbGoHome = () => window.location.href = '/index.htm';
-window.fsbShowCart = () => typeof toggleQuickCart === 'function' ? toggleQuickCart() : window.location.href = '/cart/cart.htm';
+window.fsbShowCart = () => typeof toggleQuickCart === 'function' ? toggleQuickCart() : window.location.href = '/page/cart/cart.htm';
 window.fsbScrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
 window.updateFSBBadge = (count) => {
@@ -240,25 +228,3 @@ window.fsbGetLoc = () => {
 }
 window.closeFSBLoc = (e) => { if(!e || e.target === e.currentTarget) document.getElementById('fsb-overlay').classList.remove('show'); }
 
-window.fsbCalc = () => {
-    const addr = document.getElementById('fsb-inp').value.trim();
-    const res = document.getElementById('fsb-res');
-    if(!addr) { res.innerHTML = '<span style="color:red">Vui lòng nhập địa chỉ</span>'; return; }
-    res.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
-    
-    // API Của bạn
-    const API_KEY = "YOUR_GOOGLE_MAPS_API_KEY"; 
-    const SHOP = { lat: 21.0164, lng: 105.8266 };
-    
-    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(addr)}&key=${API_KEY}`)
-        .then(r => r.json()).then(d => {
-            if(d.status === 'OK' && d.results[0]) {
-                const loc = d.results[0].geometry.location;
-                const R = 6371; const dLat = (loc.lat-SHOP.lat)*Math.PI/180; const dLon = (loc.lng-SHOP.lng)*Math.PI/180;
-                const a = Math.sin(dLat/2)*Math.sin(dLat/2) + Math.cos(SHOP.lat*Math.PI/180)*Math.cos(loc.lat*Math.PI/180)*Math.sin(dLon/2)*Math.sin(dLon/2);
-                const dist = R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-                if(dist > 5) res.innerHTML = `<span style="color:red; font-weight:bold">Quá xa (${dist.toFixed(1)}km). Chỉ ship < 5km</span>`;
-                else res.innerHTML = `<span style="color:green; font-weight:bold">${dist.toFixed(1)}km - Ship: ${dist<=3?15:20}.000đ</span>`;
-            } else res.innerHTML = 'Không tìm thấy địa chỉ';
-        }).catch(() => res.innerHTML = 'Lỗi kết nối');
-}
