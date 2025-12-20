@@ -108,7 +108,9 @@
 
     .view-btn.active {
       background: var(--text-dark);
-      color: white;
+      color: rgb(0, 0, 0);
+      background-color: #dadada
+      ;
     }
 
     .sort-select {
@@ -231,10 +233,10 @@
 
     .btn-pill-outline {
       display: inline-block;
-      padding: 6px 20px;
+      padding: 6px 16px;
       border-radius: 50px;
       color: #fff;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 700;
       text-transform: uppercase;
       background: linear-gradient(135deg, #ff6b35 0%, #df2626 100%);
@@ -262,9 +264,9 @@
     }
 
     .products.list-view .bs-img-wrapper {
-      width: 280px;
-      height: 280px;
-      min-width: 280px;
+      width: 220px;
+      height: 220px;
+      min-width: 220px;
       margin-bottom: 0;
       flex-shrink: 0;
     }
@@ -281,7 +283,7 @@
     .products.list-view .bs-name {
       height: auto;
       text-transform: none;
-      font-size: 16px;
+      font-size: 22px;
       margin-bottom: 10px;
     }
 
