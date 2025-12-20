@@ -250,9 +250,9 @@ body {
 }
 
 /* ========================================
-   Phần video
+   Phần image
    ======================================== */
-.video-cta-section {
+.image-cta-section {
     position: relative;
     height: 40vh;
     min-height: 520px;
@@ -261,7 +261,7 @@ body {
     align-items: flex-end;
 }
 
-.video-bg {
+.image-bg {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -270,33 +270,32 @@ body {
     z-index: 0;
 }
 
-.video-overlay {
+.image-overlay {
     position: absolute;
     inset: 0;
     background: rgba(0, 0, 0, 0.45);
     z-index: 1;
 }
 
-.video-content {
+.image-content {
     position: relative;
     z-index: 2;
     padding-bottom: 80px;
     color: var(--white);
 }
 
-.video-title {
+.image-title {
     font-size: 3rem;
     font-weight: 800;
     margin-bottom: 12px;
 }
 
-.video-subtitle {
+.image-subtitle {
     font-size: 1.1rem;
     opacity: 0.9;
     max-width: 720px;
     margin: 0 auto 24px;
 }
-
 /* ========================================
    Các section sản phẩm - Categories
    ======================================== */
@@ -407,7 +406,7 @@ body {
 .testimonial-section {
     position: relative;
     padding: 80px 0;
-    background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600');
+    background-image: url('/assets/feature/feature3.png');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
