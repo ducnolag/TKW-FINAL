@@ -12,7 +12,6 @@
         body { background-color: var(--bg-light); color: var(--text);  }
         body.modal-open { overflow: hidden; }
         .container { width: 1100px; max-width: 100%; margin: 0 auto; padding: 0 15px; }
-        
         /* Banner & Header */
         /* Khi màn hình nhỏ hơn 768px (Điện thoại/Máy tính bảng) */
         @media screen and (max-width: 1000px) {
@@ -166,7 +165,10 @@
         .modal-desc-block h4 { font-size: 14px; font-weight: 700; border-bottom: 2px solid #eee; padding-bottom: 5px; margin-bottom: 8px; color: #555; text-transform: uppercase; }
         .modal-desc-block p { font-size: 14px; line-height: 1.6; color: #555; }
 
-        @media (max-width: 900px) { .promo-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 900px) { .promo-grid { grid-template-columns: 1fr ;  margin-left: 200px; margin-right: 200px; } }
+        @media (max-width: 815px) { .promo-grid { grid-template-columns: 1fr ;  margin-left: 170px; margin-right: 170px; } }
+        @media (max-width: 730px) { .promo-grid { grid-template-columns: 1fr ;  margin-left: 150px; margin-right: 150px; } }
+        @media (max-width: 635px) { .promo-grid { grid-template-columns: 1fr  ; margin-left: 10px; margin-right: 10px;} }
 
         /* --- BỔ SUNG: ẢNH TRONG MODAL & LIGHTBOX --- */
         /* 1. Ảnh nằm trong Modal */
