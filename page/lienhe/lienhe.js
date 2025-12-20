@@ -1,19 +1,14 @@
-/* Khởi tạo EmailJS */
-  emailjs.init('YOUR_PUBLIC_KEY');
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.getElementById('contactForm');
+  const successMsg = document.getElementById('successMsg');
 
-  /* Xử lý submit form */
-  document.getElementById('contactForm').addEventListener('submit', function(e) {
-    e.preventDefault();
+  form.addEventListener('submit', function (e) {
+    e.preventDefault(); // chặn reload
 
-    /* Gửi form qua EmailJS */
-    emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
-      .then(() => {
-        /* Hiện thông báo thành công */
-        const msg = document.getElementById('successMsg');
-        msg.style.display = 'block';
-        msg.style.opacity = '1';
-
-        /* Reset form */
-        this.reset();
-      });
+    // Nếu form hợp lệ (HTML required)
+    if (form.checkValidity()) {
+      successMsg.style.display = 'block';
+      form.reset();
+    }
   });
+});

@@ -59,8 +59,6 @@ html, body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--card);
-  border: 1px solid var(--line);
   border-radius: 14px;
   padding: 12px;
   width: 170px;

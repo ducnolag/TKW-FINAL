@@ -28,6 +28,7 @@ function renderPosts(list) {
   }
 
   el.innerHTML = list.map(p => `
+    
     <div class="news-card mb-4">
       <div class="news-thumbnail">
         <img src="${p.image}" alt="${p.title}">
