@@ -1,9 +1,3 @@
-/* =========================================================
-   - Giữ tone màu giống bản gốc: primary cam #F97316
-   - Hỗ trợ dark mode: thêm class "dark" vào body.app
-   - Font: Inter (tải từ Google Fonts trong HTML)
-   ========================================================= */
-
 :root{
   --primary: #F97316;
 
@@ -124,7 +118,7 @@ body.dark .text-link-blue{
 .mb-4{ margin-bottom: 1rem; }
 
 /* ===================== Step Sections ===================== */
-/* tương đương border-t border-gray-100 dark:border-gray-700 pt-6 */
+/*tương đương border-t border-gray-100 dark:border-gray-700 pt-6 */
 .step{
   border-top: 1px solid var(--border-light);
   padding-top: 1.5rem;
@@ -142,20 +136,6 @@ body.dark .step{
   font-weight: 700;
   color: var(--primary);
   margin: 0 0 1rem;
-}
-
-/* Step number circle */
-.step-badge{
-  width: 2rem;
-  height: 2rem;
-  border-radius: 999px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background: rgba(249,115,22,.10); /* bg-primary/10 */
-  color: var(--primary);
-  font-size: .875rem;
-  font-weight: 700;
 }
 
 /* Lists styles like original */

@@ -1,0 +1,291 @@
+:root{
+  --primary: #F97316;
+
+  --bg-light: #FFFFFF;
+  --bg-dark: #111827;
+
+  --surface-light: #FFFFFF;
+  --surface-dark: #1F2937;
+
+  --text-light: #1F2937;
+  --text-dark: #F9FAFB;
+
+  --muted-light: #4B5563;
+  --muted-dark: #9CA3AF;
+
+  --ring-light: #E5E7EB;
+  --ring-dark: #374151;
+
+  --border-light: #F3F4F6;
+  --border-dark: #374151;
+
+  --radius-xl: 16px;
+  --shadow: 0 6px 18px rgba(0,0,0,.06);
+
+  --font: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+/* ===================== Base ===================== */
+*{ box-sizing: border-box; }
+body{
+  margin:0;
+  font-family: var(--font);
+  background: var(--bg-light);
+  color: var(--text-light);
+  transition: background .2s ease, color .2s ease;
+}
+body.dark{
+  background: var(--bg-dark);
+  color: var(--text-dark);
+}
+
+/* ===================== Layout ===================== */
+.container{
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 3rem 1rem;
+}
+@media (min-width: 640px){
+  .container{ padding-left: 1.5rem; padding-right: 1.5rem; }
+}
+@media (min-width: 1024px){
+  .container{ padding-left: 2rem; padding-right: 2rem; }
+}
+
+/* ===================== Header ===================== */
+.page-header{
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.page-title{
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 1.5rem;
+  color: #111827;
+}
+body.dark .page-title{ color: #fff; }
+@media (min-width: 640px){
+  .page-title{ font-size: 2.25rem; }
+}
+.page-divider{
+  height: .25rem;
+  width: 5rem;
+  background: var(--primary);
+  margin: 0 auto;
+  border-radius: 999px;
+}
+
+/* ===================== Card ===================== */
+.card{
+  background: var(--surface-light);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--ring-light);
+}
+body.dark .card{
+  background: var(--surface-dark);
+  border-color: var(--ring-dark);
+}
+@media (min-width: 640px){
+  .card{ padding: 2.5rem; }
+}
+
+/* spacing like space-y-8 */
+.card > section + section{ margin-top: 2rem; }
+
+/* ===================== Text ===================== */
+.text-muted{
+  color: var(--muted-light);
+  line-height: 1.7;
+}
+body.dark .text-muted{ color: var(--muted-dark); }
+
+.text-strong{
+  color: #111827;
+  font-weight: 700;
+}
+body.dark .text-strong{ color: #fff; }
+
+.mb-4{ margin-bottom: 1rem; }
+
+/* ===================== Step Sections ===================== */
+.step{
+  border-top: 1px solid var(--border-light);
+  padding-top: 1.5rem;
+}
+body.dark .step{
+  border-top-color: var(--border-dark);
+}
+.step-title{
+  display:flex;
+  align-items:center;
+  gap: .5rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0 0 1rem;
+}
+
+/* NOTE: list bullet nhẹ cho policy */
+.bullet{
+  margin: .5rem 0 0 1.25rem;
+  padding: 0;
+}
+.bullet li{ margin: .35rem 0; }
+
+/* ===================== Support footer ===================== */
+.support{
+  margin-top: 2rem;
+  text-align:center;
+  font-size: .875rem;
+}
+.support-link{
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+.support-link:hover{ text-decoration: underline; }
+
+/* =========================================================
+   - Bọc bảng trong .table-wrap để mobile cuộn ngang
+   - border nhạt, header hơi cam
+   ========================================================= */
+
+.table-wrap{
+  width: 100%;
+  overflow-x: auto;                 /* mobile kéo ngang */
+  border: 1px solid var(--ring-light);
+  border-radius: 12px;
+  background: transparent;
+}
+body.dark .table-wrap{
+  border-color: var(--ring-dark);
+}
+
+/* đặt min-width để table không bị bóp chữ */
+.table{
+  width: 100%;
+  min-width: 780px;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td{
+  text-align:center!important;
+  vertical-align: top;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+body.dark .table th,
+body.dark .table td{
+  border-bottom-color: var(--border-dark);
+}
+
+.table th{
+  font-weight: 800;
+  color: var(--text-light);
+  background: rgba(249,115,22,.10);
+}
+body.dark .table th{
+  color: var(--text-dark);
+  background: rgba(249,115,22,.14);
+}
+
+.table tr:last-child td{
+  border-bottom: none;
+}
+/* =========================================================
+   TABLE – CỘT RÕ RÀNG, DỄ ĐỌC (OVERRIDE)
+   ========================================================= */
+
+/* Bọc bảng */
+.table-wrap{
+  overflow-x: auto;
+  border-radius: 14px;
+  border: 1px solid var(--border-dark);
+}
+body.dark .table-wrap{
+  border-color: var(--ring-dark);
+}
+
+/* Bảng */
+.table{
+  width: 100%;
+  min-width: 780px;
+  border-collapse: separate;   /* quan trọng để kẻ cột */
+  border-spacing: 0;
+  background: transparent;
+}
+
+/* Header */
+.table thead th{
+  background: rgba(249,115,22,.12); /* cam nhạt */
+  font-weight: 800;
+  color: var(--text-light);
+  border-bottom: 2px solid var(--primary); /* phân cách header */
+}
+body.dark .table thead th{
+  color: var(--text-dark);
+  background: rgba(249,115,22,.18);
+}
+
+/* Cell chung */
+.table th,
+.table td{
+  padding: 14px 16px;
+  vertical-align: top;
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.7;
+
+  /*  KẺ CỘT RÕ */
+  border-right: 1px solid var(--border-dark);
+  border-bottom: 1px solid var(--border-dark);
+}
+body.dark .table th,
+body.dark .table td{
+  border-right-color: var(--border-dark);
+  border-bottom-color: var(--border-dark);
+}
+
+/* Bỏ border cột cuối */
+.table th:last-child,
+.table td:last-child{
+  border-right: none;
+}
+
+/* Zebra row – dễ đọc */
+.table tbody tr:nth-child(even){
+  background: rgba(0,0,0,.02);
+}
+body.dark .table tbody tr:nth-child(even){
+  background: rgba(255,255,255,.03);
+}
+
+/* Hover nhẹ */
+.table tbody tr:hover{
+  background: rgba(249,115,22,.05);
+}
+body.dark .table tbody tr:hover{
+  background: rgba(249,115,22,.08);
+}
+
+/* Bo góc cho header */
+.table thead th:first-child{
+  border-top-left-radius: 14px;
+}
+.table thead th:last-child{
+  border-top-right-radius: 14px;
+}
+
+/* Bo góc cho hàng cuối */
+.table tbody tr:last-child td:first-child{
+  border-bottom-left-radius: 14px;
+}
+.table tbody tr:last-child td:last-child{
+  border-bottom-right-radius: 14px;
+}

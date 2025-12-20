@@ -1,9 +1,3 @@
-/* =========================================================
-   - Giữ tone màu giống bản gốc: primary cam #F97316
-   - Hỗ trợ dark mode: thêm class "dark" vào body.app
-   - Font: Inter (tải từ Google Fonts trong HTML)
-   ========================================================= */
-
 :root{
   --primary: #F97316;
 
@@ -144,20 +138,6 @@ body.dark .step{
   margin: 0 0 1rem;
 }
 
-/* Step number circle */
-.step-badge{
-  width: 2rem;
-  height: 2rem;
-  border-radius: 999px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background: rgba(249,115,22,.10); /* bg-primary/10 */
-  color: var(--primary);
-  font-size: .875rem;
-  font-weight: 700;
-}
-
 /* Lists styles like original */
 .step-list{
   list-style: none;
@@ -219,3 +199,16 @@ body.dark .step-list{
   font-weight: 600;
 }
 .support-link:hover{ text-decoration: underline; }
+
+/* =========================================================
+   - Không thay đổi layout, chỉ làm list/đoạn văn dễ nhìn hơn
+   ========================================================= */
+.card p{ margin: 0 0 1rem; }
+.card p:last-child{ margin-bottom: 0; }
+
+/* List gạch đầu dòng thường (nếu dùng <ul class="bullet"> ) */
+.bullet{
+  margin: .25rem 0 1rem 1.25rem;
+  padding: 0;
+}
+.bullet li{ margin: .35rem 0; }
