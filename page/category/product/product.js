@@ -222,6 +222,17 @@ let allData = null;
         });
       }
 
+      const mobileNavItems = document.querySelectorAll('.nav-item[data-category]');
+    mobileNavItems.forEach(btn => {
+        if (btn.getAttribute('data-category') === category) {
+            btn.classList.add('active');
+            // Tự động cuộn nút được chọn vào giữa tầm nhìn
+            btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+
       // ⭐ HIỂN THỊ SẢN PHẨM VỚI PHÂN TRANG - BỌC TRONG .products
       if (products.length > 0) {
         let html = '<div class="products">';
@@ -434,5 +445,22 @@ let allData = null;
         closeModal();
       }
     });
+
+    document.querySelectorAll('.nav-item').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const category = btn.getAttribute('data-category');
+        currentCategory = category;
+        searchQuery = ''; // Xóa tìm kiếm khi chọn danh mục
+        currentPage = 1; // Reset về trang 1
+        
+        displayProducts(category);
+        
+        // Cuộn trang lên đầu danh sách sản phẩm để người dùng thấy món mới
+        document.querySelector('.products-header').scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start' 
+        });
+    });
+});
 
     getData();

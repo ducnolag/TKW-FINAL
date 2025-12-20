@@ -969,3 +969,61 @@
     font-size: 12px;
   }
 }
+
+/* Ẩn trên máy tính */
+.mobile-category-bar {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .mobile-category-bar {
+        display: block;
+        background: #fff;
+        padding: 10px 0;
+        position: sticky;
+        top: 0; /* Cố định trên cùng khi cuộn */
+        z-index: 900;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .nav-scroll-container {
+        display: flex;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding: 0 15px;
+        gap: 8px;
+        -webkit-overflow-scrolling: touch; /* Cuộn mượt trên iOS */
+    }
+
+    /* Ẩn thanh cuộn vật lý để nhìn thẩm mỹ hơn */
+    .nav-scroll-container::-webkit-scrollbar {
+        display: none;
+    }
+
+    .nav-item {
+        padding: 8px 18px;
+        background: #f8f9fa;
+        border: 1px solid #eee;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #666;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        flex-shrink: 0;
+    }
+
+    .nav-item.active {
+        background: linear-gradient(135deg, #ff6b35 0%, #df2626 100%);
+        color: white;
+        border-color: transparent;
+        box-shadow: 0 4px 12px rgba(223, 38, 38, 0.2);
+    }
+    
+    /* Điều chỉnh tiêu đề trang để không bị dính sát vào thanh menu */
+    .page-title {
+        margin-bottom: 0 !important;
+        padding: 20px 15px !important;
+    }
+}
