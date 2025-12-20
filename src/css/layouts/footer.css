@@ -192,6 +192,18 @@ html, body {
     grid-template-columns: 1fr 1fr;
     gap: 18px;
   }
+  .box1{
+    order: 1;
+  }
+  .box2{
+    order: 3;
+  }
+  .box3{
+    order: 2;
+  }
+  .box4{
+    order: 4;
+  }
 }
 
 @media (max-width: 576px){
@@ -200,7 +212,6 @@ html, body {
     grid-template-columns: 1fr;
     gap: 14px;
   }
-
   /* accordion hoạt động ở mobile */
   .footer_acc{
     cursor: pointer;
@@ -221,7 +232,27 @@ html, body {
   .footer_panel.open{
     display: block;
   }
+  .box1{
+    order: 1;
+  }
+  .box2{
+    order: 2;
+  }
+  .box3{
+    order: 3;
+  }
+  .box4{
+    order: 4;
+    display: flex;
+    flex-direction: column; /* Chuyển các thẻ thành hàng dọc */
+  }
 
+  .hd1{
+    order: 2;
+  }
+  .hd2{
+    order: 1;
+  }
   /* thu gọn logo & spacing trên mobile */
   .footer_logo{ width: 190px; }
 }

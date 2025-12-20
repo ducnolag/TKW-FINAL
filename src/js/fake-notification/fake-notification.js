@@ -28,7 +28,7 @@ function initFakeNotification() {
         .fake-time { font-size: 11px; color: #999; margin-top: 2px; }
         
         /* Ẩn trên mobile nếu màn hình quá nhỏ */
-        @media (max-width: 480px) { .fake-notify-box { bottom: 70px; left: 10px; max-width: 280px; } }
+        @media (max-width: 768px) { .fake-notify-box { display: none; } }
     `;
     document.head.appendChild(style);
 

@@ -218,34 +218,42 @@ body {
   50%      { transform: translateX(12px); }
 }
 
-
 /* ========================================
-  Phần video 
+========== IMAGE SECTION 
+   ======================================== */  
+/* ========================================
+Phần Image CTA Section
+======================================== */
+/* ========================================
+   Phần Image CTA Section
    ======================================== */
 .image-cta-section {
   position: relative;
-  height: 40vh;                 /* chỉnh chiều cao section */
-  min-height: 520px;
-  overflow: hidden;
+  /* Thay height cứng bằng min-height để chứa đủ nội dung dài */
+  min-height: 520px; 
   display: flex;
-  align-items: flex-end;       
+  align-items: flex-end; 
+  justify-content: center; /* Canh giữa nội dung theo chiều ngang */
+  overflow: hidden;
+  margin-top: 50px;
 }
 
-/* Video nền */
+/* Video/Ảnh nền */
 .image-bg {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   z-index: 0;
 }
 
-/* Overlay tối */
+/* Overlay */
 .image-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(0, 0, 0, 0.5); /* Tăng nhẹ độ tối để chữ trắng dễ đọc hơn */
   z-index: 1;
 }
 
@@ -255,38 +263,67 @@ body {
   z-index: 2;
   padding-bottom: 80px;      
   color: #fff;
+  width: 100%;
 }
 
 .image-title {
-  font-size: 3rem;
+  /* GIỮ NGUYÊN CỠ CHỮ GỐC */
+  font-size: 3rem; 
   font-weight: 800;
   margin-bottom: 30px;
-color: #fff;
+  color: #fff;
 }
 
 .image-subtitle {
-  font-size: 1.1rem;
-  opacity: 0.9;
-  max-width: 720px;
+  /* GIỮ NGUYÊN CỠ CHỮ GỐC */
+  font-size: 1.1rem; 
+  opacity: 0.95;
+  max-width: 800px;
   margin: 0 auto 24px;
+  /* Thêm dòng này để đoạn văn dài dễ đọc hơn, không ảnh hưởng cỡ chữ */
+  line-height: 1.6; 
 }
 
-/* Responsive */
+/* ========================================
+   RESPONSIVE (Mobile & Tablet)
+   ======================================== */
 @media (max-width: 768px) {
   .image-cta-section {
-    height: 70vh;
-    min-height: 420px;
-  }
-
-  .image-title {
-    font-size: 2.2rem;
+    /* Trên mobile chuyển sang canh giữa để cân đối */
+    align-items: center; 
+    
+    /* Bỏ chiều cao cứng 70vh để tránh bị mất chữ nếu văn bản dài */
+    height: auto; 
+    min-height: auto;
+    
+    /* Thêm padding trên dưới để chữ không dính sát mép */
+    padding: 60px 0; 
   }
 
   .image-content {
-    padding-bottom: 50px;
+    /* Reset padding gốc để nội dung nằm giữa */
+    padding-bottom: 0; 
+    
+    /* Thêm khoảng cách 2 bên lề màn hình điện thoại */
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .image-title {
+    /* GIỮ NGUYÊN CỠ CHỮ GỐC */
+    font-size: 2.2rem; 
+  }
+  
+  .image-subtitle {
+     /* Giữ nguyên cỡ chữ 1.1rem như trên PC (theo code gốc của bạn) */
+     /* Căn đều 2 bên cho đẹp mắt trên điện thoại */
+     text-align: justify; 
+     text-align-last: center;
   }
 }
-
+/* ========================================
+========== end IMAGE SECTION 
+   ======================================== */  
 /* ========================================
    Các section sản phẩm
    ======================================== */
