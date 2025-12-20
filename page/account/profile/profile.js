@@ -341,7 +341,7 @@ function renderEmptyState() {
     <div class="empty-state">
         <i class="fas fa-shopping-basket"></i>
         <p>Chưa có đơn hàng nào.</p>
-        <a href="/index.htm" class="action-link">Mua sắm ngay</a>
+        <a href="/page/category/product/product.htm" class="action-link">Mua sắm ngay</a>
     </div>`;
 }
 
