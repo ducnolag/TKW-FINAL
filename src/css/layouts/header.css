@@ -363,6 +363,28 @@
   opacity: 0; visibility: hidden; transition: 0.3s; z-index: 9998;
 }
 .mobile-overlay.active { opacity: 1; visibility: visible; }
+/* Hiệu ứng hover cho các đường dẫn trong mobile menu */
+.mobile-nav-item a {
+  transition: all 0.3s ease; /* Đảm bảo hiệu ứng mượt mà */
+  position: relative;
+}
+
+.mobile-nav-item a:hover {
+  background-color: rgba(255, 107, 53, 0.08); /* Nền cam nhạt cực nhẹ */
+  color: var(--primary-color, #ff6b35); /* Đổi màu chữ sang màu chủ đạo */
+  padding-left: 30px; /* Hiệu ứng đẩy nhẹ sang phải */
+}
+
+/* Thêm một đường gạch nhỏ bên trái khi hover để tạo điểm nhấn */
+.mobile-nav-item a:hover::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  background: var(--primary-color, #ff6b35);
+}
 
 /* ============================================================== */
 /* ===== RESPONSIVE FIX (QUAN TRỌNG) ===== */
