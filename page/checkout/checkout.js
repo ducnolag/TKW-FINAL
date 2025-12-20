@@ -358,7 +358,7 @@ function renderCheckout(user) {
                                     Chủ TK: <b>NGUYEN MANH DUC</b>
                                 </div>
                                 <img src="/assets/techcombank.jpg" alt="QR Banking" class="qr-code-img">
-                                <p class="payment-info-text"><i>Vui lòng nhập nội dung: [Tên KH] + [SĐT]</i></p>
+                                <p class="payment-info-text"><i>Vui lòng nhập nội dung: [Tên KH] + [SĐT] đã đặt hàng</i></p>
                             </div>
                         </div>
 
@@ -370,7 +370,7 @@ function renderCheckout(user) {
                             </div>
                             <div class="payment-details">
                                 <img src="/assets/momo.jpg" alt="QR MoMo" class="qr-code-img">
-                                <p class="payment-info-text"><i>Vui lòng nhập nội dung: [Tên KH] + [SĐT]</i></p>
+                                <p class="payment-info-text"><i>Vui lòng nhập nội dung: [Tên KH] + [SĐT] đã đặt hàng</i></p>
                             </div>
                         </div>
                     </div>
