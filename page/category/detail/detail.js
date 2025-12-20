@@ -761,12 +761,16 @@ function addToCartAction() {
         return;
     }
     
-    const selectedOptions = getSelectedOptions();
+    // CHỈ LẤY OPTIONS NẾU SẢN PHẨM CÓ ĐỊNH NGHĨA OPTIONS TRONG JSON
+    let selectedOptions = null;
+    if (currentProduct.options && currentProduct.options.length > 0) {
+        selectedOptions = getSelectedOptions();
+    }
+
     let cart = JSON.parse(localStorage.getItem('cart') || '[]');
     
-    // Tạo unique key kết hợp ID và options để phân biệt các sản phẩm khác nhau
-    const optionKey = selectedOptions.length > 0 ? JSON.stringify(selectedOptions) : '';
-    const cartItemKey = `${currentProduct.id}_${optionKey}`;
+    // Tạo unique key để phân biệt
+    const optionKey = selectedOptions ? JSON.stringify(selectedOptions) : '';
     
     const existingItem = cart.find(item => {
         const itemOptionKey = item.selectedOptions ? JSON.stringify(item.selectedOptions) : '';
@@ -782,7 +786,8 @@ function addToCartAction() {
             price: currentProduct.price_current,
             quantity: quantity,
             image: currentProduct.image,
-            selectedOptions: selectedOptions.length > 0 ? selectedOptions : null
+            // Lưu options (nếu không có thì lưu null)
+            selectedOptions: selectedOptions 
         });
     }
     localStorage.setItem('cart', JSON.stringify(cart));

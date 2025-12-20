@@ -109,7 +109,22 @@
 
 }
 
+/* Đảm bảo thẻ link bao phủ toàn bộ slide */
+.section_slider .swiper-slide a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5; /* Nằm trên ảnh nền nhưng dưới nút điều hướng */
+}
 
+/* Đảm bảo slide-bg lấp đầy thẻ a */
+.slide-bg {
+  width: 100%;
+  height: 100%;
+}
 /* MOBILE RESPONSIVE */
 @media (max-width: 768px) {
 

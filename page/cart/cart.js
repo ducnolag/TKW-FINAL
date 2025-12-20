@@ -128,32 +128,25 @@ function renderCart() {
                 <div class="item-header">
                     <div>
                         <div class="item-name">${item.title}</div>
-                        ${item.selectedOptions && item.selectedOptions.length > 0 ? `
-                            <div style="font-size: 12px; color: #666; margin-top: 4px;">
-                                ${item.selectedOptions.map(opt => `<div>${opt.name}: <strong>${opt.value}</strong></div>`).join('')}
+                        
+                        ${item.selectedOptions && Array.isArray(item.selectedOptions) && item.selectedOptions.length > 0 ? `
+                            <div class="item-options-display" style="font-size: 12px; color: #666; margin-top: 4px; background: #f9f9f9; padding: 4px 8px; border-radius: 4px;">
+                                ${item.selectedOptions.map(opt => `
+                                    <div class="opt-line">
+                                        <i class="fa-solid fa-check" style="font-size: 8px; color: #ff6b35;"></i> 
+                                        ${opt.name}: <strong>${opt.value}</strong>
+                                    </div>
+                                `).join('')}
                             </div>
                         ` : ''}
+
                         <div class="item-price">${formatPrice(item.price)}</div>
                     </div>
                     <button class="delete-btn" onclick="removeItem(${index})" title="Xóa sản phẩm">
                         <i class="fa fa-trash-alt"></i>
                     </button>
                 </div>
-                <div class="item-footer">
-                    <div class="quantity-control">
-                        <button class="qty-btn" onclick="decreaseQty(${index})" ${item.quantity <= 1 ? 'disabled' : ''}>
-                            −
-                        </button>
-                        <div class="qty-display">${item.quantity}</div>
-                        <button class="qty-btn" onclick="increaseQty(${index})">
-                            +
-                        </button>
-                    </div>
-                    <div class="item-total">
-                        Thành tiền: <span>${formatPrice(item.price * item.quantity)}</span>
-                    </div>
                 </div>
-            </div>
         </div>
     `).join('');
 }

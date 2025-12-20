@@ -4,10 +4,15 @@ document.addEventListener('htmlIncluded', function () {
   const heroSlider = new Swiper('.home-hero-slider', {
     loop: true,
     centeredSlides: true,
-    slidesPerView: 1.5,  /* Giữ nguyên hoặc thay đổi breakpoint */
+    slidesPerView: 1.5,
     spaceBetween: 30,
     speed: 700,
     grabCursor: true,
+    
+    // Thêm các dòng này để xử lý click tốt hơn
+    preventClicks: true,
+    preventClicksPropagation: true,
+    slideToClickedSlide: false, 
 
     autoplay: {
       delay: 3000,
