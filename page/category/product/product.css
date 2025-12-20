@@ -490,7 +490,7 @@
         grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
         gap: 15px;
       }
-
+/* nam ngang 
       .products.list-view {
         grid-template-columns: 1fr;
       }
@@ -532,7 +532,7 @@
       .products.list-view .product-actions {
         justify-content: center;
       }
-
+*/
       .product-image {
         height: 180px;
       }

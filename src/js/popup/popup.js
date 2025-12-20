@@ -36,7 +36,6 @@
             height: auto;
             border-radius: 8px;
             display: block;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
         .js-popup-close {
             position: absolute;
@@ -44,21 +43,19 @@
             right: -15px;
             width: 35px;
             height: 35px;
-            background: #fff;
-            color: #000;
+            color: #fff;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 24px;
+            font-size: 50px;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
             transition: transform 0.2s;
         }
         .js-popup-close:hover {
             transform: scale(1.1);
-            background: #f0f0f0;
+            color: #e76b3eff;
         }
     `;
 

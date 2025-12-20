@@ -110,91 +110,135 @@ h1{
 }
 
 /* ================= KHU VỰC GIAN HÀNG ================= */
-.store-wrapper{
-    display:grid;
-    grid-template-columns:1.7fr 1.3fr; /* TĂNG CHIỀU NGANG ẢNH */
-    gap:30px;
-    align-items:stretch;
+/* --- KHU VỰC CHUNG --- */
+.section {
+    /* Giữ lại padding để nội dung không dính sát lề màn hình */
+    padding: 30px;
+    /* background-color: #fff;  Có thể bỏ màu nền hoặc để màu trắng */
 }
 
-/* ================= KHỐI GIAN HÀNG BÊN TRÁI ================= */
-.store{
-    border-left:6px solid var(--primary);
-    padding-left:22px;
-    margin-bottom:30px;
-    transition:.3s;
+/* --- CONTAINER CHÍNH --- */
+.store-wrapper {
+    display: flex;
+    /* Tạo khoảng cách giữa cột nội dung và cột ảnh */
+    gap: 40px;
+    /* Căn giữa nội dung theo chiều dọc */
+    align-items: center;
 }
 
-.store:hover{
-    transform:translateX(8px);
+/* --- CỘT TRÁI: NỘI DUNG GIAN HÀNG --- */
+.store-wrapper > div:first-child {
+    flex: 1; /* Chiếm phần không gian còn lại */
+    /* Không cần padding ở đây nữa vì đã có gap */
 }
 
-.store:last-child{
-    margin-bottom:0;
+/* --- KHỐI TỪNG GIAN HÀNG --- */
+.store {
+    margin-bottom: 40px;
 }
 
-.store h3{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    color:var(--primary);
-    margin-bottom:6px;
+.store:last-child {
+    margin-bottom: 0;
 }
 
-.store p{
-    color:var(--text-body);
-    margin-bottom:14px;
+/* --- TIÊU ĐỀ GIAN HÀNG --- */
+.store h3 {
+    display: flex;
+    align-items: center;
+    color: #ea5836; /* Màu cam */
+    font-size: 18px; /* Tăng nhẹ kích thước font */
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 0 0 10px 0;
+    /* Đường gạch đứng màu cam */
+    border-left: 4px solid #ea5836;
+    padding-left: 12px;
+    line-height: 1.2;
 }
 
-/* ================= NÚT HÃNG GIAO HÀNG ================= */
-.brand-buttons{
-    display:flex;
-    gap:14px;
-    flex-wrap:wrap;
+/* Icon SVG */
+.store h3 .icon {
+    width: 22px;
+    height: 22px;
+    stroke: #ea5836; /* Màu viền icon */
+    margin-right: 10px;
+    flex-shrink: 0;
 }
 
-.brand-btn{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    padding:11px 18px;
-    border-radius:999px;
-    background:var(--bg-card);
-    border:1px solid var(--border-color);
-    text-decoration:none;
-    font-weight:500;
-    color:var(--text-heading);
-    transition:.35s;
+.store p {
+    margin: 0 0 20px 0;
+    color: #555;
+    font-size: 15px;
+    padding-left: 16px; /* Thụt đầu dòng thẳng với text tiêu đề */
 }
 
-.brand-btn img{
-    width:22px;
-    height:22px;
+/* --- CÁC NÚT BẤM --- */
+.brand-buttons {
+    display: flex;
+    gap: 15px;
+    padding-left: 16px;
+    flex-wrap: wrap;
 }
 
-/* hiệu ứng hover nút */
-.brand-btn:hover{
-    transform:translateY(-5px) scale(1.05);
-    box-shadow:0 5px 10px rgba(255, 107, 53, 0.25);
+.brand-btn {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid #e0e0e0;
+    border-radius: 50px; /* Bo tròn */
+    padding: 8px 20px;
+    transition: all 0.2s ease;
+    background: #fff;
+    /* Thêm bóng nhẹ cho nút để nổi bật */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-/* ================= ẢNH BÊN PHẢI GIAN HÀNG ================= */
-.store-image{
-    width:100%;
-    height:100%;
-    min-width:420px; /* ảnh to rõ hơn */
-    border-radius:22px;
-    object-fit:cover;
-    box-shadow:0 15px 25px rgba(0,0,0,.25);
-    transition:.6s;
+.brand-btn img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    object-fit: contain;
 }
 
-/* hiệu ứng hover zoom + ánh sáng */
-.store-image:hover{
-    transform:scale(1.06);
-    filter:brightness(1.05);
+.brand-btn:hover {
+    border-color: #ea5836;
+    color: #ea5836;
+    background-color: #fff5f2;
+    box-shadow: 0 4px 8px rgba(234, 88, 54, 0.15);
 }
 
+/* --- CỘT PHẢI: ẢNH MINH HỌA --- */
+.store-image {
+    /* Điều chỉnh tỷ lệ chiều rộng của ảnh */
+    width: 45%; /* Ví dụ: Ảnh chiếm 45%, nội dung chiếm 55% */
+    /* height: 450px;  Bạn có thể đặt chiều cao cố định nếu muốn */
+    object-fit: cover; /* Cắt ảnh vừa khung */
+    border-radius: 16px; /* Bo tròn góc ảnh */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); /* Đổ bóng cho ảnh đẹp hơn */
+    display: block;
+}
+
+/* ================= RESPONSIVE (MOBILE/TABLET) ================= */
+@media (max-width: 992px) { /* Đặt điểm gãy ở tablet dọc */
+    .store-wrapper {
+        /* Chuyển thành cột dọc: Ảnh lên trên, nội dung xuống dưới */
+        flex-direction: column-reverse;
+        gap: 30px;
+    }
+
+    .store-image {
+        width: 100%; /* Ảnh tràn chiều ngang trên mobile */
+        height: 300px; /* Chiều cao cố định trên mobile */
+    }
+    
+    .section {
+        padding: 20px; /* Giảm padding trên mobile */
+    }
+}
+/* ================= end KHU VỰC GIAN HÀNG ================= */
 /* ================= KHỐI LỜI KHUYÊN ================= */
 .highlight{
     background:linear-gradient(135deg,#fff7ed,#ffedd5);
@@ -219,9 +263,6 @@ h1{
 @media(max-width:900px){
     .store-wrapper{
         grid-template-columns:1fr;
-    }
-    .store-image{
-        min-height:260px;
     }
 }
 
