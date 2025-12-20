@@ -260,7 +260,8 @@ body {
 .image-title {
   font-size: 3rem;
   font-weight: 800;
-  margin-bottom: 12px;
+  margin-bottom: 30px;
+color: #fff;
 }
 
 .image-subtitle {

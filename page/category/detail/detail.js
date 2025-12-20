@@ -40,15 +40,15 @@ const ReviewManager = {
         if (stored.length === 0) {
             const seedData = [
                 {
-                    id: 1, name: 'Nguyễn Văn A', rating: 5, date: '2024-12-10', verified: true,
-                    content: 'Sản phẩm rất tuyệt vời! Chất lượng tốt, giao hàng nhanh. Mì trộn rất đậm đà.',
-                    avatar: null, images: [], likes: 12,
+                    id: 1, name: 'Vợ thầy Sinh', rating: 5, date: '2024-12-10', verified: true,
+                    content: 'Sản phẩm rất tuyệt vời! Chất lượng tốt, giao hàng nhanh. Mì trộn rất đậm đà. Tôi luôn tin tưởng các rò của chồng tôi',
+                    avatar: '/assets/reviewfake/vothaysinh.jpg', images: [], likes: 12,
                     reply: { content: 'Cảm ơn bạn đã ủng hộ Tiệm!', date: '2024-12-11' }
                 },
                 {
-                    id: 2, name: 'Trần Thị B', rating: 4, date: '2024-12-08', verified: true,
-                    content: 'Đóng gói cẩn thận. Vị hơi cay so với mình một chút nhưng vẫn ngon.',
-                    avatar: 'https://i.pravatar.cc/150?u=2', images: ['https://placehold.co/100x100/orange/white?text=Anh1'], likes: 5
+                    id: 2, name: 'Vũ Trọng Sinh', rating: 4, date: '2024-12-08', verified: true,
+                    content: 'Hàng ngon và chất lượng, 10 điểm xứng đáng.',
+                    avatar: '/assets/reviewfake/thaysinh.jpg', images: ['/assets/reviewfake/anh10diem.jpg'], likes: 5
                 }
             ];
             this.data = seedData;
@@ -430,7 +430,7 @@ function addSuggestToCart(event, productName) {
     event.stopPropagation();
     const suggestProduct = suggestProducts.find(p => p.title === productName);
     if (!suggestProduct) {
-        showToast('❌ Không tìm thấy sản phẩm!', 'error');
+        showToast('Không tìm thấy sản phẩm!', 'error');
         return;
     }
     let cart = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -449,7 +449,7 @@ function addSuggestToCart(event, productName) {
     localStorage.setItem('cart', JSON.stringify(cart));
     window.updateCartCount();
     window.dispatchEvent(new Event('cartUpdated'));
-    showToast(`✅ Đã thêm ${productName} vào giỏ!`, 'success');
+    showToast(`Đã thêm ${productName} vào giỏ!`, 'success');
 }
 
 
@@ -721,7 +721,7 @@ function checkUserLogin() {
     const userSession = sessionStorage.getItem('currentUser');
     const userLocal = localStorage.getItem('currentUser');
     if (!userSession && !userLocal) {
-        showToast('❌ Vui lòng đăng nhập để tiếp tục', 'error');
+        showToast('Vui lòng đăng nhập để tiếp tục', 'error');
         setTimeout(() => {
             window.location.href = '/page/account/login/login.html';
         }, 1000);
@@ -757,7 +757,7 @@ function getSelectedOptions() {
 function addToCartAction() {
     const quantity = parseInt(document.querySelector('.qty-input')?.value || 1);
     if (!currentProduct) {
-        showToast('❌ Lỗi: Không tìm thấy sản phẩm', 'error');
+        showToast('Lỗi: Không tìm thấy sản phẩm', 'error');
         return;
     }
     
@@ -788,7 +788,7 @@ function addToCartAction() {
     localStorage.setItem('cart', JSON.stringify(cart));
     updateCartCount();
     window.dispatchEvent(new Event('cartUpdated'));
-    showToast(`✅ Đã thêm ${quantity} sản phẩm vào giỏ hàng!`, 'success');
+    showToast(` Đã thêm ${quantity} sản phẩm vào giỏ hàng!`, 'success');
     const modal = document.getElementById('modal-cart-overlay');
     if (modal) modal.classList.remove('active');
 }
@@ -797,7 +797,7 @@ function triggerMainBuy() {
     if (!checkUserLogin()) return;
     const quantity = parseInt(document.querySelector('.qty-input')?.value || 1);
     if (!currentProduct) {
-        showToast('❌ Lỗi: Không tìm thấy sản phẩm', 'error');
+        showToast('Lỗi: Không tìm thấy sản phẩm', 'error');
         return;
     }
     
@@ -848,18 +848,18 @@ function cartAction() {
 function submitReviewForm() {
     // 1. Validate
     if (selectedRating === 0) {
-        showToast('❌ Vui lòng chọn số sao đánh giá!', 'error');
+        showToast('Vui lòng chọn số sao đánh giá!', 'error');
         return;
     }
     const content = document.getElementById('reviewComment').value.trim();
     if (!content) {
-        showToast('❌ Vui lòng nhập nội dung đánh giá!', 'error');
+        showToast(' Vui lòng nhập nội dung đánh giá!', 'error');
         return;
     }
 
     // 2. Check product
     if (!window.currentProduct) {
-        showToast('❌ Không tìm thấy sản phẩm!', 'error');
+        showToast('Không tìm thấy sản phẩm!', 'error');
         return;
     }
 
@@ -952,7 +952,7 @@ function openPromoModal() {
     if (typeof window.openPromotionModal === 'function') {
         window.openPromotionModal();
     } else {
-        showToast('❌ Không tìm thấy mã khuyến mãi', 'error');
+        showToast('Không tìm thấy mã khuyến mãi', 'error');
     }
 }
 

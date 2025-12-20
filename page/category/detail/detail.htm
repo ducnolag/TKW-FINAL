@@ -415,7 +415,7 @@ const SuggestBox = {
         `;
         
         document.body.appendChild(wrapper);
-        console.log("✅ [SuggestBox] Đã thêm vào giao diện");
+        console.log(" [SuggestBox] Đã thêm vào giao diện");
 
         // 3. Hẹn giờ mở (Đang để 3s để test, sau test sửa số 3000 thành 15000)
         console.log("⏳ [SuggestBox] Đang đếm ngược 3 giây...");
@@ -464,7 +464,7 @@ const SuggestBox = {
         
         localStorage.setItem('cart', JSON.stringify(cart));
         if (window.updateCartCount) window.updateCartCount();
-        if (window.showToast) window.showToast(`✅ Đã thêm ${product.title}`, 'success');
+        if (window.showToast) window.showToast(` Đã thêm ${product.title}`, 'success');
         else alert(`Đã thêm ${product.title}`);
     }
 };

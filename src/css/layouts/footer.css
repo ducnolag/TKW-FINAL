@@ -27,7 +27,7 @@ html, body {
 .footer_grid{
   display: grid;
   grid-template-columns: 1.25fr 1fr 1fr 1fr;
-  gap: 22px;
+  gap: 40px;
   align-items: start;
 }
 
@@ -42,7 +42,7 @@ html, body {
 
 .footer_title{
   font-size: 18px;
-  font-weight: 800;
+  font-weight: 600;
   margin: 0 0 10px;
   letter-spacing: .25px;
 }
@@ -94,6 +94,7 @@ html, body {
   text-align: center;
   color: var(--accent);
 }
+
 
 /* ===== list ===== */
 .footer_list{
@@ -177,8 +178,14 @@ html, body {
   color: var(--muted);
   font-size: 14px;
 }
-.footer_bottom strong{ color: var(--text); }
 
+/* ===== ten chu ===== */
+.footer_title, .footer_bottom strong {
+  color: rgba(255,255,255,.92);
+}   
+.footer a {
+  color: rgba(255,255,255,.70);
+}   
 /* ===== responsive ===== */
 @media (max-width: 992px){
   .footer_grid{
