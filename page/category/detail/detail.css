@@ -128,6 +128,7 @@ a { text-decoration: none; color: inherit; transition: 0.3s; }
 .bs-button-next, .bs-button-prev { width: 40px; height: 40px; border-radius: 50%; background-color: #ffb195; color: #fff; display: flex; align-items: center; justify-content: center; position: absolute; top: 40%; z-index: 20; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: 0.3s; }
 .bs-button-next:hover, .bs-button-prev:hover { background-color: #e85d2a;; color: #fff; border-color: #d82b2b; }
 .bs-button-prev { left: 0px; } .bs-button-next { right: 0px; }
+.best-seller-section h2{ font-size: 32px;}
 
 /* --- NEW REVIEW SECTION STYLES --- */
 .review-header-container { margin-bottom: 30px; text-align: left; }
