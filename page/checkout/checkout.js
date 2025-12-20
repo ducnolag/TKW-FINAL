@@ -304,7 +304,7 @@ function renderCheckout(user) {
                                     <option value="Tây Hồ">Tây Hồ</option>
                                     <option value="Thanh Xuân">Thanh Xuân</option>
                                 </select>
-                                <div class="helper-text"><i class="fas fa-info-circle"></i> Chỉ giao trong bán kính 5km</div>
+                                <div class="helper-text">Chú ý: Tiệm chỉ giao trong bán kính 5km</div>
                             </div>
                         </div>
 
