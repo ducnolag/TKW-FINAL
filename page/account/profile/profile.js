@@ -249,6 +249,7 @@ function renderMainContent(user, tab) {
         return `
             <div class="content-header">
                 <div class="welcome-text"><h2>Lịch sử đơn hàng</h2></div>
+                <a href="/index.htm" class="home-btn"><i class="fas fa-arrow-left"></i> Trang chủ</a>
             </div>
             <div class="section-card purchases-wrapper" style="min-height: 500px;">
                 <div class="section-header">
@@ -266,6 +267,7 @@ function renderMainContent(user, tab) {
         return `
             <div class="content-header">
                 <div class="welcome-text"><h2>Chỉnh sửa hồ sơ</h2></div>
+                <a href="/index.htm" class="home-btn"><i class="fas fa-arrow-left"></i> Trang chủ</a>
             </div>
             <div class="edit-form-card">
                 <form onsubmit="saveProfile(event)">
