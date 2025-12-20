@@ -100,6 +100,7 @@ function renderCart() {
     const cartItems = document.getElementById('cartItems');
     const itemCount = document.getElementById('itemCount');
     
+    // Cập nhật số lượng loại sản phẩm trong giỏ
     itemCount.textContent = cart.length;
 
     if (cart.length === 0) {
@@ -132,8 +133,8 @@ function renderCart() {
                         ${item.selectedOptions && Array.isArray(item.selectedOptions) && item.selectedOptions.length > 0 ? `
                             <div class="item-options-display" style="font-size: 12px; color: #666; margin-top: 4px; background: #f9f9f9; padding: 4px 8px; border-radius: 4px;">
                                 ${item.selectedOptions.map(opt => `
-                                    <div class="opt-line">
-                                        <i class="fa-solid fa-check" style="font-size: 8px; color: #ff6b35;"></i> 
+                                    <div style="margin-bottom: 2px;">
+                                        <i class="fa-solid fa-caret-right" style="color: #ff6b35; font-size: 10px;"></i> 
                                         ${opt.name}: <strong>${opt.value}</strong>
                                     </div>
                                 `).join('')}
@@ -146,7 +147,22 @@ function renderCart() {
                         <i class="fa fa-trash-alt"></i>
                     </button>
                 </div>
+                
+                <div class="item-footer">
+                    <div class="quantity-control">
+                        <button class="qty-btn" onclick="decreaseQty(${index})" ${item.quantity <= 1 ? 'disabled' : ''}>
+                            −
+                        </button>
+                        <div class="qty-display">${item.quantity}</div>
+                        <button class="qty-btn" onclick="increaseQty(${index})">
+                            +
+                        </button>
+                    </div>
+                    <div class="item-total">
+                        Thành tiền: <span>${formatPrice(item.price * item.quantity)}</span>
+                    </div>
                 </div>
+            </div>
         </div>
     `).join('');
 }
