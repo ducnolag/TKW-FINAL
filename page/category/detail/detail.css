@@ -125,8 +125,8 @@ a { text-decoration: none; color: inherit; transition: 0.3s; }
 .price-current { color: #d82b2b; font-weight: 700; font-size: 16px; }
 .btn-pill-outline { display: inline-block; padding: 6px 20px; border-radius: 50px; color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; background: linear-gradient(135deg, #ff6b35 0%, #df2626 100%);; transition: all 0.3s ease; }
 .btn-pill-outline:hover { background: linear-gradient(135deg, #ff6b35 20%, #df2626 100%);; color: #fff; }
-.bs-button-next, .bs-button-prev { width: 40px; height: 40px; border-radius: 50%; background-color: #fff; border: 1px solid #eee; color: #555; display: flex; align-items: center; justify-content: center; position: absolute; top: 40%; z-index: 20; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: 0.3s; }
-.bs-button-next:hover, .bs-button-prev:hover { background-color: #d82b2b; color: #fff; border-color: #d82b2b; }
+.bs-button-next, .bs-button-prev { width: 40px; height: 40px; border-radius: 50%; background-color: #ffb195; color: #fff; display: flex; align-items: center; justify-content: center; position: absolute; top: 40%; z-index: 20; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: 0.3s; }
+.bs-button-next:hover, .bs-button-prev:hover { background-color: #e85d2a;; color: #fff; border-color: #d82b2b; }
 .bs-button-prev { left: 0px; } .bs-button-next { right: 0px; }
 
 /* --- NEW REVIEW SECTION STYLES --- */

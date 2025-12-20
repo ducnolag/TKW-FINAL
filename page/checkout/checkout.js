@@ -115,7 +115,9 @@ function showSuccessModal(totalStr, method) {
 }
 
 window.selectPaymentNew = function(element, method) {
-    document.querySelectorAll('.payment-option').forEach(el => el.classList.remove('active'));
+  
+    const parent = element.parentElement;
+    parent.querySelectorAll('.payment-option').forEach(el => el.classList.remove('active'));
     element.classList.add('active');
     document.getElementById('selectedPaymentMethod').value = method;
 }
@@ -349,12 +351,26 @@ function renderCheckout(user) {
                                 <h4>Chuyển khoản Ngân hàng</h4>
                                 <p>Quét mã VietQR (24/7)</p>
                             </div>
+                            <div class="payment-details">
+                                <div class="payment-info-text">
+                                    Ngân hàng: <b>TECHCOMBANK</b><br>
+                                    STK: <b>3023022006</b><br>
+                                    Chủ TK: <b>NGUYEN MANH DUC</b>
+                                </div>
+                                <img src="/assets/techcombank.jpg" alt="QR Banking" class="qr-code-img">
+                                <p class="payment-info-text"><i>Vui lòng nhập nội dung: [Tên KH] + [SĐT]</i></p>
+                            </div>
                         </div>
+
                         <div class="payment-option" onclick="selectPaymentNew(this, 'momo')">
                             <div class="custom-radio"></div>
                             <div class="option-info">
                                 <h4>Ví MoMo</h4>
                                 <p>Thanh toán qua ứng dụng MoMo</p>
+                            </div>
+                            <div class="payment-details">
+                                <img src="/assets/momo.jpg" alt="QR MoMo" class="qr-code-img">
+                                <p class="payment-info-text"><i>Vui lòng nhập nội dung: [Tên KH] + [SĐT]</i></p>
                             </div>
                         </div>
                     </div>

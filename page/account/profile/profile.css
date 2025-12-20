@@ -172,7 +172,7 @@ body {
     box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
 }
 
-.menu-item.logout { color: #e53e3e; margin-top: 15px; border-top: 1px solid transparent; }
+.menu-item.logout { color: #e53e3e;  border-top: 1px solid transparent; }
 .menu-item.logout:hover { background: #fff5f5; color: #c53030; }
 
 /* =========================================

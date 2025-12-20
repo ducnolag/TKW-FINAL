@@ -572,3 +572,126 @@ input::placeholder { color: var(--text-placeholder); }
     .sticky-column { grid-column: span 1; }
     .form-row { grid-template-columns: 1fr; }
 }
+
+/* --- NÂNG CẤP PHƯƠNG THỨC THANH TOÁN --- */
+.payment-option {
+    display: flex;
+    flex-wrap: wrap; /* Cho phép nội dung QR xuống hàng */
+    align-items: center;
+    padding: 18px;
+    border: 1.5px solid var(--border-color);
+    border-radius: 16px; /* Bo góc mềm mại hơn */
+    cursor: pointer;
+    margin-bottom: 16px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: #fff;
+    position: relative;
+    overflow: hidden;
+}
+
+.payment-option:hover {
+    border-color: var(--primary);
+    background-color: #fff9f6;
+    transform: translateY(-2px);
+}
+
+.payment-option.active {
+    border-color: var(--primary);
+    background-color: #fff7ed;
+    box-shadow: 0 8px 20px rgba(255, 107, 53, 0.1);
+}
+
+/* Radio Button xịn hơn */
+.custom-radio {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #d1d5db;
+    border-radius: 50%;
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.payment-option.active .custom-radio {
+    border-color: var(--primary);
+}
+
+.payment-option.active .custom-radio::after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: var(--primary);
+    border-radius: 50%;
+    animation: scaleUp 0.2s ease;
+}
+
+/* Hiệu ứng Accordion cho QR Code */
+.payment-details {
+    width: 100%;
+    max-height: 0; /* Mặc định đóng */
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0, 1, 0, 1), opacity 0.3s ease;
+    padding: 0;
+}
+
+.payment-option.active .payment-details {
+    max-height: 1000px; /* Mở rộng khi active */
+    opacity: 1;
+    transition: max-height 0.8s ease-in, opacity 0.5s ease;
+    padding-top: 20px;
+    margin-top: 15px;
+    border-top: 1px dashed #e5e7eb;
+}
+
+/* Card chứa mã QR */
+.qr-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    display: inline-block;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.qr-code-img {
+    width: 180px;
+    height: 180px;
+    display: block;
+    margin: 0 auto 15px;
+}
+
+.payment-info-box {
+    background: #f8fafc;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: left;
+    margin-bottom: 10px;
+    border-left: 4px solid var(--primary);
+}
+
+.payment-info-text {
+    font-size: 13px;
+    color: #475569;
+    line-height: 1.8;
+}
+
+.payment-info-text b {
+    color: #1e293b;
+    font-weight: 700;
+}
+
+.copy-hint {
+    font-size: 11px;
+    color: var(--primary);
+    margin-top: 5px;
+    display: block;
+    font-weight: 500;
+}
+
+@keyframes scaleUp {
+    from { transform: scale(0); }
+    to { transform: scale(1); }
+}

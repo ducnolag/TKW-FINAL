@@ -205,8 +205,8 @@
     @media (max-width: 900px) {
       .content { grid-template-columns: 1fr; }
       .page-header { padding: 20px; }
+      .contact-info { margin-top: 1px; }
     }
-
     /* ================= ANIMATION ================= */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(30px); }
