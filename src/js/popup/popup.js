@@ -1,18 +1,10 @@
 (function() {
-    // 1. Kiểm tra xem đây có phải là hành động RELOAD không
-    // Chế độ này chỉ cho phép popup hiện khi người dùng nhấn F5 hoặc Refresh
-    const perfEntries = performance.getEntriesByType("navigation");
-    const isReload = perfEntries.length > 0 && perfEntries[0].type === "reload";
-
-    if (!isReload) {
-        return; // Nếu không phải reload (ví dụ: chuyển trang, click link) thì thoát luôn
-    }
-
-    // 2. Cấu hình đường dẫn (giữ nguyên của bạn)
+    // 1. Cấu hình
     const imgUrl = "/../assets/popup.png"; 
     const targetLink = "/../page/promotion/promotion.html"; 
+    const displayDuration = 5000; // Đóng sau 5 giây (0 để tắt tự động đóng)
 
-    // 3. Chèn CSS
+    // 2. Chèn CSS
     const css = `
         #js-popup-overlay {
             position: fixed;
@@ -63,14 +55,14 @@
     styleSheet.innerText = css;
     document.head.appendChild(styleSheet);
 
-    // 4. Hàm hiển thị Popup
+    // 3. Hàm hiển thị Popup
     function showImagePopup() {
         const popupHTML = `
             <div id="js-popup-overlay">
                 <div class="js-popup-container">
                     <div class="js-popup-close">&times;</div>
                     <a href="${targetLink}" target="_blank">
-                        <img src="${imgUrl}" alt="Popup Ads">
+                        <img src="${imgUrl}" alt="Promotion">
                     </a>
                 </div>
             </div>
@@ -81,14 +73,24 @@
         const overlay = document.getElementById('js-popup-overlay');
         const closeBtn = overlay.querySelector('.js-popup-close');
 
-        const closePopup = () => overlay.remove();
-        closeBtn.onclick = closePopup;
-        overlay.onclick = (e) => {
-            if (e.target === overlay) closePopup();
+        // Kích hoạt hiệu ứng xuất hiện (sau khi render vào DOM)
+        setTimeout(() => overlay.classList.add('active'), 10);
+
+        const closePopup = () => {
+            overlay.classList.remove('active');
+            setTimeout(() => overlay.remove(), 400); // Đợi hiệu ứng ẩn xong mới xóa DOM
         };
+
+        closeBtn.onclick = closePopup;
+        overlay.onclick = (e) => { if (e.target === overlay) closePopup(); };
+
+        // Tự động đóng sau X giây
+        if (displayDuration > 0) {
+            setTimeout(closePopup, displayDuration);
+        }
     }
 
-    // 5. Kích hoạt
+    // 4. Kích hoạt khi trang đã sẵn sàng
     if (document.readyState === 'complete') {
         showImagePopup();
     } else {
