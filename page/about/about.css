@@ -222,7 +222,7 @@ body {
 /* ========================================
   Phần video 
    ======================================== */
-.video-cta-section {
+.image-cta-section {
   position: relative;
   height: 40vh;                 /* chỉnh chiều cao section */
   min-height: 520px;
@@ -232,7 +232,7 @@ body {
 }
 
 /* Video nền */
-.video-bg {
+.image-bg {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -242,7 +242,7 @@ body {
 }
 
 /* Overlay tối */
-.video-overlay {
+.image-overlay {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.45);
@@ -250,20 +250,21 @@ body {
 }
 
 /* Nội dung */
-.video-content {
+.image-content {
   position: relative;
   z-index: 2;
   padding-bottom: 80px;      
   color: #fff;
 }
 
-.video-title {
+.image-title {
   font-size: 3rem;
   font-weight: 800;
-  margin-bottom: 12px;
+  margin-bottom: 30px;
+color: #fff;
 }
 
-.video-subtitle {
+.image-subtitle {
   font-size: 1.1rem;
   opacity: 0.9;
   max-width: 720px;
@@ -272,16 +273,16 @@ body {
 
 /* Responsive */
 @media (max-width: 768px) {
-  .video-cta-section {
+  .image-cta-section {
     height: 70vh;
     min-height: 420px;
   }
 
-  .video-title {
+  .image-title {
     font-size: 2.2rem;
   }
 
-  .video-content {
+  .image-content {
     padding-bottom: 50px;
   }
 }
@@ -409,7 +410,7 @@ body {
 .testimonial-section {
     position: relative;
     padding: 50px 0;
-    background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600');
+    background-image: url('/assets/feature/feature3.png');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -716,7 +717,7 @@ body {
         font-size: 2.2rem;
     }
     
-    .video-title {
+    .image-title {
         font-size: 2.2rem;
     }
     
@@ -737,8 +738,8 @@ body {
     .section-title-center {
         font-size: 1.8rem;
     }
-    
-    .video-title {
+
+    .image-title {
         font-size: 1.8rem;
     }
     
@@ -772,8 +773,8 @@ body {
     .product-section {
         padding: 60px 0;
     }
-    
-    .video-cta-section {
+
+    .image-cta-section {
         padding: 100px 0;
     }
 }

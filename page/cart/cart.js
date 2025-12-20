@@ -1,5 +1,5 @@
 let cart = [];
-const SHIPPING_FEE = 30000;
+const SHIPPING_FEE = 20000;
 let discountPercent = 0;
 let appliedPromoCode = '';
 let pendingConfirmAction = null; // Lưu hàm cần thực hiện sau khi xác nhận
@@ -91,6 +91,9 @@ function loadCart() {
 
 function saveCart() {
     localStorage.setItem('cart', JSON.stringify(cart));
+    
+    // ✅ Kích hoạt sự kiện để Header (header.js) cập nhật số lượng ngay lập tức
+    window.dispatchEvent(new Event('cartUpdated'));
 }
 
 function renderCart() {
@@ -244,6 +247,7 @@ function updatePromoDisplay() {
 }
 
 // 🎨 TOAST NOTIFICATION SYSTEM
+// 🎨 TOAST NOTIFICATION SYSTEM (Đã đồng bộ icon với detail)
 function showNotification(message, type = 'info', duration = 3000) {
     let container = document.getElementById('toast-container');
     if (!container) {
@@ -253,11 +257,12 @@ function showNotification(message, type = 'info', duration = 3000) {
         document.body.appendChild(container);
     }
 
+    // Thay đổi từ Emoji sang FontAwesome Icons
     const icons = {
-        success: '✅',
-        error: '❌',
-        warning: '⚠️',
-        info: 'ℹ️'
+        success: '<i class="fa-solid fa-circle-check"></i>',
+        error: '<i class="fa-solid fa-circle-xmark"></i>',
+        warning: '<i class="fa-solid fa-triangle-exclamation"></i>',
+        info: '<i class="fa-solid fa-circle-info"></i>'
     };
 
     const toast = document.createElement('div');
@@ -270,6 +275,7 @@ function showNotification(message, type = 'info', duration = 3000) {
 
     container.appendChild(toast);
 
+    // Hiệu ứng tự động đóng
     setTimeout(() => {
         if (toast.parentElement) {
             toast.classList.add('remove');

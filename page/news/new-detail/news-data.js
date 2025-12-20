@@ -5,7 +5,7 @@ window.newsData = [
   category: "Sự kiện",
   date: "09/11/2025",
   author: "Admin",
-  image: "https://img.freepik.com/premium-vector/birthday-greeting-vector-background-design-happy-birthday-text-red-space-with-elegant-floating_572293-2918.jpg",
+  image: "/assets/news/news1.png",
   excerpt: "Thời gian thật nhanh! Mới ngày nào TIỆM ĂN VẶT NGON NHẤT THẾ GIỚI còn khởi nghiệp với bao bỡ ngỡ, vậy mà hôm nay chúng mình đã cùng nhau đi qua chặng đường 3 năm đầy nỗ lực.",
   content: [
     {
@@ -133,7 +133,7 @@ window.newsData = [
     category: "Thông báo",
     date: "25/08/2025",
     author: "Admin",
-    image: "https://png.pngtree.com/background/20230601/original/pngtree-happy-birthday-banner-design-vector-picture-image_2829303.jpg",
+    image: "/assets/news/news3.png",
     excerpt: "WOA! Tiệm xin phép được \"khoe\" với cả nhà một tin vui cực kỳ \"chấn động\" trong tuần này: Chúng ta đã chính thức vượt mốc 10.000 gói mì Indomie được ship đi thành công!",
     content: [
   {

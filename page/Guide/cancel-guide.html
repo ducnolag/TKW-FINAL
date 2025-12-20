@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hướng dẫn hủy đơn</title>
-
+  <link rel="icon" type="image/x-icon" href="/assets/logo.svg">
   <!-- NOTE: Giữ đúng font + icons như trang guide -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
@@ -14,18 +14,17 @@
 
 </head>
 
-<!-- NOTE: Nếu muốn dark mode: thêm class "dark" vào body -->
-<body class="app">
-  <div data-include="/src/components/header.htm"></div>
+<body >
+      <div data-include="/src/components/header.htm"></div>
   <main class="container">
 
-    <!-- NOTE: Header giống trang hướng dẫn mua hàng -->
+    <!--  Header  -->
     <header class="page-header">
       <h1 class="page-title">Hướng dẫn hủy đơn</h1>
       <div class="page-divider"></div>
     </header>
 
-    <!-- NOTE: Card giống trang hướng dẫn mua hàng -->
+    <!-- Card  -->
     <div class="card">
 
       <section>
@@ -34,7 +33,7 @@
         </p>
       </section>
 
-      <!-- NOTE: Mục 1 -->
+      <!--  Mục 1 -->
       <section class="step">
         <h3 class="step-title">
           <span class="step-badge">01</span>
@@ -67,7 +66,7 @@
         </ul>
       </section>
 
-      <!-- NOTE: Mục 2 -->
+      <!--  Mục 2 -->
       <section class="step">
         <h3 class="step-title">
           <span class="step-badge">02</span>
@@ -83,7 +82,7 @@
         </p>
       </section>
 
-      <!-- NOTE: Mục 3 -->
+      <!--  Mục 3 -->
       <section class="step">
         <h3 class="step-title">
           <span class="step-badge">03</span>
@@ -110,14 +109,15 @@
 
     </div>
 
-    <!-- NOTE: Footer giống trang guide -->
+    <!-- support -->
     <div class="support">
       <p class="text-muted">
-        Cần hỗ trợ thêm? <a class="support-link" href="/page/lienhe/lienhe.html">Liên hệ</a>
+        Cần hỗ trợ thêm? <a class="support-link" href="/page/lienhe/lienhe.html">Liên hệ CSKH</a>
       </p>
     </div>
 
   </main>
+  <div data-include="/src/components/chatbot.html"></div>
   <div data-include="/src/components/footer.html"></div>
   <script type="module" src="/src/js/again.js"></script>
 </body>

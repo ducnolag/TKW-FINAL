@@ -83,9 +83,9 @@ function proBotLogic(v) {
                 window.pushProMsg(card, 'left');
             });
         } else if(isPromo) {
-            window.pushProMsg("🔥 Tiệm đang có các ưu đãi cực hời cho bạn:<br>1. Nhập mã <b>FREESHIP</b> cho đơn từ 200k.<br>2. Nhập mã <b>YUMMY50</b> giảm 50k cho đơn đầu tiên!<br>Chúc bạn ngon miệng nhé! 🎁", 'left');
+            window.pushProMsg("🔥 Tiệm đang có các ưu đãi cực hời cho bạn:<br>1. Nhập mã <b>CHAOBANMOI</b> để giảm 10% cho tổng đơn hàng đăng nhặp lần đầu tiên.<br>2. Nhập mã <b>THITOTNHA</b> để nhận ngay ưu đãi miên phí vận chuyển tối đa 15k", 'left');
         } else if(isCall) {
-            window.pushProMsg("Dạ, Hotline của Tiệm là <b>1900 xxxx</b>. Tụi mình luôn sẵn sàng nghe máy ạ! 🎧", 'left');
+            window.pushProMsg("Dạ, Hotline của Tiệm là <b>0343130254</b>. Tụi mình luôn sẵn sàng nghe máy ạ! 🎧", 'left');
         } else {
             window.pushProMsg("Dạ, yêu cầu của bạn đang được chuyển đến nhân viên tư vấn. Vui lòng đợi trong giây lát ạ! 🎧", 'left');
         }

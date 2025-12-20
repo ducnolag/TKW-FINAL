@@ -150,25 +150,31 @@
     let comments = JSON.parse(localStorage.getItem(`comments_${id}`)) || [];
 
     // Hiển thị bình luận đã lưu
-    function renderComments() {
-      if (comments.length === 0) {
-        commentsList.innerHTML = '<div class="comments-empty">Chưa có bình luận nào. Hãy là người đầu tiên!</div>';
-        return;
-      }
+function renderComments() {
+  if (comments.length === 0) {
+    commentsList.innerHTML = '<div class="text-center text-muted py-4">Chưa có bình luận nào. Hãy là người đầu tiên chia sẻ cảm nghĩ!</div>';
+    return;
+  }
 
-      commentsList.innerHTML = comments
-        .map(
-          (c) =>
-            `<div class="comment-item">
+  commentsList.innerHTML = comments
+    .map((c) => {
+        // Lấy chữ cái đầu của tên để làm avatar
+        const firstLetter = c.name ? c.name.charAt(0).toUpperCase() : '?';
+        
+        return `
+        <div class="comment-item">
+          <div class="comment-avatar">${firstLetter}</div>
+          <div class="comment-content">
             <div class="comment-header">
               <span class="comment-author">${esc(c.name)}</span>
-              <span class="comment-date">${c.date}</span>
+              <span class="comment-date"><i class="far fa-clock me-1"></i>${c.date}</span>
             </div>
             <div class="comment-text">${esc(c.text)}</div>
-          </div>`
-        )
-        .join("");
-    }
+          </div>
+        </div>`;
+    })
+    .join("");
+}
 
     // Render bình luận ban đầu
     renderComments();

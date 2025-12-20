@@ -156,7 +156,7 @@
 }
 
 .shop-now-btn {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #ff6b35 20%, #df2626 100%);
     color: white;
     border: none;
     padding: 12px 30px;
@@ -169,7 +169,7 @@
 
 .shop-now-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 6px 16px rgba(255, 107, 53, 0.4);
 }
 
 /* ===== CART ITEM ===== */
@@ -598,7 +598,7 @@
 }
 
 .toast {
-    background: var(--bg-card);
+    background: #fff;
     padding: 16px;
     border-radius: 8px;
     box-shadow: var(--shadow-md);
@@ -606,27 +606,32 @@
     align-items: center;
     gap: 12px;
     animation: slideIn 0.3s ease;
-    border-left: 4px solid var(--primary);
+    border-left: 4px solid #27ae60;
 }
 
-.toast.success {
-    border-left-color: #27ae60;
-    background: #f0fdf4;
+/* Cập nhật màu sắc icon cho từng loại Toast */
+.toast.success .toast-icon {
+    color: #27ae60;
 }
 
-.toast.error {
-    border-left-color: #e74c3c;
-    background: #fef2f2;
+.toast.error .toast-icon {
+    color: #e74c3c;
 }
 
-.toast.warning {
-    border-left-color: #f39c12;
-    background: #fffbeb;
+.toast.warning .toast-icon {
+    color: #f39c12;
 }
 
-.toast.info {
-    border-left-color: #3498db;
-    background: #eff6ff;
+.toast.info .toast-icon {
+    color: #3498db;
+}
+
+.toast-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @keyframes slideIn {
@@ -654,6 +659,8 @@
         transform: translateX(100%);
     }
 }
+
+
 
 .toast-icon {
     font-size: 20px;

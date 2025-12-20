@@ -7,11 +7,11 @@ window.addEventListener('load', () => {
 
 // DỮ LIỆU GIẢ LẬP (Tên khách + Sản phẩm + Địa chỉ)
 const fakeData = [
-    { name: "Lan Anh", loc: "Hà Nội", product: "Khô Gà Lá Chanh", img: "https://files.freepik.com/site/404.html" },
-    { name: "Minh Tuấn", loc: "Đống Đa", product: "Cơm Cháy Siêu Ruốc", img: "https://files.freepik.com/site/404.html" },
-    { name: "Chị Hạnh", loc: "Ba Đình", product: "Mực Rim Me", img: "https://files.freepik.com/site/404.html" },
-    { name: "Ngọc Mai", loc: "Cầu Giấy", product: "Set Ăn Vặt Văn Phòng", img: "https://files.freepik.com/site/404.html" },
-    { name: "Đức Thắng", loc: "Hoàn Kiếm", product: "Heo Khô Cháy Tỏi", img: "https://files.freepik.com/site/404.html" }
+    { name: "Mạnh Đức", loc: "Đống Đa", product: "Khô Gà Lá Chanh", img: "/assets/co-folder/manhduc.jpg" },
+    { name: "Tất Đạt", loc: "Đống Đa", product: "Cơm Cháy Siêu Ruốc", img: "/assets/co-folder/tatdat.jpg" },
+    { name: "Thu Hoài", loc: "Ba Đình", product: "Mực Rim Me", img: "/assets/co-folder/thuhoai.jpg" },
+    { name: "Việt Hằng", loc: "Cầu Giấy", product: "Set Ăn Vặt Văn Phòng", img: "/assets/co-folder/viethang.jpg" },
+    { name: "Vợ thầy Sinh", loc: "Thanh Xuân", product: "Heo Khô Cháy Tỏi", img: "/assets/reviewfake/vothaysinh.jpg" }
 ];
 
 function initFakeNotification() {
@@ -82,6 +82,6 @@ function startNotificationLoop() {
         showRandom();
         
         // Sau đó cứ mỗi 15 giây hiện 1 lần
-        setInterval(showRandom, 1500);
+        setInterval(showRandom, 15000);
     }, 5000);
 }

@@ -70,6 +70,22 @@
       flex: 1;
     }
 
+
+    /* Sửa lỗi hover cho phần Hướng dẫn */
+.sidebar ul li a {
+  text-decoration: none;
+  color: inherit; /* Lấy màu từ thẻ li cha */
+  display: block; /* Mở rộng vùng bấm ra toàn bộ dòng */
+  width: 100%;
+}
+
+/* Đảm bảo khi hover vào li thì a cũng đổi màu */
+.sidebar li:hover a {
+  color: var(--primary-color);
+}
+
+
+
     .products-header {
       background: var(--bg-primary);
       padding: 20px;

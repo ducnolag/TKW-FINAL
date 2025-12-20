@@ -179,7 +179,112 @@ img {
   color: #fff;
   transform: translateX(5px);
 }
+/* Container bình luận */
+.comments-section {
+    background: #f9f9f9;
+    padding: 30px;
+    border-radius: 15px;
+    margin-top: 40px;
+}
 
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #333;
+    border-bottom: 2px solid #ee4d2d;
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+/* Item bình luận */
+.comment-item {
+    display: flex;
+    gap: 15px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0,05);
+    transition: transform 0.2s;
+}
+
+.comment-item:hover {
+    transform: translateY(-2px);
+}
+
+.comment-avatar {
+    width: 50px;
+    height: 50px;
+    background: #e0e0e0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #666;
+    flex-shrink: 0;
+}
+
+.comment-content {
+    flex-grow: 1;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.comment-author {
+    font-weight: 700;
+    color: #ee4d2d;
+}
+
+.comment-date {
+    font-size: 0.85rem;
+    color: #999;
+}
+
+.comment-text {
+    line-height: 1.6;
+    color: #444;
+}
+
+/* Form nhập liệu */
+.comment-form {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.form-control {
+    border: 1px solid #eee;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.form-control:focus {
+    border-color: #ee4d2d;
+    box-shadow: 0 0 0 0.2rem rgba(238, 77, 45, 0.1);
+}
+
+.btn-submit-comment {
+    background: #ee4d2d;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-submit-comment:hover {
+    background: #d73211;
+    box-shadow: 0 4px 12px rgba(238, 77, 45, 0.3);
+}
 
 /* ==================== MODAL ZOOM ẢNH ==================== */
 .image-modal {

@@ -1,0 +1,201 @@
+:root{
+  --primary: #F97316;
+
+  --bg-light: #FFFFFF;
+  --bg-dark: #111827;
+
+  --surface-light: #FFFFFF;
+  --surface-dark: #1F2937;
+
+  --text-light: #1F2937;
+  --text-dark: #F9FAFB;
+
+  --muted-light: #4B5563;
+  --muted-dark: #9CA3AF;
+
+  --ring-light: #E5E7EB;
+  --ring-dark: #374151;
+
+  --border-light: #F3F4F6;
+  --border-dark: #374151;
+
+  --radius-xl: 16px;
+  --shadow: 0 6px 18px rgba(0,0,0,.06);
+
+  --font: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+/* ===================== Base ===================== */
+*{ box-sizing: border-box; }
+body{
+  margin:0;
+  font-family: var(--font);
+  background: var(--bg-light);
+  color: var(--text-light);
+  transition: background .2s ease, color .2s ease;
+}
+body.dark{
+  background: var(--bg-dark);
+  color: var(--text-dark);
+}
+
+/* ===================== Layout ===================== */
+.container{
+  max-width: 64rem;          /* ~ max-w-4xl */
+  margin: 0 auto;
+  padding: 3rem 1rem;        /* py-12 px-4 */
+}
+@media (min-width: 640px){
+  .container{ padding-left: 1.5rem; padding-right: 1.5rem; } /* sm:px-6 */
+}
+@media (min-width: 1024px){
+  .container{ padding-left: 2rem; padding-right: 2rem; }     /* lg:px-8 */
+}
+
+/* ===================== Header ===================== */
+.page-header{
+  text-align: center;
+  margin-bottom: 3rem;       /* mb-12 */
+}
+.page-title{
+  font-size: 2rem;           /* text-3xl */
+  font-weight: 700;
+  margin: 0 0 1.5rem;        /* mb-6 */
+  color: var(--red-primary)
+}
+body.dark .page-title{ color: #fff; }
+@media (min-width: 640px){
+  .page-title{ font-size: 2.25rem; } /* sm:text-4xl */
+}
+.page-divider{
+  height: .25rem;            /* h-1 */
+  width: 5rem;               /* w-20 */
+  background: var(--primary);
+  margin: 0 auto;
+  border-radius: 999px;
+}
+
+/* ===================== Card ===================== */
+.card{
+  background: var(--surface-light);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;          /* p-6 */
+  box-shadow: var(--shadow);
+  border: 1px solid var(--ring-light); /* ring-1 ring-gray-200 */
+}
+body.dark .card{
+  background: var(--surface-dark);
+  border-color: var(--ring-dark);      /* dark:ring-gray-700 */
+}
+@media (min-width: 640px){
+  .card{ padding: 2.5rem; } /* sm:p-10 */
+}
+
+/* spacing like space-y-8 */
+.card > section + section{ margin-top: 2rem; }
+
+/* ===================== Text ===================== */
+.text-muted{
+  color: var(--muted-light);
+  line-height: 1.7;
+}
+body.dark .text-muted{ color: var(--muted-dark); }
+
+.text-strong{
+  color: #111827;
+  font-weight: 700;
+}
+body.dark .text-strong{ color: #fff; }
+
+.text-link-blue{
+  color: #2563eb; /* gần text-blue-600 */
+  font-weight: 700;
+}
+body.dark .text-link-blue{
+  color: #60a5fa; /* gần text-blue-400 */
+}
+
+.mb-4{ margin-bottom: 1rem; }
+
+/* ===================== Step Sections ===================== */
+/*tương đương border-t border-gray-100 dark:border-gray-700 pt-6 */
+.step{
+  border-top: 1px solid var(--border-light);
+  padding-top: 1.5rem;
+}
+body.dark .step{
+  border-top-color: var(--border-dark);
+}
+
+/* Step title */
+.step-title{
+  display:flex;
+  align-items:center;
+  gap: .5rem;
+  font-size: 1.125rem; /* text-lg */
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0 0 1rem;
+}
+
+/* Lists styles like original */
+.step-list{
+  list-style: none;
+  margin: 0 0 0 1.25rem; /* ml-3-ish */
+  padding: 0 0 0 1.25rem;
+  border-left: 2px solid var(--border-light);
+}
+body.dark .step-list{
+  border-left-color: var(--border-dark);
+}
+.step-list li{
+  margin: 0 0 .75rem;
+}
+.step-list li:last-child{ margin-bottom: 0; }
+
+/* Ordered list */
+.step-ol{
+  margin: 0;
+  padding-left: 1.25rem;
+}
+.step-ol li{ margin: 0 0 .75rem; }
+.step-ol li:last-child{ margin-bottom: 0; }
+
+/* ===================== Final icon list ===================== */
+.final-list{
+  list-style:none;
+  padding: 0;
+  margin: 0;
+}
+.final-item{
+  display:flex;
+  align-items:flex-start;
+  gap: .75rem;
+}
+.final-item + .final-item{ margin-top: 1rem; }
+
+/* icons */
+.material-icons{
+  font-size: 20px;
+  line-height: 1;
+}
+.icon-inline{
+  font-size: 16px;
+  vertical-align: middle;
+  margin: 0 .125rem;
+}
+.icon-success{ color: #22c55e; } /* green-500 */
+.icon-warning{ color: #eab308; } /* yellow-500 */
+
+/* ===================== Support footer ===================== */
+.support{
+  margin-top: 2rem;
+  text-align:center;
+  font-size: .875rem;
+}
+.support-link{
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+.support-link:hover{ text-decoration: underline; }

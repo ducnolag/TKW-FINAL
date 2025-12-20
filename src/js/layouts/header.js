@@ -210,58 +210,77 @@ document.addEventListener("htmlIncluded", function () {
   // ============================================================
   // 7. HIGHLIGHT ACTIVE MENU
   // ============================================================
-  const currentPath = window.location.pathname;
-  const navItems = document.querySelectorAll('.nav-item');
-  
-  // Không highlight menu nếu đang ở trang cart
-  if (!currentPath.includes('/page/cart/')) {
+  function highlightActiveMenu() {
+    const currentPath = window.location.pathname;
+    const navItems = document.querySelectorAll('.nav-item');
+    
+    // Xóa active từ tất cả items
+    navItems.forEach(el => el.classList.remove('active'));
+    
+    // Không highlight menu nếu đang ở trang cart
+    if (currentPath.includes('/page/cart/')) {
+      return;
+    }
+    
     navItems.forEach(item => {
       const link = item.querySelector('.nav-link');
       if (link) {
         const href = link.getAttribute('href');
-        
-        // Kiểm tra các trường hợp khác nhau
         let isActive = false;
         
+        // Chuẩn hóa đường dẫn
+        const normalizedPath = currentPath.toLowerCase();
+        const normalizedHref = href.toLowerCase();
+        
         // Trang chủ
-        if ((currentPath === '/' || currentPath === '/index.htm') && href === '/index.htm') {
+        if ((normalizedPath === '/' || normalizedPath.endsWith('index.htm') || normalizedPath === '') && 
+            (normalizedHref === '/index.htm' || normalizedHref === '/')) {
           isActive = true;
         }
         // Trang sản phẩm (bao gồm cả detail pages)
-        else if ((currentPath.includes('/page/category/') || currentPath.includes('/page/checkout/')) && href === '/page/category/product/product.htm') {
+        else if ((normalizedPath.includes('/page/category/') || normalizedPath.includes('/page/checkout/')) && 
+                 normalizedHref.includes('product')) {
           isActive = true;
         }
         // Trang khuyến mãi
-        else if (currentPath.includes('/page/promotion/') && href === '/page/promotion/promotion.html') {
+        else if (normalizedPath.includes('/page/promotion/') && 
+                 normalizedHref.includes('/page/promotion/')) {
           isActive = true;
         }
         // Trang giới thiệu
-        else if (currentPath.includes('/page/about/') && href === '/page/about/about.html') {
+        else if (normalizedPath.includes('/page/about/') && 
+                 normalizedHref.includes('/page/about/')) {
           isActive = true;
         }
         // Trang tin tức
-        else if (currentPath.includes('/page/news/') && href === '/page/news/news.html') {
+        else if (normalizedPath.includes('/page/news/') && 
+                 normalizedHref.includes('/page/news/')) {
           isActive = true;
         }
         // Trang phương thức mua hàng
-        else if (currentPath.includes('/page/ptmh/') && href === '/page/ptmh/phuongthucmuahang.html') {
+        else if (normalizedPath.includes('/page/ptmh/') && 
+                 normalizedHref.includes('/page/ptmh/')) {
           isActive = true;
         }
         // Trang liên hệ
-        else if (currentPath.includes('/page/lienhe/') && href === '/page/lienhe/lienhe.html') {
+        else if (normalizedPath.includes('/page/lienhe/') && 
+                 normalizedHref.includes('/page/lienhe/')) {
           isActive = true;
         }
         
         if (isActive) {
-          navItems.forEach(el => el.classList.remove('active'));
           item.classList.add('active');
         }
       }
     });
-  } else {
-    // Xóa active từ tất cả menu khi ở trang cart
-    navItems.forEach(el => el.classList.remove('active'));
   }
+  
+  // Chạy khi load trang
+  highlightActiveMenu();
+  
+  // Chạy lại khi có thay đổi URL (dùng cho SPA hoặc khi navigate)
+  window.addEventListener('hashchange', highlightActiveMenu);
+  window.addEventListener('popstate', highlightActiveMenu);
 });
 
 // ============================================================
