@@ -29,11 +29,13 @@ Home Featured Menu Styles
   padding: 50px 20px;
   color: #222;
   box-shadow: var(--shadow-large);
+  width: 380px;
 }
 
 .featured-logo {
-  width: 150px;
+  width: 300px;
   margin-bottom: 15px;
+  margin: 0 auto;
 }
 
 .featured-left h2 {
@@ -142,16 +144,42 @@ Home Featured Menu Styles
   .featured-right {
     grid-template-columns: repeat(2, 1fr);
   }
+  .featured-left {
+    width: 100%;
+    flex-direction: row;
+    gap: 80px
+  }
+  .featured-logo{
+    width: 400px;
+  }
 }
-
+@media (max-width: 880px) {
+  .featured-left {
+    gap: 20px;
+  }
+}
 @media (max-width: 768px) {
   .featured-container {
     grid-template-columns: 1fr;
     padding: 0 8px;
   }
-
+  .featured-left {
+    flex-direction: column;
+    gap: 0px;
+  }
+  .featured-logo{
+    width: 300px;
+  }
   .featured-right {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 390px) {
+  .featured-left h2 {
+    font-size: 32px;
+  }
+  .featured-left p {
+    font-size: 15px;
   }
 }
 
