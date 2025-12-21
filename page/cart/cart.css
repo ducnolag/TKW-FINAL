@@ -196,6 +196,12 @@
     border-radius: 8px;
     overflow: hidden;
     background: var(--bg-page);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.item-image:hover {
+    transform: scale(1.02);
 }
 
 .item-image img {
@@ -232,6 +238,12 @@
     max-height: 3.2em;
     overflow: hidden;
     text-overflow: ellipsis;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.item-name:hover {
+    color: var(--primary-dark, #e85d2a);
 }
 
 .item-price {
@@ -287,7 +299,7 @@
 }
 
 .qty-btn {
-    background: var(--bg-card);
+    background: #fff;
     border: 1px solid var(--border-color);
     width: 32px;
     height: 32px;
@@ -299,13 +311,13 @@
     align-items: center;
     justify-content: center;
     font-weight: 600;
-    color: var(--primary);
+    color: #555;
 }
 
 .qty-btn:hover:not(:disabled) {
-    background: var(--primary);
-    color: white;
-    border-color: var(--primary);
+    background: #f5f5f5;
+    color: #ff6b35;
+    
 }
 
 .qty-btn:disabled {

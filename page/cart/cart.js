@@ -119,12 +119,12 @@ function renderCart() {
 
     cartItems.innerHTML = cart.map((item, index) => `
         <div class="cart-item">
-            <div class="item-image">
+            <div class="item-image" style="cursor: pointer;" onclick="goToProductDetail(${item.id})">
                 <img src="${item.image || 'https://via.placeholder.com/120'}" alt="${item.title}">
             </div>
             <div class="item-details">
                 <div class="item-header">
-                    <div>
+                    <div onclick="goToProductDetail(${item.id})" style="cursor: pointer;">
                         <div class="item-name">${item.title}</div>
                         
                         ${item.selectedOptions && Array.isArray(item.selectedOptions) && item.selectedOptions.length > 0 ? `
@@ -466,6 +466,11 @@ function checkout() {
     }
     
     window.location.href = '/page/checkout/checkout.htm';
+}
+
+// Hàm điều hướng tới trang chi tiết sản phẩm
+function goToProductDetail(productId) {
+    window.location.href = `/page/category/detail/detail.htm?id=${productId}`;
 }
 
 loadCart();
