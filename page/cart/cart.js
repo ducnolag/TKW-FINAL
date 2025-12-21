@@ -337,3 +337,8 @@ function checkout() {
 }
 
 loadCart();
+
+// Lắng nghe sự kiện cập nhật giỏ từ các trang khác (VD: random picker, detail page, etc)
+window.addEventListener('cartUpdated', function() {
+    loadCart();
+});

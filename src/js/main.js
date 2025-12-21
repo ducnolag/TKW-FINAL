@@ -6,3 +6,7 @@ import './layouts/footer.js';
 import './layouts/chatbot.js';
 import '/page/home/js/slide.js';
 import '/page/home/js/bestseller.js';
+import '/page/home/js/feature.js';
+
+
+
