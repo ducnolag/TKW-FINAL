@@ -19,7 +19,7 @@
 .news-header h2 {
   font-size: 42px; /* duoc ghi de o duoi */
   font-weight: 900;
-  color: var(--text-color-dark);
+  color: #3a4249;
   margin-bottom: 15px;
   text-transform: uppercase;
   letter-spacing: 1px;

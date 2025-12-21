@@ -22,7 +22,7 @@ a { text-decoration: none; color: inherit; transition: 0.3s; }
 .breadcrumb .home-icon i { font-size: 14px; color: var(--primary-orange); margin-bottom: 2px; }
 .breadcrumb .separator { font-size: 10px; color: #ccc; display: flex; align-items: center; }
 .breadcrumb .current { color: var(--primary-red); font-weight: 600; max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.page-main-title { font-size: 32px; font-weight: 900; color: #333; margin-bottom: 35px; text-transform: uppercase; line-height: 1.4; position: relative; display: inline-block; letter-spacing: 0.5px; background: linear-gradient(90deg, #333 30%, var(--primary-red) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.page-main-title { font-size: 32px; font-weight: 900; color: #3a4249;; margin-bottom: 35px; text-transform: uppercase; line-height: 1.4; position: relative; display: inline-block; letter-spacing: 0.5px; background: linear-gradient(90deg, #333 30%, var(--primary-red) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .page-main-title::after { content: ""; position: absolute; bottom: -10px; left: 0; width: 80px; height: 5px; background: linear-gradient(90deg, var(--primary-orange), var(--primary-red)); border-radius: 10px; }
 .page-main-title::before { content: ""; position: absolute; bottom: -10px; left: 90px; width: 8px; height: 5px; background-color: #ffd166; border-radius: 10px; }
 .mobile-break { display: none; }

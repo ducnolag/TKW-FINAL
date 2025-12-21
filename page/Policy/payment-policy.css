@@ -58,9 +58,10 @@ body.dark{
 }
 .page-title{
   font-size: 2rem;           /* text-3xl */
-  font-weight: 700;
+  font-weight: 900;
+  color: #3a4249;
+  text-transform: uppercase;
   margin: 0 0 1.5rem;        /* mb-6 */
-  color: var(--red-primary)
 }
 body.dark .page-title{ color: #fff; }
 @media (min-width: 640px){
