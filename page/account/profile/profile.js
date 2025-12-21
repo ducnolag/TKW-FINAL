@@ -76,6 +76,12 @@ function getUserPurchases(username) {
     return allPurchases[username] || [];
 }
 
+// Lấy ghi nhận thanh toán
+function getPaymentTransactions(username) {
+    const transactions = JSON.parse(localStorage.getItem('userPaymentTransactions') || '{}');
+    return transactions[username] || [];
+}
+
 // --- 2. CÁC CHỨC NĂNG CHÍNH ---
 
 // Chuyển Tab
@@ -179,8 +185,10 @@ function renderSidebar(user, activeTab) {
 // Hàm render nội dung chính dựa theo Tab
 function renderMainContent(user, tab) {
     const purchases = getUserPurchases(user.username);
-    const totalOrders = purchases.length;
-    const totalItems = purchases.reduce((sum, p) => sum + (p.quantity || 1), 0);
+    const totalItems = purchases.length;
+    // Đếm số lần thanh toán từ ghi nhận giao dịch
+    const paymentTransactions = getPaymentTransactions(user.username);
+    const totalOrders = paymentTransactions.length;
     const createdDate = user.createdAt ? new Date(user.createdAt) : new Date();
 
     // --- VIEW 1: OVERVIEW (TỔNG QUAN) ---
@@ -201,7 +209,7 @@ function renderMainContent(user, tab) {
                     <div class="stat-icon"><i class="fas fa-shopping-cart"></i></div>
                     <div class="stat-info">
                         <div class="stat-value">${totalOrders}</div>
-                        <div class="stat-label">Đơn hàng đã đặt</div>
+                        <div class="stat-label">Lần thanh toán</div>
                     </div>
                 </div>
 
