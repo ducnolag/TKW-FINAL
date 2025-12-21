@@ -464,3 +464,53 @@ let allData = null;
 });
 
     getData();
+
+
+/* fix nut khi dan */
+// --- BẮT ĐẦU ĐOẠN MÃ CẬP NHẬT ---
+// Tự động kích hoạt menu và giữ trạng thái active sau khi dữ liệu tải xong
+(function() {
+    const params = new URLSearchParams(window.location.search);
+    const targetCat = params.get('category');
+
+    if (targetCat) {
+        // Hàm kích hoạt menu
+        const setActiveMenu = () => {
+            // 1. Xử lý Sidebar (Desktop)
+            const sidebarItems = document.querySelectorAll('#menu li[data-category]');
+            sidebarItems.forEach(item => {
+                if (item.getAttribute('data-category') === targetCat) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+
+            // 2. Xử lý Mobile Nav (Quan trọng)
+            const mobileNavItems = document.querySelectorAll('.nav-item[data-category]');
+            mobileNavItems.forEach(btn => {
+                if (btn.getAttribute('data-category') === targetCat) {
+                    // Ép thêm class active (dùng !important trong JS logic)
+                    btn.classList.add('active');
+                    
+                    // Cuộn tới vị trí nút
+                    btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        };
+
+        // Chạy lần 1: Ngay lập tức để người dùng thấy phản hồi
+        setActiveMenu();
+
+        // Chạy lần 2: Sau khi window tải xong (để ghi đè nếu getData chạy chậm)
+        window.addEventListener('load', () => {
+            setTimeout(setActiveMenu, 300); // Chờ 0.3s sau khi load xong để đảm bảo ghi đè thành công
+        });
+
+        // Chạy lần 3: Dự phòng trường hợp mạng chậm (sau 1.5s)
+        setTimeout(setActiveMenu, 1500);
+    }
+})();
+// --- KẾT THÚC ĐOẠN MÃ CẬP NHẬT ---
