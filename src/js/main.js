@@ -10,3 +10,6 @@ import '/page/home/js/feature.js';
 
 
 
+fetch('/data/product.json')
+    .then(res => res.json())
+    .then(data => localStorage.setItem('products_data', JSON.stringify(data)));

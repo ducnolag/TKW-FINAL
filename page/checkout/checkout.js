@@ -1,8 +1,10 @@
 // --- CONFIG DATA ---
 const validPromoCodes = {
-    'CHAOBANMOI': { type: 'percent', value: 10, desc: 'Giảm 10%' },
-    'FREESHIP': { type: 'shipping', value: 15000, desc: 'Freeship 15k' },
-    'GIAM50K': { type: 'fixed', value: 50000, desc: 'Giảm 50k' }
+    'CHAOBANMOI': { type: 'percent', value: 10, desc: 'Giảm 10% (Lần đầu mua)', minOrder: 0, firstTimeOnly: true },
+    'MUC10': { type: 'fixed', value: 10000, desc: 'Giảm 10k', minOrder: 99000 },
+    'MUC20': { type: 'fixed', value: 20000, desc: 'Giảm 20k', minOrder: 169000 },
+    'MUC30': { type: 'fixed', value: 30000, desc: 'Giảm 30k', minOrder: 249000 },
+    'THITOTNHA': { type: 'shipping', value: 15000, desc: 'Giảm 15k phí vận chuyển' }
 };
 
 let appliedPromoCode = '';
@@ -95,16 +97,38 @@ function removeItem(productId) {
     });
 }
 
-function showToast(msg, type = 'success') {
-    const container = document.getElementById('toast-container');
+function showToast(msg, type = 'success', duration = 3000) {
+    let container = document.getElementById('toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        container.className = 'toast-container';
+        document.body.appendChild(container);
+    }
+
+    const icons = {
+        success: '<i class="fa-solid fa-circle-check"></i>',
+        error: '<i class="fa-solid fa-circle-xmark"></i>',
+        warning: '<i class="fa-solid fa-triangle-exclamation"></i>',
+        info: '<i class="fa-solid fa-circle-info"></i>'
+    };
+
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
-    toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i> <span>${msg}</span>`;
+    toast.innerHTML = `
+        <span class="toast-icon">${icons[type] || icons.info}</span>
+        <span class="toast-text">${msg}</span>
+        <button class="toast-close" onclick="this.parentElement.remove()">✕</button>
+    `;
+
     container.appendChild(toast);
+
     setTimeout(() => {
-        toast.style.opacity = '0';
-        setTimeout(() => toast.remove(), 300);
-    }, 3000);
+        if (toast.parentElement) {
+            toast.classList.add('remove');
+            setTimeout(() => toast.remove(), 300);
+        }
+    }, duration);
 }
 
 function showSuccessModal(totalStr, method) {
@@ -124,18 +148,42 @@ window.selectPaymentNew = function(element, method) {
 
 function applyPromoCode() {
     const input = document.getElementById('checkoutPromoInput');
-    const code = input.value.trim().toUpperCase();
+    const code = input.value.trim();
     
-    if (!code) { showToast('Vui lòng nhập mã!', 'error'); return; }
+    if (!code) { showToast('Vui lòng nhập mã!', 'warning'); return; }
 
-    if (validPromoCodes[code]) {
-        localStorage.setItem('appliedPromoCode', code);
-        showToast('Đã áp dụng mã giảm giá!', 'success');
-        renderCheckout(checkAuth());
-    } else {
+    const promo = validPromoCodes[code];
+    if (!promo) {
         showToast('Mã giảm giá không tồn tại', 'error');
         input.value = '';
+        return;
     }
+    
+    // Kiểm tra điều kiện
+    const cartItems = getCartItems();
+    const subtotal = calculateTotal(cartItems);
+    
+    if (promo.minOrder && subtotal < promo.minOrder) {
+        showToast(`Mã yêu cầu đơn tối thiểu ${formatMoney(promo.minOrder)}`, 'warning');
+        input.value = '';
+        return;
+    }
+    
+    if (promo.firstTimeOnly) {
+        const currentUser = JSON.parse(sessionStorage.getItem('currentUser') || localStorage.getItem('currentUser') || '{}');
+        const userPurchases = JSON.parse(localStorage.getItem('userPurchases') || '{}');
+        
+        if (currentUser.username && userPurchases[currentUser.username] && userPurchases[currentUser.username].length > 0) {
+            showToast('Mã CHAOBANMOI chỉ áp dụng cho lần đầu mua', 'warning');
+            input.value = '';
+            return;
+        }
+    }
+    
+    localStorage.setItem('appliedPromoCode', code);
+    showToast(`Áp dụng mã thành công! ${promo.desc}`, 'success');
+    input.value = '';
+    renderCheckout(checkAuth());
 }
 
 function removePromoCode() {
@@ -236,21 +284,104 @@ function renderCheckout(user) {
     
     let discount = 0;
     let discountText = '';
+    let autoDiscount = 0;
+    let promoInfo = '';
+    
+    // ===== TỰ ĐỘNG GIẢM GIÁ NƯỚC LỌC =====
+    // Giảm 50% nước lọc khi mua "Mỳ Trộn Không Khô" hoặc "Mỳ Cay Không Cay"
+    const hasMiTronKhongKho = cartItems.some(item => 
+        item.title && (item.title.includes('Mì trộn') || item.title.includes('Mỳ Trộn'))
+    );
+    const hasMiCayKhongCay = cartItems.some(item => 
+        item.title && (item.title.includes('Mì cay') || item.title.includes('Mỳ Cay'))
+    );
+    const waterItem = cartItems.find(item => item.id === 125);
+    
+    if ((hasMiTronKhongKho || hasMiCayKhongCay) && waterItem) {
+        autoDiscount += (waterItem.price * 0.5);
+        promoInfo += 'Mỳ Trộn Không Khô - Mỳ Cay Không Cay\n';
+    }
+    
+    // ===== CHƯƠNG TRÌNH THEO GIỜ =====
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const currentTime = hours * 60 + minutes;
+    
+    // Chương trình "xế chiều nạp mood": 13:30 - 17:30, giảm 5% đồ uống
+    const xeChieuStart = 13 * 60 + 30;  // 13:30
+    const xeChieuEnd = 17 * 60 + 30;    // 17:30
+    let xeChieuDiscount = 0;
+    
+    if (currentTime >= xeChieuStart && currentTime <= xeChieuEnd) {
+        const drinkItems = cartItems.filter(item => item.id >= 120 && item.id <= 139);
+        if (drinkItems.length > 0) {
+            drinkItems.forEach(item => {
+                xeChieuDiscount += (item.price * item.quantity * 0.05);
+            });
+            promoInfo += '🌆 Xế chiều nạp mood (đồ uống -5%)\n';
+        }
+    }
+    autoDiscount += xeChieuDiscount;
+    
+    // Chương trình "cú đêm Việt mộ": 22:30 - 02:30, giảm 5% ăn vặt
+    const cuDemStart = 22 * 60 + 30;   // 22:30
+    const cuDemEnd = 2 * 60 + 30;      // 02:30 (ngày hôm sau)
+    let cuDemDiscount = 0;
+    
+    const isCuDem = currentTime >= cuDemStart || currentTime <= cuDemEnd;
+    
+    if (isCuDem) {
+        const snackItems = cartItems.filter(item => item.id >= 42 && item.id <= 61);
+        if (snackItems.length > 0) {
+            snackItems.forEach(item => {
+                cuDemDiscount += (item.price * item.quantity * 0.05);
+            });
+            promoInfo += '🌙 Cú đêm Việt mộ (ăn vặt -5%)\n';
+        }
+    }
+    autoDiscount += cuDemDiscount;
+    
+    // ===== KIỂM TRA ĐIỀU KIỆN MÃ GIẢM GIÁ =====
     const promo = validPromoCodes[appliedPromoCode];
     if (promo) {
-        if (promo.type === 'percent') {
-            discount = subtotal * (promo.value / 100);
-            discountText = `-${promo.value}%`;
-        } else if (promo.type === 'fixed') {
-            discount = promo.value;
-            discountText = `-${formatMoney(promo.value)}`;
-        } else if (promo.type === 'shipping') {
-            discount = Math.min(promo.value, shipping);
-            discountText = 'FreeShip';
+        let canApply = true;
+        
+        // Kiểm tra đơn hàng tối thiểu
+        if (promo.minOrder && subtotal < promo.minOrder) {
+            canApply = false;
+            localStorage.removeItem('appliedPromoCode');
+            appliedPromoCode = '';
+            showToast(`Mã yêu cầu đơn tối thiểu ${formatMoney(promo.minOrder)}`, 'error');
+        }
+        
+        // Kiểm tra lần đầu mua
+        if (promo.firstTimeOnly && canApply) {
+            const userPurchases = JSON.parse(localStorage.getItem('userPurchases') || '{}');
+            
+            if (user && userPurchases[user.username] && userPurchases[user.username].length > 0) {
+                canApply = false;
+                localStorage.removeItem('appliedPromoCode');
+                appliedPromoCode = '';
+                showToast('Mã CHAOBANMOI chỉ áp dụng cho lần đầu mua', 'error');
+            }
+        }
+        
+        if (canApply) {
+            if (promo.type === 'percent') {
+                discount = subtotal * (promo.value / 100);
+                discountText = `-${promo.value}%`;
+            } else if (promo.type === 'fixed') {
+                discount = promo.value;
+                discountText = `-${formatMoney(promo.value)}`;
+            } else if (promo.type === 'shipping') {
+                discount = Math.min(promo.value, shipping);
+                discountText = 'FreeShip';
+            }
         }
     }
     
-    const total = subtotal + shipping - discount;
+    const total = subtotal + shipping - discount - autoDiscount;
 
 // ... (Các phần trên giữ nguyên)
 
@@ -404,9 +535,16 @@ function renderCheckout(user) {
 
                         <div class="promo-section">
                             <div class="promo-group">
-                                <input type="text" id="checkoutPromoInput" placeholder="Mã giảm giá">
+                                <input type="text" id="checkoutPromoInput" placeholder="Mã giảm giá" oninput="this.value = this.value.toUpperCase()">
                                 <button type="button" onclick="applyPromoCode()">Áp dụng</button>
                             </div>
+                            
+                            ${promoInfo ? `
+                                <div style="background: #fef3c7; border: 1px solid #fcd34d; border-radius: 8px; padding: 10px; margin-top: 10px; font-size: 12px; color: #92400e; line-height: 1.6;">
+                                    <div style="font-weight: 600; margin-bottom: 5px; color: #d97706;">✨ Chương trình khuyến mãi</div>
+                                    ${promoInfo.trim().split('\n').map(line => `<div>${line}</div>`).join('')}
+                                </div>
+                            ` : ''}
                             
                             ${appliedPromoCode ? `
                                 <div class="applied-badge">
@@ -424,10 +562,10 @@ function renderCheckout(user) {
                             <span>Phí vận chuyển</span>
                             <span>${formatMoney(shipping)}</span>
                         </div>
-                        ${discount > 0 ? `
+                        ${discount > 0 || autoDiscount > 0 ? `
                         <div class="summary-line" style="color:#059669; font-weight:500;">
                             <span>Giảm giá</span>
-                            <span>${discountText} -${formatMoney(discount)}</span>
+                            <span>-${formatMoney(discount + autoDiscount)}</span>
                         </div>` : ''}
                         
                         <div class="summary-line total">
