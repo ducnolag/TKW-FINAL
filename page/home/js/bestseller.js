@@ -7,20 +7,24 @@ document.addEventListener('htmlIncluded', function () {
   fetch('/data/product.json')
     .then(res => res.json())
     .then(data => {
-      // Lấy tất cả sản phẩm từ các category
-      const products = [
+      // Lấy tất cả sản phẩm từ các category gộp vào 1 mảng
+      let allProducts = [
         ...(data.micay || []),
         ...(data.mitron || []),
-        ...(data.anvat || []),
-        ...(data.ankem || []),
-        ...(data.douong || [])
-      ].slice(0, 8); // Lấy 8 sản phẩm đầu tiên làm bestseller
+      ];
+
+      // --- SỬA ĐỔI: TRỘN NGẪU NHIÊN VÀ LẤY 8 SẢN PHẨM ---
+      // Thuật toán trộn ngẫu nhiên (Fisher-Yates shuffle) đơn giản hóa
+      const products = allProducts
+                        .sort(() => 0.5 - Math.random()) // Trộn ngẫu nhiên
+                        .slice(0, 8);                   // Lấy 8 cái
+      // --------------------------------------------------
 
       // Chọn wrapper của slider
       const wrapper = document.querySelector('.swiper_product_sale .swiper-wrapper');
       if (!wrapper) return;
 
-      // 2. Render sản phẩm vào slider (giống .bs-card structure)
+      // 2. Render sản phẩm vào slider
       wrapper.innerHTML = products.map(item => `
         <div class="swiper-slide bs-card">
           <div class="bs-img-wrapper">
