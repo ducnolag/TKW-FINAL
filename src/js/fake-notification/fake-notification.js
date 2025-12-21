@@ -7,10 +7,10 @@ window.addEventListener('load', () => {
 
 // DỮ LIỆU GIẢ LẬP (Tên khách + Sản phẩm + Địa chỉ)
 const fakeData = [
-    { name: "Mạnh Đức", loc: "Đống Đa", product: "Khô Gà Lá Chanh", img: "/assets/co-folder/manhduc.jpg" },
-    { name: "Tất Đạt", loc: "Đống Đa", product: "Cơm Cháy Siêu Ruốc", img: "/assets/co-folder/tatdat.jpg" },
-    { name: "Thu Hoài", loc: "Ba Đình", product: "Mực Rim Me", img: "/assets/co-folder/thuhoai.jpg" },
-    { name: "Việt Hằng", loc: "Cầu Giấy", product: "Set Ăn Vặt Văn Phòng", img: "/assets/co-folder/viethang.jpg" },
+    { name: "Mạnh Đức", loc: "Đống Đa", product: "Trà quất lắc sữa", img: "/assets/co-folder/manhduc.jpg" },
+    { name: "Tất Đạt", loc: "Đống Đa", product: "Mì cay hải sản", img: "/assets/co-folder/tatdat.jpg" },
+    { name: "Thu Hoài", loc: "Ba Đình", product: "Cá viên chiên kiểu sài gòn ", img: "/assets/co-folder/thuhoai.jpg" },
+    { name: "Việt Hằng", loc: "Cầu Giấy", product: "Mì trộn ngon nhất thế giới", img: "/assets/co-folder/viethang.jpg" },
     { name: "Vợ thầy Sinh", loc: "Thanh Xuân", product: "Heo Khô Cháy Tỏi", img: "/assets/reviewfake/vothaysinh.jpg" }
 ];
 
