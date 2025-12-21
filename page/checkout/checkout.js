@@ -256,6 +256,18 @@ function recordUserPurchases(cartItems) {
              }
         });
         localStorage.setItem('userPurchases', JSON.stringify(purchases));
+        
+        // Ghi nhận lần thanh toán riêng biệt
+        const paymentHistory = JSON.parse(localStorage.getItem('userPaymentTransactions') || '{}');
+        if (!paymentHistory[user.username]) paymentHistory[user.username] = [];
+        paymentHistory[user.username].push({
+            transactionId: Date.now(),
+            paymentDate: new Date().toLocaleDateString('vi-VN'),
+            paymentTime: new Date().toLocaleTimeString('vi-VN'),
+            itemCount: cartItems.length,
+            timestamp: new Date().getTime()
+        });
+        localStorage.setItem('userPaymentTransactions', JSON.stringify(paymentHistory));
     } catch (e) {}
 }
 
@@ -391,7 +403,7 @@ function renderCheckout(user) {
                 <a href="/index.htm" class="brand">
                     <img src="/assets/logo.svg" alt="Logo" style="height: 40px;">
                 </a>
-                <a href="/index.htm" class="back-link">
+                <a href="/page/category/product/product.htm" class="back-link">
                     <i class="fas fa-arrow-left"></i> 
                     <span>Tiếp tục mua hàng</span>
                 </a>

@@ -415,13 +415,13 @@ const SuggestBox = {
                 </div>
                 <div class="sg-body">
                     ${suggestDataList.map(item => `
-                        <div class="sg-item">
+                        <div class="sg-item" onclick="window.location.href='/page/category/detail/detail.htm?id=${item.id}'" style="cursor: pointer;">
                             <img src="${item.image}" class="sg-img" alt="${item.title}">
                             <div class="sg-info">
                                 <div class="sg-name">${item.title}</div>
                                 <div class="sg-price">${typeof formatPrice === 'function' ? formatPrice(item.price) : item.price.toLocaleString() + 'đ'}</div>
                             </div>
-                            <button class="sg-add-btn" onclick="SuggestBox.addItem(${item.id})" title="Thêm vào giỏ">
+                            <button class="sg-add-btn" onclick="event.stopPropagation(); SuggestBox.addItem(${item.id})" title="Thêm vào giỏ">
                                 <i class="fa-solid fa-plus"></i>
                             </button>
                         </div>

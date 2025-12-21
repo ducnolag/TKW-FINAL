@@ -814,7 +814,7 @@ function addToCartAction() {
 }
 
 function triggerMainBuy() {
-    if (!checkUserLogin()) return;
+    // ========== THÊM VÀO GIỎ HÀNG NGAY (KHÔNG CẦN KIỂM TRA ĐĂNG NHẬP) ==========
     const quantity = parseInt(document.querySelector('.qty-input')?.value || 1);
     if (!currentProduct) {
         showToast('Lỗi: Không tìm thấy sản phẩm', 'error');
@@ -854,6 +854,9 @@ function triggerMainBuy() {
         buys++;
         localStorage.setItem(`product_buys_${productId}`, buys);
     }
+    
+    showToast(`Đã thêm ${quantity} sản phẩm vào giỏ hàng!`, 'success');
+    
     window.location.href = '/page/checkout/checkout.htm';
 }
 
