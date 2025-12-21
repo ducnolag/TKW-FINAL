@@ -352,14 +352,33 @@ async function loadSuggestProducts() {
         // Lấy sản phẩm từ danh mục ăn kèm (ankem) và đồ uống (douong)
         const sideProducts = [...(data.ankem || []), ...(data.douong || [])];
         
-        // Lấy 3-5 sản phẩm ngẫu nhiên
-        const shuffled = sideProducts.sort(() => Math.random() - 0.5);
-        suggestDataList = shuffled.slice(0, 5).map(product => ({
-            id: product.id,
-            title: product.title,
-            price: product.price_current,
-            image: product.image
-        }));
+        // Tìm nước lọc (id=125)
+        const waterProduct = sideProducts.find(p => p.id === 125);
+        
+        // Loại bỏ nước lọc từ danh sách rồi lấy 4 sản phẩm ngẫu nhiên
+        const otherProducts = sideProducts.filter(p => p.id !== 125);
+        const shuffled = otherProducts.sort(() => Math.random() - 0.5);
+        
+        // Tạo mảng gợi ý: nước lọc luôn ở vị trí đầu tiên + 4 sản phẩm ngẫu nhiên
+        suggestDataList = [];
+        if (waterProduct) {
+            suggestDataList.push({
+                id: waterProduct.id,
+                title: waterProduct.title,
+                price: waterProduct.price_current,
+                image: waterProduct.image
+            });
+        }
+        
+        // Thêm 4 sản phẩm ngẫu nhiên khác
+        suggestDataList = suggestDataList.concat(
+            shuffled.slice(0, 4).map(product => ({
+                id: product.id,
+                title: product.title,
+                price: product.price_current,
+                image: product.image
+            }))
+        );
         
         console.log(`✅ Đã load ${suggestDataList.length} sản phẩm gợi ý`);
         
