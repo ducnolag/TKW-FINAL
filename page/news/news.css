@@ -39,7 +39,10 @@ img {
   max-width: 100%;
   display: block;
 }
-
+.page-title {
+  font-size: 42px;
+  font-weight: 900;
+}
 /* ==================== CARD BÀI VIẾT ==================== */
 .news-card {
   background: #fff;
@@ -664,10 +667,11 @@ img {
 }
 
 /* ==================== RESPONSIVE ==================== */
-@media (max-width: 991.98px) {
+@media (max-width: 941px) {
   .page-title {
-    font-size: 26px;
+    font-size: 28px;
     text-align: center;
+
   }
 
   .news-thumbnail {
