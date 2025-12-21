@@ -2,9 +2,9 @@
     // 1. Cấu hình
     const imgUrl = "/../assets/popup.png"; 
     const targetLink = "/../page/promotion/promotion.html"; 
-    const displayDuration = 5000; // Đóng sau 5 giây (0 để tắt tự động đóng)
+    const displayDuration = 5000; 
 
-    // 2. Chèn CSS
+    // 2. Chèn CSS (Giữ nguyên)
     const css = `
         #js-popup-overlay {
             position: fixed;
@@ -31,10 +31,8 @@
         }
         .js-popup-close {
             position: absolute;
-            top: -15px;
-            right: -15px;
-            width: 35px;
-            height: 35px;
+            top: -15px; right: -15px;
+            width: 35px; height: 35px;
             color: #fff;
             border-radius: 50%;
             display: flex;
@@ -73,27 +71,48 @@
         const overlay = document.getElementById('js-popup-overlay');
         const closeBtn = overlay.querySelector('.js-popup-close');
 
-        // Kích hoạt hiệu ứng xuất hiện (sau khi render vào DOM)
+        // Hiệu ứng xuất hiện
         setTimeout(() => overlay.classList.add('active'), 10);
 
         const closePopup = () => {
             overlay.classList.remove('active');
-            setTimeout(() => overlay.remove(), 400); // Đợi hiệu ứng ẩn xong mới xóa DOM
+            setTimeout(() => overlay.remove(), 400);
         };
 
         closeBtn.onclick = closePopup;
         overlay.onclick = (e) => { if (e.target === overlay) closePopup(); };
 
-        // Tự động đóng sau X giây
         if (displayDuration > 0) {
             setTimeout(closePopup, displayDuration);
         }
     }
 
-    // 4. Kích hoạt khi trang đã sẵn sàng
+    // 4. Logic kiểm tra điều kiện (Chỉ Home + Reload)
+    function checkAndRun() {
+        // A. Kiểm tra trang chủ (index hoặc root /)
+        const path = window.location.pathname;
+        // Logic: Chấp nhận đường dẫn là "/" HOẶC đường dẫn có chứa chữ "index" (ví dụ index.html, index.php)
+        const isHomePage = path === "/" || path.indexOf("index") !== -1;
+        
+        if (!isHomePage) return;
+
+        // B. Kiểm tra có phải là Reload trang (F5) không
+        const navEntries = performance.getEntriesByType("navigation");
+        let isReload = false;
+        if (navEntries.length > 0 && navEntries[0].type === 'reload') {
+            isReload = true;
+        }
+        
+        // Chỉ chạy nếu là reload
+        if (isReload) {
+            showImagePopup();
+        }
+    }
+
+    // 5. Kích hoạt
     if (document.readyState === 'complete') {
-        showImagePopup();
+        checkAndRun();
     } else {
-        window.addEventListener('load', showImagePopup);
+        window.addEventListener('load', checkAndRun);
     }
 })();
