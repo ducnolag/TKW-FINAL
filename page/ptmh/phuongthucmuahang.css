@@ -135,6 +135,7 @@ h1{
 /* --- KHỐI TỪNG GIAN HÀNG --- */
 .store {
     margin-bottom: 40px;
+    transition:.3s;
 }
 
 .store:last-child {
@@ -145,17 +146,19 @@ h1{
 .store h3 {
     display: flex;
     align-items: center;
-    color: #ea5836; /* Màu cam */
+    color: #ff6b35;
     font-size: 18px; /* Tăng nhẹ kích thước font */
     font-weight: 700;
     text-transform: uppercase;
     margin: 0 0 10px 0;
     /* Đường gạch đứng màu cam */
-    border-left: 4px solid #ea5836;
+    border-left: 4px solid #ff6b35;
     padding-left: 12px;
     line-height: 1.2;
 }
-
+.store:hover{
+    transform:translateX(8px);
+}
 /* Icon SVG */
 .store h3 .icon {
     width: 22px;
@@ -184,43 +187,44 @@ h1{
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: #333;
+    color: #111;
     font-size: 14px;
     font-weight: 500;
-    border: 1px solid #e0e0e0;
+    border:1px solid #e5e7eb;
     border-radius: 50px; /* Bo tròn */
     padding: 8px 20px;
-    transition: all 0.2s ease;
+    transition: .35s;
     background: #fff;
-    /* Thêm bóng nhẹ cho nút để nổi bật */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
 .brand-btn img {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     margin-right: 10px;
     object-fit: contain;
 }
 
-.brand-btn:hover {
-    border-color: #ea5836;
-    color: #ea5836;
-    background-color: #fff5f2;
-    box-shadow: 0 4px 8px rgba(234, 88, 54, 0.15);
+.brand-btn:hover{
+    transform:translateY(-5px) scale(1.05);
+    box-shadow:0 5px 10px rgba(255, 107, 53, .3);
 }
 
 /* --- CỘT PHẢI: ẢNH MINH HỌA --- */
 .store-image {
     /* Điều chỉnh tỷ lệ chiều rộng của ảnh */
-    width: 45%; /* Ví dụ: Ảnh chiếm 45%, nội dung chiếm 55% */
-    /* height: 450px;  Bạn có thể đặt chiều cao cố định nếu muốn */
+    width: 45%; /* Ảnh chiếm 45%, nội dung chiếm 55% */
+    /* height: 450px */
     object-fit: cover; /* Cắt ảnh vừa khung */
-    border-radius: 16px; /* Bo tròn góc ảnh */
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); /* Đổ bóng cho ảnh đẹp hơn */
+    border-radius: 22px; /* Bo tròn góc ảnh */
+    box-shadow:0 15px 25px rgba(0,0,0,.25); /* Đổ bóng cho ảnh đẹp hơn */
     display: block;
+    transition:.6s;
 }
-
+/* hiệu ứng hover zoom + ánh sáng */
+.store-image:hover{
+    transform:scale(1.06);
+    filter:brightness(1.05);
+}
 /* ================= RESPONSIVE (MOBILE/TABLET) ================= */
 @media (max-width: 992px) { /* Đặt điểm gãy ở tablet dọc */
     .store-wrapper {
@@ -257,16 +261,4 @@ h1{
     margin-bottom:10px;
     color:var(--primary-dark);
     line-height:1.5;
-}
-
-/* ================= RESPONSIVE MOBILE ================= */
-@media(max-width:900px){
-    .store-wrapper{
-        grid-template-columns:1fr;
-    }
-}
-
-@media(max-width:600px){
-    h1{font-size:28px;}
-    .section{padding:22px;}
 }
