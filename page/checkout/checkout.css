@@ -359,15 +359,121 @@ input::placeholder { color: var(--text-placeholder); }
 }
 
 /* --- TOAST & MODAL --- */
-#toast-container { position: fixed; top: 20px; right: 20px; z-index: 100; }
-.toast {
-    background: white; padding: 14px 20px; border-radius: 8px;
-    box-shadow: var(--shadow-lg); border-left: 4px solid;
-    display: flex; align-items: center; gap: 12px; margin-bottom: 12px;
-    animation: slideIn 0.3s; font-size: 14px; font-weight: 500;
+#checkoutPromoInput {
+    font-weight: 700 !important;
 }
-.toast.success { border-color: #10b981; } .toast.success i { color: #10b981; }
-.toast.error { border-color: #ef4444; } .toast.error i { color: #ef4444; }
+
+#toast-container { 
+    position: fixed; 
+    top: 20px; 
+    right: 20px; 
+    z-index: 9999; 
+    display: flex; 
+    flex-direction: column;
+    gap: 12px;
+    max-width: 400px;
+}
+
+.toast {
+    background: #fff;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: slideIn 0.3s ease;
+    border-left: 4px solid #27ae60;
+    margin-bottom: 0;
+}
+
+.toast.success { 
+    border-left-color: #27ae60; 
+}
+
+.toast.success .toast-icon { 
+    color: #27ae60; 
+}
+
+.toast.error { 
+    border-left-color: #e74c3c; 
+}
+
+.toast.error .toast-icon { 
+    color: #e74c3c; 
+}
+
+.toast.warning {
+    border-left-color: #f39c12;
+}
+
+.toast.warning .toast-icon {
+    color: #f39c12;
+}
+
+.toast.info {
+    border-left-color: #3498db;
+}
+
+.toast.info .toast-icon {
+    color: #3498db;
+}
+
+.toast-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.toast.remove {
+    animation: slideOut 0.3s ease;
+}
+
+@keyframes slideOut {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+.toast-text {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.toast-close {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: #9ca3af;
+    padding: 0;
+    transition: all 0.2s ease;
+}
+
+.toast-close:hover {
+    color: #1f2937;
+    transform: scale(1.2);
+}
 
 .modal-overlay {
     position: fixed; inset: 0; background: rgba(0,0,0,0.5);
