@@ -17,7 +17,7 @@
 }
 
 .news-header h2 {
-  font-size: 42px;
+  font-size: 42px; /* duoc ghi de o duoi */
   font-weight: 900;
   color: var(--text-color-dark);
   margin-bottom: 15px;
@@ -271,6 +271,16 @@
     margin-top: 6px;
   }
 }
+
+/* ghi de them */
 .bestseller-header h2, .news-header  h2 {
   font-size: 32px;
+}
+@media (max-width: 580px) {
+  .bestseller-header h2, .news-header  h2 {
+    font-size: 20px;
+  }
+  .news-subtitle, .bs-subtitle {
+    font-size: 14px;
+  }
 }

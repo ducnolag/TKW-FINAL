@@ -239,7 +239,7 @@ Home Featured Menu Styles
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 580px) {
   .featured-banner {
     height: 430px;
     padding: 0 10px;
