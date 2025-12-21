@@ -436,12 +436,18 @@ body {
 /* =========================================
    8. RESPONSIVE (MOBILE)
    ========================================= */
+@media screen and (max-width: 1080px) {
+    .stats-grid { grid-template-columns: repeat(1fr); }
+}
 @media screen and (max-width: 900px) {
-    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .stats-grid { grid-template-columns: repeat(1fr); }
     .info-row-compact { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media screen and (max-width: 768px) {
+    .main-content{
+        width: 100%;
+    }
     .layout-wrapper {
         display: flex;
         flex-direction: column;
