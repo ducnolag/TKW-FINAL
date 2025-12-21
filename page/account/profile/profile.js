@@ -209,7 +209,7 @@ function renderMainContent(user, tab) {
                     <div class="stat-icon"><i class="fas fa-shopping-cart"></i></div>
                     <div class="stat-info">
                         <div class="stat-value">${totalOrders}</div>
-                        <div class="stat-label">Lần thanh toán</div>
+                        <div class="stat-label">Đơn hàng đã đặt</div>
                     </div>
                 </div>
 
