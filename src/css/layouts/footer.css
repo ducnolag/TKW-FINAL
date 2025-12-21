@@ -61,7 +61,7 @@ html, body {
   justify-content: center;
   border-radius: 14px;
   padding: 12px;
-  width: 170px;
+  width: 300px;
   max-width: 100%;
 }
 .footer_logo img{
@@ -188,6 +188,7 @@ html, body {
 }   
 /* ===== responsive ===== */
 @media (max-width: 992px){
+  .footer_logo{ width: 250px; padding-top:0px ; padding-bottom: 5px; }
   .footer_grid{
     grid-template-columns: 1fr 1fr;
     gap: 18px;
@@ -255,6 +256,4 @@ html, body {
   .hd2{
     order: 1;
   }
-  /* thu gọn logo & spacing trên mobile */
-  .footer_logo{ width: 190px; }
 }
