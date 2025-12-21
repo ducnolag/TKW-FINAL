@@ -196,7 +196,10 @@
             box-shadow: 0 6px 16px rgba(255, 107, 53, 0.4);
         }
 
-        @media (max-width: 900px) { .promo-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 900px) { .promo-grid { grid-template-columns: 1fr ;  margin-left: 200px; margin-right: 200px; } }
+        @media (max-width: 815px) { .promo-grid { grid-template-columns: 1fr ;  margin-left: 170px; margin-right: 170px; } }
+        @media (max-width: 730px) { .promo-grid { grid-template-columns: 1fr ;  margin-left: 150px; margin-right: 150px; } }
+        @media (max-width: 635px) { .promo-grid { grid-template-columns: 1fr  ; margin-left: 10px; margin-right: 10px;} }
 
         /* --- BỔ SUNG: ẢNH TRONG MODAL & LIGHTBOX --- */
         /* 1. Ảnh nằm trong Modal */
@@ -215,14 +218,13 @@
     </style>
 </head>
 <body>
-
     <div class="page-header">
         <h1 class="page-title">Săn Deal Hời - Ăn Thả Ga</h1>
         <p class="page-desc">Tổng hợp tất cả chương trình khuyến mãi và mã giảm giá đang hoạt động.</p>
     </div>
 
+    <!-- --- Chương Trình Tự Động --- -->
     <h2 class="section-title"><i class="fas fa-bolt"></i> Chương Trình Tự Động</h2>
-    
     <div class="promo-grid" id="program-container">
         
         <div class="common-card type-program active" 
@@ -241,13 +243,13 @@
                 <div class="cc-time"><i class="fas fa-clock"></i> Luôn hoạt động</div>
 
                 <div class="card-footer">
-                    <a href="menu.html#mycay" class="btn-action no-modal">MUA MỲ CAY</a>
-                    <a href="menu.html#mytron" class="btn-action no-modal">MUA MỲ TRỘN</a>
+                    <a href="/page/category/product/product.htm?category=micay" class="btn-action no-modal">MUA MỲ CAY</a>
+                    <a href="/page/category/product/product.htm?category=mitron"class="btn-action no-modal">MUA MỲ TRỘN</a>
                 </div>
             </div>
         </div>
 
-        <div class="common-card type-program wait" id="card-afternoon"
+        <div class="common-card type-program" id="card-afternoon"
             data-title="Xế Chiều Nạp MOOD"
             data-detail="Nạp năng lượng tỉnh táo cho buổi chiều."
             data-terms="- Khung giờ: 13:30 - 17:30.<br>- Giảm 5% toàn bộ menu Đồ uống.">
@@ -263,12 +265,12 @@
                 <div class="cc-time"><i class="fas fa-clock"></i> 13:30 - 17:30</div>
 
                 <div class="card-footer">
-                    <a href="menu.html#douong" class="btn-action no-modal">XEM MENU ĐỒ UỐNG</a>
+                    <a href="/page/category/product/product.htm?category=douong" class="btn-action no-modal">XEM MENU ĐỒ UỐNG</a>
                 </div>
             </div>
         </div>
 
-        <div class="common-card type-program wait" id="card-night"
+        <div class="common-card type-program" id="card-night"
             data-title="Cú Đêm Diệt Mồi"
             data-detail="Đói bụng đêm khuya đã có menu ăn vặt trợ giá."
             data-terms="- Khung giờ: 22:30 - 02:30 sáng.<br>- Giảm 5% các món Ăn vặt.">
@@ -284,15 +286,14 @@
                 <div class="cc-time"><i class="fas fa-clock"></i> 22:30 - 02:30 Sáng</div>
 
                 <div class="card-footer">
-                    <a href="menu.html#anvat" class="btn-action no-modal">XEM MENU ĂN VẶT</a>
+                    <a href="/page/category/product/product.htm?category=anvat" class="btn-action no-modal">XEM MENU ĂN VẶT</a>
                 </div>
             </div>
         </div>
     </div>
 
-
+    <!-- --- Kho Mã Giảm Giá --- -->
     <h2 class="section-title"><i class="fas fa-ticket-alt"></i> Kho Mã Giảm Giá</h2>
-
     <div class="promo-grid" id="voucher-container">
         <div class="common-card type-voucher"
             data-title="Voucher: Chào Bạn Mới"
@@ -360,6 +361,7 @@
     </div>
 </div>
 
+<!-- --- popup chi tiet --- -->
 <div class="modal-overlay" id="detailModal">
     <div class="modal-box">
         <div class="modal-header">
@@ -381,19 +383,18 @@
                 <p id="modalTermsContent" style="white-space: pre-line;">...</p>
             </div>
         </div>
-        <div class="modal-footer">
-            <button class="btn-close-modal" onclick="closeModal()">Đóng</button>
-        </div>
     </div>
 </div>
 
+<!-- --- Noi de xuat hien anh --- -->
 <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
     <img src="" alt="Zoom Image" class="lightbox-img" id="lightboxImg">
 </div>
 
-<script src="../js/promotion/checktime.js"></script>
-<script src="../js/promotion/modal-lightbox.js"></script>
-<script src="../js/promotion/toast.js"></script>
+
+<script src="/page/promotion/js-promotion/checktime.js"></script>
+<script src="/page/promotion/js-promotion/modal-lightbox.js"></script>
+<script src="/page/promotion/js-promotion/toast.js"></script>
 <!-- Swiper JS (Best Seller) -->
 <script src="../JS/widget-loader/widget-loader.js"></script>
 <script>
