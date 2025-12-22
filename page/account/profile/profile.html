@@ -11,46 +11,45 @@
     <link rel="stylesheet" href="profile.css">
 </head>
 <body>
-    <div id="app">
-        <div class="loading-screen">
-            <div class="spinner"></div>
-            <p>Đang tải dữ liệu...</p>
-        </div>
-    </div>
+ <!-- Vùng app: ban đầu chỉ hiển thị "loading", JS sẽ thay thế toàn bộ nội dung sau -->
+  <div id="app">Loading...</div>
 
-    <!-- Modal for Messages -->
-    <div class="modal-profile" id="messageModal">
-        <div class="modal-content-profile">
-            <div class="modal-header-profile">
-                <h2 id="modalTitle">Thông báo</h2>
-                <button class="close-btn-profile" onclick="closeMessageModal()">&times;</button>
-            </div>
-            <div class="modal-body-profile">
-                <p id="modalMessage"></p>
-            </div>
-            <div class="modal-actions-profile">
-                <button class="modal-btn-profile modal-btn-primary-profile" onclick="closeMessageModal()">Đóng</button>
-            </div>
-        </div>
-    </div>
+  <!-- ===== Modal THÔNG BÁO (message) ===== -->
+  <div id="messageModal" class="modal-profile">
+    <!-- overlay + hộp modal -->
+    <div class="modal-content">
+      <!-- Tiêu đề modal (JS sẽ set text vào đây) -->
+      <h3 id="messageTitle">Thông báo</h3>
 
-    <!-- Modal for Confirmation -->
-    <div class="modal-profile" id="confirmModal">
-        <div class="modal-content-profile">
-            <div class="modal-header-profile">
-                <h2 id="confirmTitle">Xác nhận</h2>
-                <button class="close-btn-profile" onclick="closeConfirmModal()">&times;</button>
-            </div>
-            <div class="modal-body-profile">
-                <p id="confirmMessage"></p>
-            </div>
-            <div class="modal-actions-profile">
-                <button class="modal-btn-profile" onclick="closeConfirmModal()">Hủy</button>
-                <button class="modal-btn-profile modal-btn-primary-profile" id="confirmButton" onclick="confirmAction()">Xác nhận</button>
-            </div>
-        </div>
-    </div>
+      <!-- Nội dung modal (JS sẽ set text vào đây) -->
+      <p id="messageContent"></p>
 
-    <script src="profile.js"></script>
+      <!-- Nút đóng: gọi hàm closeMessageModal() trong JS -->
+      <button onclick="closeMessageModal()" class="primary-btn">OK</button>
+    </div>
+  </div>
+
+  <!-- ===== Modal XÁC NHẬN (confirm) ===== -->
+  <div id="confirmModal" class="modal-profile">
+    <div class="modal-content">
+      <!-- Tiêu đề confirm -->
+      <h3 id="confirmTitle">Xác nhận</h3>
+
+      <!-- Nội dung confirm -->
+      <p id="confirmContent"></p>
+
+      <!-- 2 nút: Hủy và Xác nhận -->
+      <div class="modal-actions">
+        <!-- Hủy: đóng confirm modal -->
+        <button onclick="closeConfirmModal()" class="secondary-btn">Hủy</button>
+
+        <!-- Xác nhận: chạy hành động đã “gắn” trước đó (pendingConfirmAction) -->
+        <button onclick="confirmAction()" class="danger-btn">Xác nhận</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="profile.js"></script>
 </body>
+
 </html>
