@@ -39,7 +39,7 @@ let allData = null;
     function formatPrice(price) {
       return price.toLocaleString('vi-VN') + 'đ';
     }
-
+// ⭐ CẬP NHẬT HÀM TẠO HTML SẢN PHẨM
     function createProductHTML(item) {
       const statusButton = item.status === 'soldout' 
         ? `<button class="btn" onclick="event.stopPropagation(); openModal(${item.id}, '${item.title}', ${item.price_current});">Xem Chi Tiết</button>`
@@ -128,7 +128,7 @@ let allData = null;
       // Cuộn lên đầu container sản phẩm
       document.querySelector('.products-header').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-
+    // ⭐ CẬP NHẬT HÀM SẮP XẾP SẢN PHẨM
     function sortProducts(products) {
       const sorted = [...products];
       
@@ -145,7 +145,7 @@ let allData = null;
           return sorted;
       }
     }
-
+    // ⭐ CẬP NHẬT HÀM HIỂN THỊ SẢN PHẨM VỚI PHÂN TRANG
     function displayProducts(category) {
       if (!allData) return;
 
@@ -221,7 +221,7 @@ let allData = null;
           }
         });
       }
-
+      // Cập nhật mobile nav - đánh dấu danh mục hiện tại
       const mobileNavItems = document.querySelectorAll('.nav-item[data-category]');
     mobileNavItems.forEach(btn => {
         if (btn.getAttribute('data-category') === category) {
@@ -308,7 +308,7 @@ let allData = null;
         }
       });
     });
-
+    // Lấy dữ liệu từ file JSON
     const getData = async () => {
       try {
         console.log('Đang tải dữ liệu sản phẩm...');
@@ -334,7 +334,7 @@ let allData = null;
     const menuToggle = document.getElementById('menuToggle');
     const sidebar = document.getElementById('sidebar');
     const sidebarOverlay = document.getElementById('sidebarOverlay');
-
+    
     function openSidebar() {
       sidebar.classList.add('active');
       sidebarOverlay.classList.add('active');
@@ -453,7 +453,7 @@ let allData = null;
         searchQuery = ''; // Xóa tìm kiếm khi chọn danh mục
         currentPage = 1; // Reset về trang 1
         
-        displayProducts(category);
+        displayProducts(category);// Hiển thị sản phẩm theo danh mục được chọn
         
         // Cuộn trang lên đầu danh sách sản phẩm để người dùng thấy món mới
         document.querySelector('.products-header').scrollIntoView({ 
@@ -466,8 +466,6 @@ let allData = null;
     getData();
 
 
-/* fix nut khi dan */
-// --- BẮT ĐẦU ĐOẠN MÃ CẬP NHẬT (FINAL) ---
 // Tự động kích hoạt menu (bao gồm cả trường hợp mặc định là 'all')
 (function() {
     const params = new URLSearchParams(window.location.search);
