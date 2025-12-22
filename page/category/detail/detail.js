@@ -83,6 +83,7 @@ const ReviewManager = {
     },
 
     // 4. Tính toán thống kê
+    // Hàm toán học. Nó tính điểm trung bình (VD: 4.5 sao) và đếm xem có bao nhiêu người chấm 5 sao, 4 sao... để vẽ biểu đồ thanh ngang.
     calculateStats() {
         const total = this.data.length;
         if (total === 0) return { avg: 0, total: 0, counts: {1:0,2:0,3:0,4:0,5:0} };
@@ -103,6 +104,7 @@ const ReviewManager = {
     },
 
     // 5. Render Dashboard Progress Bars
+    //Vẽ phần thống kê đầu trang (Số sao to đùng, thanh tiến trình màu vàng).
     renderDashboard(stats) {
         const avgScore = document.getElementById('avg-rating-score');
         if(avgScore) avgScore.textContent = stats.avg;
@@ -134,6 +136,7 @@ const ReviewManager = {
     },
 
     // 6. Render Gallery
+    //Lọc tất cả các ảnh từ các review và hiển thị thành một thư viện ảnh nhỏ (Gallery) để khách tiện xem ảnh thực tế.
     renderGallery() {
         const container = document.getElementById('review-gallery-container');
         const track = document.getElementById('review-gallery-track');
@@ -159,11 +162,13 @@ const ReviewManager = {
     },
 
     // 7. Render List Review (Có lọc & phân trang)
+    //Vẽ danh sách các bình luận bên dưới.
     renderList() {
         const listContainer = document.getElementById('review-list-container');
         if(!listContainer) return;
 
         // Filter
+        //Chức năng Lọc (Filter): Nó kiểm tra biến currentFilter. Nếu bạn chọn xem "5 sao", nó chỉ vẽ các review 5 sao. Nếu chọn "Có hình ảnh", nó chỉ vẽ review có ảnh.
         let filtered = this.data.sort((a, b) => new Date(b.date) - new Date(a.date)); // Mới nhất trước
         
         if (this.currentFilter === 'image') {
@@ -173,6 +178,7 @@ const ReviewManager = {
         }
 
         // Cập nhật button "Load More"
+        // Phân trang: Nó chỉ hiện số lượng review giới hạn (displayCount), nếu nhiều hơn sẽ hiện nút "Xem thêm".
         const loadMoreBtn = document.getElementById('review-pagination');
         if(loadMoreBtn) {
             if (filtered.length > this.displayCount) {
@@ -183,6 +189,7 @@ const ReviewManager = {
         }
 
         // Slice display
+        // Đây là cái "khuôn bánh". Nó nhận dữ liệu của 1 review và trả về chuỗi HTML hoàn chỉnh (Avatar, tên, sao, nội dung, nút like, phản hồi của shop...).
         const displayData = filtered.slice(0, this.displayCount);
 
         if (displayData.length === 0) {
@@ -193,12 +200,14 @@ const ReviewManager = {
                 </div>`;
             return;
         }
-
+        // Đây là kỹ thuật kinh điển trong JavaScript hiện đại để vẽ danh sách.
         listContainer.innerHTML = displayData.map(r => this.createCardHTML(r)).join('');
         
         // Cập nhật active class cho filter buttons
+        // "Reset" trạng thái. Trước khi tô màu nút đang chọn, nó xóa class active (màu đậm) khỏi tất cả các nút.
         document.querySelectorAll('.r-filter-btn').forEach(btn => btn.classList.remove('active'));
         // Logic tìm button active
+        // Tô màu (thêm class active) cho nút mà người dùng đang bấm.
         const btns = document.querySelectorAll('.r-filter-btn');
         if(btns.length > 0) {
             if(this.currentFilter === 'all') btns[0].classList.add('active');
@@ -214,6 +223,7 @@ const ReviewManager = {
     // Helper: Tạo HTML cho 1 card
     createCardHTML(review) {
         // Avatar logic: Nếu không có ảnh, tạo avatar chữ cái
+        // Xử lý Avatar (Ảnh đại diện)
         let avatarHTML = '';
         if (review.avatar) {
             avatarHTML = `<img src="${review.avatar}" class="rc-avatar" alt="${review.name}">`;
@@ -223,7 +233,7 @@ const ReviewManager = {
             const color = colors[review.name.length % colors.length];
             avatarHTML = `<div class="rc-avatar" style="background:${color}; color:white;">${firstLetter}</div>`;
         }
-
+        // Xử lý Hình ảnh đính kèm & Phản hồi của Shop
         const imagesHTML = review.images && review.images.length > 0 
             ? `<div class="rc-images">${review.images.map(img => `<img src="${img}" class="rc-img-thumb" onclick="openImageViewer('${img}')">`).join('')}</div>`
             : '';
@@ -264,6 +274,7 @@ const ReviewManager = {
     },
 
     // Actions
+    // Khi bấm nút "Hữu ích". Nó tìm review đó trong mảng dữ liệu. Cộng thêm 1 like. Lưu lại (saveData). Cập nhật ngay lập tức con số trên nút bấm để người dùng thấy mượt mà.
     likeReview(id, btn) {
         const review = this.data.find(r => r.id === id);
         if (review) {
@@ -277,7 +288,7 @@ const ReviewManager = {
             btn.removeAttribute('onclick'); 
         }
     },
-
+    // Hàm này được gọi khi người dùng điền form và bấm "Gửi". Nó thêm review mới lên đầu danh sách (unshift) và lưu lại.
     addNewReview(reviewObj) {
         this.data.unshift(reviewObj);
         this.saveData();
@@ -287,6 +298,7 @@ const ReviewManager = {
     },
 
     // Utilities
+    // Các hàm phụ trợ giúp đổi ngày tháng sang dạng "Hôm qua", "2 ngày trước" và đổi số 5 thành 5 ngôi sao icon.
     getStarHTML(rating) {
         let stars = '';
         for (let i = 1; i <= 5; i++) {
@@ -308,36 +320,12 @@ const ReviewManager = {
     }
 };
 
-// ========== HIỂN THỊ LƯỢT XEM & MUA ==========
-function createStatsHTML(productId) {
-    let views = parseInt(localStorage.getItem(`product_views_${productId}`) || '0');
-    views++;
-    localStorage.setItem(`product_views_${productId}`, views);
-    const buys = parseInt(localStorage.getItem(`product_buys_${productId}`) || '0');
-    return `
-        <div style="display: flex; gap: 20px; padding: 15px; background: #f3f4f6; border-radius: 10px; margin: 15px 0;">
-            <div style="display: flex; align-items: center; gap: 8px;">
-                <span style="font-size: 18px;">👁️</span>
-                <div>
-                    <div style="font-size: 12px; color: #6b7280;">Lượt xem</div>
-                    <div style="font-weight: 700; color: #1f2937;">${views.toLocaleString('vi-VN')}</div>
-                </div>
-            </div>
-            <div style="display: flex; align-items: center; gap: 8px;">
-                <span style="font-size: 18px;">🛍️</span>
-                <div>
-                    <div style="font-size: 12px; color: #6b7280;">Lượt mua</div>
-                    <div style="font-weight: 700; color: #1f2937;">${buys.toLocaleString('vi-VN')}</div>
-                </div>
-            </div>
-        </div>
-    `;
-}
 
 // ========== HIỂN THỊ GỢI Ý ==========
 let suggestBoxVisible = false;
 let suggestBoxMinimized = false;
 
+// Hàm này chịu trách nhiệm vẽ ra giao diện của hộp gợi ý và nút thu nhỏ
 function createSuggestHTML() {
     if (typeof suggestProducts === 'undefined') return ''; // Safety check
 
@@ -375,7 +363,8 @@ function createSuggestHTML() {
         </style>
     `;
 }
-
+// Phần "Hiệu ứng chuyển động" (show, minimize, toggle)
+// Hiện hộp (showSuggestBox): Hộp trồi lên, nút tròn thu nhỏ (🔥) biến mất.
 function showSuggestBox() {
     const box = document.getElementById('suggestBox');
     const floatingBtn = document.getElementById('suggestFloatingBtn');
@@ -387,7 +376,7 @@ function showSuggestBox() {
     suggestBoxVisible = true;
     suggestBoxMinimized = false;
 }
-
+// Thu nhỏ (minimizeSuggestBox): Hộp tụt xuống, nút tròn thu nhỏ (🔥) hiện ra để khách cần thì bấm gọi lại.
 function minimizeSuggestBox() {
     const box = document.getElementById('suggestBox');
     const floatingBtn = document.getElementById('suggestFloatingBtn');
@@ -399,7 +388,7 @@ function minimizeSuggestBox() {
     suggestBoxVisible = false;
     suggestBoxMinimized = true;
 }
-
+// gọi ra
 function toggleSuggestBox() {
     if (suggestBoxMinimized || !suggestBoxVisible) {
         showSuggestBox();
@@ -407,7 +396,8 @@ function toggleSuggestBox() {
         minimizeSuggestBox();
     }
 }
-
+// Nó quyết định KHI NÀO thì hiện hộp gợi ý.
+// Khi khách hàng đã xem được 60% nội dung trang (tức là họ thực sự quan tâm sản phẩm), thì hộp gợi ý mới trượt lên. Điều này tránh gây phiền khi khách vừa mới vào trang.
 function initSuggestBox() {
     console.log('🔍 Khởi tạo suggest box...');
     const suggestBox = document.getElementById('suggestBox');
@@ -425,7 +415,7 @@ function initSuggestBox() {
         }
     });
 }
-
+// Phần "Hành động mua hàng" (addSuggestToCart) Xử lý khi khách bấm nút dấu (+) màu cam trong hộp gợi ý.
 function addSuggestToCart(event, productName) {
     event.stopPropagation();
     const suggestProduct = suggestProducts.find(p => p.title === productName);
@@ -454,6 +444,17 @@ function addSuggestToCart(event, productName) {
 
 
 // ========== HÀM HIỂN THỊ CHI TIẾT ==========
+/* Hàm này KHÔNG vẽ lại tên hay giá sản phẩm (việc đó để hàm updateDetailPageUI làm). Nhiệm vụ của nó là chuẩn bị các tính năng bổ trợ như:
+
+Tính toán: Tính phần trăm giảm giá, kiểm tra còn hàng hay hết hàng.
+
+Trang trí: Chọn ngẫu nhiên một icon đồ ăn (🍗, 🍔, 🍕...) dựa trên ID sản phẩm để làm giao diện sinh động hơn.
+
+Tạo khung HTML ẩn:
+
+createSuggestHTML(): Chèn hộp gợi ý mua kèm (lúc này chưa hiện).
+
+#imageViewer: Chèn cái khung đen mờ (popup) để khi khách bấm vào ảnh sản phẩm thì ảnh phóng to lên ở giữa màn hình. */
 function createDetailHTML(product) {
     const discount = calculateDiscount(product.price_old, product.price_current);
     const statusText = product.status === 'soldout' ? 'Hết hàng' : 'Còn hàng';
@@ -472,18 +473,26 @@ function createDetailHTML(product) {
 }
 
 // ========== LẤY DỮ LIỆU CHI TIẾT SẢN PHẨM ==========
+// Xác định khách muốn xem món gì
 const getDetailProduct = async () => {
     try {
+        // Xác định khách muốn xem món gì băng cach lay ID từ URL
         const params = new URLSearchParams(window.location.search);
         const productId = params.get('id');
 
         if (!productId) throw new Error('Không tìm thấy ID sản phẩm');
-
+        // Lấy dữ liệu từ kho (JSON)
         const response = await fetch('/data/product.json');
         if (!response.ok) throw new Error('Không thể tải dữ liệu sản phẩm');
 
         const data = await response.json();
         window.allProductData = data;
+
+        /* Trong file JSON, món ăn được chia thành nhiều ngăn: Mì cay, Ăn vặt, Đồ uống...
+
+        Đoạn code này đổ tất cả các ngăn đó vào một cái rổ lớn (allProducts).
+
+        Sau đó dùng hàm .find() để bới trong cái rổ đó xem món nào có ID trùng với ID ở Bước 1. */
         const allProducts = [
           ...(data.micay || []),
           ...(data.mitron || []),
@@ -497,11 +506,13 @@ const getDetailProduct = async () => {
             window.currentProduct = product;
             
             // Khởi tạo Review Manager
+            // Gọi bộ quản lý đánh giá dậy làm việc.
             if (ReviewManager) {
                 ReviewManager.init(product.id);
             }
             
             // Render HTML chính
+            // Chèn các thành phần phụ (popup ảnh, box gợi ý) vào trang.
             if (productDetail) {
                 productDetail.innerHTML = createDetailHTML(product);
             }
@@ -516,8 +527,9 @@ const getDetailProduct = async () => {
             }
             
             // Update UI Static
+            // Đây là hàm (ở chỗ khác) sẽ điền Tên món, Giá tiền, Mô tả vào các ô trống trên giao diện.
             updateDetailPageUI(product, parseInt(localStorage.getItem(`product_views_${productId}`) || '0'));
-
+            // Sau 0.3 giây (setTimeout), nó khởi động hộp gợi ý "Mua kèm" để sẵn sàng trượt lên khi khách cuộn trang.
             setTimeout(() => {
                 console.log('Khởi tạo suggest box...');
                 initSuggestBox();
@@ -525,6 +537,7 @@ const getDetailProduct = async () => {
         } else {
             if (productDetail) productDetail.innerHTML = '<div class="error">Không tìm thấy sản phẩm này!</div>';
         }
+    // Nếu file JSON bị lỗi, mạng bị rớt, hoặc ID không tồn tại, nó sẽ hiện thông báo lỗi màu đỏ ra màn hình thay vì để khách nhìn thấy trang web bị đơ.
     } catch (error) {
         console.error('Lỗi:', error.message);
         if (productDetail) productDetail.innerHTML = `<div class="error">Lỗi: ${error.message}</div>`;
@@ -532,6 +545,7 @@ const getDetailProduct = async () => {
 };
 
 // ========== HÀM LOAD SẢN PHẨM TỪ URL PARAMETER ==========
+// Lấy hàng từ kho (tải dữ liệu) dựa trên vé xe (URL ID).
 async function loadProductFromURL() {
     try {
         const params = new URLSearchParams(window.location.search);
@@ -569,6 +583,7 @@ async function loadProductFromURL() {
 }
 
 // ========== HÀM CẬP NHẬT UI VỚI DỮ LIỆU SẢN PHẨM ==========
+// Bày biện hàng hóa lên kệ (cập nhật giao diện HTML).
 function updateDetailPageUI(product, views) {
     document.title = product.title + ' - Tiệm Ăn Vặt';
     
