@@ -23,28 +23,32 @@ window.toggleProBot = function() {
     }
 };
 
+
+// Hàm thêm tin nhắn vào khung chat
 window.pushProMsg = function(html, type) {
     const b = document.getElementById('pro-bot-body');
     if (!b) return;
     const d = document.createElement('div');
     d.className = `msg-wrap msg-${type}`;
-    d.innerHTML = html;
-    b.appendChild(d);
-    b.scrollTop = b.scrollHeight;
+    d.innerHTML = html;// nội dung tin nhắn
+    b.appendChild(d);// thêm tin nhắn vào cuối mảng
+    b.scrollTop = b.scrollHeight;// tự động cuộn xuống cuối
 };
 
+// Hàm xử lý gửi tin nhắn
 window.proSend = function() {
     const i = document.getElementById('pro-bot-input');
     if(!i || !i.value.trim()) return;
     const v = i.value;
-    window.pushProMsg(v, 'right');
-    i.value = '';
-    proBotLogic(v.toLowerCase());
+    window.pushProMsg(v, 'right');//Hiển thị tin nhắn bên phải 
+    i.value = '';// Xóa nội dung ô nhập
+    proBotLogic(v.toLowerCase());// Xử lý logic bot
 };
 
+// Hàm xử lý chọn nút
 window.proSelect = function(t) {
     if(t === 'menu') { 
-        window.pushProMsg("Xem thực đơn", 'right'); 
+        window.pushProMsg("Xem thực đơn", 'right'); // Gọi hàm hiển thị tin nhắn và truyền nội dung để hiển thị bên phải 
         proBotLogic('menu'); 
     }
     else if(t === 'promo' || t === 'ưu đãi') { 
@@ -52,12 +56,12 @@ window.proSelect = function(t) {
         proBotLogic('ưu đãi'); 
     }
     else if(t === 'call') { 
-        window.pushProMsg("Liên hệ hotline", 'right'); 
+        window.pushProMsg("Liên hệ hotline", 'right');
         proBotLogic('call'); 
     }
 };
 
-// 3. Logic xử lý tin nhắn
+// 3. Logic xử lý tin nhắn người dùng nhập
 function proBotLogic(v) {
     setTimeout(() => {
         // Cập nhật logic từ khóa linh hoạt theo yêu cầu của bạn
@@ -67,12 +71,12 @@ function proBotLogic(v) {
 
         if(isMenu) {
             window.pushProMsg("Dạ, đây là những món bán chạy nhất của Tiệm ạ:", 'left');
-            botDB.slice(0, 3).forEach(p => {
+            botDB.slice(0, 3).forEach(p => { // Lấy 3 món đầu tiên làm ví dụ
                 // Sửa lỗi đường dẫn ảnh /.. thành /assets
-                const imagePath = p.image.startsWith('/..') ? p.image.substring(3) : p.image;
+                const imagePath = p.image.startsWith('/..') ? p.image.substring(3) : p.image;// Loại bỏ /.. ở đầu đường dẫn
                 const card = `
                     <div class="bot-prod-item">
-                        <img src="${imagePath}" onerror="this.src='https://placehold.co/100x100?text=Food'">
+                        <img src="${imagePath}" onerror="this.src='https://placehold.co/100x100?text=Food'"> 
                         <div class="bot-prod-info">
                             <b>${p.title}</b>
                             <span>${p.price_current.toLocaleString('vi-VN')}đ</span>

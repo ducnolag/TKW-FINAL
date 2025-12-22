@@ -7,7 +7,7 @@ const validPromoCodes = {
     'THITOTNHA': { type: 'shipping', value: 15000, desc: 'Giảm 15k phí vận chuyển' }
 };
 
-let appliedPromoCode = '';
+let appliedPromoCode = '';// Mã giảm giá đã áp dụng
 let pendingConfirmAction = null; // Lưu hàm cần thực hiện sau khi xác nhận
 
 // ===== MODAL FUNCTIONS =====
@@ -16,28 +16,28 @@ function showMessageModal(title, message) {
     document.getElementById('modalMessage').textContent = message;
     document.getElementById('messageModal').classList.add('active');
 }
-
+// Đóng modal thông báo
 function closeMessageModal() {
     document.getElementById('messageModal').classList.remove('active');
 }
-
+// Mở modal xác nhận
 function showConfirmModal(title, message, onConfirm) {
     document.getElementById('confirmTitle').textContent = title;
     document.getElementById('confirmMessage').textContent = message;
     pendingConfirmAction = onConfirm;
     document.getElementById('confirmModal').classList.add('active');
 }
-
+// Đóng modal xác nhận
 function closeConfirmModal() {
     document.getElementById('confirmModal').classList.remove('active');
     pendingConfirmAction = null;
 }
-
+// Xác nhận hành động
 function confirmAction() {
-    if (pendingConfirmAction && typeof pendingConfirmAction === 'function') {
-        pendingConfirmAction();
+    if (pendingConfirmAction && typeof pendingConfirmAction === 'function') {// Kiểm tra và thực thi hàm đã lưu
+        pendingConfirmAction();// Thực thi hàm
     }
-    closeConfirmModal();
+    closeConfirmModal();// Đóng modal sau khi xác nhận
 }
 
 // Đóng modal khi bấm ra ngoài
@@ -62,41 +62,41 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// --- AUTH & INIT ---
+// kiêm tra đăng nhập
 function checkAuth() {
-    const currentUser = sessionStorage.getItem("currentUser");
+    const currentUser = sessionStorage.getItem("currentUser");// Lấy thông tin user từ sessionStorage
     if (!currentUser) {
-        window.location.href = "/page/account/login/login.html#login";
+        window.location.href = "/page/account/login/login.html#login";// Chuyển hướng về trang đăng nhập nếu chưa đăng nhập
         return null;
     }
     return JSON.parse(currentUser);
 }
-
+// Lấy danh sách món trong giỏ hàng
 function getCartItems() {
     return JSON.parse(localStorage.getItem('cart') || '[]');
 }
 
-// --- UTILS ---
+// Định dạng tiền tệ
 function formatMoney(amount) {
     return amount.toLocaleString('vi-VN') + 'đ';
 }
-
+// Tính tổng tiền hàng
 function calculateTotal(items) {
     return items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 }
 
-// --- ACTIONS ---
+// Xóa món khỏi giỏ hàng
 function removeItem(productId) {
-    showConfirmModal("Xác nhận xóa", "Bạn chắc chắn muốn xóa món này?", function() {
-        let cart = getCartItems();
-        cart = cart.filter(item => item.id != productId);
-        localStorage.setItem('cart', JSON.stringify(cart));
-        
+    showConfirmModal("Xác nhận xóa", "Bạn chắc chắn muốn xóa món này?", function() {// Hàm thực thi khi xác nhận
+        let cart = getCartItems();// Lấy giỏ hàng hiện tại
+        cart = cart.filter(item => item.id != productId);// Lọc bỏ món có ID trùng với productId
+        localStorage.setItem('cart', JSON.stringify(cart));// Cập nhật giỏ hàng sau khi xóa
+        // Hiển thị thông báo
         showToast('Đã xóa món ăn', 'success');
-        renderCheckout(checkAuth());
+        renderCheckout(checkAuth());// Cập nhật lại giao diện checkout
     });
 }
-
+// Hiển thị thông báo dạng toast
 function showToast(msg, type = 'success', duration = 3000) {
     let container = document.getElementById('toast-container');
     if (!container) {
@@ -130,14 +130,14 @@ function showToast(msg, type = 'success', duration = 3000) {
         }
     }, duration);
 }
-
+// Hiển thị modal thành công sau khi đặt hàng
 function showSuccessModal(totalStr, method) {
     const modal = document.getElementById('successModal');
     const content = modal.querySelector('.modal-body-text');
     content.innerHTML = `Tổng thanh toán: <b>${totalStr}</b><br>Hình thức: ${method}`;
     modal.classList.add('show');
 }
-
+// Đóng modal thành công
 window.selectPaymentNew = function(element, method) {
   
     const parent = element.parentElement;
@@ -145,13 +145,13 @@ window.selectPaymentNew = function(element, method) {
     element.classList.add('active');
     document.getElementById('selectedPaymentMethod').value = method;
 }
-
+// Hàm áp dụng mã giảm giá
 function applyPromoCode() {
-    const input = document.getElementById('checkoutPromoInput');
-    const code = input.value.trim();
+    const input = document.getElementById('checkoutPromoInput');// Lấy ô nhập mã giảm giá
+    const code = input.value.trim();// Lấy mã nhập vào và loại bỏ khoảng trắng
     
-    if (!code) { showToast('Vui lòng nhập mã!', 'warning'); return; }
-
+    if (!code) { showToast('Vui lòng nhập mã!', 'warning'); return; }// Kiểm tra nhập mã
+    // Kiểm tra mã có hợp lệ không
     const promo = validPromoCodes[code];
     if (!promo) {
         showToast('Mã giảm giá không tồn tại', 'error');
@@ -162,13 +162,13 @@ function applyPromoCode() {
     // Kiểm tra điều kiện
     const cartItems = getCartItems();
     const subtotal = calculateTotal(cartItems);
-    
+    // Kiểm tra đơn hàng tối thiểu
     if (promo.minOrder && subtotal < promo.minOrder) {
         showToast(`Mã yêu cầu đơn tối thiểu ${formatMoney(promo.minOrder)}`, 'warning');
         input.value = '';
         return;
     }
-    
+    // Kiểm tra lần đầu mua
     if (promo.firstTimeOnly) {
         const currentUser = JSON.parse(sessionStorage.getItem('currentUser') || localStorage.getItem('currentUser') || '{}');
         const userPurchases = JSON.parse(localStorage.getItem('userPurchases') || '{}');
@@ -180,17 +180,17 @@ function applyPromoCode() {
         }
     }
     
-    localStorage.setItem('appliedPromoCode', code);
-    showToast(`Áp dụng mã thành công! ${promo.desc}`, 'success');
-    input.value = '';
-    renderCheckout(checkAuth());
+    localStorage.setItem('appliedPromoCode', code);// Lưu mã vào localStorage
+    showToast(`Áp dụng mã thành công! ${promo.desc}`, 'success');// Thông báo thành công
+    input.value = '';// Xóa ô nhập
+    renderCheckout(checkAuth());// Cập nhật lại giao diện checkout
 }
-
+// Hàm xóa mã giảm giá
 function removePromoCode() {
     localStorage.removeItem('appliedPromoCode');
     renderCheckout(checkAuth());
 }
-
+// Xử lý đặt hàng
 function placeOrder(event) {
     event.preventDefault();
     const form = event.target;
@@ -203,7 +203,7 @@ function placeOrder(event) {
         return;
     }
     
-    // Validate phone number
+    // Kiểm tra số điện thoại
     const phoneInput = form.querySelector('input[name="phone"]');
     const phoneValue = phoneInput.value.trim();
     
@@ -214,40 +214,40 @@ function placeOrder(event) {
         phoneInput.focus();
         return;
     }
-    
+    // Lấy món trong giỏ hàng
     const cartItems = getCartItems();
     if (cartItems.length === 0) {
         showToast('Giỏ hàng trống!', 'error');
         return;
     }
-
+    // Lấy phương thức thanh toán
     const paymentMethodEl = document.querySelector('.payment-option.active h4');
     const paymentMethodText = paymentMethodEl ? paymentMethodEl.innerText : 'Thanh toán';
     
-    // Record History
+    // Ghi nhận đơn hàng (Ở đây ta chỉ mô phỏng, không gửi lên server)
     recordUserPurchases(cartItems);
 
-    // Clear Data
+    // Xóa giỏ hàng và mã giảm giá đã áp dụng
     localStorage.removeItem('cart');
     localStorage.removeItem('appliedPromoCode');
 
-    // Get display total
+    // Hiển thị modal thành công
     const totalEl = document.querySelector('.summary-line.total span:last-child');
     const totalStr = totalEl ? totalEl.innerText : '0đ';
 
     showSuccessModal(totalStr, paymentMethodText);
 }
-
+// Ghi nhận lịch sử mua hàng của người dùng
 function recordUserPurchases(cartItems) {
     try {
-        const user = JSON.parse(sessionStorage.getItem('currentUser') || localStorage.getItem('currentUser'));
+        const user = JSON.parse(sessionStorage.getItem('currentUser') || localStorage.getItem('currentUser'));// Lấy thông tin user
         if (!user) return;
-        const purchases = JSON.parse(localStorage.getItem('userPurchases') || '{}');
-        if (!purchases[user.username]) purchases[user.username] = [];
-        
+        const purchases = JSON.parse(localStorage.getItem('userPurchases') || '{}');// Lấy lịch sử mua hàng hiện tại
+        if (!purchases[user.username]) purchases[user.username] = [];// Khởi tạo mảng nếu chưa có
+        // Ghi nhận từng món đã mua
         cartItems.forEach(item => {
-             if (!purchases[user.username].some(p => p.productId == item.id)) {
-                purchases[user.username].push({
+             if (!purchases[user.username].some(p => p.productId == item.id)) {// Chỉ ghi nhận món chưa mua trước đó
+                purchases[user.username].push({// Thêm mục mua hàng mới
                     productId: item.id,
                     productTitle: item.title,
                     purchaseDate: new Date().toLocaleDateString('vi-VN'),
@@ -258,10 +258,10 @@ function recordUserPurchases(cartItems) {
         localStorage.setItem('userPurchases', JSON.stringify(purchases));
         
         // Ghi nhận lần thanh toán riêng biệt
-        const paymentHistory = JSON.parse(localStorage.getItem('userPaymentTransactions') || '{}');
-        if (!paymentHistory[user.username]) paymentHistory[user.username] = [];
-        paymentHistory[user.username].push({
-            transactionId: Date.now(),
+        const paymentHistory = JSON.parse(localStorage.getItem('userPaymentTransactions') || '{}');// Lấy lịch sử thanh toán
+        if (!paymentHistory[user.username]) paymentHistory[user.username] = [];// Khởi tạo mảng nếu chưa có
+        paymentHistory[user.username].push({// Thêm mục thanh toán mới
+            transactionId: Date.now(),// ID giao dịch duy nhất
             paymentDate: new Date().toLocaleDateString('vi-VN'),
             paymentTime: new Date().toLocaleTimeString('vi-VN'),
             itemCount: cartItems.length,
@@ -271,7 +271,7 @@ function recordUserPurchases(cartItems) {
     } catch (e) {}
 }
 
-// --- MAIN RENDER ---
+// Hiển thị giao diện trang thanh toán
 function renderCheckout(user) {
     const cartItems = getCartItems();
     
@@ -287,11 +287,11 @@ function renderCheckout(user) {
         return;
     }
 
-    // Calculations
-    const subtotal = calculateTotal(cartItems);
+    // Tính toán đơn hàng
+    const subtotal = calculateTotal(cartItems);// Tổng tiền hàng
     const shipping = 20000;
     
-    const savedPromo = localStorage.getItem('appliedPromoCode') || '';
+    const savedPromo = localStorage.getItem('appliedPromoCode') || '';// Lấy mã giảm giá đã lưu
     appliedPromoCode = savedPromo;
     
     let discount = 0;
@@ -355,7 +355,7 @@ function renderCheckout(user) {
     autoDiscount += cuDemDiscount;
     
     // ===== KIỂM TRA ĐIỀU KIỆN MÃ GIẢM GIÁ =====
-    const promo = validPromoCodes[appliedPromoCode];
+    const promo = validPromoCodes[appliedPromoCode];// Lấy thông tin mã giảm giá đã áp dụng
     if (promo) {
         let canApply = true;
         
@@ -369,10 +369,10 @@ function renderCheckout(user) {
         
         // Kiểm tra lần đầu mua
         if (promo.firstTimeOnly && canApply) {
-            const userPurchases = JSON.parse(localStorage.getItem('userPurchases') || '{}');
+            const userPurchases = JSON.parse(localStorage.getItem('userPurchases') || '{}');// Lấy lịch sử mua hàng
             
-            if (user && userPurchases[user.username] && userPurchases[user.username].length > 0) {
-                canApply = false;
+            if (user && userPurchases[user.username] && userPurchases[user.username].length > 0) {// Đã mua hàng trước đó
+                canApply = false;// Không thể áp dụng
                 localStorage.removeItem('appliedPromoCode');
                 appliedPromoCode = '';
                 showToast('Mã CHAOBANMOI chỉ áp dụng cho lần đầu mua', 'error');
@@ -395,8 +395,7 @@ function renderCheckout(user) {
     
     const total = subtotal + shipping - discount - autoDiscount;
 
-// ... (Các phần trên giữ nguyên)
-
+// hiển thị giao diện
     const html = `
         <div class="header-modern">
             <div class="header-inner">
@@ -603,11 +602,11 @@ function renderCheckout(user) {
         </div>
     `;
 
-// ...
+// Gán HTML vào trang
     document.getElementById('app').innerHTML = html;
 }
 
-// --- INIT ---
+// Khởi tạo trang khi load
 window.onload = function() {
     const user = checkAuth();
     if (user) renderCheckout(user);

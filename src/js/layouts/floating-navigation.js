@@ -1,20 +1,20 @@
 /* === FLOATING SIDEBAR - PRO VERSION (FIXED UI) === */
-
+// sự kiện load trang
 window.addEventListener('load', () => {
     // Load FontAwesome
-    if (!document.querySelector('link[href*="fontawesome"]')) {
+    if (!document.querySelector('link[href*="fontawesome"]')) {// kiểm tra nếu chưa có fontawesome thì thêm vào
         const fa = document.createElement('link');
         fa.rel = 'stylesheet';
         fa.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
         document.head.appendChild(fa);
     }
     
-    createSafeNav();
-    initSafeScroll();
+    createSafeNav();// tạo thanh điều hướng an toàn
+    initSafeScroll();// khởi tạo sự kiện scroll
 });
-
+// Hàm tạo thanh điều hướng an toàn
 function createSafeNav() {
-    const style = document.createElement('style');
+    const style = document.createElement('style');// tạo thẻ style để chứa CSS
     style.innerHTML = `
         :root {
             --fsb-home: #2980b9; --fsb-cart: #e67e22; --fsb-map: #c0392b; 
@@ -126,7 +126,7 @@ function createSafeNav() {
             100% { transform: rotate(0); }
         }
     `;
-    document.head.appendChild(style);
+    document.head.appendChild(style);// thêm CSS vào thẻ head
 
     const html = `
         <div id="fsb-widget" class="fsb-widget">
@@ -178,30 +178,30 @@ function createSafeNav() {
 }
 
 /* === TOÀN BỘ PHẦN LOGIC RANDOM DƯỚI ĐÂY ĐƯỢC GIỮ NGUYÊN === */
-
+// Hàm khởi tạo sự kiện scroll để hiển thị nút
 function initSafeScroll() {
-    updateFSBBadge();
-    const widget = document.getElementById('fsb-widget');
+    updateFSBBadge();// Cập nhật số lượng món trong giỏ khi load trang
+    const widget = document.getElementById('fsb-widget');// Lấy phần tử widget
     const checkScroll = () => {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        if (scrollTop > 150) widget.classList.add('is-visible');
+        if (scrollTop > 150) widget.classList.add('is-visible');// Hiển thị nút khi cuộn xuống hơn 150px
         else {
-            widget.classList.remove('is-visible');
-            widget.classList.remove('is-open');
+            widget.classList.remove('is-visible');// Ẩn nút khi ở trên cùng
+            widget.classList.remove('is-open');// Đóng thanh khi ẩn
         }
     };
-    window.addEventListener('scroll', checkScroll);
+    window.addEventListener('scroll', checkScroll);// Gắn sự kiện scroll
     checkScroll();
 }
-
+// Hàm khởi tạo hộp thông báo toast
 window.initToastBox = function() {
-    if (!document.getElementById('toast-container')) {
+    if (!document.getElementById('toast-container')) {// kiểm tra nếu chưa có hộp thông báo thì tạo mới
         const toastContainer = document.createElement('div');
         toastContainer.id = 'toast-container';
         toastContainer.style.cssText = 'position: fixed; top: 20px; right: 20px; z-index: 100000; display: flex; flex-direction: column; gap: 10px;';
         document.body.appendChild(toastContainer);
         
-        if (!document.getElementById('toast-styles')) {
+        if (!document.getElementById('toast-styles')) {// Thêm CSS cho hiệu ứng nếu chưa có
             const style = document.createElement('style');
             style.id = 'toast-styles';
             style.innerHTML = `
@@ -213,10 +213,11 @@ window.initToastBox = function() {
     }
 };
 
+// Hàm hiển thị thông báo toast
 window.showToastMessage = function(message, type = 'success') {
     initToastBox();
-    let toastContainer = document.getElementById('toast-container');
-    const toast = document.createElement('div');
+    let toastContainer = document.getElementById('toast-container');// Lấy hộp thông báo
+    const toast = document.createElement('div');// Tạo thẻ thông báo mới
     const color = type === 'success' ? '#10b981' : '#ef4444';
     const icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
     
@@ -229,9 +230,9 @@ window.showToastMessage = function(message, type = 'success') {
         setTimeout(() => toast.remove(), 300);
     }, 3000);
 };
-
+// Hàm chuyển đổi trạng thái thanh điều hướng
 window.toggleFSB = () => {
-    const w = document.getElementById('fsb-widget');
+    const w = document.getElementById('fsb-widget');// Lấy phần tử widget
     w.classList.toggle('is-open');
     document.querySelector('.fsb-toggle-btn i').className = w.classList.contains('is-open') ? 'fa-solid fa-angles-right' : 'fa-solid fa-angles-left';
 }
@@ -240,38 +241,39 @@ window.fsbGoHome = () => window.location.href = '/index.htm';
 window.fsbShowCart = () => typeof toggleQuickCart === 'function' ? toggleQuickCart() : window.location.href = '/page/cart/cart.htm';
 window.fsbScrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
+// Hàm cập nhật số lượng món trong giỏ hàng
 window.updateFSBBadge = (count) => {
     const badge = document.getElementById('fsb-badge');
     if (!badge) return;
-    if (typeof count === 'undefined') {
+    if (typeof count === 'undefined') {// Nếu không truyền số lượng, lấy từ localStorage
         try { count = JSON.parse(localStorage.getItem('cart')).reduce((t, i) => t + (i.qty || i.quantity || 0), 0); } catch(e){ count = 0; }
     }
     badge.textContent = count;
     badge.style.display = count > 0 ? 'flex' : 'none';
 }
-
+// Biến lưu kết quả món được chọn gần nhất
 window.fsbOpenRandom = () => {
     document.getElementById('fsb-random-overlay').classList.add('show');
     if(!window.lastRandomResult) fsbStartSpin();
 };
-
+// Đóng hộp thoại 
 window.fsbCloseRandom = (e) => {
     if(e.target === e.currentTarget) document.getElementById('fsb-random-overlay').classList.remove('show');
 };
-
+// Hàm bắt đầu tung xúc xắc chọn món
 window.fsbStartSpin = async () => {
     const display = document.getElementById('fsb-random-display');
     const spinBtn = document.getElementById('fsb-spin-btn');
     const addBtn = document.getElementById('fsb-add-btn');
     
-    spinBtn.disabled = true;
-    spinBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang chọn...';
-    addBtn.style.display = 'none';
+    spinBtn.disabled = true;// vô hiệu hóa nút trong quá trình tung
+    spinBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang chọn...';// thay đổi nội dung nút
+    addBtn.style.display = 'none';// ẩn nút thêm vào giỏ
 
     let allItems = [];
     try {
-        const rawData = JSON.parse(localStorage.getItem('products_data')); 
-        if(rawData) allItems = Object.values(rawData).flat();
+        const rawData = JSON.parse(localStorage.getItem('products_data')); // Lấy dữ liệu từ localStorage
+        if(rawData) allItems = Object.values(rawData).flat();// lấy dữ liệu từ rawdata chuyển đổi thành object thành mảng phẳng
     } catch(e) { console.error("Lỗi dữ liệu", e); }
 
     if (allItems.length === 0) {
@@ -279,22 +281,23 @@ window.fsbStartSpin = async () => {
         spinBtn.disabled = false;
         return;
     }
-
-    let counter = 0;
-    const maxSteps = 12;
+    // Hiệu ứng tung xúc xắc
+    let counter = 0;// đếm số lần lặp
+    const maxSteps = 12;// số lần lặp tối đa
     const shuffleInterval = setInterval(() => {
-        const tempItem = allItems[Math.floor(Math.random() * allItems.length)];
+        const tempItem = allItems[Math.floor(Math.random() * allItems.length)];// Chọn ngẫu nhiên món ăn tạm thời
+        // Hiển thị món ăn tạm thời
         display.innerHTML = `
             <img src="${tempItem.image}" class="fsb-food-img fsb-dice-shake" onerror="this.src='https://placehold.co/200x200?text=Food'">
             <div class="fsb-food-name">${tempItem.title}</div>
             <div class="fsb-food-price">${tempItem.price_current.toLocaleString()}đ</div>
         `;
-        counter++;
+        counter++;// tăng bộ đếm
         if (counter >= maxSteps) {
-            clearInterval(shuffleInterval);
-            const finalItem = allItems[Math.floor(Math.random() * allItems.length)];
-            window.lastRandomResult = finalItem;
-            
+            clearInterval(shuffleInterval);// dừng hiệu ứng sau khi đạt số lần lặp
+            const finalItem = allItems[Math.floor(Math.random() * allItems.length)];// Chọn món ăn cuối cùng
+            window.lastRandomResult = finalItem;// Lưu kết quả vào biến toàn cục
+            // Hiển thị món ăn được chọn
             display.innerHTML = `
                 <img src="${finalItem.image}" class="fsb-food-img" style="border-color: #27ae60; transform: scale(1.05)">
                 <div class="fsb-food-name">✨ ${finalItem.title} ✨</div>
@@ -305,16 +308,16 @@ window.fsbStartSpin = async () => {
             spinBtn.innerText = "Xoay lại";
             addBtn.style.display = 'block';
             addBtn.onclick = () => {
-                let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-                const existingItem = cart.find(item => item.id === finalItem.id);
-                if (existingItem) existingItem.quantity = (existingItem.quantity || existingItem.qty) + 1;
-                else cart.push({ id: finalItem.id, title: finalItem.title, price: finalItem.price_current, quantity: 1, image: finalItem.image });
+                let cart = JSON.parse(localStorage.getItem('cart') || '[]');// Lấy giỏ hàng từ localStorage
+                const existingItem = cart.find(item => item.id === finalItem.id);// Kiểm tra nếu món đã có trong giỏ
+                if (existingItem) existingItem.quantity = (existingItem.quantity || existingItem.qty) + 1;// Tăng số lượng nếu đã có
+                else cart.push({ id: finalItem.id, title: finalItem.title, price: finalItem.price_current, quantity: 1, image: finalItem.image });// Thêm món mới vào giỏ
                 
-                localStorage.setItem('cart', JSON.stringify(cart));
-                updateFSBBadge();
-                window.dispatchEvent(new Event('cartUpdated'));
+                localStorage.setItem('cart', JSON.stringify(cart));// Lưu giỏ hàng trở lại localStorage
+                updateFSBBadge();// Cập nhật số lượng món trong giỏ
+                window.dispatchEvent(new Event('cartUpdated'));// Gửi sự kiện cập nhật giỏ hàng
                 showToastMessage(`Đã thêm ${finalItem.title} vào giỏ!`, 'success');
-                document.getElementById('fsb-random-overlay').classList.remove('show');
+                document.getElementById('fsb-random-overlay').classList.remove('show');// Đóng hộp thoại
             };
         }
     }, 100);

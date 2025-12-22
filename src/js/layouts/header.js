@@ -2,9 +2,10 @@ document.addEventListener("htmlIncluded", function () {
   // ============================================================
   // 1. QUẢN LÝ TRẠNG THÁI ĐĂNG NHẬP (AUTH STATE)
   // ============================================================
+  // Hàm kiểm tra trạng thái đăng nhập và cập nhật giao diện
   function checkAuthState() {
-    const currentUser = sessionStorage.getItem("currentUser");
-    const loggedInSection = document.getElementById("loggedInSection");
+    const currentUser = sessionStorage.getItem("currentUser");// Lấy thông tin user từ sessionStorage, dùng session để tránh lưu lâu quá
+    const loggedInSection = document.getElementById("loggedInSection");// Phần hiển thị khi đã đăng nhập
     const authDropdown = document.getElementById("authDropdown");
     const usernameDisplay = document.getElementById("usernameDisplay"); // Nếu có hiển thị tên
 
@@ -12,14 +13,14 @@ document.addEventListener("htmlIncluded", function () {
 
     if (currentUser) {
       // Đã đăng nhập
-      const user = JSON.parse(currentUser);
-      if (loggedInSection) loggedInSection.classList.add("show");
-      if (authDropdown) authDropdown.classList.remove("show");
-      if (usernameDisplay) usernameDisplay.textContent = user.username;
+      const user = JSON.parse(currentUser);// Giải mã thông tin user
+      if (loggedInSection) loggedInSection.classList.add("show");// Hiển thị phần đã đăng nhập
+      if (authDropdown) authDropdown.classList.remove("show");// Ẩn phần đăng nhập/đăng ký
+      if (usernameDisplay) usernameDisplay.textContent = user.username;// Hiển thị tên người dùng nếu có
     } else {
       // Chưa đăng nhập
-      if (loggedInSection) loggedInSection.classList.remove("show");
-      if (authDropdown) authDropdown.classList.add("show");
+      if (loggedInSection) loggedInSection.classList.remove("show");// Ẩn phần đã đăng nhập
+      if (authDropdown) authDropdown.classList.add("show");// Hiển thị phần đăng nhập/đăng ký
     }
   }
 
@@ -42,7 +43,7 @@ document.addEventListener("htmlIncluded", function () {
   const cancelLogoutBtn = document.getElementById("cancelLogoutBtn");
   const confirmLogoutBtn = document.getElementById("confirmLogoutBtn");
 
-  // Hàm mở Modal
+  // Hàm mở Modal đăng xuất
   function openLogoutPopup() {
     if (logoutModal) {
       logoutModal.classList.add("active");
@@ -75,15 +76,15 @@ document.addEventListener("htmlIncluded", function () {
   if (logoutBtn) {
     logoutBtn.addEventListener("click", function(e) {
       e.preventDefault(); // Chặn hành động mặc định
-      openLogoutPopup();
+      openLogoutPopup();// Mở popup xác nhận đăng xuất
     });
   }
 
   // Gán sự kiện cho các nút bên trong Modal
-  if (closeLogoutModal) closeLogoutModal.addEventListener("click", closeLogoutPopup);
-  if (cancelLogoutBtn) cancelLogoutBtn.addEventListener("click", closeLogoutPopup);
+  if (closeLogoutModal) closeLogoutModal.addEventListener("click", closeLogoutPopup);// Nút X đóng
+  if (cancelLogoutBtn) cancelLogoutBtn.addEventListener("click", closeLogoutPopup);// Nút Hủy
   
-  if (confirmLogoutBtn) {
+  if (confirmLogoutBtn) {// Nút Xác nhận
     confirmLogoutBtn.addEventListener("click", performLogout);
   }
 
@@ -99,6 +100,7 @@ document.addEventListener("htmlIncluded", function () {
   // ============================================================
   // 3. HIỆU ỨNG CUỘN TRANG (SCROLL EFFECT)
   // ============================================================
+  // Thêm hoặc loại bỏ class "scrolled" khi cuộn trang để hiển thị mượt hơn
   window.addEventListener("scroll", function () {
     const header = document.querySelector(".header-main");
     if (header && window.scrollY > 50) {
@@ -115,24 +117,24 @@ document.addEventListener("htmlIncluded", function () {
   const mobileMenu = document.getElementById("mobileMenu");
   const mobileClose = document.getElementById("mobileClose");
   const mobileOverlay = document.getElementById("mobileOverlay");
-
+  // Hàm mở menu mobile
   function openMobileMenu() {
     if (mobileMenu) mobileMenu.classList.add("active");
     if (mobileOverlay) mobileOverlay.classList.add("active");
     document.body.style.overflow = "hidden"; // Khóa cuộn trang chính
   }
-
+  // Hàm đóng menu mobile
   function closeMobileMenu() {
     if (mobileMenu) mobileMenu.classList.remove("active");
     if (mobileOverlay) mobileOverlay.classList.remove("active");
     document.body.style.overflow = ""; // Mở lại cuộn
   }
 
-  if (mobileToggle) mobileToggle.addEventListener("click", openMobileMenu);
-  if (mobileClose) mobileClose.addEventListener("click", closeMobileMenu);
-  if (mobileOverlay) mobileOverlay.addEventListener("click", closeMobileMenu);
+  if (mobileToggle) mobileToggle.addEventListener("click", openMobileMenu);// Mở menu
+  if (mobileClose) mobileClose.addEventListener("click", closeMobileMenu);// Đóng menu
+  if (mobileOverlay) mobileOverlay.addEventListener("click", closeMobileMenu);// Đóng khi click ra ngoài
 
-  // Đóng menu khi nhấn ESC
+  // Đóng menu khi nhấn phím Escape
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") {
       closeMobileMenu();
@@ -143,10 +145,11 @@ document.addEventListener("htmlIncluded", function () {
   // ============================================================
   // 5. MEGA MENU (TẢI TỪ JSON)
   // ============================================================
+  // Hàm tải dữ liệu megamenu từ file JSON và hiển thị
   async function loadMegaMenu() {
     try {
       const response = await fetch('/data/product.json');
-      const data = await response.json();
+      const data = await response.json();// Lấy dữ liệu JSON
       const megaCategory = document.getElementById('megaCategory');
       
       if (!megaCategory) return;
@@ -161,16 +164,16 @@ document.addEventListener("htmlIncluded", function () {
         'douong': 'Đồ Uống',
         'combo': 'Combo'
       };
-      
+      // Duyệt qua các danh mục và tạo liên kết nếu có dữ liệu
       for (const [key, label] of Object.entries(categories)) {
         if (data[key]) {
           // Tạo link cho danh mục
           const categoryLink = document.createElement('a');
           categoryLink.href = `/page/category/product/product.htm?category=${key}`;
-          categoryLink.className = 'mega-category-link';
+          categoryLink.className = 'mega-category-link';// Thêm class để dễ dàng tùy chỉnh CSS
           categoryLink.textContent = label;
           
-          megaCategory.appendChild(categoryLink);
+          megaCategory.appendChild(categoryLink);// Thêm vào megamenu
         }
       }
     } catch (error) {
@@ -183,9 +186,10 @@ document.addEventListener("htmlIncluded", function () {
   // ============================================================
   // 6. GIỎ HÀNG (CART COUNT)
   // ============================================================
+  // Hàm cập nhật số lượng món trong giỏ hàng hiển thị trên header
   window.updateCartCount = function() {
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);// Tính tổng số lượng món
     const cartCountElement = document.querySelector('.cart-count');
     if (cartCountElement) {
       cartCountElement.textContent = totalItems;
@@ -198,7 +202,7 @@ document.addEventListener("htmlIncluded", function () {
   // Lắng nghe thay đổi từ tab khác
   window.addEventListener('storage', function(e) {
     if (e.key === 'cart') {
-      window.updateCartCount();
+      window.updateCartCount();// Cập nhật số lượng món khi có thay đổi giỏ hàng
     }
   });
 
@@ -206,13 +210,14 @@ document.addEventListener("htmlIncluded", function () {
   window.addEventListener('cartUpdated', function() {
     window.updateCartCount();
   });
-
+  // ============================================================
   // ============================================================
   // 7. HIGHLIGHT ACTIVE MENU
   // ============================================================
+  // Hàm highlight menu hiện tại dựa trên URL
   function highlightActiveMenu() {
-    const currentPath = window.location.pathname;
-    const navItems = document.querySelectorAll('.nav-item');
+    const currentPath = window.location.pathname;// Lấy đường dẫn hiện tại
+    const navItems = document.querySelectorAll('.nav-item');// Lấy tất cả các mục menu
     
     // Xóa active từ tất cả items
     navItems.forEach(el => el.classList.remove('active'));
@@ -221,12 +226,12 @@ document.addEventListener("htmlIncluded", function () {
     if (currentPath.includes('/page/cart/')) {
       return;
     }
-    
+    // Duyệt qua từng mục để kiểm tra và gán class active
     navItems.forEach(item => {
-      const link = item.querySelector('.nav-link');
-      if (link) {
-        const href = link.getAttribute('href');
-        let isActive = false;
+      const link = item.querySelector('.nav-link');// Lấy thẻ a bên trong nav-item
+      if (link) {// Kiểm tra tồn tại
+        const href = link.getAttribute('href');// Lấy href của thẻ a
+        let isActive = false; //tạo hàm kiểm tra
         
         // Chuẩn hóa đường dẫn
         const normalizedPath = currentPath.toLowerCase();
@@ -269,7 +274,7 @@ document.addEventListener("htmlIncluded", function () {
         }
         
         if (isActive) {
-          item.classList.add('active');
+          item.classList.add('active');// Gán class active
         }
       }
     });
@@ -286,12 +291,12 @@ document.addEventListener("htmlIncluded", function () {
 // ============================================================
 // 8. TÌM KIẾM (GLOBAL FUNCTION)
 // ============================================================
-// Hàm này cần nằm ngoài để onsubmit trong HTML gọi được
+// Hàm xử lý tìm kiếm từ form header
 function handleSearch(event) {
   event.preventDefault(); // Chặn reload form mặc định
-  const query = event.target.querySelector('input[name="query"]').value.trim();
+  const query = event.target.querySelector('input[name="query"]').value.trim();// Lấy giá trị tìm kiếm
   if (query) {
-    window.location.href = '/page/category/product/product.htm?query=' + encodeURIComponent(query);
+    window.location.href = '/page/category/product/product.htm?query=' + encodeURIComponent(query);// Chuyển đến trang kết quả tìm kiếm
   }
   return false;
 }
