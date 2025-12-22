@@ -50,50 +50,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     // 3. Initialize testimonial slider
     initTestimonialSlider();
-    // 4. Initialize play button animation
-    initPlayButton();
-    // 5. Initialize image hover effects
-    initImageEffects();
     // 6. Initialize parallax scrolling
     initParallaxEffect();
 });
-
-/* ========================================
-   Hiệu ứng nút play
-   ======================================== */
-function initPlayButton() {
-    const playButton = document.querySelector('.play-button');
-    
-    if (playButton) {
-        // Pulse animation
-        setInterval(() => {
-            playButton.style.animation = 'none';
-            setTimeout(() => {
-                playButton.style.animation = 'pulse 2s infinite';
-            }, 10);
-        }, 3000);
-        
-        playButton.addEventListener('click', function() {
-            alert('Video sẽ được phát ở đây!');
-        });
-    }
-}
-
-/* Pulse animation keyframes */
-const style = document.createElement('style');
-style.innerHTML = `
-    @keyframes pulse {
-        0%, 100% {
-            transform: scale(1);
-            box-shadow: 0 0 0 0 rgba(247, 179, 43, 0.7);
-        }
-        50% {
-            transform: scale(1.05);
-            box-shadow: 0 0 0 20px rgba(247, 179, 43, 0);
-        }
-    }
-`;
-document.head.appendChild(style);
 
 /* ========================================
    Slider đánh giá
@@ -161,43 +120,6 @@ function initTestimonialSlider() {
 }
 
 /* ========================================
-  Hiệu ứng hover hình ảnh
-   ======================================== */
-function initImageEffects() {
-    // Intro images hover
-    const introImages = document.querySelectorAll('.intro-images img');
-    introImages.forEach(img => {
-        img.addEventListener('mouseenter', function() {
-            this.style.transform = 'scale(1.1) rotate(2deg)';
-        });
-        
-        img.addEventListener('mouseleave', function() {
-            this.style.transform = 'scale(1) rotate(0deg)';
-        });
-    });
-    
-    // Product images hover
-    const productImages = document.querySelectorAll('.product-image');
-    productImages.forEach(img => {
-        img.addEventListener('mouseenter', function() {
-            const decoration = this.querySelector('.product-decoration');
-            if (decoration) {
-                decoration.style.opacity = '1';
-                decoration.style.transform = 'rotate(360deg) scale(1.1)';
-            }
-        });
-        
-        img.addEventListener('mouseleave', function() {
-            const decoration = this.querySelector('.product-decoration');
-            if (decoration) {
-                decoration.style.opacity = '0';
-                decoration.style.transform = 'rotate(0deg) scale(1)';
-            }
-        });
-    });
-}
-
-/* ========================================
    PARALLAX EFFECT - Hiệu ứng cuộn parallax
    ======================================== */
 function initParallaxEffect() {
@@ -216,28 +138,6 @@ function initParallaxEffect() {
         });
     });
 }
-
-/* ========================================
-   Hiệu ứng hover cho chef cards
-   ======================================== */
-const chefCards = document.querySelectorAll('.chef-card');
-
-chefCards.forEach(card => {
-    card.addEventListener('mouseenter', function() {
-        const badge = this.querySelector('.chef-badge');
-        if (badge) {
-            badge.style.transform = 'scale(1.1)';
-            badge.style.transition = 'transform 0.3s ease';
-        }
-    });
-    
-    card.addEventListener('mouseleave', function() {
-        const badge = this.querySelector('.chef-badge');
-        if (badge) {
-            badge.style.transform = 'scale(1)';
-        }
-    });
-});
 
 /* ========================================
    Hiệu ứng cho value cards
@@ -259,125 +159,4 @@ valueCards.forEach(card => {
         }
     });
 });
-
-
-/* ========================================
-   Tải ảnh 
-   ======================================== */
-const images = document.querySelectorAll('img[data-src]');
-const imageObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const img = entry.target;
-            img.src = img.dataset.src;
-            img.classList.add('loaded');
-            imageObserver.unobserve(img);
-        }
-    });
-});
-
 images.forEach(img => imageObserver.observe(img));
-
-
-/* ========================================
-   PERFORMANCE OPTIMIZATION - Tối ưu hiệu suất
-   ======================================== */
-// Debounce function
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-// Throttle function
-function throttle(func, limit) {
-    let inThrottle;
-    return function(...args) {
-        if (!inThrottle) {
-            func.apply(this, args);
-            inThrottle = true;
-            setTimeout(() => inThrottle = false, limit);
-        }
-    };
-}
-
-// Apply throttle to scroll events
-const handleScroll = throttle(() => {
-    // Scroll handling logic
-}, 100);
-
-window.addEventListener('scroll', handleScroll);
-
-/* ========================================
-   ACCESSIBILITY - Cải thiện accessibility
-   ======================================== */
-// Keyboard navigation
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Tab') {
-        document.body.classList.add('keyboard-nav');
-    }
-});
-
-document.addEventListener('mousedown', function() {
-    document.body.classList.remove('keyboard-nav');
-});
-
-// Add focus styles for keyboard navigation
-const focusStyle = document.createElement('style');
-focusStyle.innerHTML = `
-    .keyboard-nav a:focus,
-    .keyboard-nav button:focus {
-        outline: 3px solid var(--primary-color);
-        outline-offset: 3px;
-    }
-`;
-document.head.appendChild(focusStyle);
-
-/* ========================================
-   BUTTON CLICK EFFECTS - Hiệu ứng click button
-   ======================================== */
-document.querySelectorAll('.btn-custom, .btn-custom-light').forEach(btn => {
-    btn.addEventListener('click', function(e) {
-        // Ripple effect
-        const ripple = document.createElement('span');
-        ripple.style.cssText = `
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.6);
-            width: 100px;
-            height: 100px;
-            margin-top: -50px;
-            margin-left: -50px;
-            animation: ripple 0.6s;
-            opacity: 0;
-        `;
-        
-        const rect = this.getBoundingClientRect();
-        ripple.style.left = e.clientX - rect.left + 'px';
-        ripple.style.top = e.clientY - rect.top + 'px';
-        
-        this.style.position = 'relative';
-        this.style.overflow = 'hidden';
-        this.appendChild(ripple);
-        
-        setTimeout(() => ripple.remove(), 600);
-    });
-});
-
-// Ripple animation
-const rippleStyle = document.createElement('style');
-rippleStyle.innerHTML = `
-    @keyframes ripple {
-        to {
-            transform: scale(4);
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(rippleStyle);
